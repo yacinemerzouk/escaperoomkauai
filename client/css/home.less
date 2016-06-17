@@ -1,0 +1,22 @@
+.Home{
+	padding-bottom: 4px;
+	.marketing{
+		margin-top: 330px;
+		.featurette-heading:first-child{
+			padding-top: 40px;
+		}
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.Home {
+		.marketing {
+			margin-top: calc(100vh);
+			clear: both;
+			.featurette-heading:first-child{
+				padding-top: 0;
+				margin-top: 0;
+			}
+		}
+	}
+}

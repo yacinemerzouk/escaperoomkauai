@@ -1,0 +1,45 @@
+.navbar-collapse{
+	border-top: none;
+}
+.navbar {
+
+	.navbar-brand img{
+		width: 100px;
+		padding-left: 14px;
+		padding-top: 5px;
+	}
+
+	li a {
+		color: #FFF;
+		font-family: 'Oswald', sans-serif;
+		font-size: 18px;
+		font-weight: 300;
+		text-transform: uppercase;
+
+		border-top: 5px solid rgba(255,255,255,0);
+	}
+	li.active a,
+	li a:hover,
+	li a:focus,
+	li a:active{
+		border-top: 5px solid #FFF;
+		background: none;
+	}
+
+
+}
+
+@media screen and (max-width: 768px){
+	.navbar{
+		li{
+			a,
+			a.active,
+			a:hover,
+			a:focus,
+			a:active{
+				border-top: none !important;
+				background: none;
+			}
+		}
+	}
+}
