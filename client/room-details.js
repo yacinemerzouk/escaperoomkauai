@@ -149,6 +149,7 @@ Template.room.events({
     },
     'click [hook="checkout"]': function(evt,tmpl){
 
+        $('.processing-bg').show()
 
         var nbPlayersCost;
         var closeRoomCost;
@@ -213,6 +214,7 @@ Template.room.events({
                                 }
                             }
                         );
+                        $('.processing-bg').hide()
                         Router.go('confirmation', {_id:resId});
                     }else{
                         Notifications.error('Charge OK but Reservation failed', 'Please call 808.635.6957');
