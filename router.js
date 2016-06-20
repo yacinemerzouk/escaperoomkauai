@@ -220,8 +220,9 @@ Router.route('/room/:slug', {
     name: 'room',
     ironMeta: true,
     meta: function(){
-        var title = room.title + ' - Kauai Escape Room';
         var room =  EscapeRoom.Collections.Rooms.findOne({slug:this.params.slug});
+        var title = room.title + ' - Kauai Escape Room';
+        var image = 'https://www.escaperoomkauai.com' + room.image;
         return {
             title: title,
             description: room.description,
@@ -232,7 +233,7 @@ Router.route('/room/:slug', {
             "og:url": 'https://www.escaperoomkauai.com/room/'+room.slug,
             "og:description": room.description,
             "og:site_name": 'Kauai Escape Room',
-            "og:image": room.image,
+            "og:image": image,
             "og:image:width": '1200',
             "og:image:height": '630',
             "twitter:card": 'summary_large_image',
@@ -240,7 +241,7 @@ Router.route('/room/:slug', {
             "twitter:creator": '@kauaiescaperoom',
             "twitter:title": title,
             "twitter:description": room.description,
-            "twitter:image": room.image
+            "twitter:image": image
         }
     },
     data: function(){
