@@ -1,0 +1,32 @@
+<template name="layoutConfirmation">
+    {{> notifications}}
+    <div id="wrapper">
+
+        {{>yield}}
+
+        <div class="container" style="clear: both">
+            <div class="row">
+                <div class="col-xs-12">
+                    <footer>
+                        <hr style="margin: 60px 0 50px 0;">
+                        <a href="{{pathFor 'home'}}">Home</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href="{{pathFor 'rooms'}}">Rooms</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href="{{pathFor 'contact'}}">Contact</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href="{{pathFor 'about'}}">About</a>
+                        <br>
+                        <a href="{{pathFor 'roomMadScientist'}}">Room: Mad Scientist's Lab</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href="{{pathFor 'roomArtHeist'}}">Room: Art Heist</a>
+                        <br>
+                        <a href="{{pathFor 'roomTikiLounge'}}">Room: Tiki Lounge</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href="{{pathFor 'roomMobile'}}">Room: Mobile Escape Room</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

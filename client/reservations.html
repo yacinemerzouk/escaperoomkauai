@@ -1,0 +1,35 @@
+<template name="reservations">
+
+    <div class="hero hero-home-bg room-box-bg-mad-scientist">
+        <div class="overlay">
+            <div class="content">
+                <h1>Reservations</h1>
+                <p>Admins only...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container marketing">
+        <div class="col-xs-12 col-md-4">
+            <div id="datepicker"></div>
+        </div>
+        <div class="col-xs-12 col-md-8">
+            {{#each reservations}}
+                <p>{{_id}}</p>
+            {{/each}}
+            {{#each times}}
+                <p class="resTime">{{humanReadableDate adminSelectedDate format='short'}} @ {{time}}</p>
+                {{#each reservations}}
+                    <div class="party">
+                        <p>Reservation #{{publicId}}</p>
+                        <p>{{firstName}} {{lastName}} &bull; Party of {{nbPlayers}}</p>
+                        <p>{{roomTitle roomId}} {{#if closeRoom}}&bull; CLOSED ROOM{{/if}}</p>
+                    </div>
+                {{/each}}
+                <hr>
+            {{/each}}
+        </div>
+
+    </div>
+
+</template>

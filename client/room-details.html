@@ -1,0 +1,253 @@
+<template name="room">
+
+    <div class="hero hero-home-bg room-box-bg-mad-scientist" style="background-image:url({{image}})">
+        <div class="overlay">
+            <div class="content">
+                <h1>{{title}}</h1>
+                <p>{{excerpt}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container marketing">
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="room-boxes">
+
+
+
+                    <div class="row featurette">
+                        <div class="col-xs-12 col-sm-6">
+                            <h2 class="featurette-heading">{{title}}</h2>
+                            <p class="lead">
+                                {{description}}
+                            </p>
+                            <div class="room-details">
+
+                                <p>
+                                    <small>Number of players</small><br>
+                                    {{minPlayers}}-{{maxPlayers}} Players
+                                </p>
+                                <p>
+                                    <small>Duration</small><br>
+                                    {{duration}} Minutes
+                                </p>
+                                <p>
+                                    <small>Difficulty</small><br>
+                                    {{successRate}}% Success Rate
+                                </p>
+                                <p>
+                                    <small>Price per player</small><br>
+                                    {{#if isNumber pricePerPlayer}}<span style="padding-right: 2px">$</span>{{pricePerPlayer}}.00{{else}}Varies{{/if}}
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="booking-container">
+                                {{#if opening}}
+                                    <h3 style="margin-top: 0; font-size: 16px; color: #444; font-weight: bold;">Opening very soon!!!</h3>
+                                    <!-- Begin MailChimp Signup Form -->
+                                    <div id="mc_embed_signup">
+                                        <form action="//zendylabs.us4.list-manage.com/subscribe/post?u=39a2a8b95a361766451ab131e&amp;id=cd90eebeec" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                            <div id="mc_embed_signup_scroll">
+                                                <!--<h2 class="featurette-heading">Opening Very Soon!!!</h2>-->
+                                                <p class="lead">This room will be available in <strong>{{opening}}</strong>. Be notified about the grand opening of Kauai Escape Room.</p>
+                                                <div class="mc-field-group form-group">
+                                                    <label for="mce-EMAIL">Email Address </label>
+                                                    <input type="email" value="" name="EMAIL" class="form-control required email" id="mce-EMAIL">
+                                                </div>
+                                                <div class="mc-field-group form-group">
+                                                    <label for="mce-FNAME">First Name </label>
+                                                    <input type="text" value="" name="FNAME" class="form-control" id="mce-FNAME">
+                                                </div>
+                                                <div class="mc-field-group form-group">
+                                                    <label for="mce-LNAME">Last Name </label>
+                                                    <input type="text" value="" name="LNAME" class="form-control" id="mce-LNAME">
+                                                </div>
+                                                <div id="mce-responses" class="clear">
+                                                    <div class="response" id="mce-error-response" style="display:none"></div>
+                                                    <div class="response" id="mce-success-response" style="display:none"></div>
+                                                </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_39a2a8b95a361766451ab131e_cd90eebeec" tabindex="-1" value=""></div>
+                                                <div class="clear"><input type="submit" value="Sign Up For A Notification" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!--End mc_embed_signup-->
+
+                                {{else}}
+                                    <h3 style="margin-top: 0; font-size: 16px; color: #444; font-weight: bold;">Book Now</h3>
+
+                                    <div id="datepicker"></div>
+                                    <ul id="times">
+                                        <li>
+                                            <h5>
+                                                {{humanReadableDate selectedDate}}
+                                                {{#if selectedTime}}
+                                                    @ {{selectedTime}} <a href="#" hook="set-time" hook-data=""><span style="font-size: 12px; font-weight: normal; color: #cc0000">change time</span></a>
+                                                {{/if}}
+                                                <br>
+                                                <!--<a href="#"><span style="font-size: 12px; font-weight: normal; color: #666">View availability for all rooms &rarr;</span></a>-->
+                                            </h5>
+                                        </li>
+
+
+
+                                        {{#unless selectedTime}}
+                                            {{#each startTimes}}
+                                                <li>
+                                                    {{this}}
+                                                    {{#if canBook ../_id selectedDate this}}
+                                                        <a href="#" hook="set-time" hook-data="{{this}}" class="button  pull-right {{#if hasEnoughSpots ../_id selectedDate this}} button-available {{else}} button-unavailable {{/if}}">{{spotsLeft ../_id selectedDate this}}  spots left &nbsp;&bull;&nbsp; Book Now</a>
+                                                    {{else}}
+                                                        <a href="#" class="button  pull-right sold-out">Sold Out</a>
+                                                    {{/if}}
+                                                </li>
+                                            {{/each}}
+                                        {{/unless}}
+
+                                        <li style="padding-right: 15px;">
+                                            <div class="form-group">
+                                                <label for="nbPlayers">Number of players</label>
+                                                <select class="form-control" hook="nbPlayers" id="nbPlayers" name="nbPlayers" style="width: 300px">
+                                                    <option value="0">-- SELECT NUMBER OF PLAYERS --</option>
+                                                    {{#each nbPlayersOptions}}
+                                                        <option value="{{this}}" {{selected this selectedNbPlayers}}>{{this}} players</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                        </li>
+
+
+                                        {{#if selectedTime}}
+                                        <form style="padding: 12px 15px">
+
+                                            <div class="form-group">
+                                                <label for="firstName">First Name</label>
+                                                <input type="text" hook="enteredFirstName" class="form-control" id="firstName" name="firstName" value="{{enteredFirstName}}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="lastName">Last Name</label>
+                                                <input type="text" hook="enteredLastName" class="form-control" id="lastName" name="lastName" value="{{enteredLastName}}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input type="email" hook="enteredEmail" class="form-control" id="email" name="email" value="{{enteredEmail}}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="phone">Phone</label>
+                                                <input type="text" hook="enteredPhone" class="form-control" id="phone" name="phone" value="{{enteredPhone}}">
+                                            </div>
+
+                                            {{#if canClose}}
+                                                <div class="form-group">
+                                                    <label>Close Room</label>
+
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input hook="closeRoom" type="checkbox" id="closeRoom" name="closeRoom" {{checked selectedCloseRoom}}> Yes, I want to pay a $20 fee to keep players outside of my party from reserving this time slot.
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            {{/if}}
+
+                                            <hr>
+
+                                            {{#if selectedNbPlayers}}
+
+                                                <label for="subtotal">Cart</label>
+                                                <table class="table table-striped table-bordered table-responsive">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>{{selectedNbPlayers}} players</td>
+                                                        <td class="currency">{{toCurrency calculatedNbPlayersCost}}</td>
+                                                    </tr>
+                                                    {{#if canClose}}
+                                                        {{#if selectedCloseRoom}}
+                                                            <tr>
+                                                                <td>Closed room</td>
+                                                                <td class="currency">{{toCurrency calculatedCloseRoomCost}}</td>
+                                                            </tr>
+                                                        {{/if}}
+                                                    {{/if}}
+                                                    <tr style="font-size: 18px;">
+                                                        <th>TOTAL</th>
+                                                        <th class="currency">{{toCurrency calculatedTotal}}</th>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <div class="form-group">
+                                                    <label for="cc">Credit Card Number</label>
+                                                    <input type="text" hook="enteredcc" class="form-control" id="cc" name="cc" value="{{enteredcc}}">
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="form-group col-xs-4">
+                                                        <label for="ccExpMonth">Exp. Month</label>
+                                                        <input type="text" hook="enteredccExpMonth" class="form-control" id="ccExpMonth" name="ccExpMonth" value="{{enteredccExpMonth}}">
+                                                    </div>
+
+                                                    <div class="form-group col-xs-4">
+                                                        <label for="ccExpYear">Exp. Year</label>
+                                                        <input type="text" hook="enteredccExpYear" class="form-control" id="ccExpYear" name="ccExpYear" value="{{enteredccExpYear}}">
+                                                    </div>
+
+                                                    <div class="form-group col-xs-4">
+                                                        <label for="cvv">CVV</label>
+                                                        <input type="text" hook="enteredcvv" class="form-control" id="cvv" name="cvv" value="{{enteredcvv}}">
+                                                    </div>
+
+                                                </div>
+
+                                                <a href="#" hook="checkout" class="button btn-block button-available text-center">Checkout</a>
+
+                                            {{/if}}
+                                        </form>
+
+                                        {{/if}}
+
+                                        <!--<li>-->
+                                            <!--3:30pm-->
+                                            <!--<a href="#" class="button button-available pull-right">4 spots left &nbsp;&bull;&nbsp; Book Now</a>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--5:00pm-->
+                                            <!--<a href="#" class="button button-available pull-right">6 spots left &nbsp;&bull;&nbsp; Book Now</a>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--6:30pm-->
+                                            <!--<a href="#" class="button button-available pull-right">1 spots left &nbsp;&bull;&nbsp; Book Now</a>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--8:00pm-->
+                                            <!--<span class="sold-out pull-right">Sold out</span>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--9:30pm-->
+                                            <!--<a href="#" class="button button-available pull-right">6 spots left &nbsp;&bull;&nbsp; Book Now</a>-->
+                                        <!--</li>-->
+                                    </ul>
+
+                                {{/if}}
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</template>

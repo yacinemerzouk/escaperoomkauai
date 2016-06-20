@@ -1,0 +1,37 @@
+<template name="confirmation">
+
+
+
+    <div class="container" style="max-width: 600px">
+        <div class="row">
+            <div class="col-xs-12">
+                <br>
+                <br>
+                <a href="{{pathFor 'home'}}" style="color: green;">&larr; back to homepage</a>
+                <h1>Reservation Confirmed</h1>
+
+                <table class="table table-responsive table-bordered table-striped">
+                    <tbody>
+                    <tr>
+                        <td>Reservation #{{publicId}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{roomTitle roomId}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{humanReadableDate date}} @ {{time}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{nbPlayers}} players</td>
+                    </tr>
+                    <tr>
+                        <td>Reserved under {{firstName}} {{lastName}} &nbsp;&bull;&nbsp; {{email}} &nbsp;&bull;&nbsp; {{phone}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</template>

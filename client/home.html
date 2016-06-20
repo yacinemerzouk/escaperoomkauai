@@ -3,7 +3,7 @@
     <div class="hero hero-home-bg">
         <div class="overlay">
             <div class="content">
-                <h1>Opening Summer 2016</h1>
+                <h1>Opening July 2016</h1>
                 <p>Live action escape games and puzzle rooms are coming to Kauai! We're opening in a few weeks.</p>
                 <a href="#" hook="explainer" class="button">What are escape rooms?</a>
                 <a href="#" hook="rooms" class="button">Our Rooms</a>
@@ -23,7 +23,7 @@
         <div class="row featurette">
             <div class="col-md-8 col-md-offset-2">
                 <h2 class="featurette-heading"><span class="text-muted">What are</span> escape rooms?</h2>
-                <p class="lead">Real-life room escape games (also called <em>escape rooms</em>, <em>escape games</em>, and <em>puzzle rooms</em>, are a type of live action adventure game in which people are locked in a room with other participants and have to use elements of the room to solve a series of puzzles, find clues, and escape the room within a set time limit.</p>
+                <p class="lead">Real-life room escape games (also called <em>escape rooms</em>, <em>escape games</em>, and <em>puzzle rooms</em>) are a type of live action adventure game in which people are locked in a room with other participants and have to use elements of the room to solve a series of puzzles, find clues, and escape the room within a set time limit.</p>
                 <h2 class="featurette-heading">How <span class="text-muted">does it work?</span></h2>
                 <p class="lead">The game begins the moment you step into the room. You have 30 to 60 minutes to fulfill your destiny within the scenario. Quests do not require any special training or physical strength. Observation, logic, deduction and creative thinking are key abilities. Each scenario has the main storyline and sometimes secondary objectives.</p>
                 <h2 class="featurette-heading">Who <span class="text-muted">is it for?</span></h2>
@@ -42,51 +42,53 @@
 
 
     <div class="room-boxes" id="rooms">
-        <a href="{{pathFor 'roomMadScientist'}}">
-            <div class="room-box room-box-bg-mad-scientist">
-                <div class="room-box-overlay">
-                    <div class="room-box-content">
-                        <h2>Mad Scientist's Lab</h2>
-                        <p>Investigate the study and laboratory of a scientist gone missing.</p>
-                        <a href="{{pathFor 'roomMadScientist'}}" class="button">Room Info &amp; Schedule</a>
-                    </div>
-                </div>
-            </div>
-        </a>
 
-        <a href="{{pathFor 'roomArtHeist'}}">
-            <div class="room-box room-box-bg-art-heist">
-                <div class="room-box-overlay">
-                    <div class="room-box-content">
-                        <h2>Art Heist</h2>
-                        <p>Disarm the museum's security system to pull off this art heist.</p>
-                        <a href="{{pathFor 'roomArtHeist'}}" class="button">Room Info &amp; Schedule</a>
+        {{#each rooms}}
+            <a href="{{pathFor 'room' slug}}">
+                <div class="room-box room-box-bg-mad-scientist" style="background-image: url({{image}})">
+                    <div class="room-box-overlay">
+                        <div class="room-box-content">
+                            <h2>{{title}}</h2>
+                            <p>{{excerpt}}</p>
+                            <a href="{{pathFor 'room' slug}}" class="button">Room Info &amp; Schedule</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </a>
-        <a href="{{pathFor 'roomTikiLounge'}}">
-            <div class="room-box room-box-bg-tiki-lounge">
-                <div class="room-box-overlay">
-                    <div class="room-box-content">
-                        <h2>Tiki Lounge</h2>
-                        <p>Something strange is happening at this Hawaiian-style tiki lounge.</p>
-                        <a href="{{pathFor 'roomTikiLounge'}}" class="button">Room Info &amp; Schedule</a>
-                    </div>
-                </div>
-            </div>
-        </a>
+            </a>
+        {{/each}}
+        <!--<a href="{{pathFor 'roomArtHeist'}}">-->
+            <!--<div class="room-box room-box-bg-art-heist">-->
+                <!--<div class="room-box-overlay">-->
+                    <!--<div class="room-box-content">-->
+                        <!--<h2>Art Heist</h2>-->
+                        <!--<p>Disarm the museum's security system to pull off this art heist.</p>-->
+                        <!--<a href="{{pathFor 'roomArtHeist'}}" class="button">Room Info &amp; Schedule</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</a>-->
+        <!--<a href="{{pathFor 'roomTikiLounge'}}">-->
+            <!--<div class="room-box room-box-bg-tiki-lounge">-->
+                <!--<div class="room-box-overlay">-->
+                    <!--<div class="room-box-content">-->
+                        <!--<h2>Tiki Lounge</h2>-->
+                        <!--<p>Something strange is happening at this Hawaiian-style tiki lounge.</p>-->
+                        <!--<a href="{{pathFor 'roomTikiLounge'}}" class="button">Room Info &amp; Schedule</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</a>-->
 
-        <a href="{{pathFor 'roomMobile'}}">
-            <div class="room-box room-box-bg-trailer">
-                <div class="room-box-overlay">
-                    <div class="room-box-content">
-                        <h2>Mobile Escape Room</h2>
-                        <p>Inquire about our mobile escape room.</p>
-                        <a href="{{pathFor 'roomMobile'}}" class="button">Room Info &amp; Schedule</a>
-                    </div>
-                </div>
-            </div>
-        </a>
+        <!--<a href="{{pathFor 'roomMobile'}}">-->
+            <!--<div class="room-box room-box-bg-trailer">-->
+                <!--<div class="room-box-overlay">-->
+                    <!--<div class="room-box-content">-->
+                        <!--<h2>Mobile Escape Room</h2>-->
+                        <!--<p>Inquire about our mobile escape room.</p>-->
+                        <!--<a href="{{pathFor 'roomMobile'}}" class="button">Room Info &amp; Schedule</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</a>-->
     </div>
 </template>

@@ -13,10 +13,8 @@ Template.home.events({
     }
 });
 
-Template.home.created = function(){
-    var title = "Escape Room Kauai - Escape Games, Puzzle Rooms";
-    DocHead.setTitle(title);
-
-    var metaInfo = {name: "description", content: "Escape Room Kauai offers live action escape games and puzzle rooms. We're located in Kapaa, Hawaii."};
-    DocHead.addMeta(metaInfo);
-}
+Template.home.helpers({
+    rooms: function(){
+        return EscapeRoom.Collections.Rooms.find();
+    }
+});
