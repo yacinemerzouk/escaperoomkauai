@@ -1,0 +1,21 @@
+{
+    "private": {},
+    "public": {
+        "analyticsSettings": {
+            "Google Analytics" : {
+                "trackingId": "UA-74124187-1"
+            }
+        }
+    },
+    "galaxy.meteor.com": {
+        "env": {
+            "MONGO_URL": "mongodb://escaperoomkauai_admin:ns2N7dVpwu@ds019494-a0.mlab.com:19494,ds019494-a1.mlab.com:19494/escaperoomkauai?replicaSet=rs-ds019494",
+            "MONGO_OPLOG_URL": "mongodb://oplog-reader:rzB52JiOfE@ds019494-a0.mlab.com:19494,ds019494-a1.mlab.com:19494/local?authSource=admin",
+            "ROOT_URL": "https://www.escaperoomkauai.com"
+        }
+    },
+    "kadira": {
+        "appId": "pBwnjmccm3mkZXgZY",
+        "appSecret": "7808fce9-3e5a-4e99-aaf2-bcbdee77a08e"
+    }
+}
