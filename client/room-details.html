@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6">
                             <div class="booking-container">
-                                {{#if opening}}
+                                {{#if notopening}}
                                     <h3 style="margin-top: 0; font-size: 16px; color: #444; font-weight: bold;">Opening very soon!!!</h3>
                                     <!-- Begin MailChimp Signup Form -->
                                     <div id="mc_embed_signup">
@@ -145,17 +145,33 @@
                                                 <input type="text" hook="enteredPhone" class="form-control" id="phone" name="phone" value="{{enteredPhone}}">
                                             </div>
 
+                                            <div class="form-group">
+                                                <label for="nbKamaaina">Kama'aina Discount</label>
+                                                <p>How many Hawai'i residents in your party? Hawai'i residents each get $5 off. HAWAII ID REQUIRED.</p>
+                                                <select class="form-control" hook="nbKamaaina" id="nbKamaaina" name="nbKamaaina" style="width: 100%">
+                                                    <option value="0">-- SELECT NUMBER OF HAWAII RESIDENTS --</option>
+                                                    {{#each kamaainaPlayersOptions}}
+                                                        <option value="{{this}}" {{selected this selectedNbKamaaina}}>{{this}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+
                                             {{#if canClose}}
                                                 <div class="form-group">
                                                     <label>Close Room</label>
 
                                                     <div class="checkbox">
                                                         <label>
-                                                            <input hook="closeRoom" type="checkbox" id="closeRoom" name="closeRoom" {{checked selectedCloseRoom}}> Yes, I want to pay a $20 fee to keep players outside of my party from reserving this time slot.
+                                                            <input hook="closeRoom" type="checkbox" id="closeRoom" name="closeRoom" {{checked selectedCloseRoom}}> Yes, I want to pay a ${{priceToClose}} fee to keep players outside of my party from reserving this time slot.
                                                         </label>
                                                     </div>
                                                 </div>
                                             {{/if}}
+
+                                            <div class="form-group">
+                                                <label for="coupon">Coupon Code</label>
+                                                <input type="text" hook="coupon" class="form-control" id="coupon" name="coupon" value="{{enteredCoupon}}">
+                                            </div>
 
                                             <hr>
 
@@ -175,6 +191,18 @@
                                                                 <td class="currency">{{toCurrency calculatedCloseRoomCost}}</td>
                                                             </tr>
                                                         {{/if}}
+                                                    {{/if}}
+                                                    {{#if hasKamaainaPlayers}}
+                                                        <tr>
+                                                            <td>Kama'aina Discount</td>
+                                                            <td class="currency discount">&mdash; {{toCurrency calculatedKamaainaDiscount}}</td>
+                                                        </tr>
+                                                    {{/if}}
+                                                    {{#if hasCoupon}}
+                                                        <tr>
+                                                            <td>{{enteredCoupon}} {{couponDiscount}}% OFF</td>
+                                                            <td class="currency discount">&mdash; {{toCurrency calculatedCouponDiscount}}</td>
+                                                        </tr>
                                                     {{/if}}
                                                     <tr style="font-size: 18px;">
                                                         <th>TOTAL</th>

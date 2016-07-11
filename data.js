@@ -1,3 +1,7 @@
+/**
+ * Data populated in DB after meteor reset
+ * TODO: remove once website is live
+ */
 if( Meteor.isServer ){
     Meteor.startup(function(){
         if( EscapeRoom.Collections.Rooms.find().count() === 0 ) {
@@ -61,17 +65,6 @@ if( Meteor.isServer ){
                 excerpt: 'Inquire about our mobile escape room.',
                 description: 'We can bring Kauai Escape Room games to you! Inquire about our mobile escape room.'
             });
-            //var room = EscapeRoom.Collections.Rooms.findOne();
-            //EscapeRoom.Collections.Reservations.insert({
-            //    roomId: room._id,
-            //    date: '2016-06-18',
-            //    time: '3:30pm',
-            //    firstName: 'x',
-            //    lastName: 'y',
-            //    email: 'yacine@merzouk.ca',
-            //    phone: '808.634.2466',
-            //    nbPlayers: 2
-            //});
         }
     });
 }
