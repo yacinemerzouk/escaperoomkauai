@@ -39,8 +39,34 @@ Template.room.helpers({
         }
         return nbPlayersOptions;
     },
+    kamaainaPlayersOptions: function(){
+        var kamaainaPlayersOptions = [];
+        var spotsLeft = EscapeRoom.spotsLeft( this._id, Session.get('selectedDate'), Session.get('selectedTime') );
+        if( this ){
+            for( var x = 0; x <= this.maxPlayers && x <= Session.get('selectedNbPlayers'); x++ ){
+                if( x <= spotsLeft ) {
+                    kamaainaPlayersOptions.push(x);
+                }
+            }
+        }
+        return kamaainaPlayersOptions;
+    },
+    hasKamaainaPlayers: function(){
+        var nbKamaaina = Session.get( 'selectedNbKamaaina');
+        return nbKamaaina && nbKamaaina != '0' && parseInt(nbKamaaina) > 0;
+    },
+    hasCoupon: function(){
+        var coupon = Session.get('couponDiscount');
+        return coupon && parseInt(coupon) > 0;
+    },
+    couponDiscount: function(){
+        return Session.get('couponDiscount');
+    },
     selectedNbPlayers: function(){
         return Session.get('selectedNbPlayers');
+    },
+    selectedNbKamaaina: function(){
+        return Session.get('selectedNbKamaaina');
     },
     selectedCloseRoom: function(){
         return Session.get('selectedCloseRoom');
@@ -59,6 +85,15 @@ Template.room.helpers({
             return false;
         }
     },
+    calculatedKamaainaDiscount: function(){
+        var nbKamaaina = Session.get( 'selectedNbKamaaina');
+        if( nbKamaaina && nbKamaaina != '0' ){
+            return 5 * parseInt(nbKamaaina);
+        }
+    },
+    calculatedCouponDiscount: function(){
+        return 0;
+    },
     calculatedTotal: function(){
         var nbPlayersCost;
         var closeRoomCost;
@@ -72,7 +107,12 @@ Template.room.helpers({
         }else{
             closeRoomCost = 0;
         }
-        return nbPlayersCost + closeRoomCost;
+        var nbKamaaina = Session.get( 'selectedNbKamaaina');
+        var kamaainaDiscount = 0;
+        if( nbKamaaina && nbKamaaina != '0' ){
+            kamaainaDiscount = 5 * parseInt(nbKamaaina);
+        }
+        return nbPlayersCost + closeRoomCost - kamaainaDiscount;
     },
     enteredFirstName: function(){
         return Session.get('enteredFirstName');
@@ -85,6 +125,9 @@ Template.room.helpers({
     },
     enteredPhone: function(){
         return Session.get('enteredPhone');
+    },
+    enteredCoupon: function(){
+        return Session.get('enteredCoupon');
     },
     enteredcc: function(){
         return Session.get('enteredcc');
@@ -116,6 +159,21 @@ Template.room.events({
     'change [hook="enteredPhone"]': function(evt,tmpl){
         Session.set('enteredPhone',evt.target.value);
     },
+    'change [hook="enteredCoupon"]': function(evt,tmpl){
+        var availableCoupons = [
+            { coupon:'YEAH', discount: 10 },
+            { coupon:'BOOYAH', discount: 20 }
+        ];
+        var enteredCoupon = evt.target.value;
+        _.each(availableCoupons,function(availableCoupon){
+           if( availableCoupon.coupon == enteredCoupon ){
+               Session.set('couponDiscount',availableCoupon.discount);
+           }else{
+               Session.set('couponDiscount',0);
+           }
+        });
+        Session.set('enteredCoupon',evt.target.value);
+    },
     'change [hook="enteredcc"]': function(evt,tmpl){
         Session.set('enteredcc',evt.target.value);
     },
@@ -140,8 +198,18 @@ Template.room.events({
         var nbPlayers = $(evt.currentTarget).val();
         if( nbPlayers == '0' ){
             nbPlayers = false;
+        }else {
+            // check for discount adjustment
+            var selectedKamaaina = Session.get('selectedNbKamaaina');
+            if (selectedKamaaina && parseInt(selectedKamaaina) > parseInt(nbPlayers) ){
+                Session.set('selectedNbKamaaina', nbPlayers);
+            }
         }
         Session.set( 'selectedNbPlayers', nbPlayers );
+    },
+    'change [hook="nbKamaaina"]': function(evt,tmpl){
+        var nbKamaaina = $(evt.currentTarget).val();
+        Session.set( 'selectedNbKamaaina', nbKamaaina );
     },
     'change [hook="closeRoom"]': function(evt,tmpl){
         var closeRoom = $(evt.target).is(':checked');

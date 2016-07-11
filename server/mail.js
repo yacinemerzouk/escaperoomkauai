@@ -1,4 +1,5 @@
 // SMTP SETTINGS
+// TODO: move this to settings / package
 process.env.MAIL_URL = "smtp://info@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/";
 
 /**
@@ -20,7 +21,6 @@ Meteor.methods({
         // without waiting for the email sending to complete.
         this.unblock();
 
-
         Email.send({
             to: to,
             bcc: 'notifications@zendy.net',
@@ -28,7 +28,6 @@ Meteor.methods({
             subject: subject,
             html: text
         });
-
 
     }
 
