@@ -1,10 +1,24 @@
 {
-    "private": {},
+    "private": {
+        "smtp": {
+            "email": "info@escaperoomkauai.com",
+            "password": "Ozozw27NMX",
+            "server": "secure.emailsrvr.com",
+            "port": 465,
+            "MAIL_URL": "smtp://info@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/"
+        },
+        "stripe": {
+            "secretKey": "pNVbtQUJwt5HhEiWIEYghnmSzfMlY44m"
+        }
+    },
     "public": {
         "analyticsSettings": {
             "Google Analytics" : {
                 "trackingId": "UA-74124187-1"
             }
+        },
+        "stripe": {
+            "publishableKey": "pk_gbxDAV3kVIYwDfCRaRiIApr4RmDyU"
         }
     },
     "kadira": {

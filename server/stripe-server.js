@@ -15,8 +15,7 @@ Meteor.methods({
 
         // On the server, process card asynchronously
         if( Meteor.isServer ) {
-            // TODO: set API keys from settings
-            Stripe = StripeAPI('sk_test_ngE14PMlvYJunAPkrJBq5VdC');
+            Stripe = StripeAPI(Meteor.settings.private.stripe.secretKey);
 
             // Process card; asynchronous
             var charge = Meteor.wrapAsync( Stripe.charges.create, Stripe.charges );

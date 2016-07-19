@@ -86,33 +86,51 @@ Template.room.helpers({
         }
     },
     calculatedKamaainaDiscount: function(){
-        var nbKamaaina = Session.get( 'selectedNbKamaaina');
-        if( nbKamaaina && nbKamaaina != '0' ){
-            return 5 * parseInt(nbKamaaina);
-        }
+        return EscapeRoom.calculateKamaaina( Session.get('selectedNbKamaaina') );
     },
     calculatedCouponDiscount: function(){
-        return 0;
+        return  EscapeRoom.calculateDiscount(
+            this._id,
+            Session.get('selectedNbPlayers'),
+            Session.get('couponDiscount'),
+            Session.get('selectedCloseRoom')
+        );
+    },
+    calculatedTaxes: function(){
+        return EscapeRoom.calculateTaxes(
+            this._id,
+            Session.get('selectedNbPlayers'),
+            Session.get('selectedNbKamaaina'),
+            Session.get('couponDiscount'),
+            Session.get('selectedCloseRoom')
+        )
     },
     calculatedTotal: function(){
-        var nbPlayersCost;
-        var closeRoomCost;
-        if( Session.get('selectedNbPlayers') ){
-            nbPlayersCost = parseInt( Session.get('selectedNbPlayers') ) * this.pricePerPlayer;
-        }else{
-            nbPlayersCost = 0;
-        }
-        if( Session.get('selectedCloseRoom') && EscapeRoom.canClose( this._id, Session.get('selectedDate'), Session.get('selectedTime') ) ){
-            closeRoomCost = this.priceToClose;
-        }else{
-            closeRoomCost = 0;
-        }
-        var nbKamaaina = Session.get( 'selectedNbKamaaina');
-        var kamaainaDiscount = 0;
-        if( nbKamaaina && nbKamaaina != '0' ){
-            kamaainaDiscount = 5 * parseInt(nbKamaaina);
-        }
-        return nbPlayersCost + closeRoomCost - kamaainaDiscount;
+        // var nbPlayersCost;
+        // var closeRoomCost;
+        // if( Session.get('selectedNbPlayers') ){
+        //     nbPlayersCost = parseInt( Session.get('selectedNbPlayers') ) * this.pricePerPlayer;
+        // }else{
+        //     nbPlayersCost = 0;
+        // }
+        // if( Session.get('selectedCloseRoom') && EscapeRoom.canClose( this._id, Session.get('selectedDate'), Session.get('selectedTime') ) ){
+        //     closeRoomCost = this.priceToClose;
+        // }else{
+        //     closeRoomCost = 0;
+        // }
+        // var nbKamaaina = Session.get( 'selectedNbKamaaina');
+        // var kamaainaDiscount = 0;
+        // if( nbKamaaina && nbKamaaina != '0' ){
+        //     kamaainaDiscount = 5 * parseInt(nbKamaaina);
+        // }
+        // return nbPlayersCost + closeRoomCost - kamaainaDiscount;
+        return EscapeRoom.calculateTotal(
+            this._id,
+            Session.get('selectedNbPlayers'),
+            Session.get('selectedNbKamaaina'),
+            Session.get('couponDiscount'),
+            Session.get('selectedCloseRoom')
+        );
     },
     enteredFirstName: function(){
         return Session.get('enteredFirstName');
@@ -142,7 +160,11 @@ Template.room.helpers({
         return Session.get('enteredcvv');
     },
     canClose: function(){
-        return EscapeRoom.canClose( this._id, Session.get('selectedDate'), Session.get('selectedTime') );
+        return EscapeRoom.canClose(
+            this._id,
+            Session.get('selectedDate'),
+            Session.get('selectedTime')
+        );
     }
 });
 
@@ -161,15 +183,21 @@ Template.room.events({
     },
     'change [hook="enteredCoupon"]': function(evt,tmpl){
         var availableCoupons = [
-            { coupon:'YEAH', discount: 10 },
-            { coupon:'BOOYAH', discount: 20 }
+            { coupon:'YAXTEST', discount: 95 },
+            { coupon:'GRANDOPENING', discount: 50, limitDateFrom: '2016-07-23', limitDateTo: '2016-07-27'}
         ];
         var enteredCoupon = evt.target.value;
+        Session.set('couponDiscount',0);
         _.each(availableCoupons,function(availableCoupon){
-           if( availableCoupon.coupon == enteredCoupon ){
-               Session.set('couponDiscount',availableCoupon.discount);
-           }else{
-               Session.set('couponDiscount',0);
+            if( availableCoupon.coupon.toLowerCase() == enteredCoupon.toLowerCase() ){
+                var selectedDate = Session.get('selectedDate');
+                if( coupon.limitDateFrom && coupon.limitDateTo ){
+                    if( selectedDate >= coupon.limitDateFrom && selected <= coupon.limitDateTo ){
+                        Session.set('couponDiscount',availableCoupon.discount);
+                    }
+                }else{
+                    Session.set('couponDiscount',availableCoupon.discount);
+                }
            }
         });
         Session.set('enteredCoupon',evt.target.value);
@@ -219,19 +247,25 @@ Template.room.events({
 
         $('.processing-bg').show()
 
-        var nbPlayersCost;
-        var closeRoomCost;
-        if( Session.get('selectedNbPlayers') ){
-            nbPlayersCost = parseInt( Session.get('selectedNbPlayers') ) * this.pricePerPlayer;
-        }else{
-            nbPlayersCost = 0;
-        }
-        if( Session.get('selectedCloseRoom') && EscapeRoom.canClose( this._id, Session.get('selectedDate'), Session.get('selectedTime') ) ){
-            closeRoomCost = this.priceToClose;
-        }else{
-            closeRoomCost = 0;
-        }
-        var total = nbPlayersCost + closeRoomCost;
+        // var nbPlayersCost;
+        // var closeRoomCost;
+        // if( Session.get('selectedNbPlayers') ){
+        //     nbPlayersCost = parseInt( Session.get('selectedNbPlayers') ) * this.pricePerPlayer;
+        // }else{
+        //     nbPlayersCost = 0;
+        // }
+        // if( Session.get('selectedCloseRoom') && EscapeRoom.canClose( this._id, Session.get('selectedDate'), Session.get('selectedTime') ) ){
+        //     closeRoomCost = this.priceToClose;
+        // }else{
+        //     closeRoomCost = 0;
+        // }
+        var total = EscapeRoom.calculateTotal(
+            tmpl.data._id,
+            Session.get('selectedNbPlayers'),
+            Session.get('selectedNbKamaaina'),
+            Session.get('couponDiscount'),
+            Session.get('selectedCloseRoom')
+        ) * 100;
 
         Stripe.card.createToken({
             number: Session.get('enteredcc'),
