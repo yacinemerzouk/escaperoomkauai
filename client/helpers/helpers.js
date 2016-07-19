@@ -90,7 +90,11 @@ UI.registerHelper('toCurrency', function( n ) {
  * @returns String : "selected" or ""
  */
 UI.registerHelper('selected', function( value, selected ){
-    return value.toString() === selected.toString() ? 'selected' : '';
+    if( value ) {
+        return value.toString() === selected.toString() ? 'selected' : '';
+    }else{
+        return '';
+    }
 });
 
 /**
@@ -117,7 +121,7 @@ UI.registerHelper('roomTitle', function( roomId ){
     var room = EscapeRoom.Collections.Rooms.findOne({
         _id: roomId
     });
-    return room.title;
+    return room.title ? room.title : "";
 });
 
 /**

@@ -37,3 +37,6 @@ wizonesolutions:canonical
 gadicohen:sitemaps
 zendy:seo
 zendy:tuxedo
+accounts-base
+accounts-ui
+accounts-password

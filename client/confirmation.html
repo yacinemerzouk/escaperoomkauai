@@ -10,7 +10,7 @@
                 <table class="table table-responsive table-bordered table-striped">
                     <tbody>
                     <tr>
-                        <td>Reservation #{{publicId}}</td>
+                        <th>Reservation #{{publicId}}</th>
                     </tr>
 
                     <tr>
@@ -25,6 +25,27 @@
                     <tr>
                         <td>Reserved under {{firstName}} {{lastName}} &nbsp;&bull;&nbsp; {{email}} &nbsp;&bull;&nbsp; {{phone}}</td>
                     </tr>
+
+                    {{#if closeRoom}}
+                    <tr>
+                        <td>Closed Room<br>You will play the room with only members of your party of {{nbPlayers}}. No one else can join this time slot.</td>
+                    </tr>
+                    {{/if}}
+
+
+                    </tbody>
+                </table>
+
+                <table class="table table-responsive table-bordered table-striped">
+                    <tbody class="text-right">
+                        <tr>
+                            <th>Credit Card Transaction Number</th>
+                            <td class="currency">{{transaction.id}}</td>
+                        </tr>
+                        <tr>
+                            <th>Amount Charged</th>
+                            <td class="currency">{{toCurrency total}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

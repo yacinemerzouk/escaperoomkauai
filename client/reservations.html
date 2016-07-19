@@ -9,27 +9,50 @@
         </div>
     </div>
 
+    {{#if currentUser}}
+
     <div class="container marketing">
         <div class="col-xs-12 col-md-4">
             <div id="datepicker"></div>
+            <br>
+            <a href="#block" class="button button-unavailable btn-block" hook="block-date" hook-data-date="{{adminSelectedDate}}">Block Entire Day</a>
+            <a href="#block" class="button button-unavailable btn-block" hook="unblock-date" hook-data-date="{{adminSelectedDate}}">Unblock Entire Day</a>
+
         </div>
         <div class="col-xs-12 col-md-8">
             {{#each reservations}}
                 <p>{{_id}}</p>
             {{/each}}
             {{#each times}}
-                <p class="resTime">{{humanReadableDate adminSelectedDate format='short'}} @ {{time}}</p>
-                {{#each reservations}}
-                    <div class="party">
-                        <p>Reservation #{{publicId}}</p>
-                        <p>{{firstName}} {{lastName}} &bull; Party of {{nbPlayers}}</p>
-                        <p>{{roomTitle roomId}} {{#if closeRoom}}&bull; CLOSED ROOM{{/if}}</p>
-                    </div>
-                {{/each}}
+                <span class="resTime">{{humanReadableDate adminSelectedDate format='short'}} @ {{time}}</span>
+                {{#if reservations}}
+                    {{#each reservations}}
+                        {{#if blocked}}
+                            &nbsp;&nbsp;&bull;&nbsp;&nbsp; <b class="red">BLOCKED</b> <a href="#" hook="unblock-time"  hook-data-date="{{adminSelectedDate}}" hook-data-time="{{time}}">Unblock</a>
+                        {{else}}
+                            <div class="party">
+                                <p>Reservation #{{publicId}}</p>
+                                <p>{{firstName}} {{lastName}} &bull; Party of {{nbPlayers}}</p>
+                                <p>{{roomTitle roomId}} {{#if closeRoom}}&bull; CLOSED ROOM{{/if}}</p>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                {{else}}
+                    &nbsp;&nbsp;&bull;&nbsp;&nbsp; <a href="#" hook="block-time" hook-data-date="{{adminSelectedDate}}" hook-data-time="{{time}}">Block</a>
+                {{/if}}
                 <hr>
             {{/each}}
         </div>
 
     </div>
+
+    {{else}}
+
+        <div class="container marketing">
+            Admins only
+            <br>
+            {{> loginButtons}}
+        </div>
+    {{/if}}
 
 </template>

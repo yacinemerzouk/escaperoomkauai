@@ -1,6 +1,5 @@
 // SMTP SETTINGS
-// TODO: move this to settings / package
-process.env.MAIL_URL = "smtp://info@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/";
+process.env.MAIL_URL = Meteor.settings.private.smtp.MAIL_URL;
 
 /**
  * Meteor methods for mail
@@ -23,7 +22,7 @@ Meteor.methods({
 
         Email.send({
             to: to,
-            bcc: 'notifications@zendy.net',
+            bcc: 'notifications@zendy.net,yacine@merzouk.ca,mrundbaken@gmail.com',
             from: from,
             subject: subject,
             html: text
