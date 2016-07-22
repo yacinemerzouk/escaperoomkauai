@@ -67,6 +67,8 @@ p a,
 /* GLOBAL UI ELEMENTS
 /* ======================================== */
 
+
+
 // loading screen styles
 .loading-bg{
 	width: 100%;
@@ -337,10 +339,29 @@ ul.notifications {
 		}
 	}
 	.booking-container{
-		margin-top: -83px;
+		
 		background: #f6f6f6;
 		padding: 25px 35px 35px;
 		box-shadow: 0px 1px 5px rgba(0,0,0,0.3);
+	}
+	@media screen and (min-width:768px){
+		.booking-container {
+			margin-top: -83px;
+		}
+	}
+	@media screen and (min-width: 768px) and (max-width: 1199px){
+		.booking-container .button{
+			display: block;
+			width: 100%;
+			float: none !important;
+		}
+	}
+	@media screen and (max-width: 450px){
+		.booking-container .button{
+			display: block;
+			width: 100%;
+			float: none !important;
+		}
 	}
 	#datepicker{
 		width: 100%;

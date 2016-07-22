@@ -19,6 +19,17 @@
                         <a href="{{pathFor 'room' _id}}">
                             <div class="room-box large room-box-bg-mad-scientist" style="background-image: url({{image}})">
                                 <div class="room-box-overlay">
+                                    <div class="ribbon-wrapper">
+                                        <div class="ribbon-wrapper-green">
+                                            <div class="ribbon-green">
+                                                {{#if available}}
+                                                    BOOK NOW!
+                                                {{else}}
+                                                    {{opening}}
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="room-box-content">
                                         <h2>{{title}}</h2>
                                         <p>{{excerpt}}</p>

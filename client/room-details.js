@@ -1,4 +1,5 @@
 Template.room.onRendered(function(){
+    console.log( 'Firing datepicker!' );
     var defaultDate;
     if( Session.get( 'selectedDate' ) ){
         defaultDate = Session.get( 'selectedDate' );
@@ -7,16 +8,20 @@ Template.room.onRendered(function(){
         Session.set( 'selectedDate', defaultDate );
     }
 
-    $('#datepicker').datepicker({
-        minDate: 0,
-        dateFormat: 'yy-mm-dd',
-        defaultDate: defaultDate,
-        onSelect: function( dateText, inst ){
-            $('.ui-state-highlight').removeClass("ui-state-highlight");
-            Session.set( 'selectedDate', dateText );
-            Session.set( 'selectedTime', false );
-        }
-    });
+    var fireDatepicker = function() {
+        $('#datepicker').datepicker({
+            minDate: 0,
+            dateFormat: 'yy-mm-dd',
+            defaultDate: defaultDate,
+            onSelect: function (dateText, inst) {
+                $('.ui-state-highlight').removeClass("ui-state-highlight");
+                Session.set('selectedDate', dateText);
+                Session.set('selectedTime', false);
+            }
+        });
+    }
+
+    setTimeout( fireDatepicker, 2000 );
 
 });
 
@@ -184,6 +189,7 @@ Template.room.events({
     'change [hook="enteredCoupon"]': function(evt,tmpl){
         var availableCoupons = [
             { coupon:'YAXTEST', discount: 95 },
+            { coupon:'HERSHEL', discount: 50, limitDateFrom: '2016-07-23', limitDateTo: '2016-08-05' },
             { coupon:'GRANDOPENING', discount: 50, limitDateFrom: '2016-07-23', limitDateTo: '2016-07-27'}
         ];
         var enteredCoupon = evt.target.value;
