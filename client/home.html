@@ -47,6 +47,17 @@
             <a href="{{pathFor 'room' slug}}">
                 <div class="room-box room-box-bg-mad-scientist" style="background-image: url({{image}})">
                     <div class="room-box-overlay">
+                        <div class="ribbon-wrapper">
+                            <div class="ribbon-wrapper-green">
+                                <div class="ribbon-green">
+                                    {{#if available}}
+                                        Now Open
+                                    {{else}}
+                                        {{opening}}
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
                         <div class="room-box-content">
                             <h2>{{title}}</h2>
                             <p>{{excerpt}}</p>

@@ -46,6 +46,16 @@
                             <th>Amount Charged</th>
                             <td class="currency">{{toCurrency total}}</td>
                         </tr>
+                        {{#if adjustments}}
+                            <tr>
+                                <th>Amount Refunded (may take 5-10 days to appear on your statement)</th>
+                                <td class="currency">{{toCurrency refund}}</td>
+                            </tr>
+                            <tr>
+                                <th>Corrected Amount Charged</th>
+                                <td class="currency">{{toCurrency correctedAmount}}</td>
+                            </tr>
+                            {{/if}}
                     </tbody>
                 </table>
             </div>
