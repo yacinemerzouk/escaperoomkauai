@@ -35,8 +35,8 @@ Router.route('/', {
     priority: '1.0',
     ironMeta: true,
     meta: function(){
-        var title = 'Escape Room Kauai - Escape Games, Puzzle Rooms';
-        var description = 'Escape Room Kauai offers live action escape games and puzzle rooms. We are located on Rice Street in Lihue, Kauai, Hawaii.';
+        var title = 'Kauai Escape Room - Escape Games, Puzzle Rooms';
+        var description = 'Kauai Escape Room offers live action escape games and puzzle rooms. We are located on Rice Street in Lihue, Kauai, Hawaii.';
         var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
         return {
             title: title,
@@ -71,7 +71,7 @@ Router.route('/rooms', {
     priority: '0.9',
     ironMeta: true,
     meta: function(){
-        var title = 'Our Escape Rooms - Escape Room Kauai - Escape Games, Puzzle Rooms';
+        var title = 'Our Escape Rooms - Kauai Escape Room - Escape Games, Puzzle Rooms';
         var description = "Our escape rooms: the missing scientist, the lost Elvis record, Pele's tiki lounge, and our mobile escape room.";
         var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
         return {
@@ -107,7 +107,7 @@ Router.route('/faq', {
     priority: '0.5',
     ironMeta: true,
     meta: function() {
-        var title = 'FAQ - Frequently Asked Questions - Escape Room Kauai';
+        var title = 'FAQ - Frequently Asked Questions - Kauai Escape Room';
         var description = 'First time players always have a lot of questions. We understand. Here are the most common ones. Feel free to call us for more info.';
         var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
         return {
@@ -143,7 +143,7 @@ Router.route('/about', {
     priority: '0.5',
     ironMeta: true,
     meta: function() {
-        var title = 'About Us - Escape Room Kauai - Escape Games, Puzzle Rooms';
+        var title = 'About Us - Kauai Escape Room - Escape Games, Puzzle Rooms';
         var description = 'We are a couple from Kapaa. He is a published game designer and storytelling enthusiast. She is an educator with a creative mind. We have been making our own escape room games since 2015.';
         var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
         return {
@@ -180,7 +180,7 @@ Router.route('/contact', {
     priority: '0.5',
     ironMeta: true,
     meta: function() {
-        var title = 'Contact Us - Escape Room Kauai - Escape Games, Puzzle Rooms';
+        var title = 'Contact Us - Kauai Escape Room - Escape Games, Puzzle Rooms';
         var description = 'Email us at info@escaperoomkauai.com. You can also call us at 1.808.635.6957 to ask questions or book over the phone. Of course you can also book online.';
         var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
         return {
@@ -191,6 +191,43 @@ Router.route('/contact', {
             "og:title": title,
             "og:type": 'website',
             "og:url": 'https://www.escaperoomkauai.com/contact',
+            "og:description": description,
+            "og:site_name": 'Kauai Escape Room',
+            "og:image": image,
+            "og:image:width": '1200',
+            "og:image:height": '630',
+            "twitter:card": 'summary_large_image',
+            "twitter:site": '@kauaiescaperoom',
+            "twitter:creator": '@kauaiescaperoom',
+            "twitter:title": title,
+            "twitter:description": description,
+            "twitter:image": image
+        }
+    }
+
+});
+
+/**
+ * Directions
+ */
+Router.route('/directions', {
+    name: 'directions',
+    sitemap: true,
+    changefreq: 'monthly',
+    priority: '0.1',
+    ironMeta: true,
+    meta: function() {
+        var title = 'Directions - Kauai Escape Room - Escape Games, Puzzle Rooms';
+        var description = 'We are located at 4353 Rice Street, Unit #1. Reserve online before showing up.';
+        var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
+        return {
+            title: title,
+            description: description,
+            keywords: 'kauai, escape room, escape game, puzzle room',
+            canonical: 'https://www.escaperoomkauai.com/directions',
+            "og:title": title,
+            "og:type": 'website',
+            "og:url": 'https://www.escaperoomkauai.com/directions',
             "og:description": description,
             "og:site_name": 'Kauai Escape Room',
             "og:image": image,

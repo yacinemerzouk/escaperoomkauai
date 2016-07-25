@@ -14,7 +14,10 @@ Template.confirmation.helpers({
     refund: function(){
         return this.adjustments && this.adjustments.refund ? ( this.adjustments.refund / 100 ).toFixed(2) : false;
     },
+    extra: function(){
+        return this.adjustments && this.adjustments.extra ? ( this.adjustments.extra / 100 ).toFixed(2) : false;
+    },
     correctedAmount: function(){
-    return this.adjustments && this.adjustments.correctedAmount ? ( this.adjustments.correctedAmount / 100 ).toFixed(2) : false;
-}
+        return this.adjustments && this.adjustments.correctedAmount ? ( this.adjustments.correctedAmount / 100 ).toFixed(2) : false;
+    }
 });

@@ -47,10 +47,18 @@
                             <td class="currency">{{toCurrency total}}</td>
                         </tr>
                         {{#if adjustments}}
+                            {{#if refund}}
                             <tr>
                                 <th>Amount Refunded (may take 5-10 days to appear on your statement)</th>
                                 <td class="currency">{{toCurrency refund}}</td>
                             </tr>
+                            {{/if}}
+                            {{#if extra}}
+                            <tr>
+                                <th>Extra Charges</th>
+                                <td class="currency">{{toCurrency extra}}</td>
+                            </tr>
+                            {{/if}}
                             <tr>
                                 <th>Corrected Amount Charged</th>
                                 <td class="currency">{{toCurrency correctedAmount}}</td>

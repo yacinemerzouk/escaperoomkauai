@@ -1,3 +1,25 @@
+Template.room.created = function(){
+    this.checkCoupon = function( enteredCoupon ){
+        var availableCoupons = [
+            { coupon:'GRANDOPENING', discount: 50, limitDateFrom: '2016-07-23', limitDateTo: '2016-07-27'},
+            { coupon:'YAXTEST', discount: 99, limitDateFrom: '2016-07-23', limitDateTo: '2016-08-05'}
+        ];
+        Session.set('couponDiscount',0);
+        _.each(availableCoupons,function(availableCoupon){
+            if( availableCoupon && availableCoupon.coupon && enteredCoupon && availableCoupon.coupon.toLowerCase() == enteredCoupon.toLowerCase() ){
+                var selectedDate = Session.get('selectedDate');
+
+                if( availableCoupon.limitDateFrom && availableCoupon.limitDateTo ){
+                    if( selectedDate >= availableCoupon.limitDateFrom && selectedDate <= availableCoupon.limitDateTo ){
+                        Session.set('couponDiscount',availableCoupon.discount);
+                    }
+                }else{
+                    Session.set('couponDiscount',availableCoupon.discount);
+                }
+            }
+        });
+    }
+}
 Template.room.onRendered(function(){
     console.log( 'Firing datepicker!' );
     var defaultDate;
@@ -7,7 +29,7 @@ Template.room.onRendered(function(){
         defaultDate = Epoch.dateObjectToDateString(new Date());
         Session.set( 'selectedDate', defaultDate );
     }
-
+    var self = this;
     var fireDatepicker = function() {
         $('#datepicker').datepicker({
             minDate: 0,
@@ -17,6 +39,8 @@ Template.room.onRendered(function(){
                 $('.ui-state-highlight').removeClass("ui-state-highlight");
                 Session.set('selectedDate', dateText);
                 Session.set('selectedTime', false);
+                self.checkCoupon( Session.get('enteredCoupon') );
+
             }
         });
     }
@@ -187,25 +211,7 @@ Template.room.events({
         Session.set('enteredPhone',evt.target.value);
     },
     'change [hook="enteredCoupon"]': function(evt,tmpl){
-        var availableCoupons = [
-            { coupon:'YAXTEST', discount: 95 },
-            { coupon:'HERSHEL', discount: 50, limitDateFrom: '2016-07-23', limitDateTo: '2016-08-05' },
-            { coupon:'GRANDOPENING', discount: 50, limitDateFrom: '2016-07-23', limitDateTo: '2016-07-27'}
-        ];
-        var enteredCoupon = evt.target.value;
-        Session.set('couponDiscount',0);
-        _.each(availableCoupons,function(availableCoupon){
-            if( availableCoupon.coupon.toLowerCase() == enteredCoupon.toLowerCase() ){
-                var selectedDate = Session.get('selectedDate');
-                if( coupon.limitDateFrom && coupon.limitDateTo ){
-                    if( selectedDate >= coupon.limitDateFrom && selected <= coupon.limitDateTo ){
-                        Session.set('couponDiscount',availableCoupon.discount);
-                    }
-                }else{
-                    Session.set('couponDiscount',availableCoupon.discount);
-                }
-           }
-        });
+        tmpl.checkCoupon( evt.currentTarget.value );
         Session.set('enteredCoupon',evt.target.value);
     },
     'change [hook="enteredcc"]': function(evt,tmpl){
@@ -251,87 +257,118 @@ Template.room.events({
     },
     'click [hook="checkout"]': function(evt,tmpl){
 
-        $('.processing-bg').show()
 
-        // var nbPlayersCost;
-        // var closeRoomCost;
-        // if( Session.get('selectedNbPlayers') ){
-        //     nbPlayersCost = parseInt( Session.get('selectedNbPlayers') ) * this.pricePerPlayer;
-        // }else{
-        //     nbPlayersCost = 0;
-        // }
-        // if( Session.get('selectedCloseRoom') && EscapeRoom.canClose( this._id, Session.get('selectedDate'), Session.get('selectedTime') ) ){
-        //     closeRoomCost = this.priceToClose;
-        // }else{
-        //     closeRoomCost = 0;
-        // }
-        var total = EscapeRoom.calculateTotal(
-            tmpl.data._id,
-            Session.get('selectedNbPlayers'),
-            Session.get('selectedNbKamaaina'),
-            Session.get('couponDiscount'),
-            Session.get('selectedCloseRoom')
-        ) * 100;
+        var isValid = function(){
+            if( Session.get('enteredccExpMonth') && Session.get('enteredccExpMonth').length == 1 ){
+                Session.set('enteredccExpMonth', '0'+Session.get('enteredccExpMonth') );
+            }
+            return (
+                Session.get( 'enteredFirstName' ) &&
+                Session.get( 'enteredLastName' ) &&
+                Session.get( 'enteredEmail' ) &&
+                Session.get( 'enteredPhone' ) &&
+                Session.get( 'enteredcc' ) &&
+                Session.get( 'enteredccExpMonth' ).length == 2 &&
+                Session.get( 'enteredccExpYear' ).length == 2 &&
+                Session.get( 'enteredcvv' ).length >= 3
 
-        Stripe.card.createToken({
-            number: Session.get('enteredcc'),
-            exp_month: Session.get('enteredccExpMonth'),
-            exp_year: Session.get('enteredccExpYear'),
-            cvc: Session.get('enteredcvv'),
-        }, function(status, response) {
-            var stripeToken = response.id;
-            Meteor.call('chargeCard', stripeToken, total, function(error, result){
-                console.log( 'callback from chargeCard', error, result );
-                if( error ){
-                    Notifications.error( 'Error', 'Sorry. We could not process your card. Please call 808.635.6957' );
-                }else if( result ){
+            );
+        }
+        if( isValid() ){
 
-                    var publicId;
-                    var lastRes = EscapeRoom.Collections.Reservations.findOne({},{sort:{publicId:-1}});
+            $('.processing-bg').show()
 
-                    if( lastRes && lastRes.publicId ){
-                        publicId = lastRes.publicId + 1;
-                    }else{
-                        publicId = 350000
-                    }
+            // var nbPlayersCost;
+            // var closeRoomCost;
+            // if( Session.get('selectedNbPlayers') ){
+            //     nbPlayersCost = parseInt( Session.get('selectedNbPlayers') ) * this.pricePerPlayer;
+            // }else{
+            //     nbPlayersCost = 0;
+            // }
+            // if( Session.get('selectedCloseRoom') && EscapeRoom.canClose( this._id, Session.get('selectedDate'), Session.get('selectedTime') ) ){
+            //     closeRoomCost = this.priceToClose;
+            // }else{
+            //     closeRoomCost = 0;
+            // }
+            var total = EscapeRoom.calculateTotal(
+                    tmpl.data._id,
+                    Session.get('selectedNbPlayers'),
+                    Session.get('selectedNbKamaaina'),
+                    Session.get('couponDiscount'),
+                    Session.get('selectedCloseRoom')
+                ) * 100;
 
-                    var resId = EscapeRoom.Collections.Reservations.insert({
-                        publicId: publicId,
-                        roomId: tmpl.data._id,
-                        date: Session.get('selectedDate'),
-                        time: Session.get('selectedTime'),
-                        firstName: Session.get('enteredFirstName'),
-                        lastName: Session.get('enteredLastName'),
-                        email: Session.get('enteredEmail'),
-                        phone: Session.get('enteredPhone'),
-                        nbPlayers: Session.get('selectedNbPlayers'),
-                        closeRoom: EscapeRoom.canClose( tmpl.data._id, Session.get('selectedDate'), Session.get('selectedTime') ) && Session.get('selectedCloseRoom') ? true : false,
-                        transaction: result
-                    });
+            Stripe.card.createToken({
+                number: Session.get('enteredcc'),
+                exp_month: Session.get('enteredccExpMonth'),
+                exp_year: Session.get('enteredccExpYear'),
+                cvc: Session.get('enteredcvv'),
+            }, function(status, response) {
+                var stripeToken = response.id;
+                Meteor.call('chargeCard', stripeToken, total, function(error, result){
+                    console.log( 'callback from chargeCard', error, result );
+                    if( error ){
 
-                    if( resId ){
-                        Meteor.call(
-                            'sendEmail',
-                            Session.get('enteredEmail'),
-                            '"Kauai Escape Room" info@escaperoomkauai.com',
-                            'Booking confirmation - RESERVATION #' + publicId,
-                            EscapeRoom.getConfirmationEmailBody(resId),
-                            function (error,result) {
-                                if( error ){
-                                    throw new Meteor.Error( 'MAILER_ERROR', 'Error while sending booking confirmation. ERROR ||| RES => ' + JSON.stringify( error ) ) ;
+                        $('.processing-bg').hide();
+                        Notifications.error( error.message, 'Sorry. We could not process your card. Please call 808.635.6957' );
+
+                    }else if( result ){
+
+                        var publicId;
+                        var lastRes = EscapeRoom.Collections.Reservations.findOne({},{sort:{publicId:-1}});
+
+                        if( lastRes && lastRes.publicId ){
+                            publicId = lastRes.publicId + 1;
+                        }else{
+                            publicId = 350000
+                        }
+
+                        var resId = EscapeRoom.Collections.Reservations.insert({
+                            publicId: publicId,
+                            roomId: tmpl.data._id,
+                            date: Session.get('selectedDate'),
+                            time: Session.get('selectedTime'),
+                            firstName: Session.get('enteredFirstName'),
+                            lastName: Session.get('enteredLastName'),
+                            email: Session.get('enteredEmail'),
+                            phone: Session.get('enteredPhone'),
+                            nbPlayers: Session.get('selectedNbPlayers'),
+                            closeRoom: EscapeRoom.canClose( tmpl.data._id, Session.get('selectedDate'), Session.get('selectedTime') ) && Session.get('selectedCloseRoom') ? true : false,
+                            coupon: Session.get('enteredCoupon'),
+                            transaction: result
+                        });
+
+                        if( resId ){
+                            Meteor.call(
+                                'sendEmail',
+                                Session.get('enteredEmail'),
+                                '"Kauai Escape Room" info@escaperoomkauai.com',
+                                'Booking confirmation - RESERVATION #' + publicId,
+                                EscapeRoom.getConfirmationEmailBody(resId),
+                                function (error,result) {
+                                    if( error ){
+                                        throw new Meteor.Error( 'MAILER_ERROR', 'Error while sending booking confirmation. ERROR ||| RES => ' + JSON.stringify( error ) ) ;
+                                    }
                                 }
-                            }
-                        );
-                        $('.processing-bg').hide()
-                        Router.go('confirmation', {_id:resId});
+                            );
+                            $('.processing-bg').hide()
+                            Router.go('confirmation', {_id:resId});
+                        }else{
+                            Notifications.error('Charge OK but Reservation failed', 'Please call 808.635.6957');
+                        }
                     }else{
-                        Notifications.error('Charge OK but Reservation failed', 'Please call 808.635.6957');
+                        Notifications.error( 'Payment Processing Error', 'Sorry. We could not process your card. Please call 808.635.6957' );
                     }
-                }else{
-                    Notifications.error( 'Error', 'Sorry. We could not process your card. Please call 808.635.6957' );
-                }
+                });
             });
-        });
+
+        }else{
+
+            Notifications.error( 'Missing Field(s)', 'All fields are required.');
+
+        }
+
+
 
     }
 });
