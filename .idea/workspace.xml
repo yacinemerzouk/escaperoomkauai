@@ -2,46 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3ab2dd3-2ff8-4bd3-88c4-cdd518ab4e68" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/epoch-meteor-package" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/Game.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/Reservation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/Room.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/coupons.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/coupons.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/css/hero.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/css/room-details.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/css/rooms.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/reports-transactions-list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/reports-transactions-list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/images/hero-mad-scientist.jpg" afterPath="$PROJECT_DIR$/public/images/hero-mad-scientist.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/escaperoomkauai.com.iml" afterPath="$PROJECT_DIR$/.idea/escaperoomkauai.com.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" afterPath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/packages/bureaucrat-meteor-package" afterPath="$PROJECT_DIR$/packages/bureaucrat-meteor-package" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/packages/epoch-meteor-package" afterPath="$PROJECT_DIR$/packages/epoch-meteor-package" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/packages" afterPath="$PROJECT_DIR$/.meteor/packages" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/versions" afterPath="$PROJECT_DIR$/.meteor/versions" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/contact.html" afterPath="$PROJECT_DIR$/client/contact.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/_global.less" afterPath="$PROJECT_DIR$/client/css/_global.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/home.less" afterPath="$PROJECT_DIR$/client/css/home.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/faq.html" afterPath="$PROJECT_DIR$/client/faq.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/hero.less" afterPath="$PROJECT_DIR$/client/css/hero.less" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/helpers/helpers.js" afterPath="$PROJECT_DIR$/client/helpers/helpers.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/home.html" afterPath="$PROJECT_DIR$/client/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/home.js" afterPath="$PROJECT_DIR$/client/home.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/layout.html" afterPath="$PROJECT_DIR$/client/layout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/not-found.html" afterPath="$PROJECT_DIR$/client/not-found.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/reports-transactions-list.html" afterPath="$PROJECT_DIR$/client/reports-transactions-list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/reservations.html" afterPath="$PROJECT_DIR$/client/reservations.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/reservations.js" afterPath="$PROJECT_DIR$/client/reservations.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/room-details.html" afterPath="$PROJECT_DIR$/client/room-details.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/room-details.js" afterPath="$PROJECT_DIR$/client/room-details.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/rooms.html" afterPath="$PROJECT_DIR$/client/rooms.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/rooms.js" afterPath="$PROJECT_DIR$/client/rooms.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data.js" afterPath="$PROJECT_DIR$/data.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/_namespace.js" afterPath="$PROJECT_DIR$/lib/_namespace.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/router.js" afterPath="$PROJECT_DIR$/router.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/mail.js" afterPath="$PROJECT_DIR$/server/mail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/publications.js" afterPath="$PROJECT_DIR$/server/publications.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/stripe-server.js" afterPath="$PROJECT_DIR$/server/stripe-server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings-dev.json" afterPath="$PROJECT_DIR$/settings-dev.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings-prod.json" afterPath="$PROJECT_DIR$/settings-prod.json" />
     </list>
     <ignored path="escaperoomkauai.com.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -61,64 +32,67 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="_global.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/css/_global.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="99" column="17" selection-start-line="99" selection-start-column="17" selection-end-line="99" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="room-details.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/css/room-details.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hero.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/css/hero.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="79" column="39" selection-start-line="79" selection-start-column="39" selection-end-line="79" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="room-details.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/room-details.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="70" column="69" selection-start-line="70" selection-start-column="69" selection-end-line="70" selection-end-column="69" />
+            <state relative-caret-position="380">
+              <caret line="106" column="56" selection-start-line="106" selection-start-column="56" selection-end-line="106" selection-end-column="56" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#label#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/css/home.less">
+      <file leaf-file-name="layout.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/layout.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
+            <state relative-caret-position="368">
+              <caret line="86" column="41" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
+              <folding>
+                <element signature="n#style#0;n#footer#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reservations.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/reservations.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="6" column="82" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="82" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stripe-config.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/stripe-config.js">
+      <file leaf-file-name="reservations.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/reservations.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="38">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="helpers.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/helpers/helpers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="503">
+              <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="room-details.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/room-details.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="214" column="14" selection-start-line="214" selection-start-column="4" selection-end-line="214" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -127,8 +101,8 @@
       <file leaf-file-name="_namespace.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/_namespace.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="203" column="52" selection-start-line="203" selection-start-column="52" selection-end-line="203" selection-end-column="52" />
+            <state relative-caret-position="142">
+              <caret line="66" column="27" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="27" />
               <folding>
                 <marker date="1471387118000" expanded="true" signature="4774:4812" ph="..." />
                 <marker date="1471387118000" expanded="true" signature="4847:4891" ph="..." />
@@ -140,43 +114,6 @@
                 <marker date="1471387118000" expanded="true" signature="10057:10101" ph="..." />
                 <marker date="1471387118000" expanded="true" signature="10295:10368" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reservations.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/reservations.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#2873#2881#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#form#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#form#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reservations.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/reservations.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2752">
-              <caret line="200" column="30" selection-start-line="200" selection-start-column="30" selection-end-line="200" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Game.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/classes/Game.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="124" column="37" selection-start-line="124" selection-start-column="37" selection-end-line="124" selection-end-column="37" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -214,32 +151,32 @@
         <option value="$PROJECT_DIR$/client/transactions.html" />
         <option value="$PROJECT_DIR$/packages/epoch-meteor-package/zendy-epoch-functions.js" />
         <option value="$PROJECT_DIR$/client/reports-transactions-list.js" />
-        <option value="$PROJECT_DIR$/client/layout.html" />
         <option value="$PROJECT_DIR$/client/home.js" />
-        <option value="$PROJECT_DIR$/client/reports-transactions-list.html" />
         <option value="$PROJECT_DIR$/server/publications.js" />
         <option value="$PROJECT_DIR$/router.js" />
-        <option value="$PROJECT_DIR$/client/helpers/helpers.js" />
         <option value="$PROJECT_DIR$/settings-dev.json" />
         <option value="$PROJECT_DIR$/settings-prod.json" />
-        <option value="$PROJECT_DIR$/client/room-details.js" />
         <option value="$PROJECT_DIR$/classes/Reservation.js" />
         <option value="$PROJECT_DIR$/client/not-found.html" />
         <option value="$PROJECT_DIR$/client/rooms.js" />
-        <option value="$PROJECT_DIR$/client/home.html" />
         <option value="$PROJECT_DIR$/client/faq.html" />
         <option value="$PROJECT_DIR$/client/contact.html" />
-        <option value="$PROJECT_DIR$/client/css/hero.less" />
         <option value="$PROJECT_DIR$/client/rooms.html" />
         <option value="$PROJECT_DIR$/client/css/rooms.less" />
         <option value="$PROJECT_DIR$/client/css/room-details.less" />
         <option value="$PROJECT_DIR$/client/css/_global.less" />
-        <option value="$PROJECT_DIR$/client/room-details.html" />
         <option value="$PROJECT_DIR$/client/css/home.less" />
         <option value="$PROJECT_DIR$/lib/_namespace.js" />
         <option value="$PROJECT_DIR$/client/reservations.js" />
-        <option value="$PROJECT_DIR$/client/reservations.html" />
         <option value="$PROJECT_DIR$/classes/Game.js" />
+        <option value="$PROJECT_DIR$/client/home.html" />
+        <option value="$PROJECT_DIR$/client/reports-transactions-list.html" />
+        <option value="$PROJECT_DIR$/client/reservations.html" />
+        <option value="$PROJECT_DIR$/client/css/hero.less" />
+        <option value="$PROJECT_DIR$/client/helpers/helpers.js" />
+        <option value="$PROJECT_DIR$/client/room-details.js" />
+        <option value="$PROJECT_DIR$/client/room-details.html" />
+        <option value="$PROJECT_DIR$/client/layout.html" />
       </list>
     </option>
   </component>
@@ -571,12 +508,12 @@
       <workItem from="1470944374564" duration="9092000" />
       <workItem from="1470975841017" duration="469000" />
       <workItem from="1471215416575" duration="12176000" />
-      <workItem from="1471384772696" duration="2958000" />
+      <workItem from="1471384772696" duration="5151000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148294000" />
+    <option name="totallyTimeSpent" value="150487000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -758,13 +695,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/layout.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1197">
-          <caret line="63" column="41" selection-start-line="63" selection-start-column="41" selection-end-line="63" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/reports-transactions-list.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="551">
@@ -793,14 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/helpers/helpers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1080">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/mail.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="246">
@@ -823,14 +745,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/room-details.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2337">
-          <caret line="123" column="9" selection-start-line="123" selection-start-column="9" selection-end-line="123" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/classes/Reservation.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
@@ -845,18 +759,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/reports-transactions-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2223">
-          <caret line="132" column="78" selection-start-line="132" selection-start-column="78" selection-end-line="132" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/not-found.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="1" column="11" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -872,14 +779,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1007">
-          <caret line="53" column="76" selection-start-line="53" selection-start-column="53" selection-end-line="53" selection-end-column="76" />
           <folding />
         </state>
       </provider>
@@ -929,14 +828,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/hero.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="79" column="39" selection-start-line="79" selection-start-column="39" selection-end-line="79" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/css/room-details.less">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="520">
@@ -969,10 +860,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/classes/Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="139" column="51" selection-start-line="139" selection-start-column="51" selection-end-line="139" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/reports-transactions-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="39" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="39" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#template#2;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/hero.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="162" column="24" selection-start-line="162" selection-start-column="24" selection-end-line="162" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/helpers/helpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/reservations.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/reservations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="82" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/_namespace.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="203" column="52" selection-start-line="203" selection-start-column="52" selection-end-line="203" selection-end-column="52" />
+        <state relative-caret-position="142">
+          <caret line="66" column="27" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="27" />
           <folding>
             <marker date="1471387118000" expanded="true" signature="4774:4812" ph="..." />
             <marker date="1471387118000" expanded="true" signature="4847:4891" ph="..." />
@@ -987,45 +936,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/room-details.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="214" column="14" selection-start-line="214" selection-start-column="4" selection-end-line="214" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/room-details.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="70" column="69" selection-start-line="70" selection-start-column="69" selection-end-line="70" selection-end-column="69" />
+        <state relative-caret-position="380">
+          <caret line="106" column="56" selection-start-line="106" selection-start-column="56" selection-end-line="106" selection-end-column="56" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#label#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/reservations.html">
+    <entry file="file://$PROJECT_DIR$/client/layout.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+        <state relative-caret-position="368">
+          <caret line="86" column="41" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#2873#2881#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#form#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#form#0;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#footer#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/reservations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2752">
-          <caret line="200" column="30" selection-start-line="200" selection-start-column="30" selection-end-line="200" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/Game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="124" column="37" selection-start-line="124" selection-start-column="37" selection-end-line="124" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>

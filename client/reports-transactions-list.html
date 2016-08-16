@@ -10,34 +10,44 @@
     </div>
 
     {{#if currentUser}}
+        <div class="container">
 
-        <div class="container marketing">
+            <div class="row">
 
+                <div class="col-sm-4 form-group">
+                    <h4>From:</h4>
+                    <input class="form-control" id="datepickerFrom" value="{{reportsTransactionsListFrom}}">
+                    <h4>To:</h4>
+                    <input class="form-control" id="datepickerTo" value="{{reportsTransactionsListTo}}">
 
-            <div class="col-sm-4 form-group">
-                <h4>From:</h4>
-                <input class="form-control" id="datepickerFrom" value="{{reportsTransactionsListFrom}}">
-                <h4>To:</h4>
-                <input class="form-control" id="datepickerTo" value="{{reportsTransactionsListTo}}">
+                </div>
 
-            </div>
+                <div class="col-sm-8">
+                    <h4>Transactions list</h4>
+                    {{#each reservations}}
+                        {{>reservationDetails this}}
+                    {{/each}}
+                </div>
 
-            <div class="col-sm-8">
-                <h4>Transactions list</h4>
-                {{#each reservations}}
-                    {{>reservationDetails this}}
-                {{/each}}
             </div>
 
         </div>
-
     {{else}}
 
-        <div class="container marketing">
-            Admins only
-            <br>
-            {{> loginButtons}}
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-xs-12">
+                    Admins only
+                    <br>
+                    {{> loginButtons}}
+                </div>
+
+            </div>
+
         </div>
+
     {{/if}}
 
 </template>

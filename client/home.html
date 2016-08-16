@@ -5,7 +5,7 @@
             <div class="content col-xs-12 text-center">
                 <h1>Can you escape?</h1>
                 <p>Find clues and solve puzzles to unravel the mysteries of the room.</p>
-                <a href="#" hook="rooms" class="button">Our Rooms</a>
+                <a href="{{pathFor 'rooms'}}" class="button">Our Rooms</a>
                 <a href="#" hook="explainer" class="button button-unavailable">How It Works</a>
             </div>
         </div>
@@ -160,7 +160,7 @@
 
                         <div class="specs">
                             <i class="fa fa-credit-card" aria-hidden="true"></i>
-                            <span class="spec-value" style="">$25 - ${{room.pricePerPlayer}}</span><br>
+                            <span class="spec-value" style="">${{kamaainaPerPlayer room}} - ${{room.pricePerPlayer}}</span><br>
                             <span class="spec-key" style="">Per Player</span>
                         </div>
 

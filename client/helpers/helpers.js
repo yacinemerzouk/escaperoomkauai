@@ -44,11 +44,13 @@ UI.registerHelper('canBook', function( roomId, date, time ) {
  * @param time: String : a HH:MM:am or HH:MM:pm formatted time
  * @returns Boolean : whether or not the room has enough spots remaining for the time slot
  */
-UI.registerHelper('hasEnoughSpots', function( roomId, date, time ) {
+UI.registerHelper('hasEnoughSpots', function( roomId, date, time, nbPlayers ) {
+
+    console.log( 'in hasEnoughSpots', roomId, date, time, nbPlayers);
 
     var spotsLeft = EscapeRoom.spotsLeft(roomId, date, time);
 
-    return parseInt(spotsLeft) >= parseInt(Session.get('selectedNbPlayers'));
+    return nbPlayers && parseInt(nbPlayers) > 0 &&  parseInt(spotsLeft) >= parseInt(nbPlayers);
 
 });
 
@@ -170,3 +172,7 @@ UI.registerHelper('loopCount', function(count){
     }
     return countArr;
 });
+
+UI.registerHelper('kamaainaPerPlayer', function(room){
+    return room.pricePerPlayer - room.kamaainaPerPlayer;
+})
