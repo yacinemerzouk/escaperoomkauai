@@ -2,71 +2,191 @@
 
     <div class="hero hero-home-bg">
         <div class="overlay">
-            <div class="content">
-                <h1>Now open!</h1>
-                <p>Live action escape games and puzzle rooms are now available on Kauai! <a href="{{pathFor 'room' slug='mad-scientist'}}">Book Now &rarr;</a></p>
-                <a href="#" hook="explainer" class="button">What are escape rooms?</a>
+            <div class="content col-xs-12 text-center">
+                <h1>Can you escape?</h1>
+                <p>Find clues and solve puzzles to unravel the mysteries of the room.</p>
                 <a href="#" hook="rooms" class="button">Our Rooms</a>
+                <a href="#" hook="explainer" class="button button-unavailable">How It Works</a>
             </div>
         </div>
     </div>
 
+    <div class="container" id="explainer">
 
-    <!-- Marketing messaging and featurettes
-================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
 
-    <div class="container marketing" id="explainer">
+        <!-- EXPLAINER -->
+        <div class="row">
 
-        <!-- START THE FEATURETTES -->
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                <h2 class="subheading">What are escape rooms?</h2>
+                <p class="lead"><strong>Escape rooms are live action games</strong>. Enter a room with your group, find clues and solve puzzles to unravel the mysteries of the room and escape within a set time limit. <strong>It's a fun and exciting rush of adrenaline</strong>. Are you up for the challenge?</p>
+                <p class="lead"><a href="{{pathFor 'faq'}}">Learn more &rarr;</a></p>
+            </div>
 
-        <div class="row featurette">
-            <div class="col-md-8 col-md-offset-2">
-                <h2 class="featurette-heading"><span class="text-muted">What are</span> escape rooms?</h2>
-                <p class="lead">Real-life room escape games (also called <em>escape rooms</em>, <em>escape games</em>, and <em>puzzle rooms</em>) are a type of live action adventure game in which people are locked in a room with other participants and have to use elements of the room to solve a series of puzzles, find clues, and escape the room within a set time limit.</p>
-                <h2 class="featurette-heading">How <span class="text-muted">does it work?</span></h2>
-                <p class="lead">The game begins the moment you step into the room. You have 30 to 60 minutes to fulfill your destiny within the scenario. Quests do not require any special training or physical strength. Observation, logic, deduction and creative thinking are key abilities. Each scenario has the main storyline and sometimes secondary objectives.</p>
-                <h2 class="featurette-heading">Who <span class="text-muted">is it for?</span></h2>
-                <p class="lead">Our escape games are for you if you love a challenge. They are <em>NOT easy games</em>. You'll have to work with your group, solve puzzles, be creative and logical in your thinking, and focus on the task at hand with the pressure of a clock ticking. It's a high energy jolt of excitement.</p>
-                <p class="lead">We try to calibrate the room difficulty for adults, but teenagers 13 of age and older will enjoy the escape rooms too.</p>
-                <h2 class="featurette-heading"><span class="text-muted">What</span> now?</h2>
-                <p class="lead">Check our rooms and pick one!</p>
+        </div>
+
+        <!-- ROOMS -->
+        <div class="row">
+
+            <div class="col-xs-12">
+
+                <h2 class="subheading">Our Escape Rooms</h2>
+
+                {{#each rooms}}
+
+                    {{>roomBox room=this float=true showExcerpt=true showCTA=true}}
+
+                {{/each}}
 
             </div>
 
         </div>
 
+        <!-- TESTIMONIALS -->
+        <div class="row">
 
-        <!-- /END THE FEATURETTES -->
-    </div>
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
 
+                <h2 class="subheading">What Players Say</h2>
 
-    <div class="room-boxes" id="rooms">
-
-        {{#each rooms}}
-            <a href="{{pathFor 'room' slug}}">
-                <div class="room-box room-box-bg-mad-scientist" style="background-image: url({{image}})">
-                    <div class="room-box-overlay">
-                        <div class="ribbon-wrapper">
-                            <div class="ribbon-wrapper-green">
-                                <div class="ribbon-green">
-                                    {{#if available}}
-                                        Now Open
-                                    {{else}}
-                                        {{opening}}
-                                    {{/if}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="room-box-content">
-                            <h2>{{title}}</h2>
-                            <p>{{excerpt}}</p>
-                            <a href="{{pathFor 'room' slug}}" class="button">Room Info &amp; Schedule</a>
-                        </div>
-                    </div>
+                <div class="testimonial">
+                    <p class="testimonial-quote">"Awesome Adventure! If you're on Kaua'i you have to check out this adventure. It was great family fun."</p>
+                    <p class="testimonial-author">-- Caroline F, Tripadvisor</p>
                 </div>
-            </a>
-        {{/each}}
 
+                <div class="testimonial">
+                    <p class="testimonial-quote">"Escape rooms are recognized worldwide as one of the best & most fun group activities you can engage in. Kauai's Escape Room is no exception. The quality of puzzles & set design are superb."</p>
+                    <p class="testimonial-author">-- Rolo B, Facebook</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOST POPULAR -->
+        <div class="row">
+
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+
+                <h2 class="subheading">Our Most Popular Room</h2>
+
+                {{#with mostPopular}}
+
+                    {{>roomBox room=this showDescription=true showSpecs=true showPrice=true showCTA=true showAvailabilityCTA=true size="large"}}
+
+                {{/with}}
+
+            </div>
+
+        </div>
+
+
+        <!-- MORE INFO -->
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+
+                <h2 class="subheading">More Info</h2>
+
+                <p class="lead">Do you have questions about our escape games? Check out or <a href="{{pathFor 'faq'}}">frequently asked questions</a> or call us at <a href="tel:18086356957">1.808.635.6957</a>. You can also contact us by email at <a href="mailto:info@escaperoomkauai.com">info@escaperoomkauai.com</a>.</p>
+                <p>&nbsp;</p>
+                <p class="text-center">
+                    <a href="{{pathFor 'rooms'}}" class="button">View All Our Rooms</a>
+                    <a href="{{pathFor 'faq'}}" class="button button-unavailable">FAQ</a>
+                    <a href="{{pathFor 'contact'}}" class="button button-unavailable">Contact Us</a>
+                </p>
+
+            </div>
+
+        </div>
     </div>
+</template>
+
+<template name="roomBox">
+    <a href="{{pathFor 'room' slug=room.slug}}">
+
+        <div class="room-box room-box-bg-mad-scientist {{size}} {{#if float}}float{{/if}}" style="background-image: url({{room.image}})">
+
+            <div class="room-box-overlay">
+
+                <div class="ribbon-wrapper">
+
+                    <div class="ribbon-wrapper-green">
+
+                        <div class="ribbon-green">
+                            {{#if room.available}}
+                                Now Open
+                            {{else}}
+                                {{room.opening}}
+                            {{/if}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="room-box-content">
+
+                    <h2>{{room.title}}</h2>
+
+                    {{#if showExcerpt}}
+                        <p>{{room.excerpt}}</p>
+                    {{/if}}
+
+                    {{#if showDescription}}
+                        <p>{{room.description}}</p>
+                    {{/if}}
+
+                    {{#if showSpecs}}
+                        <div class="specs">
+                            <i class="fa fa-users" aria-hidden="true" style=""></i>
+                            <span class="spec-value" style="">{{room.minPlayers}} - {{room.maxPlayers}}</span><br>
+                            <span class="spec-key" style="">Players</span>
+                        </div>
+                        <div class="specs">
+                            <i class="fa fa-clock-o" aria-hidden="true" style=""></i>
+                            <span class="spec-value" style="">{{room.duration}}</span><br>
+                            <span class="spec-key" style="">Minutes</span>
+                        </div>
+                        <div class="specs {{#if showPrice}}specs-break{{/if}}">
+                            <i class="fa fa-trophy" aria-hidden="true"></i>
+                            <span class="spec-value" style="">{{room.successRate}}%</span><br>
+                            <span class="spec-key" style="">Success Rate</span>
+                        </div>
+                    {{/if}}
+
+                    {{#if showPrice}}
+
+                        <div class="specs">
+                            <i class="fa fa-credit-card" aria-hidden="true"></i>
+                            <span class="spec-value" style="">$25 - ${{room.pricePerPlayer}}</span><br>
+                            <span class="spec-key" style="">Per Player</span>
+                        </div>
+
+                    {{/if}}
+
+
+                    {{#if showCTA}}
+                        {{#if showSpecs}}
+                            <div style="height:34px; clear: both;"></div>
+                        {{/if}}
+                    <div class="room-box-cta">
+                        <a href="{{pathFor 'room' slug}}" class="button">
+                            {{#if showAvailabilityCTA}}
+                                View Availability
+                            {{else}}
+                                Room Info &amp; Schedule
+                            {{/if}}
+                        </a>
+                    </div>
+                    {{/if}}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </a>
 </template>

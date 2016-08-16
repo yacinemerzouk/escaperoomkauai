@@ -2,10 +2,10 @@
     "private": {
         "smtp": {
             "email": "info@escaperoomkauai.com",
-            "password": "Ozozw27NMX",
-            "server": "secure.emailsrvr.com",
-            "port": 465,
-            "MAIL_URL": "smtp://info@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/"
+            "mailman": "mailman@escaperoomkauai.com",
+            "notifications":"info@escaperoomkauai.com",
+            "bcc": "notifications@zendy.net",
+            "MAIL_URL": "smtp://mailman@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/"
         },
         "stripe": {
             "secretKey": "FXRuP72zVcKa0U2jXo3Gmp1x0welNWl0"
@@ -19,6 +19,11 @@
         },
         "stripe": {
             "publishableKey": "pk_2gFX9b6lwBobyasH4hJdV2M0leiPY"
+        },
+        "smtp": {
+            "email": "info@escaperoomkauai.com",
+            "mailman": "mailman@escaperoomkauai.com",
+            "notifications":"info@escaperoomkauai.com"
         }
     },
     "galaxy.meteor.com": {
@@ -26,7 +31,7 @@
             "MONGO_URL": "mongodb://escaperoomkauai_admin:ns2N7dVpwu@ds019494-a0.mlab.com:19494,ds019494-a1.mlab.com:19494/escaperoomkauai?replicaSet=rs-ds019494",
             "MONGO_OPLOG_URL": "mongodb://oplog-reader:rzB52JiOfE@ds019494-a0.mlab.com:19494,ds019494-a1.mlab.com:19494/local?authSource=admin",
             "ROOT_URL": "https://www.escaperoomkauai.com",
-            "MAIL_URL": "smtp://info@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/"
+            "MAIL_URL": "smtp://mailman@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/"
         }
     },
     "kadira": {

@@ -135,3 +135,38 @@ UI.registerHelper('roomTitle', function( roomId ){
 UI.registerHelper('isNumber', function( number ){
     return !isNaN(number);
 });
+
+UI.registerHelper('unixToHumanReadableDate', function( number ){
+    var jsDate = new Date(number*1000);
+    return Epoch.dateObjectToDateString( jsDate );
+});
+
+UI.registerHelper('unixToHumanReadableDateTime', function( number ){
+    var jsDate = new Date(number*1000);
+    return Epoch.dateObjectToDateTimeString( jsDate );
+});
+
+
+UI.registerHelper('dump', function( data ){
+    return "RESERVATION OBJECT\n==================\n" + JSON.stringify(data,null,'\t');
+});
+
+UI.registerHelper('centsToDollarsCurrency', function( n ){
+    return '$' + (parseFloat(n)/100).toFixed(2);
+});
+
+UI.registerHelper('toUpperCase', function( string ){
+    if( string ){
+        return string.toUpperCase();
+    }else{
+        return '';
+    }
+});
+
+UI.registerHelper('loopCount', function(count){
+    var countArr = [];
+    for (var i=0; i<count; i++){
+        countArr.push({});
+    }
+    return countArr;
+});

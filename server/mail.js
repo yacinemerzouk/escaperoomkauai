@@ -22,7 +22,7 @@ Meteor.methods({
 
         Email.send({
             to: to,
-            bcc: 'notifications@zendy.net,yacine@merzouk.ca,mrundbaken@gmail.com',
+            bcc: Meteor.settings.private.smtp.bcc,
             from: from,
             subject: subject,
             html: text

@@ -11,40 +11,118 @@
 
     {{#if currentUser}}
 
-    <div class="container marketing">
-        <div class="col-xs-12 col-md-4">
-            <div id="datepicker"></div>
-            <br>
-            <a href="#block" class="button button-unavailable btn-block" hook="block-date" hook-data-date="{{adminSelectedDate}}">Block Entire Day</a>
-            <a href="#block" class="button button-unavailable btn-block" hook="unblock-date" hook-data-date="{{adminSelectedDate}}">Unblock Entire Day</a>
+        <div class="container marketing">
 
-        </div>
-        <div class="col-xs-12 col-md-8">
-            {{#each reservations}}
-                <p>{{_id}}</p>
-            {{/each}}
-            {{#each times}}
-                <span class="resTime">{{humanReadableDate adminSelectedDate format='short'}} @ {{time}}</span>
-                {{#if reservations}}
-                    {{#each reservations}}
-                        {{#if blocked}}
-                            &nbsp;&nbsp;&bull;&nbsp;&nbsp; <b class="red">BLOCKED</b> <a href="#" hook="unblock-time"  hook-data-date="{{adminSelectedDate}}" hook-data-time="{{time}}">Unblock</a>
-                        {{else}}
-                            <div class="party">
-                                <p>Reservation #{{publicId}}</p>
-                                <p>{{firstName}} {{lastName}} &bull; Party of {{nbPlayers}}</p>
-                                <p>{{roomTitle roomId}} {{#if closeRoom}}&bull; CLOSED ROOM{{/if}}</p>
-                            </div>
+            <div class="col-xs-12 col-md-4">
+                <div id="datepicker"></div>
+                <br>
+                <a href="#block" class="button button-unavailable btn-block" hook="block-date" hook-data-date="{{adminSelectedDate}}">Block Entire Day</a>
+                <a href="#block" class="button button-unavailable btn-block" hook="unblock-date" hook-data-date="{{adminSelectedDate}}">Unblock Entire Day</a>
+            </div>
+
+            <div class="col-sm-8">
+                {{#each games}}
+                    <div style=" padding: 15px 20px; margin-bottom: 20px; background: #ddd;">
+                        <span class="resTime">
+                            {{humanReadableDate date}} @ {{time}}
+                        </span>
+                        {{#each reservations}}
+                            {{#if blocked}}
+                                <div class="label label-danger pull-right" style="font-size: 16px;">Blocked</div>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                    {{#unless isBlocked}}
+                        {{#if reservations}}
+                            <fieldset style="margin-bottom: 30px">
+                                <legend style="width: auto; padding-right: 10px">The Missing Scientist</legend>
+                                {{#each reservations}}
+                                    {{#unless blocked}}
+                                        {{>reservationOverview this}}
+                                    {{/unless}}
+                                {{/each}}
+
+
+                                {{#if _id}}
+                                    &#10004; Game {{#if won}} Won :) {{else}} Lost :( {{/if}}<br>
+                                {{/if}}
+                                {{#if followUpEmailSent}}
+                                    &#10004; Follow-up email sent<br>
+                                {{/if}}
+                                <a href="#" hook="show-postgame" hook-data="{{date}}@{{time}}">Show Postgame</a>
+                                <a href="#" hook="hide-postgame" hook-data="{{date}}@{{time}}" style="display: none">Hide Postgame</a>
+                                <div hook="postgame-{{date}}@{{time}}" style="display: none;">
+                                    <div class="form-group" style="margin-bottom: 5px; margin-top: 10px; background-color: #eee; padding: 20px">
+                                        {{#if _id}}
+                                            &#10004; Game {{#if won}} Won :) {{else}} Lost :( {{/if}}
+                                        {{else}}
+                                            <label style="border: none; font-size: 14px;">Game Result</label>
+                                            <div class="checkbox" style="margin-bottom: 0">
+                                                <label style="border-bottom: none; padding-left: 0">
+                                                    {{#if won}}
+                                                        <input hook="log-game-result" hook-data-result="won" checked="checked" hook-data-time="{{time}}" type="radio" name="log-game-result-{{time}}"> Won
+                                                    {{else}}
+                                                        <input hook="log-game-result" hook-data-result="won" hook-data-time="{{time}}" type="radio" name="log-game-result-{{time}}"> Won
+                                                    {{/if}}
+                                                </label>
+                                                <label style="border-bottom: none; padding-left: 0">
+                                                    {{#if _id}}
+                                                        {{#if won}}
+                                                            <input hook="log-game-result" hook-data-result="lost" hook-data-time="{{time}}" type="radio" name="log-game-result-{{time}}"> Lost
+                                                        {{else}}
+                                                            <input hook="log-game-result" hook-data-result="lost" checked="checked" hook-data-time="{{time}}" type="radio" name="log-game-result-{{time}}"> Lost
+                                                        {{/if}}
+                                                    {{else}}
+                                                        <input hook="log-game-result" hook-data-result="lost" hook-data-time="{{time}}" type="radio" id="log-game-result" name="log-game-result-{{time}}"> Lost
+                                                    {{/if}}
+                                                </label>
+                                            </div>
+                                        {{/if}}
+                                    </div>
+                                    {{#if won}}
+                                        <form hook="time-log-form">
+                                            <div class="form-group" style="margin-bottom: 5px">
+                                                <div style="background-color: #eee; padding: 20px;">
+
+                                                    {{#if timeLog}}
+                                                        &#10004; Time => {{timeLog}}
+                                                    {{else}}
+                                                        <label style="border: none; font-size: 14px;">Time ( HH:SS format )</label>
+
+                                                        <input type="text" class="form-control" name="time" style="margin-bottom: 5px;" placeholder="HH:SS">
+
+                                                        <a href="#" class="button btn-block text-center" hook="log-time" hook-data-time="{{time}}">Log Time</a>
+
+                                                    {{/if}}
+                                                </div>
+                                            </div>
+                                        </form>
+                                    {{/if}}
+                                    {{#if followUpEmailSent}}
+                                        <div style="background-color: #eee; padding: 20px;">
+                                            &#10004; Follow-up email sent
+                                        </div>
+                                    {{else}}
+                                        <form hook="players-form">
+                                            <div class="form-group" style="margin-bottom: 0px">
+                                                <div style="background-color: #eee; padding: 20px;">
+                                                    <label style="border: none; font-size: 14px;">Players</label>
+                                                    {{#each players}}
+                                                        <input type="text" class="form-control" name="player-{{@index}}" style="margin-bottom: 5px;" placeholder="Email">
+                                                    {{/each}}
+                                                    <a href="#" class="button btn-block text-center" hook="send-follow-up" hook-data-time="{{time}}">Send Follow-Up Email</a>
+                                                 </div>
+                                            </div>
+                                        </form>
+                                    {{/if}}
+                                </div>
+                            </fieldset>
                         {{/if}}
-                    {{/each}}
-                {{else}}
-                    &nbsp;&nbsp;&bull;&nbsp;&nbsp; <a href="#" hook="block-time" hook-data-date="{{adminSelectedDate}}" hook-data-time="{{time}}">Block</a>
-                {{/if}}
-                <hr>
-            {{/each}}
-        </div>
+                    {{/unless}}
+                {{/each}}
+            </div>
 
-    </div>
+        </div>
 
     {{else}}
 

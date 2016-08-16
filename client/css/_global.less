@@ -14,6 +14,34 @@ p a,
 .red{
 	color: #AA0000;
 }
+.clear{
+	clear: both;
+}
+.pad-2{
+	padding: 2px;
+}
+
+
+h2.subheading{
+	font-size: 24px;
+	border-bottom: 1px solid #DDD;
+	font-family: 'Oswald', sans-serif;
+	text-align: center;
+	padding-bottom: 25px;
+	margin: 70px auto 40px auto;
+	max-width: 300px;
+	
+}
+h3.subheading{
+	font-size: 24px;
+	line-height: 34px;
+	border-bottom: 1px solid #DDD;
+	font-family: 'Oswald', sans-serif;
+	text-align: left;
+	padding-bottom: 20px;
+	margin: 70px 0 20px 0;
+	
+}
 
 /* ======================================== */
 /* FORMS, RESERVATIONS & REPORTS
@@ -37,10 +65,64 @@ p a,
 	}
 }
 
+fieldset {
+	border:1px solid #CCC;
+	padding: 5px 10px 10px;
+	margin-bottom: 10px;
+}
+
+legend {
+	padding: 0px 0px 0px 10px;
+	border: none;
+	color:#000;
+	font-size:16px;
+	font-weight: bold;
+	text-align:left;
+	width: 80px;
+	margin: 0 0 0 0
+}
+
+
+label{
+	//text-transform: uppercase;
+	font-size: 16px;
+	border-bottom: 1px solid #DDD;
+	display: block;
+	padding-bottom: 3px;
+	margin-bottom: 10px;
+	color: #666
+}
+
+.label-time{
+	display: block;
+	margin-bottom: 5px;
+	text-align: left;
+	font-size: 14px;
+	padding: 11px 14px;
+	font-weight: normal;
+}
+.label-time-red{
+	background-color: #CC0000;
+}
+.label-time-grey{
+	background-color: #444444;
+}
+.label-time-green{
+	background-color: #0e5900;
+}
+.form-group{
+	margin-bottom: 30px;
+}
 .checkbox{
 	margin-top: 0;
 }
-
+#datepicker.datepicker-full-width {
+	width: 100%;
+	margin-bottom: 30px;
+	.ui-datepicker{
+		width: 100%;
+	}
+}
 .reservations{
 	#datepicker{
 		width: 100%;
@@ -127,133 +209,86 @@ ul.notifications {
 	color: #FFF;
 }
 
-/* ======================================== */
-/* HERO BANNERS & FULL-SCREEN BACKGROUNDS
-/* ======================================== */
-
-.hero{
-	height: 400px;
-	background: #222;
-	width: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background-size: cover;
-	background-position: center center;
-	.overlay{
-		background: rgba(0,0,0,0.5);
-		width: 100%;
-		height: 100%;
-	}
-	.content{
-		position: absolute;
-		bottom: 45px;
-		left: 30px;
-		color: #FFF;
-		h1{
-			font-family: 'Oswald', sans-serif;
-			font-size: 42px;
-			max-width: 500px;
-		}
-		p{
-			font-weight: 300;
-			font-size: 24px;
-			max-width: 500px;
-			margin: 0 0 29px;
-			line-height: 30px;
-			a, a:hover, a:active, a:focus, a:visited{
-				color: #FFF;
-			}
-			a{
-				text-decoration: underline;
-			}
-			a.button{
-				text-decoration: none;
-			}
-		}
-
-	}
-
-}
-.hero-home-bg{
-	background-image: url(/images/hero-generic.jpg);
-}
-.hero-fullscreen{
-	height: 100vh;
-	.content {
-		p {
-			margin: 0 0;
-		}
-	}
-}
-
-@media screen and (max-width: 500px){
-	.hero{
-		height: 100vh;
-		.content{
-			max-width: 100%;
-			padding-right: 30px;
-			.button,button{
-				display: block;
-				width: 100%;
-				box-sizing: border-box;
-				margin-bottom: 5px;
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 349px){
-	.hero{
-		.content{
-			h1{
-				font-size: 24px;
-			}
-			p{
-				font-size: 18px;
-			}
-
-		}
-	}
-}
-
-// EXCEPTION
-.contact{
-	.hero{
-		z-index: 200;
-	}
-}
-// EXCEPTION
-.directions{
-	.hero{
-		z-index: 200;
-	}
-}
 
 /* ======================================== */
 /* SECTIONS & BOXES
 /* ======================================== */
 
+.specs{
+	font-family: 'Oswald', sans-serif;
+	color: #FFF;
+	width: 140px;
+	float:left;
+	padding-bottom: 10px;
+	.fa{
+		float: left;
+		margin-right: 17px;
+		font-size: 26px;
+		line-height: 44px;
+	}
+	.fa-users{
+		font-size: 23px;
+	}
+	.spec-value{
+		font-size: 22px;
+		line-height: 24px;
+		font-weight: bold;
+	}
+	.spec-key{
+		font-size: 16px;
+		line-height: 16px;
+	}
+	.fa-credit-card{
+		font-size: 22px;
+	}
+	
+}
+
+.room .spec-key{
+	position: relative;
+	bottom: 8px;
+	
+}
+
+.testimonial {
+	font-weight: bold;
+	padding: 20px;
+	margin: 0 auto;
+	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+	text-align: left;
+}
+
+.testimonial-quote {
+	font-size: 24px;
+	color: #888;
+	font-style: italic;
+}
+.testimonial-author {
+	font-size: 16px;
+	color: #AAA;
+	font-style: italic;
+	margin-bottom: 0;
+}
+
 .marketing{
 	margin-top: 370px;
 	clear: both;
 }
-
-// Exceptions
-@media screen and (max-width: 500px) {
-	.rooms, .room, .faq  {
-		.marketing {
-			margin-top: 100vh;
-			clear: both;
-		}
-	}
+.lead{
+	text-align: justify;
+	font-size: 20px;
+	line-height: 30px;
+}
+.lead-buttons{
+	text-align: center;
+}
+.faq .lead{
+	margin-left: 0;
+	margin-bottom: 60px;
 }
 
-.room-boxes{
-	width: 100%;
-	padding: 2px;
-	//height: 604px;
-	padding-top: 40px;
+
+
 	.room-box{
 		background-color: #eee;
 		background-position: center center;
@@ -267,7 +302,7 @@ ul.notifications {
 		.room-box-overlay{
 			width: 100%;
 			height: 100%;
-			background: rgba(0,0,0,0.5);
+			background: rgba(0,0,0,0.8);
 			position: relative;
 			.room-box-content{
 				text-shadow: 0 0 20px rgba(0,0,0,0.9);
@@ -295,10 +330,50 @@ ul.notifications {
 			}
 
 		}
+		.room-box-overlay:hover{
+			background: rgba(0,0,0,0.4);
+			
+		}
+		.room-box-cta{
+			clear: both;
+		}
+	}
+	.room-box.large{
+		height: 400px;
+	}
+@media screen and (max-width: 800px){
+	.room-box.large{
+		height: 530px;
+	}
+}
+	@media screen and (max-width: 600px){
+		.room-box.large{
+			height: 580px;
+		}
+	}
+	@media screen and (max-width: 1199px){
+		.specs-break{
+			clear: left;
+		}
+	}
+
+	@media screen and (max-width: 424px){
+		.room-box.large{
+			height: 710px;
+		}
+	}
+
+	@media screen and (max-width: 991px){
+		.room-box{
+			width: 100%;
+		}
 	}
 	.large{
 		width: 100%;
-		float: none;
+	}
+	.float{
+		width: 50%;
+		float: left;
 	}
 	.room-details{
 		margin-bottom: 60px;
@@ -352,7 +427,7 @@ ul.notifications {
 	}
 	@media screen and (min-width:768px){
 		.booking-container {
-			margin-top: -83px;
+			margin-top: 0px;
 		}
 	}
 	@media screen and (min-width: 768px) and (max-width: 1199px){
@@ -374,6 +449,10 @@ ul.notifications {
 		.ui-datepicker{
 			width: 100%;
 		}
+	}
+	
+	.reservation-form .form-group{
+		padding: 0 15px;
 	}
 	ul#times{
 		margin: 5px 0 0 0;
@@ -426,6 +505,18 @@ ul.notifications {
 			border-bottom: none;
 		}
 	}
+
+
+// Exceptions
+@media screen and (max-width: 500px) {
+	.rooms, .room, .faq  {
+		.marketing {
+			margin-top: 100vh;
+			clear: both;
+		}
+		
+		
+	}
 }
 
 .room-box-bg-trailer{
@@ -442,7 +533,7 @@ ul.notifications {
 }
 
 @media screen and (max-width: 768px){
-	.room-boxes {
+	
 		padding-top: 0px;
 
 		.room-box {
@@ -453,11 +544,11 @@ ul.notifications {
 		.room-details {
 			margin-bottom: 20px;
 		}
-	}
+	
 }
 
 @media screen and (max-width: 500px){
-	.room-boxes{
+	
 
 		.room-details{
 			margin-bottom: 20px;
@@ -479,7 +570,7 @@ ul.notifications {
 				border-right: none;
 			}
 		}
-	}
+	
 }
 
 /* ======================================== */
@@ -540,24 +631,18 @@ footer{
 	font-size: 12px;
 	padding: 0 0 60px;
 	clear: both;
+	margin-top: 80px;
 	a{
 		color: #888;
 
 	}
 }
 
-// EXCEPTION
-.contact{
-	footer{
-		margin-top: 100vh;
-		z-index: 1
-	}
-}
 
-// EXCEPTION
-.about{
+.room{
+	padding-bottom: 60px;
 	footer{
-		margin-top: 100vh;
+		display: none;
 	}
 }
 
@@ -565,7 +650,12 @@ footer{
 /* ======================================== */
 /* LAYOUT & NAVBAR
 /* ======================================== */
-
+.navbar-wrapper{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
 .navbar-brand{
 	position: absolute;
 	top: 0;

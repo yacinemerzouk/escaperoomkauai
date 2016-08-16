@@ -2,40 +2,20 @@ Template.reservations.helpers({
     adminSelectedDate: function(){
         return Session.get('adminSelectedDate');
     },
-    times: function(){
-        var possibleTimes = [];
-        var times = [];
-        var reservations = EscapeRoom.Collections.Reservations.find( {date: Session.get( 'adminSelectedDate' )}).fetch();
-        for( var x = 10; x <= 11; x++ ){
-            possibleTimes.push( x + ':00am' );
-            possibleTimes.push( x + ':30am' );
-        }
-        possibleTimes.push( '12:00pm' );
-        possibleTimes.push( '12:30pm' );
-        for( var x = 1; x <= 10; x++ ){
-            possibleTimes.push( x + ':00pm' );
-            possibleTimes.push( x + ':30pm' );
-        }
+    games: function(){
 
-        _.each( possibleTimes, function( possibleTime ){
-
-            var time = { time: possibleTime, reservations: [] };
-
-            _.each( reservations, function( reservation ){
-
-                if( possibleTime == reservation.time ){
-                    time.reservations.push( reservation );
-                }
-
-            })
-
-            times.push( time );
-
+        var times = EscapeRoom.getPossibleTimes(Session.get('adminSelectedDate'));
+        var games = [];
+        _.each(times,function(time){
+            var game = new EscapeRoom.Game({
+                date: Session.get('adminSelectedDate'),
+                time: time
+            });
+            games.push(game);
         });
 
+        return games;
 
-
-        return times;
     }
 });
 
@@ -86,6 +66,26 @@ Template.reservations.events({
         })
     },
 
+
+    'click [hook="send-follow-up"]': function(evt,tmpl) {
+        evt.preventDefault();
+        var date = Session.get('adminSelectedDate');
+        var time = $(evt.currentTarget).attr('hook-data-time');
+        var game = new EscapeRoom.Game({date:date,time:time});
+        var players = Bureaucrat.getFormData( $(evt.currentTarget).parents('[hook="players-form"]') );
+        var playersArray = [];
+        _.each(players,function(p){
+            if( p && p.length > 0 ) {
+                playersArray.push(p);
+            }
+        });
+        console.log( 'PLAYERS', players, playersArray );
+        game.players = playersArray;
+        console.log( 'SENDING FOLLOWUP', game );
+        game.sendFollowUpEmail();
+
+    },
+
     'click [hook="unblock-date"]': function(evt,tmpl) {
         evt.preventDefault();
         //console.log('unblock?');
@@ -93,6 +93,53 @@ Template.reservations.events({
         Meteor.call('unblockDate', date, function(err,res){
             //console.log('back from unblockDate');
         })
+    },
+
+    'click [hook="log-game-result"]': function(evt,tmpl) {
+        evt.preventDefault();
+        var won = $(evt.currentTarget).attr('hook-data-result') == "won" ? true : false;
+        var date = Session.get('adminSelectedDate');
+        var time = $(evt.currentTarget).attr('hook-data-time');
+        var game = new EscapeRoom.Game({date:date,time:time});
+        game.won = won;
+        console.log( 'SAVING GAME', game);
+        game.save();
+        //console.log( 'SAVE RES', res );
+        // var roomId = $(evt.currentTarget).attr('hook-data-room-id');
+        // var date = $(evt.currentTarget).attr('hook-data-date');
+        // var time = $(evt.currentTarget).attr('hook-data-time');
+        //
+        // // Check if game exists
+        // var game = EscapeRoom.Collections.Games.findOne(
+        //     {
+        //         roomId: roomId,
+        //         date: date,
+        //         time: time
+        //     }
+        // );
+        // if( game ){
+        //     EscapeRoom.Collections.Games.update(
+        //         {
+        //             roomId: roomId,
+        //             date: date,
+        //             time: time
+        //         },
+        //         {
+        //             won: won
+        //         }
+        //     );
+        // }else{
+        //     EscapeRoom.Collections.Games.insert({
+        //         won: won,
+        //         roomId: roomId,
+        //         date: date,
+        //         time: time
+        //     });
+        //
+        // }
+
+
+
     },
 
     'click [hook="block-date"]': function(evt,tmpl) {
@@ -132,5 +179,27 @@ Template.reservations.events({
             }
         })
 
+    },
+    'click [hook="show-postgame"]': function(evt,tmpl){
+        $(evt.currentTarget).siblings('[hook="hide-postgame"]').show();
+        $(evt.currentTarget).hide();
+        var postgameToShow = $(evt.currentTarget).attr('hook-data');
+        $('[hook="postgame-'+postgameToShow+'"]').show();
+    },
+    'click [hook="hide-postgame"]': function(evt,tmpl){
+        $(evt.currentTarget).siblings('[hook="show-postgame"]').show();
+        $('[hook="hide-postgame"]').hide();
+        var postgameToHide = $(evt.currentTarget).attr('hook-data');
+        $('[hook="postgame-'+postgameToHide+'"]').hide();
+    },
+    'click [hook="log-time"]': function(evt,tmpl){
+        evt.preventDefault();
+        var timeLog = $(evt.currentTarget).siblings('input').val()
+        var date = Session.get('adminSelectedDate');
+        var time = $(evt.currentTarget).attr('hook-data-time');
+        var game = new EscapeRoom.Game({date:date,time:time});
+        game.timeLog = timeLog;
+        console.log( 'SAVING GAME', game);
+        game.save();
     }
 });

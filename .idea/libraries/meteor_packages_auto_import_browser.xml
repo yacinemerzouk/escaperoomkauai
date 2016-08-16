@@ -4,6 +4,7 @@
       <sourceFilesUrls>
         <item url="file://$USER_HOME$/.meteor/packages/meteorhacks_inject-initial/1.0.4/web.browser/lib/inject-client.js" />
         <item url="file://$USER_HOME$/.meteor/packages/gfk_notifications/1.1.4/web.browser/notifications.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/zendy_bureaucrat/1.0.2/web.browser/bureaucrat.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.2.12/web.browser/runtime-tests.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.2.12/web.browser/runtime.js" />
         <item url="file://$USER_HOME$/.meteor/packages/okgrow_analytics/1.0.9/web.browser/client/collections.js" />
@@ -85,6 +86,7 @@
         <item url="file://$USER_HOME$/.meteor/packages/fastclick/1.0.12/web.browser/fastclick.js" />
         <item url="file://$USER_HOME$/.meteor/packages/geojson-utils/1.0.9/web.browser/geojson-utils.js" />
         <item url="file://$USER_HOME$/.meteor/packages/geojson-utils/1.0.9/web.browser/main.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/fortawesome_fontawesome/4.5.0/web.browser/upstream/css/font-awesome.css" />
         <item url="file://$USER_HOME$/.meteor/packages/html-tools/1.0.10/web.browser/scanner.js" />
         <item url="file://$USER_HOME$/.meteor/packages/html-tools/1.0.10/web.browser/templatetag.js" />
         <item url="file://$USER_HOME$/.meteor/packages/html-tools/1.0.10/web.browser/tokenize.js" />
@@ -236,6 +238,7 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.meteor/packages/meteorhacks_inject-initial/1.0.4/web.browser/lib/inject-client.js" />
       <root url="file://$USER_HOME$/.meteor/packages/gfk_notifications/1.1.4/web.browser/notifications.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/zendy_bureaucrat/1.0.2/web.browser/bureaucrat.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.2.12/web.browser/runtime-tests.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.2.12/web.browser/runtime.js" />
       <root url="file://$USER_HOME$/.meteor/packages/okgrow_analytics/1.0.9/web.browser/client/collections.js" />
@@ -317,6 +320,7 @@
       <root url="file://$USER_HOME$/.meteor/packages/fastclick/1.0.12/web.browser/fastclick.js" />
       <root url="file://$USER_HOME$/.meteor/packages/geojson-utils/1.0.9/web.browser/geojson-utils.js" />
       <root url="file://$USER_HOME$/.meteor/packages/geojson-utils/1.0.9/web.browser/main.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/fortawesome_fontawesome/4.5.0/web.browser/upstream/css/font-awesome.css" />
       <root url="file://$USER_HOME$/.meteor/packages/html-tools/1.0.10/web.browser/scanner.js" />
       <root url="file://$USER_HOME$/.meteor/packages/html-tools/1.0.10/web.browser/templatetag.js" />
       <root url="file://$USER_HOME$/.meteor/packages/html-tools/1.0.10/web.browser/tokenize.js" />
