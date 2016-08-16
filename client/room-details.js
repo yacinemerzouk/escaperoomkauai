@@ -167,10 +167,10 @@ Template.room.helpers({
         return Session.get( 'reservation' );
     },
 
-    hasEnoughSpots: function(reservation){
-        var spotsLeft = EscapeRoom.spotsLeft(reservation.roomId, reservation.date, reservation.time);
-        return spotsLeft >= reservation.nbPlayers ? true : false;
-    },
+    // hasEnoughSpots: function(reservation){
+    //     var spotsLeft = EscapeRoom.spotsLeft(reservation.roomId, reservation.date, reservation.time);
+    //     return spotsLeft >= reservation.nbPlayers ? true : false;
+    // },
     isFree: function(){
         var reservation = new EscapeRoom.Reservation( Session.get('reservation') );
         return reservation.total == 0 ? true : false;
@@ -210,6 +210,12 @@ Template.room.helpers({
     canClose: function(){
         var reservation = new EscapeRoom.Reservation(Session.get('reservation'));
         return reservation.canClose();
+    },
+
+    startTimes: function(){
+        var reservation = new EscapeRoom.Reservation(Session.get('reservation'));
+        console.log( 'in startTimes', reservation.date );
+        return EscapeRoom.getPossibleTimes(reservation.date);
     }
 
 
@@ -230,6 +236,9 @@ Template.room.events({
         }
         var reservation = new EscapeRoom.Reservation( Session.get('reservation') );
 
+        if( !formData.nbPlayers ){
+            formData.nbPlayers = 0;
+        }
         if( formData.nbPlayers == reservation.room.maxPlayers || formData.nbPlayers == reservation.room.maxPlayers-1 ){
             formData.closeRoom = false;
         }
