@@ -3,71 +3,206 @@
     <div class="hero hero-home-bg">
         <div class="overlay">
             <div class="content">
-                <h1>Our escape room games</h1>
-                <p>Which challenge will you take on?</p>
+                <h1>Rooms</h1>
+                <p style="margin-bottom: 0">Each one of our escape rooms is themed and set-designed to offer a unique immersive experience.</p>
             </div>
         </div>
     </div>
 
-    <div class="container marketing">
+
+    <div class="container">
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="room-boxes">
 
-                    {{#each rooms}}
-                        <a href="{{pathFor 'room' _id}}">
-                            <div class="room-box large room-box-bg-mad-scientist" style="background-image: url({{image}})">
-                                <div class="room-box-overlay">
-                                    <div class="ribbon-wrapper">
-                                        <div class="ribbon-wrapper-green">
-                                            <div class="ribbon-green">
-                                                {{#if available}}
-                                                    BOOK NOW!
-                                                {{else}}
-                                                    {{opening}}
-                                                {{/if}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="room-box-content">
-                                        <h2>{{title}}</h2>
-                                        <p>{{excerpt}}</p>
-                                        <a href="{{pathFor 'room' _id}}" class="button">Room Info &amp; Schedule</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="room-details" style="background: #eee; padding: 10px 0 10px">
-                                <div class="row">
-                                    <div class="col-xs-4 text-center data">
-                                        <h4>
-                                            <span class="huge">{{minPlayers}}-{{maxPlayers}}</span><br>
-                                            Players
-                                        </h4>
-                                    </div>
-                                    <div class="col-xs-4 text-center data">
-                                        <h4>
-                                            <span class="huge">{{duration}}</span><br>
-                                            Minutes
-                                        </h4>
-                                    </div>
-                                    <div class="col-xs-4 text-center data">
-                                        <h4>
-                                            <span class="huge">{{successRate}}%</span><br>
-                                            Success Rate
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    {{/each}}
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+
+                <h2 class="subheading">Our Escape Rooms</h2>
+
+                {{#each rooms}}
+
+                    {{>roomBox room=this showDescription=true showSpecs=true showPrice=true showCTA=true showAvailabilityCTA=true size="large"}}
 
 
+                    <!--<a href="{{pathFor 'room' slug}}">-->
+                        <!--<div class="room-box room-box-bg-mad-scientist" style="background-image: url({{image}}); height: 450px">-->
+                            <!--<div class="room-box-overlay">-->
+                                <!--<div class="ribbon-wrapper">-->
+                                    <!--<div class="ribbon-wrapper-green">-->
+                                        <!--<div class="ribbon-green">-->
+                                            <!--{{#if available}}-->
+                                                <!--Now Open-->
+                                            <!--{{else}}-->
+                                                <!--{{opening}}-->
+                                            <!--{{/if}}-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="room-box-content">-->
+                                    <!--<h2>{{title}}</h2>-->
+                                    <!--<p>{{description}}</p>-->
+                                    <!--<div class="specs">-->
+                                        <!--<i class="fa fa-users" aria-hidden="true" style=""></i>-->
+                                        <!--<span class="spec-value" style="">2 - 6</span><br>-->
+                                        <!--<span class="spec-key" style="">Players</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="specs">-->
+                                        <!--<i class="fa fa-clock-o" aria-hidden="true" style=""></i>-->
+                                        <!--<span class="spec-value" style="">60</span><br>-->
+                                        <!--<span class="spec-key" style="">Minutes</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="specs">-->
+                                        <!--<i class="fa fa-trophy" aria-hidden="true"></i>-->
+                                        <!--<span class="spec-value" style="">40%</span><br>-->
+                                        <!--<span class="spec-key" style="">Success Rate</span>-->
+                                    <!--</div>-->
+                                    <!--<div style="clear: both; padding-top: 42px;">-->
+                                        <!--<a href="{{pathFor 'room' slug}}" class="button">View Availability</a>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                {{/each}}
+
+            </div>
+
+        </div>
+
+        <!-- TESTIMONIALS -->
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+
+                <h2 class="subheading">What Players Say</h2>
+
+                <div class="testimonial">
+                    <p class="testimonial-quote">"Awesome Adventure! If you're on Kaua'i you have to check out this adventure. It was great family fun."</p>
+                    <p class="testimonial-author">-- Caroline F, Tripadvisor</p>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-quote">"Escape rooms are recognized worldwide as one of the best & most fun group activities you can engage in. Kauai's Escape Room is no exception. The quality of puzzles & set design are superb."</p>
+                    <p class="testimonial-author">-- Rolo B, Facebook</p>
                 </div>
 
             </div>
+
         </div>
+
+
+        <!-- MOST POPULAR -->
+        <div class="row">
+
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+
+                <h2 class="subheading">Our Most Popular Room</h2>
+
+                {{#with mostPopular}}
+
+                    {{>roomBox room=this showDescription=true showSpecs=true showPrice=true showCTA=true showAvailabilityCTA=true size="large"}}
+
+                {{/with}}
+
+            </div>
+
+        </div>
+
+
+        <!-- MORE INFO -->
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+
+                <h2 class="subheading">More Info</h2>
+
+                <p class="lead">Do you have questions about our escape games? Check out or <a href="{{pathFor 'faq'}}">frequently asked questions</a> or call us at <a href="tel:18086356957">1.808.635.6957</a>. You can also contact us by email at <a href="mailto:info@escaperoomkauai.com">info@escaperoomkauai.com</a>.</p>
+                <p>&nbsp;</p>
+                <p class="lead-buttons">
+                    <a href="{{pathFor 'rooms'}}" class="button">View All Our Rooms</a>
+                    <a href="{{pathFor 'faq'}}" class="button button-unavailable">FAQ</a>
+                    <a href="{{pathFor 'contact'}}" class="button button-unavailable">Contact Us</a>
+                </p>
+
+            </div>
+
+        </div>
+
     </div>
+
+    <!--<div class="container marketing">-->
+
+                <!--<div class="room-boxes">-->
+
+                    <!--{{#each rooms}}-->
+                        <!--<a href="{{pathFor 'room' slug}}">-->
+                            <!--<div class="room-box room-box-bg-mad-scientist" style="background-image: url({{image}})">-->
+                                <!--<div class="room-box-overlay">-->
+                                    <!--<div class="ribbon-wrapper">-->
+                                        <!--<div class="ribbon-wrapper-green">-->
+                                            <!--<div class="ribbon-green">-->
+                                                <!--{{#if available}}-->
+                                                    <!--Now Open-->
+                                                <!--{{else}}-->
+                                                    <!--{{opening}}-->
+                                                <!--{{/if}}-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="room-box-content">-->
+                                        <!--<h2>{{title}}</h2>-->
+                                        <!--<p>{{excerpt}}</p>-->
+
+                                        <!--<a href="{{pathFor 'room' slug}}" class="button">Room Info &amp; Schedule</a>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--{{/each}}-->
+                    <!--{{#each rooms}}-->
+                        <!--<a href="{{pathFor 'room' slug}}">-->
+                            <!--<div class="room-box room-box-bg-mad-scientist" style="background-image: url({{image}}); width: 80%; margin-left:10%; height: 400px">-->
+                                <!--<div class="room-box-overlay">-->
+                                    <!--<div class="ribbon-wrapper">-->
+                                        <!--<div class="ribbon-wrapper-green">-->
+                                            <!--<div class="ribbon-green">-->
+                                                <!--{{#if available}}-->
+                                                    <!--Now Open-->
+                                                <!--{{else}}-->
+                                                    <!--{{opening}}-->
+                                                <!--{{/if}}-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="room-box-content" style="max-width: 600px;">-->
+                                        <!--<h2>{{title}}</h2>-->
+                                        <!--<p>{{description}}</p>-->
+                                        <!--<div class="specs">-->
+                                            <!--<i class="fa fa-users" aria-hidden="true" style=""></i>-->
+                                            <!--<span class="spec-value" style="">2 - 6</span><br>-->
+                                            <!--<span class="spec-key" style="">Players</span>-->
+                                        <!--</div>-->
+                                        <!--<div class="specs">-->
+                                            <!--<i class="fa fa-clock-o" aria-hidden="true" style=""></i>-->
+                                            <!--<span class="spec-value" style="">60</span><br>-->
+                                            <!--<span class="spec-key" style="">Minutes</span>-->
+                                        <!--</div>-->
+                                        <!--<div class="specs">-->
+                                            <!--<i class="fa fa-trophy" aria-hidden="true"></i>-->
+                                            <!--<span class="spec-value" style="">40%</span><br>-->
+                                            <!--<span class="spec-key" style="">Success Rate</span>-->
+                                        <!--</div>-->
+                                        <!--<div style="clear: both; padding-top: 42px;">-->
+                                            <!--<a href="{{pathFor 'room' slug}}" class="button">View Availability</a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--{{/each}}-->
+
+
+        <!--</div>-->
+    <!--</div>-->
 
 
 </template>

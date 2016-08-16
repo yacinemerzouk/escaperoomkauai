@@ -5,5 +5,8 @@ Template.rooms.rendered = function(){
 Template.rooms.helpers({
     rooms: function(){
         return EscapeRoom.Collections.Rooms.find();
+    },
+    mostPopular: function(){
+        return EscapeRoom.Collections.Rooms.findOne({slug:'mad-scientist'})
     }
 });

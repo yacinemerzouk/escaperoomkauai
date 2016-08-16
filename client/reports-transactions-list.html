@@ -1,0 +1,157 @@
+<template name="reportsTransactionsList">
+
+    <div class="hero hero-home-bg room-box-bg-mad-scientist">
+        <div class="overlay">
+            <div class="content">
+                <h1>Transactions</h1>
+                <p>Admins only...</p>
+            </div>
+        </div>
+    </div>
+
+    {{#if currentUser}}
+
+        <div class="container marketing">
+
+
+            <div class="col-sm-4 form-group">
+                <h4>From:</h4>
+                <input class="form-control" id="datepickerFrom" value="{{reportsTransactionsListFrom}}">
+                <h4>To:</h4>
+                <input class="form-control" id="datepickerTo" value="{{reportsTransactionsListTo}}">
+
+            </div>
+
+            <div class="col-sm-8">
+                <h4>Transactions list</h4>
+                {{#each reservations}}
+                    {{>reservationDetails this}}
+                {{/each}}
+            </div>
+
+        </div>
+
+    {{else}}
+
+        <div class="container marketing">
+            Admins only
+            <br>
+            {{> loginButtons}}
+        </div>
+    {{/if}}
+
+</template>
+
+<template name="reservationDetails">
+    <table class="table table-bordered table-striped">
+        <tbody>
+        <tr>
+            <th colspan="2"><a href="{{pathFor 'confirmation' _id}}">Reservation #{{publicId}}</a></th>
+        </tr>
+        <tr>
+            <th>Transaction date &amp; time</th>
+            <td class="currency">{{unixToHumanReadableDateTime transaction.created}}</td>
+        </tr>
+
+        <tr>
+            <th>Game Date & Time</th>
+            <td class="currency">{{humanReadableDate date}} @ {{time}}</td>
+        </tr>
+
+        <tr>
+            <th>Room</th>
+            <td class="currency">{{roomTitle roomId}}</td>
+        </tr>
+        <tr>
+            <th># of Players</th>
+            <td class="currency">{{nbPlayers}}</td>
+        </tr>
+        <tr>
+            <th>Closed Room?</th>
+            <td class="currency">{{#if closeRoom}}CLOSED ROOM{{else}}No{{/if}}</td>
+        </tr>
+        <!--<tr>-->
+        <!--<th>Time</th>-->
+        <!--<td class="currency">{{time}}</td>-->
+        <!--</tr>-->
+        <tr>
+            <th>Name</th>
+            <td class="currency">{{firstName}} {{lastName}}</td>
+        </tr>
+
+
+        <tr>
+            <th>Email</th>
+            <td class="currency">{{email}}</td>
+        </tr>
+
+        <tr>
+            <th>Phone</th>
+            <td class="currency">{{phone}}</td>
+        </tr>
+
+
+
+        <tr>
+            <th>Coupon</th>
+            <td class="currency">{{toUpperCase coupon}}</td>
+        </tr>
+
+        <tr>
+            <th>Amount Charged</th>
+            <td class="currency">{{centsToDollarsCurrency transaction.amount}}</td>
+        </tr>
+
+        {{#if adjustments.refund}}
+            <tr>
+                <th>Amount Refunded</th>
+                <td class="currency">{{centsToDollarsCurrency adjustments.refund}}</td>
+            </tr>
+        {{/if}}
+
+        {{#if adjustments.extra}}
+            <tr>
+                <th>Amount Extra</th>
+                <td class="currency">{{centsToDollarsCurrency adjustments.extra}}</td>
+            </tr>
+        {{/if}}
+
+        {{#if adjustments.correctedAmount}}
+            <tr>
+                <th>Corrected Amount</th>
+                <td class="currency">{{centsToDollarsCurrency adjustments.correctedAmount}}</td>
+            </tr>
+        {{/if}}
+
+
+        </tbody>
+    </table>
+</template>
+
+
+<template name="reservationOverview">
+    <table class="table table-bordered table-striped" style="margin-bottom: 10px">
+        <tbody>
+        <tr>
+            <th colspan="2"><a href="{{pathFor 'confirmation' _id}}">Reservation #{{publicId}}</a></th>
+        </tr>
+        <tr>
+            <th>Game Date & Time</th>
+            <td class="currency">{{humanReadableDate date}} @ {{time}}</td>
+        </tr>
+
+        <tr>
+            <th>Room</th>
+            <td class="currency">{{roomTitle roomId}}</td>
+        </tr>
+        <tr>
+            <th># of Players</th>
+            <td class="currency">{{nbPlayers}} {{#if closeRoom}} &bull; CLOSED ROOM{{/if}}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td class="currency">{{firstName}} {{lastName}}</td>
+        </tr>
+        </tbody>
+    </table>
+</template>

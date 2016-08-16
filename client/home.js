@@ -16,5 +16,8 @@ Template.home.events({
 Template.home.helpers({
     rooms: function(){
         return EscapeRoom.Collections.Rooms.find();
+    },
+    mostPopular: function(){
+        return EscapeRoom.Collections.Rooms.findOne({slug:'mad-scientist'})
     }
 });

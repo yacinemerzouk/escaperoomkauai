@@ -2,10 +2,10 @@
     "private": {
         "smtp": {
             "email": "info@escaperoomkauai.com",
-            "password": "Ozozw27NMX",
-            "server": "secure.emailsrvr.com",
-            "port": 465,
-            "MAIL_URL": "smtp://info@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/"
+            "mailman": "mailman@escaperoomkauai.com",
+            "notifications":"yacine@merzouk.ca",
+            "bcc": "notifications@zendy.net",
+            "MAIL_URL": "smtp://mailman@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/"
         },
         "stripe": {
             "secretKey": "pNVbtQUJwt5HhEiWIEYghnmSzfMlY44m"
@@ -19,7 +19,13 @@
         },
         "stripe": {
             "publishableKey": "pk_gbxDAV3kVIYwDfCRaRiIApr4RmDyU"
+        },
+        "smtp": {
+            "email": "info@escaperoomkauai.com",
+            "notifications":"yacine@merzouk.ca",
+            "mailman": "mailman@escaperoomkauai.com"
         }
+
     },
     "kadira": {
         "appId": "pBwnjmccm3mkZXgZY",

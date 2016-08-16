@@ -16,13 +16,14 @@
 Router.configure({
     layoutTemplate: 'layout',
     loadingTemplate: 'loading',
-    notFoundTemplate: 'notFound',
-    waitOn: function(){
-        return [
-            Meteor.subscribe('rooms'),
-            Meteor.subscribe('reservations')
-        ]
-    }
+    notFoundTemplate: 'notFound'
+    // waitOn: function(){
+    //     return [
+    //         Meteor.subscribe('rooms'),
+    //         Meteor.subscribe('reservations'),
+    //         Meteor.subscribe('coupons')
+    //     ]
+    // }
 });
 
 /**
@@ -33,6 +34,9 @@ Router.route('/', {
     sitemap: true,
     changefreq: 'daily',
     priority: '1.0',
+    waitOn: function(){
+        return Meteor.subscribe( 'rooms' );
+    },
     ironMeta: true,
     meta: function(){
         var title = 'Kauai Escape Room - Escape Games, Puzzle Rooms';
@@ -69,6 +73,9 @@ Router.route('/rooms', {
     sitemap: true,
     changefreq: 'monthly',
     priority: '0.9',
+    waitOn: function(){
+        return Meteor.subscribe( 'rooms' );
+    },
     ironMeta: true,
     meta: function(){
         var title = 'Our Escape Rooms - Kauai Escape Room - Escape Games, Puzzle Rooms';
@@ -248,8 +255,36 @@ Router.route('/directions', {
  * Reservations - Admin page
  */
 Router.route('/reservations', {
-    name: 'reservations'
+    name: 'reservations',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('reservations'),
+            Meteor.subscribe('rooms'),
+            Meteor.subscribe('games')
+        ]
+    }
 });
+
+/**
+ * Reservations - Admin page
+ */
+Router.route('/coupons', {
+    name: 'coupons'
+});
+
+/**
+ * Transactions - Admin page
+ */
+Router.route('/reports/transactions/list', {
+    name: 'reportsTransactionsList',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('reservations'),
+            Meteor.subscribe('rooms')
+        ]
+    }
+});
+
 
 /**
  * Confirmation
@@ -257,6 +292,12 @@ Router.route('/reservations', {
 Router.route('/confirmation/:_id', {
     name: 'confirmation',
     layoutTemplate: 'layoutConfirmation',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('reservation', this.params._id),
+            Meteor.subscribe('rooms')
+        ]
+    },
     data: function(){
         return EscapeRoom.Collections.Reservations.findOne(this.params._id);
     }
@@ -267,20 +308,35 @@ Router.route('/confirmation/:_id', {
  */
 Router.route('/room/:slug', {
     name: 'room',
+    waitOn: function(){
+        return [
+            Meteor.subscribe( 'room', this.params.slug ),
+            Meteor.subscribe( 'coupons' ),
+            Meteor.subscribe( 'reservations' )
+        ]
+    },
     ironMeta: true,
     meta: function(){
         var room =  EscapeRoom.Collections.Rooms.findOne({slug:this.params.slug});
-        var title = room.title + ' - Kauai Escape Room';
-        var image = 'https://www.escaperoomkauai.com' + room.image;
+        var title, image, description, slug;
+        if( room ){
+            title = room.title + ' - Kauai Escape Room';
+            image = 'https://www.escaperoomkauai.com' + room.image;
+            description = room.description;
+        }else{
+            title = 'Kauai Escape Room';
+            image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
+            description = 'An escape game by Kauai Escape Room';
+        }
         return {
             title: title,
-            description: room.description,
+            description: description,
             keywords: 'kauai, escape room, escape game, puzzle room',
-            canonical: 'https://www.escaperoomkauai.com/room/'+room.slug,
+            canonical: 'https://www.escaperoomkauai.com/room/'+this.params.slug,
             "og:title": title,
             "og:type": 'website',
-            "og:url": 'https://www.escaperoomkauai.com/room/'+room.slug,
-            "og:description": room.description,
+            "og:url": 'https://www.escaperoomkauai.com/room/'+this.params.slug,
+            "og:description": description,
             "og:site_name": 'Kauai Escape Room',
             "og:image": image,
             "og:image:width": '1200',
@@ -289,7 +345,7 @@ Router.route('/room/:slug', {
             "twitter:site": '@kauaiescaperoom',
             "twitter:creator": '@kauaiescaperoom',
             "twitter:title": title,
-            "twitter:description": room.description,
+            "twitter:description": description,
             "twitter:image": image
         }
     },
@@ -320,8 +376,9 @@ Router.onAfterAction(function(){
         }
 
         // Grab whatever our new meta function returns
-        var metaData = this.meta();
-
+        if( this && this.meta ) {
+            var metaData = this.meta();
+        }
         // If we have metaData
         if( metaData ){
 

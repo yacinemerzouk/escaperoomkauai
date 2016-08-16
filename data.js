@@ -67,3 +67,40 @@
 //         }
 //     });
 // }
+
+// if( Meteor.isServer ){
+//     Meteor.startup(function() {
+//         if (EscapeRoom.Collections.Coupons.find().count() === 0) {
+//             EscapeRoom.Collections.Coupons.insert(
+//                 {
+//                     coupon:'GRANDOPENING',
+//                     discount: 50,
+//                     limitDateFrom: '2016-07-23',
+//                     limitDateTo: '2016-07-27'
+//                 }
+//             );
+//         }
+//     });
+// }
+
+if( Meteor.isServer ){
+    Meteor.startup(function() {
+        if (EscapeRoom.Collections.Games.find().count() === 0) {
+            EscapeRoom.Collections.Games.insert(
+                {
+                    date:'2016-07-26',
+                    time: '9:00pm',
+                    won: true,
+                    time: '55:00'
+                }
+            );
+            EscapeRoom.Collections.Games.insert(
+                {
+                    date:'2016-07-26',
+                    time: '7:30pm',
+                    won: false
+                }
+            );
+        }
+    });
+}
