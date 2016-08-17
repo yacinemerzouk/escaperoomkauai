@@ -53,7 +53,7 @@
                                     {{#with reservation}}
                                         <div class="form-group">
                                             <label for="nbPlayers">Select number of players</label>
-                                            <p style="font-size: 14px; font-weight: bold;">{{toCurrency ../pricePerPlayer}} per player<br><span class="discount">{{toCurrency kamaainaPerPlayer}} off for each Hawaii resident</span></p>
+                                            <p style="font-size: 14px; font-weight: bold;">{{toCurrency ../pricePerPlayer}} per player<br><span class="discount">{{toCurrency ../kamaainaDiscountPerPlayer}} off for each Hawaii resident</span></p>
                                             <select class="form-control" hook="update-players" id="nbPlayers" name="nbPlayers" style="width: 100%; max-width: 100%;">
                                                 <option value="0">-- NUMBER OF PLAYERS --</option>
                                                 {{#each nbPlayersOptions}}
@@ -254,7 +254,7 @@
                                                     {{#unless discount}}
                                                         {{#if discountKamaaina}}
                                                             <tr>
-                                                                <td class="discount">Kama'aina Discount &nbsp;&bull;&nbsp; {{nbKamaaina}} residents &nbsp;&times;&nbsp; &mdash; {{toCurrency '5'}}</td>
+                                                                <td class="discount">Kama'aina Discount &nbsp;&bull;&nbsp; {{nbKamaaina}} residents &nbsp;&times;&nbsp; &mdash; {{toCurrency room.kamaainaDiscountPerPlayer}}</td>
                                                                 <td class="currency discount">&mdash; {{toCurrency discountKamaaina}}</td>
                                                             </tr>
                                                         {{/if}}

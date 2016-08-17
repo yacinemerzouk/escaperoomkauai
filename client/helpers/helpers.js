@@ -174,5 +174,5 @@ UI.registerHelper('loopCount', function(count){
 });
 
 UI.registerHelper('kamaainaPerPlayer', function(room){
-    return room.pricePerPlayer - room.kamaainaPerPlayer;
+    return room.pricePerPlayer - room.kamaainaDiscountPerPlayer;
 })
