@@ -32,7 +32,8 @@
                                 <div class="label label-danger pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Blocked</div>
                                 <a href="#" class="red pull-right" style="padding-right: 10px;" hook="unblock-time" hook-data-date="{{date}}" hook-data-time="{{time}}">Unblock</a>
                             {{else}}
-                                <a href="#" class="red pull-right" hook="block-time" hook-data-date="{{date}}" hook-data-time="{{time}}">Block</a>
+                                <div class="label label-success pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Open</div>
+                                <a href="#" class="red pull-right" hook="block-time" style="padding-right: 10px;" hook-data-date="{{date}}" hook-data-time="{{time}}">Block</a>
                             {{/if}}
                         </div>
                         {{#unless isBlocked}}
