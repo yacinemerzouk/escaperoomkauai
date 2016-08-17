@@ -2,7 +2,7 @@
  * ROOMS: publish all rooms, all data
  */
 Meteor.publish('rooms', function(){
-    var rooms = EscapeRoom.Collections.Rooms.find();
+    var rooms = EscapeRoom.Collections.Rooms.find({},{sort:{order:1}});
     return rooms;
 });
 
