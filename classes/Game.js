@@ -11,7 +11,7 @@ EscapeRoom.Game = function( args ){
         var data;
         // Set properties of object with db data or straight up data
         var game = EscapeRoom.Collections.Games.findOne({date:args.date,time:args.time});
-        console.log('Getting game from object',args,game);
+        //console.log('Getting game from object',args,game);
         if( game ){
             data = game;
         }else{
@@ -54,7 +54,7 @@ EscapeRoom.Game = function( args ){
     }
     this.isBlocked = isBlocked;
     
-    // console.log('end of game constructor', this);
+    // //console.log('end of game constructor', this);
 
 }
 
@@ -62,7 +62,7 @@ EscapeRoom.Game.prototype.save = function(){
 
     var result;
 
-    console.log( 'IN GAME SAVE', this, this._id );
+    //console.log( 'IN GAME SAVE', this, this._id );
 
     // Got ID; means game is already in DB; update document in DB
     if( this._id ){
@@ -78,7 +78,7 @@ EscapeRoom.Game.prototype.save = function(){
 }
 
 EscapeRoom.Game.prototype.update = function(){
-    console.log( 'IN GAME UPDATE', this );
+    //console.log( 'IN GAME UPDATE', this );
 
     var result = EscapeRoom.Collections.Games.update(
         {
@@ -95,7 +95,7 @@ EscapeRoom.Game.prototype.update = function(){
 
 EscapeRoom.Game.prototype.create = function() {
 
-    console.log( 'IN GAME CREATE', this );
+    //console.log( 'IN GAME CREATE', this );
 
     var result = EscapeRoom.Collections.Games.insert(this);
 

@@ -46,7 +46,7 @@ UI.registerHelper('canBook', function( roomId, date, time ) {
  */
 UI.registerHelper('hasEnoughSpots', function( roomId, date, time, nbPlayers ) {
 
-    console.log( 'in hasEnoughSpots', roomId, date, time, nbPlayers);
+    //console.log( 'in hasEnoughSpots', roomId, date, time, nbPlayers);
 
     var spotsLeft = EscapeRoom.spotsLeft(roomId, date, time);
 
@@ -92,7 +92,7 @@ UI.registerHelper('toCurrency', function( n ) {
  * @returns String : "selected" or ""
  */
 UI.registerHelper('selected', function( value, selected ){
-    if( value ) {
+    if( value && selected ) {
         return value.toString() === selected.toString() ? 'selected' : '';
     }else{
         return '';
