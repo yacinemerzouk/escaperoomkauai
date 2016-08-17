@@ -117,11 +117,8 @@ Template.room.onCreated(function(){
                 });
             }
 
-        }else{
-
-            Notifications.error( 'Missing Field(s)', 'All fields are required.');
-
         }
+
     }
 });
 Template.room.onRendered(function(){
