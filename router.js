@@ -269,7 +269,12 @@ Router.route('/reservations', {
  * Reservations - Admin page
  */
 Router.route('/coupons', {
-    name: 'coupons'
+    name: 'coupons',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('coupons')
+        ]
+    }
 });
 
 /**
@@ -312,7 +317,7 @@ Router.route('/room/:slug', {
         return [
             Meteor.subscribe( 'room', this.params.slug ),
             Meteor.subscribe( 'coupons' ),
-            Meteor.subscribe( 'reservations' )
+            Meteor.subscribe( 'futureReservations' )
         ]
     },
     ironMeta: true,

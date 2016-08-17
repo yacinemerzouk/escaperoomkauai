@@ -23,6 +23,12 @@ Meteor.publish('reservations', function(){
     return reservations;
 });
 
+Meteor.publish('futureReservations', function(){
+    var today = Epoch.dateObjectToDateString(new Date());
+    var reservations = EscapeRoom.Collections.Reservations.find({date:{$gte:today}});
+    return reservations;
+});
+
 Meteor.publish('reservation', function( _id ){
     var reservation = EscapeRoom.Collections.Reservations.find({_id:_id});
     return reservation;
