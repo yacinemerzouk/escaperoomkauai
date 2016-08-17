@@ -4,15 +4,15 @@
     <list default="true" id="b3ab2dd3-2ff8-4bd3-88c4-cdd518ab4e68" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/packages/bureaucrat-meteor-package" afterPath="$PROJECT_DIR$/packages/bureaucrat-meteor-package" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/packages/epoch-meteor-package" afterPath="$PROJECT_DIR$/packages/epoch-meteor-package" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/hero.less" afterPath="$PROJECT_DIR$/client/css/hero.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/Game.js" afterPath="$PROJECT_DIR$/classes/Game.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/_global.less" afterPath="$PROJECT_DIR$/client/css/_global.less" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/helpers/helpers.js" afterPath="$PROJECT_DIR$/client/helpers/helpers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/home.html" afterPath="$PROJECT_DIR$/client/home.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/layout.html" afterPath="$PROJECT_DIR$/client/layout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/reports-transactions-list.html" afterPath="$PROJECT_DIR$/client/reports-transactions-list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/reservations.html" afterPath="$PROJECT_DIR$/client/reservations.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/reservations.js" afterPath="$PROJECT_DIR$/client/reservations.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/room-details.html" afterPath="$PROJECT_DIR$/client/room-details.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/room-details.js" afterPath="$PROJECT_DIR$/client/room-details.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/_namespace.js" afterPath="$PROJECT_DIR$/lib/_namespace.js" />
     </list>
     <ignored path="escaperoomkauai.com.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,11 +32,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="_global.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/css/_global.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="227">
+              <caret line="107" column="26" selection-start-line="107" selection-start-column="26" selection-end-line="107" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="room-details.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/room-details.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="106" column="56" selection-start-line="106" selection-start-column="56" selection-end-line="106" selection-end-column="56" />
+            <state relative-caret-position="475">
+              <caret line="25" column="83" selection-start-line="25" selection-start-column="83" selection-end-line="25" selection-end-column="83" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
@@ -61,8 +71,8 @@
       <file leaf-file-name="reservations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/reservations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="6" column="82" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="82" />
+            <state relative-caret-position="2944">
+              <caret line="201" column="21" selection-start-line="201" selection-start-column="21" selection-end-line="201" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -71,9 +81,12 @@
       <file leaf-file-name="reservations.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/reservations.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="273">
+              <caret line="31" column="130" selection-start-line="31" selection-start-column="130" selection-end-line="31" selection-end-column="130" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -81,8 +94,8 @@
       <file leaf-file-name="helpers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/helpers/helpers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="503">
-              <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+            <state relative-caret-position="103">
+              <caret line="94" column="26" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -91,8 +104,8 @@
       <file leaf-file-name="room-details.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/room-details.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="214" column="14" selection-start-line="214" selection-start-column="4" selection-end-line="214" selection-end-column="14" />
+            <state relative-caret-position="132">
+              <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -101,19 +114,29 @@
       <file leaf-file-name="_namespace.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/_namespace.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="66" column="27" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="27" />
+            <state relative-caret-position="227">
+              <caret line="382" column="24" selection-start-line="382" selection-start-column="24" selection-end-line="382" selection-end-column="24" />
               <folding>
-                <marker date="1471387118000" expanded="true" signature="4774:4812" ph="..." />
-                <marker date="1471387118000" expanded="true" signature="4847:4891" ph="..." />
-                <marker date="1471387118000" expanded="true" signature="5101:5174" ph="..." />
-                <marker date="1471387118000" expanded="true" signature="8382:8420" ph="..." />
-                <marker date="1471387118000" expanded="true" signature="8451:8495" ph="..." />
-                <marker date="1471387118000" expanded="true" signature="8689:8762" ph="..." />
-                <marker date="1471387118000" expanded="true" signature="9988:10026" ph="..." />
-                <marker date="1471387118000" expanded="true" signature="10057:10101" ph="..." />
-                <marker date="1471387118000" expanded="true" signature="10295:10368" ph="..." />
+                <marker date="1471392116000" expanded="true" signature="4735:4773" ph="..." />
+                <marker date="1471392116000" expanded="true" signature="4808:4852" ph="..." />
+                <marker date="1471392116000" expanded="true" signature="5062:5135" ph="..." />
+                <marker date="1471392116000" expanded="true" signature="8343:8381" ph="..." />
+                <marker date="1471392116000" expanded="true" signature="8412:8456" ph="..." />
+                <marker date="1471392116000" expanded="true" signature="8650:8723" ph="..." />
+                <marker date="1471392116000" expanded="true" signature="9949:9987" ph="..." />
+                <marker date="1471392116000" expanded="true" signature="10018:10062" ph="..." />
+                <marker date="1471392116000" expanded="true" signature="10256:10329" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Game.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/Game.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1785">
+              <caret line="97" column="17" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -164,19 +187,19 @@
         <option value="$PROJECT_DIR$/client/rooms.html" />
         <option value="$PROJECT_DIR$/client/css/rooms.less" />
         <option value="$PROJECT_DIR$/client/css/room-details.less" />
-        <option value="$PROJECT_DIR$/client/css/_global.less" />
         <option value="$PROJECT_DIR$/client/css/home.less" />
-        <option value="$PROJECT_DIR$/lib/_namespace.js" />
-        <option value="$PROJECT_DIR$/client/reservations.js" />
-        <option value="$PROJECT_DIR$/classes/Game.js" />
         <option value="$PROJECT_DIR$/client/home.html" />
         <option value="$PROJECT_DIR$/client/reports-transactions-list.html" />
-        <option value="$PROJECT_DIR$/client/reservations.html" />
         <option value="$PROJECT_DIR$/client/css/hero.less" />
-        <option value="$PROJECT_DIR$/client/helpers/helpers.js" />
-        <option value="$PROJECT_DIR$/client/room-details.js" />
         <option value="$PROJECT_DIR$/client/room-details.html" />
+        <option value="$PROJECT_DIR$/client/css/_global.less" />
+        <option value="$PROJECT_DIR$/client/reservations.html" />
         <option value="$PROJECT_DIR$/client/layout.html" />
+        <option value="$PROJECT_DIR$/client/reservations.js" />
+        <option value="$PROJECT_DIR$/client/room-details.js" />
+        <option value="$PROJECT_DIR$/lib/_namespace.js" />
+        <option value="$PROJECT_DIR$/classes/Game.js" />
+        <option value="$PROJECT_DIR$/client/helpers/helpers.js" />
       </list>
     </option>
   </component>
@@ -508,12 +531,12 @@
       <workItem from="1470944374564" duration="9092000" />
       <workItem from="1470975841017" duration="469000" />
       <workItem from="1471215416575" duration="12176000" />
-      <workItem from="1471384772696" duration="5151000" />
+      <workItem from="1471384772696" duration="6652000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150487000" />
+    <option name="totallyTimeSpent" value="151988000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -531,13 +554,13 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1485623" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298647" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5015544" sideWeight="0.5106496" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32452276" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3236212" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26222685" sideWeight="0.48935038" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26222685" sideWeight="0.48935038" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -713,6 +736,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
           <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -749,6 +773,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
           <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -836,14 +861,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/_global.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="99" column="17" selection-start-line="99" selection-start-column="17" selection-end-line="99" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/css/home.less">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="292">
@@ -856,14 +873,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/Game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="139" column="51" selection-start-line="139" selection-start-column="51" selection-end-line="139" selection-end-column="51" />
           <folding />
         </state>
       </provider>
@@ -894,65 +903,84 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/helpers/helpers.js">
+    <entry file="file://$PROJECT_DIR$/client/room-details.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
-          <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+        <state relative-caret-position="475">
+          <caret line="25" column="83" selection-start-line="25" selection-start-column="83" selection-end-line="25" selection-end-column="83" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/_global.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="107" column="26" selection-start-line="107" selection-start-column="26" selection-end-line="107" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/reservations.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
-          <folding />
+        <state relative-caret-position="273">
+          <caret line="31" column="130" selection-start-line="31" selection-start-column="130" selection-end-line="31" selection-end-column="130" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/reservations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="82" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="82" />
+        <state relative-caret-position="2944">
+          <caret line="201" column="21" selection-start-line="201" selection-start-column="21" selection-end-line="201" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/room-details.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/_namespace.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="66" column="27" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="27" />
+        <state relative-caret-position="227">
+          <caret line="382" column="24" selection-start-line="382" selection-start-column="24" selection-end-line="382" selection-end-column="24" />
           <folding>
-            <marker date="1471387118000" expanded="true" signature="4774:4812" ph="..." />
-            <marker date="1471387118000" expanded="true" signature="4847:4891" ph="..." />
-            <marker date="1471387118000" expanded="true" signature="5101:5174" ph="..." />
-            <marker date="1471387118000" expanded="true" signature="8382:8420" ph="..." />
-            <marker date="1471387118000" expanded="true" signature="8451:8495" ph="..." />
-            <marker date="1471387118000" expanded="true" signature="8689:8762" ph="..." />
-            <marker date="1471387118000" expanded="true" signature="9988:10026" ph="..." />
-            <marker date="1471387118000" expanded="true" signature="10057:10101" ph="..." />
-            <marker date="1471387118000" expanded="true" signature="10295:10368" ph="..." />
+            <marker date="1471392116000" expanded="true" signature="4735:4773" ph="..." />
+            <marker date="1471392116000" expanded="true" signature="4808:4852" ph="..." />
+            <marker date="1471392116000" expanded="true" signature="5062:5135" ph="..." />
+            <marker date="1471392116000" expanded="true" signature="8343:8381" ph="..." />
+            <marker date="1471392116000" expanded="true" signature="8412:8456" ph="..." />
+            <marker date="1471392116000" expanded="true" signature="8650:8723" ph="..." />
+            <marker date="1471392116000" expanded="true" signature="9949:9987" ph="..." />
+            <marker date="1471392116000" expanded="true" signature="10018:10062" ph="..." />
+            <marker date="1471392116000" expanded="true" signature="10256:10329" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/room-details.js">
+    <entry file="file://$PROJECT_DIR$/classes/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="214" column="14" selection-start-line="214" selection-start-column="4" selection-end-line="214" selection-end-column="14" />
+        <state relative-caret-position="1785">
+          <caret line="97" column="17" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/room-details.html">
+    <entry file="file://$PROJECT_DIR$/client/helpers/helpers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="106" column="56" selection-start-line="106" selection-start-column="56" selection-end-line="106" selection-end-column="56" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#template#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="103">
+          <caret line="94" column="26" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>

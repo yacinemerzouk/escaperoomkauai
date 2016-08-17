@@ -191,7 +191,7 @@ Template.room.helpers({
                 }
             }
         }
-        // console.log('nbPlayersOptions', this, nbPlayersOptions);
+        // //console.log('nbPlayersOptions', this, nbPlayersOptions);
         return nbPlayersOptions;
     },
     kamaainaPlayersOptions: function(){
@@ -214,7 +214,7 @@ Template.room.helpers({
 
     startTimes: function(){
         var reservation = new EscapeRoom.Reservation(Session.get('reservation'));
-        console.log( 'in startTimes', reservation.date );
+        //console.log( 'in startTimes', reservation.date );
         return EscapeRoom.getPossibleTimes(reservation.date);
     }
 
