@@ -25,9 +25,28 @@ Meteor.publish('reservations', function(){
 
 Meteor.publish('futureReservations', function(){
     var today = Epoch.dateObjectToDateString(new Date());
-    var reservations = EscapeRoom.Collections.Reservations.find({date:{$gte:today}});
+    var reservations = EscapeRoom.Collections.Reservations.find({date:{$gte:today}, canceled:{$ne:true}});
     return reservations;
 });
+
+Meteor.publish('reservationNumbers', function(){
+    var reservations = EscapeRoom.Collections.Reservations.find(
+        {},
+        {
+            fields: {
+                _id:1,
+                publicId:1
+            },
+            sort: {
+                publicId: -1
+            },
+            limit: 1
+        }
+    );
+    return reservations;
+});
+
+
 
 Meteor.publish('reservation', function( _id ){
     var reservation = EscapeRoom.Collections.Reservations.find({_id:_id});

@@ -317,7 +317,8 @@ Router.route('/room/:slug', {
         return [
             Meteor.subscribe( 'room', this.params.slug ),
             Meteor.subscribe( 'coupons' ),
-            Meteor.subscribe( 'futureReservations' )
+            Meteor.subscribe( 'futureReservations' ),
+            Meteor.subscribe( 'reservationNumbers' )
         ]
     },
     ironMeta: true,
