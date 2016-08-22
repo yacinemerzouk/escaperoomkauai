@@ -28,7 +28,7 @@ EscapeRoom.Game = function( args ){
         this[prop] = data[prop];
     }
 
-    var reservations = EscapeRoom.Collections.Reservations.find({time:this.time,date:this.date}).fetch();
+    var reservations = EscapeRoom.Collections.Reservations.find({time:this.time,date:this.date,canceled:{$ne:true}}).fetch();
     this.reservations = reservations;
 
     if( !this.players ){
