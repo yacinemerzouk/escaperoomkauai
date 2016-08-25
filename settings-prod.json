@@ -40,8 +40,8 @@
         "appSecret": "7808fce9-3e5a-4e99-aaf2-bcbdee77a08e"
     },
     "TWILIO": {
-        "FROM": "2673548120", // One of the phone numbers tied to your Twilio account
-        "SID": "ACb8fee16876908f1c30189381ed617a15", // SID tied to your Twilio account
-        "TOKEN": "2138e9d94998d299ef4d1722cd73bd72" // Token tied to your Twilio account
+        "FROM": "2673548120",
+        "SID": "ACb8fee16876908f1c30189381ed617a15",
+        "TOKEN": "2138e9d94998d299ef4d1722cd73bd72"
     }
 }
