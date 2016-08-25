@@ -20,6 +20,7 @@
         <item url="file://$USER_HOME$/.meteor/packages/okgrow_analytics/1.0.9/web.browser/client/collections.js" />
         <item url="file://$USER_HOME$/.meteor/packages/okgrow_analytics/1.0.9/web.browser/client/meteor-analytics.js" />
         <item url="file://$USER_HOME$/.meteor/packages/okgrow_analytics/1.0.9/web.browser/vendor/analytics.min.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/dispatch_twilio/1.1.0/web.browser/packages/dispatch_twilio.js" />
         <item url="file://$USER_HOME$/.meteor/packages/allow-deny/1.0.5/web.browser/allow-deny.js" />
         <item url="file://$USER_HOME$/.meteor/packages/allow-deny/1.0.5/web.browser/allow-deny-tests.js" />
         <item url="file://$USER_HOME$/.meteor/packages/base64/1.0.9/web.browser/base64.js" />
@@ -254,6 +255,7 @@
       <root url="file://$USER_HOME$/.meteor/packages/okgrow_analytics/1.0.9/web.browser/client/collections.js" />
       <root url="file://$USER_HOME$/.meteor/packages/okgrow_analytics/1.0.9/web.browser/client/meteor-analytics.js" />
       <root url="file://$USER_HOME$/.meteor/packages/okgrow_analytics/1.0.9/web.browser/vendor/analytics.min.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/dispatch_twilio/1.1.0/web.browser/packages/dispatch_twilio.js" />
       <root url="file://$USER_HOME$/.meteor/packages/allow-deny/1.0.5/web.browser/allow-deny.js" />
       <root url="file://$USER_HOME$/.meteor/packages/allow-deny/1.0.5/web.browser/allow-deny-tests.js" />
       <root url="file://$USER_HOME$/.meteor/packages/base64/1.0.9/web.browser/base64.js" />
