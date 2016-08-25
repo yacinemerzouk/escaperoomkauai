@@ -308,6 +308,8 @@ Router.route('/confirmation/:_id', {
     }
 });
 
+
+
 /**
  * Room details
  */
@@ -358,6 +360,40 @@ Router.route('/room/:slug', {
     data: function(){
         var room =  EscapeRoom.Collections.Rooms.findOne({slug:this.params.slug});
         return room;
+    }
+});
+
+
+/**
+ * Game management
+ */
+Router.route('/game/:slug/:date/:time', {
+    name: 'game',
+    waitOn: function(){
+        return [
+            Meteor.subscribe( 'room', this.params.slug ),
+            Meteor.subscribe( 'games' )
+        ]
+    },
+    data: function(){
+        var gameData = {
+            date: this.params.date,
+            time: this.params.time
+        };
+        // if( ! gameData ){
+        //     var gameId = EscapeRoom.Collections.Games.insert({
+        //         slug: 'mad-scientist',
+        //         date: this.data.date,
+        //         time: this.data.time
+        //     });
+        //     gameData = {
+        //         _id: gameId,
+        //         date: this.params.date,
+        //         time: this.params.time
+        //     }
+        // }
+        return gameData;
+
     }
 });
 

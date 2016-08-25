@@ -39,7 +39,7 @@
                         {{#unless isBlocked}}
                             {{#if reservations}}
                                 <fieldset style="margin-bottom: 30px">
-                                    <legend style="width: auto; padding-right: 10px">The Missing Scientist</legend>
+                                    <legend style="width: auto; padding-right: 10px">The Missing Scientist <a href="{{pathFor 'game' slug='mad-scientist' date=date time=time}}">Game Master &rarr;</a></legend>
                                     {{#each reservations}}
                                         {{#unless blocked}}
                                             {{>reservationOverview this}}
