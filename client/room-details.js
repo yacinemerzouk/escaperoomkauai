@@ -2,13 +2,13 @@ Template.room.onCreated(function(){
     this.updateReservation = function( formData ){
 
         var formData = formData || Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
-        var reservation = new EscapeRoom.Reservation( Session.get('reservation') );
+        var reservation = new Bolt.Reservation( Session.get('reservation') );
         reservation.populate( formData );
         Session.set( 'reservation',reservation );
     }
 
     this.submitOrder = function(){
-        var reservation = new EscapeRoom.Reservation( Session.get( 'reservation' ) );
+        var reservation = new Bolt.Reservation( Session.get( 'reservation' ) );
 
         if( reservation.isValid() ){
 
@@ -16,7 +16,7 @@ Template.room.onCreated(function(){
 
             if( reservation.total == 0 ){
 
-                var lastRes = EscapeRoom.Collections.Reservations.findOne({}, {sort: {publicId: -1}});
+                var lastRes = Bolt.Collections.Reservations.findOne({}, {sort: {publicId: -1}});
 
                 if (lastRes && lastRes.publicId) {
                     reservation.publicId = lastRes.publicId + 1;
@@ -34,7 +34,7 @@ Template.room.onCreated(function(){
 
                     if ( reservation.coupon && reservation.couponData ){
 
-                        EscapeRoom.Collections.Coupons.update(
+                        Bolt.Collections.Coupons.update(
                             {
                                 _id: reservation.couponData._id
                             },
@@ -73,7 +73,7 @@ Template.room.onCreated(function(){
 
                         } else if (result) {
 
-                            var lastRes = EscapeRoom.Collections.Reservations.findOne({}, {sort: {publicId: -1}});
+                            var lastRes = Bolt.Collections.Reservations.findOne({}, {sort: {publicId: -1}});
 
                             if (lastRes && lastRes.publicId) {
                                 reservation.publicId = lastRes.publicId + 1;
@@ -89,7 +89,7 @@ Template.room.onCreated(function(){
 
                                 if ( reservation.coupon && reservation.couponData ){
 
-                                    EscapeRoom.Collections.Coupons.update(
+                                    Bolt.Collections.Coupons.update(
                                         {
                                             _id: reservation.couponData._id
                                         },
@@ -100,6 +100,12 @@ Template.room.onCreated(function(){
                                         }
                                     );
                                 }
+
+                                // Track conversion
+                                analytics.track("Completed Order", {
+                                    eventName: reservation.room.title,
+                                    couponValue: reservation.total,
+                                });
 
                                 reservation.sendConfirmationEmail();
                                 reservation.sendNotificationEmail();
@@ -123,7 +129,7 @@ Template.room.onCreated(function(){
 });
 Template.room.onRendered(function(){
 
-    var reservation = new EscapeRoom.Reservation( Session.get('reservation') || {date:Epoch.dateObjectToDateString(new Date())} );
+    var reservation = new Bolt.Reservation( Session.get('reservation') || {date:Epoch.dateObjectToDateString(new Date())} );
 
     var self = this;
     $('#datepicker').datepicker({
@@ -165,11 +171,11 @@ Template.room.helpers({
     },
 
     // hasEnoughSpots: function(reservation){
-    //     var spotsLeft = EscapeRoom.spotsLeft(reservation.roomId, reservation.date, reservation.time);
+    //     var spotsLeft = Bolt.spotsLeft(reservation.roomId, reservation.date, reservation.time);
     //     return spotsLeft >= reservation.nbPlayers ? true : false;
     // },
     isFree: function(){
-        var reservation = new EscapeRoom.Reservation( Session.get('reservation') );
+        var reservation = new Bolt.Reservation( Session.get('reservation') );
         return reservation.total == 0 ? true : false;
     },
     nbPlayersOptions: function(  ){
@@ -177,7 +183,7 @@ Template.room.helpers({
         var spotsLeft;
         var reservation = Session.get('reservation');
         if( reservation.date && reservation.time ){
-            spotsLeft = EscapeRoom.spotsLeft( reservation.room._id, reservation.date, reservation.time );
+            spotsLeft = Bolt.spotsLeft( reservation.room._id, reservation.date, reservation.time );
         }else{
             spotsLeft = reservation.room.maxPlayers;
         }
@@ -194,7 +200,7 @@ Template.room.helpers({
     kamaainaPlayersOptions: function(){
         var kamaainaPlayersOptions = [];
         var reservation = Session.get('reservation');
-        //var spotsLeft = EscapeRoom.spotsLeft( reservation.room._id, reservation.date, reservation.time );
+        //var spotsLeft = Bolt.spotsLeft( reservation.room._id, reservation.date, reservation.time );
         //if( this ){
         for( var x = 0; x <= reservation.nbPlayers; x++ ){
 
@@ -205,14 +211,14 @@ Template.room.helpers({
         return kamaainaPlayersOptions;
     },
     canClose: function(){
-        var reservation = new EscapeRoom.Reservation(Session.get('reservation'));
+        var reservation = new Bolt.Reservation(Session.get('reservation'));
         return reservation.canClose();
     },
 
     startTimes: function(){
-        var reservation = new EscapeRoom.Reservation(Session.get('reservation'));
+        var reservation = new Bolt.Reservation(Session.get('reservation'));
         //console.log( 'in startTimes', reservation.date );
-        return EscapeRoom.getPossibleTimes(reservation.date);
+        return Bolt.getPossibleTimes(reservation.date);
     }
 
 
@@ -231,7 +237,7 @@ Template.room.events({
         if( formData.nbKamaaina && formData.nbPlayers < formData.nbKamaaina ){
             formData.nbKamaaina = formData.nbPlayers;
         }
-        var reservation = new EscapeRoom.Reservation( Session.get('reservation') );
+        var reservation = new Bolt.Reservation( Session.get('reservation') );
 
         if( !formData.nbPlayers ){
             formData.nbPlayers = 0;
@@ -255,7 +261,7 @@ Template.room.events({
     },
     'click [hook="set-time"]': function(evt,tmpl){
         evt.preventDefault();
-        var reservation = new EscapeRoom.Reservation( Session.get('reservation') );
+        var reservation = new Bolt.Reservation( Session.get('reservation') );
         if( $(evt.currentTarget).hasClass('button-unavailable') && reservation.nbPlayers ){
             Notifications.error('Too many players.','There are not enough spots left for the number of players you selected.');
         }else{

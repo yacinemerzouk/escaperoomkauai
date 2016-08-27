@@ -2,7 +2,7 @@
  * ROOMS: publish all rooms, all data
  */
 Meteor.publish('rooms', function(){
-    var rooms = EscapeRoom.Collections.Rooms.find({},{sort:{order:1}});
+    var rooms = Bolt.Collections.Rooms.find({},{sort:{order:1}});
     return rooms;
 });
 
@@ -10,7 +10,7 @@ Meteor.publish('rooms', function(){
  * ROOMS: publish single room, all data
  */
 Meteor.publish('room', function( slug ){
-    var room = EscapeRoom.Collections.Rooms.find( { slug:slug } );
+    var room = Bolt.Collections.Rooms.find( { slug:slug } );
     return room;
 });
 
@@ -19,18 +19,18 @@ Meteor.publish('room', function( slug ){
  * TODO: better pubsub
  */
 Meteor.publish('reservations', function(){
-    var reservations = EscapeRoom.Collections.Reservations.find();
+    var reservations = Bolt.Collections.Reservations.find();
     return reservations;
 });
 
 Meteor.publish('futureReservations', function(){
     var today = Epoch.dateObjectToDateString(new Date());
-    var reservations = EscapeRoom.Collections.Reservations.find({date:{$gte:today}, canceled:{$ne:true}});
+    var reservations = Bolt.Collections.Reservations.find({date:{$gte:today}, canceled:{$ne:true}});
     return reservations;
 });
 
 Meteor.publish('reservationNumbers', function(){
-    var reservations = EscapeRoom.Collections.Reservations.find(
+    var reservations = Bolt.Collections.Reservations.find(
         {},
         {
             fields: {
@@ -49,16 +49,16 @@ Meteor.publish('reservationNumbers', function(){
 
 
 Meteor.publish('reservation', function( _id ){
-    var reservation = EscapeRoom.Collections.Reservations.find({_id:_id});
+    var reservation = Bolt.Collections.Reservations.find({_id:_id});
     return reservation;
 });
 
 Meteor.publish('coupons', function(){
-    var coupons = EscapeRoom.Collections.Coupons.find();
+    var coupons = Bolt.Collections.Coupons.find();
     return coupons;
 });
 
 Meteor.publish('games', function(){
-    var games = EscapeRoom.Collections.Games.find();
+    var games = Bolt.Collections.Games.find();
     return games;
 });

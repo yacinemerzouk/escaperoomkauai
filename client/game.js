@@ -1,6 +1,6 @@
 Template.game.helpers({
    game: function(){
-       var game =  new EscapeRoom.Game({
+       var game =  new Bolt.Game({
            date: this.date,
            time: this.time
        });
@@ -23,7 +23,7 @@ Template.game.events({
                 Notifications.error( error.message );
             }else{
                 console.log(response);
-                var game = new EscapeRoom.Game({
+                var game = new Bolt.Game({
                     date: tmpl.data.date,
                     time: tmpl.data.time
                 });
