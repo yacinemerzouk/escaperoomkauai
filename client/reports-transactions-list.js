@@ -47,7 +47,7 @@ Template.reportsTransactionsList.helpers({
             console.log( Epoch.dateStringToDateObject( to ) );
         }
 
-        return EscapeRoom.Collections.Reservations.find(
+        return Bolt.Collections.Reservations.find(
             args
         ).fetch().reverse();
     }

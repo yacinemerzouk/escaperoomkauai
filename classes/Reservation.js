@@ -1,10 +1,10 @@
-EscapeRoom.Reservation = function( args ){
+Bolt.Reservation = function( args ){
 
     // ID was provided
     if( typeof( args ) == 'string' ){
 
         // Grab data from DB
-        var data = EscapeRoom.Collections.Reservations.findOne( args );
+        var data = Bolt.Collections.Reservations.findOne( args );
 
         // Data was provided
     }else if( typeof( args ) == 'object' ){
@@ -29,7 +29,7 @@ EscapeRoom.Reservation = function( args ){
     this.populate( data );
 }
 
-EscapeRoom.Reservation.prototype.populate = function( data ){
+Bolt.Reservation.prototype.populate = function( data ){
 
     // Set properties of object
     for (var prop in data) {
@@ -41,7 +41,7 @@ EscapeRoom.Reservation.prototype.populate = function( data ){
         this.costOfCloseRoom = this.closeRoom ? ( this.room.priceToClose ).toFixed(2) : 0;
         this.subtotal = ( parseFloat(this.costOfPlayers) + parseFloat(this.costOfCloseRoom) ).toFixed(2);
         if (this.coupon) {
-            var couponData = EscapeRoom.Collections.Coupons.findOne({coupon: this.coupon});
+            var couponData = Bolt.Collections.Coupons.findOne({coupon: this.coupon});
             if (couponData) {
                 this.couponData = couponData;
             } else {
@@ -58,7 +58,7 @@ EscapeRoom.Reservation.prototype.populate = function( data ){
 
 }
 
-EscapeRoom.Reservation.prototype.save = function(){
+Bolt.Reservation.prototype.save = function(){
 
     var result;
 
@@ -75,9 +75,9 @@ EscapeRoom.Reservation.prototype.save = function(){
 
 }
 
-EscapeRoom.Reservation.prototype.update = function(){
+Bolt.Reservation.prototype.update = function(){
 
-    var result = EscapeRoom.Collections.Reservations.update(
+    var result = Bolt.Collections.Reservations.update(
         {
             _id: this._id
         },
@@ -90,9 +90,9 @@ EscapeRoom.Reservation.prototype.update = function(){
 
 }
 
-EscapeRoom.Reservation.prototype.create = function() {
+Bolt.Reservation.prototype.create = function() {
 
-    var result = EscapeRoom.Collections.Reservations.insert(this);
+    var result = Bolt.Collections.Reservations.insert(this);
 
     if( result ){
         this._id = result;
@@ -103,7 +103,7 @@ EscapeRoom.Reservation.prototype.create = function() {
 
 }
 
-EscapeRoom.Reservation.prototype.charge = function(){
+Bolt.Reservation.prototype.charge = function(){
 
     if( Meteor.isClient ){
 
@@ -111,7 +111,7 @@ EscapeRoom.Reservation.prototype.charge = function(){
 
 }
 
-EscapeRoom.Reservation.prototype.sendConfirmationEmail = function(){
+Bolt.Reservation.prototype.sendConfirmationEmail = function(){
 
     if( Meteor.isClient ){
         var reservation = this;
@@ -121,7 +121,7 @@ EscapeRoom.Reservation.prototype.sendConfirmationEmail = function(){
             reservation.email,
             '"Kauai Escape Room" ' + Meteor.settings.public.smtp.email,
             'Booking confirmation - RESERVATION #' + reservation.publicId,
-            EscapeRoom.getConfirmationEmailBody(reservation._id),
+            Bolt.getConfirmationEmailBody(reservation._id),
             function (error, result) {
                 if (error) {
                     throw new Meteor.Error('MAILER_ERROR', 'Error while sending booking confirmation. ERROR ||| RES => ' + JSON.stringify(error));
@@ -132,7 +132,7 @@ EscapeRoom.Reservation.prototype.sendConfirmationEmail = function(){
 
 }
 
-EscapeRoom.Reservation.prototype.sendNotificationEmail = function(){
+Bolt.Reservation.prototype.sendNotificationEmail = function(){
 
     if( Meteor.isClient ){
 
@@ -142,7 +142,7 @@ EscapeRoom.Reservation.prototype.sendNotificationEmail = function(){
             Meteor.settings.public.smtp.notifications,
             '"Kauai Escape Room" ' + Meteor.settings.public.smtp.mailman,
             'Booking notification - RESERVATION #' + reservation.publicId,
-            EscapeRoom.getNotificationEmailBody(reservation._id),
+            Bolt.getNotificationEmailBody(reservation._id),
             function (error, result) {
                 if (error) {
                     throw new Meteor.Error('MAILER_ERROR', 'Error while sending booking confirmation. ERROR ||| RES => ' + JSON.stringify(error));
@@ -154,17 +154,17 @@ EscapeRoom.Reservation.prototype.sendNotificationEmail = function(){
 
 }
 
-EscapeRoom.Reservation.prototype.canClose = function(){
+Bolt.Reservation.prototype.canClose = function(){
 
     // Get all existing reservations for requested time slot
-    var reservations = EscapeRoom.Collections.Reservations.find({
+    var reservations = Bolt.Collections.Reservations.find({
         roomId: this.room._id,
         time: this.time,
         date: this.date
     }).fetch();
 
     // Calculate how many spots are available before current reservation request
-    var spotsLeft = EscapeRoom.spotsLeft(this.room._id, this.date, this.time);
+    var spotsLeft = Bolt.spotsLeft(this.room._id, this.date, this.time);
 
     // Can the room be closed?
     // Rooms can be close if the reservation is the first for a time
@@ -174,7 +174,7 @@ EscapeRoom.Reservation.prototype.canClose = function(){
 
 }
 
-EscapeRoom.Reservation.prototype.isValid = function(){
+Bolt.Reservation.prototype.isValid = function(){
 
     var isValid = true;
 

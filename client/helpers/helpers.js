@@ -27,7 +27,7 @@ UI.registerHelper('activeFlag', function( routeName ) {
  */
 UI.registerHelper('canBook', function( roomId, date, time ) {
 
-    var spotsLeft = EscapeRoom.spotsLeft(roomId, date, time);
+    var spotsLeft = Bolt.spotsLeft(roomId, date, time);
 
     return spotsLeft >= 2;
 
@@ -48,7 +48,7 @@ UI.registerHelper('hasEnoughSpots', function( roomId, date, time, nbPlayers ) {
 
     //console.log( 'in hasEnoughSpots', roomId, date, time, nbPlayers);
 
-    var spotsLeft = EscapeRoom.spotsLeft(roomId, date, time);
+    var spotsLeft = Bolt.spotsLeft(roomId, date, time);
 
     return nbPlayers && parseInt(nbPlayers) > 0 &&  parseInt(spotsLeft) >= parseInt(nbPlayers);
 
@@ -66,7 +66,7 @@ UI.registerHelper('hasEnoughSpots', function( roomId, date, time, nbPlayers ) {
  */
 UI.registerHelper('spotsLeft', function( roomId, date, time ) {
 
-    return EscapeRoom.spotsLeft(roomId, date, time);
+    return Bolt.spotsLeft(roomId, date, time);
 
 });
 
@@ -120,7 +120,7 @@ UI.registerHelper('checked', function( checked ){
  * @returns String : the room title
  */
 UI.registerHelper('roomTitle', function( roomId ){
-    var room = EscapeRoom.Collections.Rooms.findOne({
+    var room = Bolt.Collections.Rooms.findOne({
         _id: roomId
     });
     return room.title ? room.title : "";

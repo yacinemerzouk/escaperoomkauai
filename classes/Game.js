@@ -1,16 +1,16 @@
-EscapeRoom.Game = function( args ){
+Bolt.Game = function( args ){
 
     // ID was provided
     if( typeof( args ) == 'string' ){
 
         // Grab data from DB
-        var data = EscapeRoom.Collections.Games.findOne( args );
+        var data = Bolt.Collections.Games.findOne( args );
 
         // Data was provided
     }else if( typeof( args ) == 'object' ){
         var data;
         // Set properties of object with db data or straight up data
-        var game = EscapeRoom.Collections.Games.findOne({date:args.date,time:args.time});
+        var game = Bolt.Collections.Games.findOne({date:args.date,time:args.time});
         //console.log('Getting game from object',args,game);
         if( game ){
             data = game;
@@ -28,7 +28,7 @@ EscapeRoom.Game = function( args ){
         this[prop] = data[prop];
     }
 
-    var reservations = EscapeRoom.Collections.Reservations.find({time:this.time,date:this.date,canceled:{$ne:true}}).fetch();
+    var reservations = Bolt.Collections.Reservations.find({time:this.time,date:this.date,canceled:{$ne:true}}).fetch();
     this.reservations = reservations;
 
     if( !this.players ){
@@ -58,7 +58,7 @@ EscapeRoom.Game = function( args ){
 
 }
 
-EscapeRoom.Game.prototype.save = function(){
+Bolt.Game.prototype.save = function(){
 
     var result;
 
@@ -77,10 +77,10 @@ EscapeRoom.Game.prototype.save = function(){
 
 }
 
-EscapeRoom.Game.prototype.update = function(){
+Bolt.Game.prototype.update = function(){
     //console.log( 'IN GAME UPDATE', this );
 
-    var result = EscapeRoom.Collections.Games.update(
+    var result = Bolt.Collections.Games.update(
         {
             _id: this._id
         },
@@ -93,11 +93,11 @@ EscapeRoom.Game.prototype.update = function(){
 
 }
 
-EscapeRoom.Game.prototype.create = function() {
+Bolt.Game.prototype.create = function() {
 
     //console.log( 'IN GAME CREATE', this );
 
-    var result = EscapeRoom.Collections.Games.insert(this);
+    var result = Bolt.Collections.Games.insert(this);
 
     if( result ){
         this._id = result;
@@ -108,16 +108,16 @@ EscapeRoom.Game.prototype.create = function() {
 
 }
 
-EscapeRoom.Game.prototype.addPlayer = function( email ){
+Bolt.Game.prototype.addPlayer = function( email ){
     this.players.push( email );
 }
-EscapeRoom.Game.prototype.addPlayers = function( emails ){
+Bolt.Game.prototype.addPlayers = function( emails ){
     var game = this;
     _.each( emails, function( email ){
         game.addPlayer(email);
     });
 }
-EscapeRoom.Game.prototype.sendFollowUpEmail = function(){
+Bolt.Game.prototype.sendFollowUpEmail = function(){
     if( Meteor.isClient ) {
         var game = this;
         var to;
@@ -128,12 +128,12 @@ EscapeRoom.Game.prototype.sendFollowUpEmail = function(){
                 to,
                 '"Kauai Escape Room" info@escaperoomkauai.com',
                 'How did you like your Kauai Escape Room experience?',
-                EscapeRoom.getFollowUpEmailBody(),
+                Bolt.getFollowUpEmailBody(),
                 function (err, res) {
                     if (err) {
                         Notifications.error('Error', err.message);
                     } else {
-                        EscapeRoom.Collections.Games.update(
+                        Bolt.Collections.Games.update(
                             game._id,
                             {
                                 $set: {

@@ -3,8 +3,8 @@
  */
 // if( Meteor.isServer ){
 //     Meteor.startup(function(){
-//         if( EscapeRoom.Collections.Rooms.find().count() === 0 ) {
-//             EscapeRoom.Collections.Rooms.insert({
+//         if( Bolt.Collections.Rooms.find().count() === 0 ) {
+//             Bolt.Collections.Rooms.insert({
 //                 title: 'The Missing Scientist',
 //                 image: '/images/hero-mad-scientist.jpg',
 //                 opening: 'July 2016',
@@ -19,7 +19,7 @@
 //                 excerpt: 'Investigate the study of a missing scientist.',
 //                 description: 'The foremost ethnobotanist in the world disappeared five years ago. Word is he has now resurfaced in Hawaii and you are sent to investigate. You will have to use logic, observation, deduction, and teamwork to shine light on this strange situation. Are you up to the task?'
 //             });
-//             EscapeRoom.Collections.Rooms.insert({
+//             Bolt.Collections.Rooms.insert({
 //                 title: "The Lost Elvis Record",
 //                 image: '/images/hero-elvis.jpg',
 //                 opening: 'July 2016',
@@ -34,7 +34,7 @@
 //                 excerpt: 'Tutu Leilani has misplaced one of her vintage Elvis records.',
 //                 description: 'Tutu Leilani has misplaced one of her vintage Elvis records. Can you find it for her before a buyer withdraws his offer? You will have to use logic, observation, deduction, creative thinking and teamwork to find this lost Elvis record in time!'
 //             });
-//             EscapeRoom.Collections.Rooms.insert({
+//             Bolt.Collections.Rooms.insert({
 //                 title: "Pele's Tiki Lounge",
 //                 image: '/images/hero-tiki-lounge.jpg',
 //                 opening: 'August 2016',
@@ -49,7 +49,7 @@
 //                 excerpt: 'Something strange is happening at this Hawaiian-style tiki lounge.',
 //                 description: 'Something strange is happening at this Hawaiian-style tiki lounge. You are sent to investigate and are warned to be on your guard. You will have to use logic, observation, deduction, creative thinking and teamwork to unravel the mystery of the Tiki Lounge.'
 //             });
-//             EscapeRoom.Collections.Rooms.insert({
+//             Bolt.Collections.Rooms.insert({
 //                 title: 'Mobile Escape Room',
 //                 image: '/images/hero-mobile.jpg',
 //                 opening: 'Fall 2016',
@@ -70,8 +70,8 @@
 
 // if( Meteor.isServer ){
 //     Meteor.startup(function() {
-//         if (EscapeRoom.Collections.Coupons.find().count() === 0) {
-//             EscapeRoom.Collections.Coupons.insert(
+//         if (Bolt.Collections.Coupons.find().count() === 0) {
+//             Bolt.Collections.Coupons.insert(
 //                 {
 //                     coupon:'GRANDOPENING',
 //                     discount: 50,
@@ -85,8 +85,8 @@
 
 if( Meteor.isServer ){
     Meteor.startup(function() {
-        if (EscapeRoom.Collections.Games.find().count() === 0) {
-            EscapeRoom.Collections.Games.insert(
+        if (Bolt.Collections.Games.find().count() === 0) {
+            Bolt.Collections.Games.insert(
                 {
                     date:'2016-07-26',
                     time: '9:00pm',
@@ -94,7 +94,7 @@ if( Meteor.isServer ){
                     time: '55:00'
                 }
             );
-            EscapeRoom.Collections.Games.insert(
+            Bolt.Collections.Games.insert(
                 {
                     date:'2016-07-26',
                     time: '7:30pm',

@@ -4,10 +4,10 @@ Template.reservations.helpers({
     },
     games: function(){
 
-        var times = EscapeRoom.getPossibleTimes(Session.get('adminSelectedDate'));
+        var times = Bolt.getPossibleTimes(Session.get('adminSelectedDate'));
         var games = [];
         _.each(times,function(time){
-            var game = new EscapeRoom.Game({
+            var game = new Bolt.Game({
                 date: Session.get('adminSelectedDate'),
                 time: time
             });
@@ -40,7 +40,7 @@ Template.reservations.events({
         evt.preventDefault();
         var date = $(evt.target).attr('hook-data-date');
         var time = $(evt.target).attr('hook-data-time');
-        var reservations = EscapeRoom.Collections.Reservations.find({
+        var reservations = Bolt.Collections.Reservations.find({
             date:date,
             time:time
         }).fetch();
@@ -48,7 +48,7 @@ Template.reservations.events({
         var alreadyHasReservations = reservations.length > 0 ? true : false;
 
         if( !alreadyHasReservations ) {
-            var blockId = EscapeRoom.Collections.Reservations.insert({
+            var blockId = Bolt.Collections.Reservations.insert({
                 blocked: true,
                 date: date,
                 time: time
@@ -71,7 +71,7 @@ Template.reservations.events({
         evt.preventDefault();
         var date = Session.get('adminSelectedDate');
         var time = $(evt.currentTarget).attr('hook-data-time');
-        var game = new EscapeRoom.Game({date:date,time:time});
+        var game = new Bolt.Game({date:date,time:time});
         var players = Bureaucrat.getFormData( $(evt.currentTarget).parents('[hook="players-form"]') );
         var playersArray = [];
         _.each(players,function(p){
@@ -100,7 +100,7 @@ Template.reservations.events({
         var won = $(evt.currentTarget).attr('hook-data-result') == "won" ? true : false;
         var date = Session.get('adminSelectedDate');
         var time = $(evt.currentTarget).attr('hook-data-time');
-        var game = new EscapeRoom.Game({date:date,time:time});
+        var game = new Bolt.Game({date:date,time:time});
         game.won = won;
         //console.log( 'SAVING GAME', game);
         game.save();
@@ -110,7 +110,7 @@ Template.reservations.events({
         // var time = $(evt.currentTarget).attr('hook-data-time');
         //
         // // Check if game exists
-        // var game = EscapeRoom.Collections.Games.findOne(
+        // var game = Bolt.Collections.Games.findOne(
         //     {
         //         roomId: roomId,
         //         date: date,
@@ -118,7 +118,7 @@ Template.reservations.events({
         //     }
         // );
         // if( game ){
-        //     EscapeRoom.Collections.Games.update(
+        //     Bolt.Collections.Games.update(
         //         {
         //             roomId: roomId,
         //             date: date,
@@ -129,7 +129,7 @@ Template.reservations.events({
         //         }
         //     );
         // }else{
-        //     EscapeRoom.Collections.Games.insert({
+        //     Bolt.Collections.Games.insert({
         //         won: won,
         //         roomId: roomId,
         //         date: date,
@@ -147,7 +147,7 @@ Template.reservations.events({
         var date = $(evt.target).attr('hook-data-date');
 
         // Get all time slots
-        var possibleTimes = EscapeRoom.getPossibleTimes(date);
+        var possibleTimes = Bolt.getPossibleTimes(date);
         // for( var x = 10; x <= 11; x++ ){
         //     possibleTimes.push( x + ':00am' );
         //     possibleTimes.push( x + ':30am' );
@@ -162,7 +162,7 @@ Template.reservations.events({
         _.each( possibleTimes, function(time){
 
 
-            var reservations = EscapeRoom.Collections.Reservations.find({
+            var reservations = Bolt.Collections.Reservations.find({
                 date:date,
                 time:time
             }).fetch();
@@ -171,7 +171,7 @@ Template.reservations.events({
 
             if( !alreadyHasReservations ) {
                 // Loop over time slots
-                var blockId = EscapeRoom.Collections.Reservations.insert({
+                var blockId = Bolt.Collections.Reservations.insert({
                     blocked: true,
                     date: date,
                     time: time
@@ -197,7 +197,7 @@ Template.reservations.events({
         var timeLog = $(evt.currentTarget).siblings('input').val()
         var date = Session.get('adminSelectedDate');
         var time = $(evt.currentTarget).attr('hook-data-time');
-        var game = new EscapeRoom.Game({date:date,time:time});
+        var game = new Bolt.Game({date:date,time:time});
         game.timeLog = timeLog;
         //console.log( 'SAVING GAME', game);
         game.save();

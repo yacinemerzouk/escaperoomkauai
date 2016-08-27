@@ -304,7 +304,7 @@ Router.route('/confirmation/:_id', {
         ]
     },
     data: function(){
-        return EscapeRoom.Collections.Reservations.findOne(this.params._id);
+        return Bolt.Collections.Reservations.findOne(this.params._id);
     }
 });
 
@@ -325,7 +325,7 @@ Router.route('/room/:slug', {
     },
     ironMeta: true,
     meta: function(){
-        var room =  EscapeRoom.Collections.Rooms.findOne({slug:this.params.slug});
+        var room =  Bolt.Collections.Rooms.findOne({slug:this.params.slug});
         var title, image, description, slug;
         if( room ){
             title = room.title + ' - Kauai Escape Room';
@@ -358,7 +358,7 @@ Router.route('/room/:slug', {
         }
     },
     data: function(){
-        var room =  EscapeRoom.Collections.Rooms.findOne({slug:this.params.slug});
+        var room =  Bolt.Collections.Rooms.findOne({slug:this.params.slug});
         return room;
     }
 });
@@ -381,7 +381,7 @@ Router.route('/game/:slug/:date/:time', {
             time: this.params.time
         };
         // if( ! gameData ){
-        //     var gameId = EscapeRoom.Collections.Games.insert({
+        //     var gameId = Bolt.Collections.Games.insert({
         //         slug: 'mad-scientist',
         //         date: this.data.date,
         //         time: this.data.time
@@ -460,6 +460,7 @@ Router.onAfterAction(function(){
             });
 
         }
+
     }
 
 });
