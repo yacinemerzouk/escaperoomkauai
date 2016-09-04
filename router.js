@@ -74,7 +74,10 @@ Router.route('/rooms', {
     changefreq: 'monthly',
     priority: '0.9',
     waitOn: function(){
-        return Meteor.subscribe( 'rooms' );
+        return [
+            Meteor.subscribe( 'rooms' ),
+            Meteor.subscribe( 'games' )
+        ]
     },
     ironMeta: true,
     meta: function(){
@@ -278,6 +281,21 @@ Router.route('/coupons', {
 });
 
 /**
+ * Waivers
+ */
+Router.route('/waiver', {
+    name: 'waiver',
+    layoutTemplate: 'layoutEmpty',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('rooms'),
+            Meteor.subscribe('reservations'),
+            Meteor.subscribe('games')
+        ]
+    }
+});
+
+/**
  * Transactions - Admin page
  */
 Router.route('/reports/transactions/list', {
@@ -320,7 +338,8 @@ Router.route('/room/:slug', {
             Meteor.subscribe( 'room', this.params.slug ),
             Meteor.subscribe( 'coupons' ),
             Meteor.subscribe( 'futureReservations' ),
-            Meteor.subscribe( 'reservationNumbers' )
+            Meteor.subscribe( 'reservationNumbers' ),
+            Meteor.subscribe( 'games' )
         ]
     },
     ironMeta: true,
@@ -367,19 +386,25 @@ Router.route('/room/:slug', {
 /**
  * Game management
  */
-Router.route('/game/:slug/:date/:time', {
+Router.route('/game/:roomId/:date/:time', {
     name: 'game',
     waitOn: function(){
         return [
-            Meteor.subscribe( 'room', this.params.slug ),
+            Meteor.subscribe( 'rooms' ),
+            Meteor.subscribe( 'reservations' ),
             Meteor.subscribe( 'games' )
         ]
     },
     data: function(){
         var gameData = {
             date: this.params.date,
-            time: this.params.time
+            time: this.params.time,
+            roomId: this.params.roomId
         };
+        // var game = new Bolt.Game( gameData );
+        // if( !game._id ){
+        //     game.save();
+        // }
         // if( ! gameData ){
         //     var gameId = Bolt.Collections.Games.insert({
         //         slug: 'mad-scientist',
@@ -392,8 +417,8 @@ Router.route('/game/:slug/:date/:time', {
         //         time: this.params.time
         //     }
         // }
+        //var game = Bolt.Collections.Games.findOne( gameData );
         return gameData;
-
     }
 });
 

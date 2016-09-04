@@ -114,13 +114,17 @@
 
                     <div class="ribbon-wrapper-green">
 
-                        <div class="ribbon-green">
                             {{#if room.available}}
-                                Now Open
+                                {{#if room.ribbon}}
+                                <div class="ribbon-green">
+                                    {{room.ribbon}}
+                                </div>
+                                {{/if}}
                             {{else}}
-                                {{room.opening}}
+                                <div class="ribbon-green">
+                                    {{room.opening}}
+                                </div>
                             {{/if}}
-                        </div>
 
                     </div>
 
@@ -151,7 +155,7 @@
                         </div>
                         <div class="specs {{#if showPrice}}specs-break{{/if}}">
                             <i class="fa fa-trophy" aria-hidden="true"></i>
-                            <span class="spec-value" style="">{{room.successRate}}%</span><br>
+                            <span class="spec-value" style="">{{dynamicSuccessRate}}%</span><br>
                             <span class="spec-key" style="">Success Rate</span>
                         </div>
                     {{/if}}

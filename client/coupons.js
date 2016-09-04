@@ -9,6 +9,7 @@ Template.coupons.events({
         evt.preventDefault();
         var formData = Bureaucrat.getFormData($(evt.target));
         formData.uses = 0;
+        formData.coupon = formData.coupon.toUpperCase();
         var result = Bolt.Collections.Coupons.insert(formData);
         if ( result ){
             Notifications.success('Coupon Created', 'Coupon ' + formData.coupon + ' created!')

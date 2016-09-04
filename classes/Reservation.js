@@ -1,3 +1,8 @@
+/**
+ * Reservation class
+ * @param args : Mongo _id or object
+ * @constructor
+ */
 Bolt.Reservation = function( args ){
 
     // ID was provided
@@ -22,13 +27,20 @@ Bolt.Reservation = function( args ){
         this[prop] = data[prop];
     }
 
+    // For backward compat, store both room object and roomId
     if( this.room && this.room._id ){
         this.roomId = this.room._id;
     }
 
+    // Populate this badboy
     this.populate( data );
+
 }
 
+/**
+ * Populate - Update multiple attributes at once; only overwrites attributes passed, not entire object data.
+ * @param data
+ */
 Bolt.Reservation.prototype.populate = function( data ){
 
     // Set properties of object
@@ -36,10 +48,20 @@ Bolt.Reservation.prototype.populate = function( data ){
         this[prop] = data[prop];
     }
 
+    // Calculate all costs
+    // TODO: Move this somewhere cleaner
     if( this.nbPlayers ) {
+
+        // Total cost of players, before discounts and taxes
         this.costOfPlayers = ( parseFloat(this.nbPlayers) * parseFloat(this.room.pricePerPlayer) ).toFixed(2);
+
+        // Total cost of closing room, before discounts and taxes
         this.costOfCloseRoom = this.closeRoom ? ( this.room.priceToClose ).toFixed(2) : 0;
+
+        // Subtotal
         this.subtotal = ( parseFloat(this.costOfPlayers) + parseFloat(this.costOfCloseRoom) ).toFixed(2);
+
+        // Check coupon
         if (this.coupon) {
             var couponData = Bolt.Collections.Coupons.findOne({coupon: this.coupon});
             if (couponData) {
@@ -50,14 +72,26 @@ Bolt.Reservation.prototype.populate = function( data ){
         }else{
             this.couponData = false;
         }
+
+        // Discount amount for coupon
         this.discount = this.couponData ? ( parseFloat(this.subtotal) * ( this.couponData.discount / 100 ) ).toFixed(2) : 0;
+
+        // Discount amount for residents
         this.discountKamaaina = !this.discount && parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
+
+        // Taxes
         this.taxes = ( ( parseFloat(this.subtotal) - parseFloat(this.discount) - parseFloat(this.discountKamaaina) ) * 0.04166 ).toFixed(2);
+
+        // Total
         this.total = ( parseFloat(this.subtotal) - parseFloat(this.discount) - parseFloat(this.discountKamaaina) + parseFloat(this.taxes) ).toFixed(2);
     }
 
 }
 
+/**
+ * Save reservation
+ * @returns {*} : reservation ID or false
+ */
 Bolt.Reservation.prototype.save = function(){
 
     var result;
@@ -75,6 +109,10 @@ Bolt.Reservation.prototype.save = function(){
 
 }
 
+/**
+ * Update reservation
+ * @returns {any} : Mongo ID or false
+ */
 Bolt.Reservation.prototype.update = function(){
 
     var result = Bolt.Collections.Reservations.update(
@@ -82,35 +120,46 @@ Bolt.Reservation.prototype.update = function(){
             _id: this._id
         },
         {
-            $set: _.omit( this, '_id' )
+            $set: _.omit( this, ['_id','cc','ccExpMonth','ccExpYear','cvv'] )
         }
     );
 
-    return result;
+    if( result == 0 ){
+        throw new Meteor.Error( '[Bolt][Reservation][update] Error', 'No document updated.' );
+    }
+
+    return result > 0 ? this._id : false;
 
 }
 
+/**
+ * Insert reservation in DB
+ * @returns {*}
+ */
 Bolt.Reservation.prototype.create = function() {
 
-    var result = Bolt.Collections.Reservations.insert(this);
+    var result = Bolt.Collections.Reservations.insert(
+        _.omit(
+            this,
+            ['cc','ccExpMonth','ccExpYear','cvv']
+        )
+    );
 
+    // If insert was successful, we get an ID back
+    // Assign ID to object to we don't have to re-generate it
     if( result ){
         this._id = result;
         return this._id;
     }else{
+        throw new Meteor.Error( '[Bolt][Reservation][update] Error', 'Could not create document.' );
         return false;
     }
 
 }
 
-Bolt.Reservation.prototype.charge = function(){
-
-    if( Meteor.isClient ){
-
-    }
-
-}
-
+/**
+ * Send confirmation email
+ */
 Bolt.Reservation.prototype.sendConfirmationEmail = function(){
 
     if( Meteor.isClient ){
@@ -124,7 +173,7 @@ Bolt.Reservation.prototype.sendConfirmationEmail = function(){
             Bolt.getConfirmationEmailBody(reservation._id),
             function (error, result) {
                 if (error) {
-                    throw new Meteor.Error('MAILER_ERROR', 'Error while sending booking confirmation. ERROR ||| RES => ' + JSON.stringify(error));
+                    throw new Meteor.Error( '[Bolt][Reservation][sendConfirmationEmail] Error', 'Error while sending booking confirmation. ||| Error message: ' + error.message + ' ||| Error object: ' + JSON.stringify(error) );
                 }
             }
         );
@@ -132,6 +181,9 @@ Bolt.Reservation.prototype.sendConfirmationEmail = function(){
 
 }
 
+/**
+ * Send notification to admin
+ */
 Bolt.Reservation.prototype.sendNotificationEmail = function(){
 
     if( Meteor.isClient ){
@@ -145,7 +197,7 @@ Bolt.Reservation.prototype.sendNotificationEmail = function(){
             Bolt.getNotificationEmailBody(reservation._id),
             function (error, result) {
                 if (error) {
-                    throw new Meteor.Error('MAILER_ERROR', 'Error while sending booking confirmation. ERROR ||| RES => ' + JSON.stringify(error));
+                    throw new Meteor.Error( '[Bolt][Reservation][sendNotificationEmail] Error', 'Error while sending notification email to admin. ||| Error message: ' + error.message + ' ||| Error object: ' + JSON.stringify(error) );
                 }
             }
         );
@@ -154,6 +206,10 @@ Bolt.Reservation.prototype.sendNotificationEmail = function(){
 
 }
 
+/**
+ * Checks whether the time slot for the reservation can be closed or not
+ * @returns {boolean}
+ */
 Bolt.Reservation.prototype.canClose = function(){
 
     // Get all existing reservations for requested time slot
@@ -174,6 +230,10 @@ Bolt.Reservation.prototype.canClose = function(){
 
 }
 
+/**
+ * Checks reservation data from order form
+ * @returns {boolean}
+ */
 Bolt.Reservation.prototype.isValid = function(){
 
     var isValid = true;
@@ -183,11 +243,10 @@ Bolt.Reservation.prototype.isValid = function(){
     var emailOK = this.email && this.email != '';
     var phoneOK = this.phone && this.phone != '';
     var nbPlayersOK = this.nbPlayers && parseInt( this.nbPlayers ) > 0 ;
-    var ccOK = this.cc && this.cc != '';
-    var ccExpMonthOK = this.ccExpMonth && this.ccExpMonth != '';
-    var ccExpYearOK = this.ccExpYear && this.ccExpYear != '';
-    var cvvOK = this.cvv && this.cvv != '';
-    // console.log('ok');
+    var ccOK = this.total == 0 || this.cc && this.cc != '';
+    var ccExpMonthOK = this.total == 0 || this.ccExpMonth && this.ccExpMonth != '';
+    var ccExpYearOK = this.total == 0 || this.ccExpYear && this.ccExpYear != '';
+    var cvvOK = this.total == 0 || this.cvv && this.cvv != '';
 
     if( !nbPlayersOK ){
         Notifications.error('Missing Info', 'Please select number of players in your party.');

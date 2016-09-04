@@ -9,6 +9,10 @@
         },
         "stripe": {
             "secretKey": "pNVbtQUJwt5HhEiWIEYghnmSzfMlY44m"
+        },
+        "MailChimp": {
+            "apiKey": "4dea6fda5950407d6090b15f60b3755f-us13",
+            "listId": "2381bdabff"
         }
     },
     "public": {
