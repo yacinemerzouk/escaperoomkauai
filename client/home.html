@@ -135,11 +135,22 @@
                     <h2>{{room.title}}</h2>
 
                     {{#if showExcerpt}}
-                        <p>{{room.excerpt}}</p>
+                        <p>
+                            {{#if showOpeningDate}}
+                                Opening {{humanReadableDate room.openingDate format="short"}} &bull; Book Now! &mdash;
+                            {{/if}}
+                            {{room.excerpt}}
+                        </p>
                     {{/if}}
 
                     {{#if showDescription}}
-                        <p>{{room.description}}</p>
+
+                        <p>
+                            {{#if showOpeningDate}}
+                                Opening {{humanReadableDate room.openingDate format="short"}} &bull; Book Now! &mdash;
+                            {{/if}}
+                            {{room.description}}
+                        </p>
                     {{/if}}
 
                     {{#if showSpecs}}

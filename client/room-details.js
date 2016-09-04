@@ -58,6 +58,29 @@ Template.room.onCreated(function(){
 
                     reservation.sendConfirmationEmail();
                     reservation.sendNotificationEmail();
+
+                    // Configure the Twilio client
+                    var SMSString = "New Booking - " +
+                        reservation.room.title +
+                        " - " +
+                        reservation.date +
+                        " @ " +
+                        reservation.time +
+                        " - " +
+                        reservation.nbPlayers + " players" +
+                        " - " +
+                        "$0.00"
+                    Meteor.call('sendAdminNotificationSMS', SMSString, function(error,response){
+                        if( error ) {
+                            console.log( error );
+                            new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
+                        }else{
+                            console.log( response );
+                        }
+
+                    });
+
+
                     $('.processing-bg').hide();
                     Router.go('confirmation', {_id:resId});
 
@@ -119,6 +142,28 @@ Template.room.onCreated(function(){
 
                                 reservation.sendConfirmationEmail();
                                 reservation.sendNotificationEmail();
+
+                                // Configure the Twilio client
+                                var SMSString = "New Booking - " +
+                                    reservation.room.title +
+                                    " - " +
+                                    reservation.date +
+                                    " @ " +
+                                    reservation.time +
+                                    " - " +
+                                    reservation.nbPlayers + " players" +
+                                    " - " +
+                                    "$" + reservation.total;
+                                Meteor.call('sendAdminNotificationSMS', SMSString, function(error,response){
+                                    if( error ) {
+                                        console.log( error );
+                                        new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
+                                    }else{
+                                        console.log( response );
+                                    }
+
+                                });
+
                                 $('.processing-bg').hide();
                                 Router.go('confirmation', {_id:resId});
 
@@ -139,11 +184,18 @@ Template.room.onCreated(function(){
 });
 Template.room.onRendered(function(){
 
-    var reservation = new Bolt.Reservation( Session.get('reservation') || {date:Epoch.dateObjectToDateString(new Date())} );
+    var reservation = new Bolt.Reservation( Session.get('reservation') || {room: this.data, date:Epoch.dateObjectToDateString(new Date())} );
+    var minDate = 0;
+    if( reservation.room && reservation.room.openingDate ){
+        minDate = reservation.room.openingDate;
+    }
+    if( reservation.date < reservation.room.openingDate ){
+        reservation.date = reservation.room.openingDate;
+    }
 
     var self = this;
     $('#datepicker').datepicker({
-        minDate: 0,
+        minDate: minDate,
         dateFormat: 'yy-mm-dd',
         defaultDate: reservation.date,
         onSelect: function (dateText, inst) {
