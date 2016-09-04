@@ -184,36 +184,50 @@ Template.room.onCreated(function(){
 });
 Template.room.onRendered(function(){
 
+
     var reservation = new Bolt.Reservation( Session.get('reservation') || {room: this.data, date:Epoch.dateObjectToDateString(new Date())} );
-    var minDate = 0;
-    if( reservation.room && reservation.room.openingDate ){
-        minDate = reservation.room.openingDate;
-    }
-    if( reservation.date < reservation.room.openingDate ){
-        reservation.date = reservation.room.openingDate;
-    }
+
 
     var self = this;
-    $('#datepicker').datepicker({
-        minDate: minDate,
-        dateFormat: 'yy-mm-dd',
-        defaultDate: reservation.date,
-        onSelect: function (dateText, inst) {
-            $('.ui-state-highlight').removeClass("ui-state-highlight");
-            var formData = Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
-            if( formData ) {
-                reservation.populate(formData);
-            }
-            reservation.date = dateText;
-            reservation.time = false;
-            Session.set( 'reservation',reservation );
+
+    this.autorun(function() {
+
+        // hack to force the autorun to reevaluate
+        Template.currentData();
+
+
+
+        reservation.roomId = self.data._id;
+        reservation.room = self.data;
+
+        var minDate = 0;
+        if( reservation.room && reservation.room.openingDate ){
+            minDate = reservation.room.openingDate;
         }
+        if( reservation.date < reservation.room.openingDate ){
+            reservation.date = reservation.room.openingDate;
+        }
+
+        $('#datepicker').datepicker({
+            minDate: minDate,
+            dateFormat: 'yy-mm-dd',
+            defaultDate: reservation.date,
+            onSelect: function (dateText, inst) {
+                $('.ui-state-highlight').removeClass("ui-state-highlight");
+                var formData = Bureaucrat.getFormData($('[hook="reservation-form"]'));
+                if (formData) {
+                    reservation.populate(formData);
+                }
+                reservation.date = dateText;
+                reservation.time = false;
+                Session.set('reservation', reservation);
+            }
+        });
+
+        Session.set( 'reservation', reservation );
+
     });
 
-    reservation.roomId = this.data._id;
-    reservation.room = this.data;
-
-    Session.set( 'reservation', reservation );
 
 });
 
