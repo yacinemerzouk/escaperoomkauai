@@ -3,14 +3,24 @@ Template.room.onCreated(function(){
 
         var formData = formData || Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
         var reservation = new Bolt.Reservation( Session.get('reservation') );
+        if( formData.coupon ) {
+            formData.coupon = formData.coupon.toUpperCase();
+        }
         reservation.populate( formData );
         Session.set( 'reservation',reservation );
     }
 
     this.submitOrder = function(){
+
+
         var reservation = new Bolt.Reservation( Session.get( 'reservation' ) );
 
         if( reservation.isValid() ){
+
+            analytics.track("Booking", {
+                name: reservation.room.title + ' Booking',
+                revenue: reservation.total
+            });
 
             $('.processing-bg').show()
 
@@ -218,7 +228,25 @@ Template.room.helpers({
     startTimes: function(){
         var reservation = new Bolt.Reservation(Session.get('reservation'));
         //console.log( 'in startTimes', reservation.date );
-        return Bolt.getPossibleTimes(reservation.date);
+        return Bolt.getPossibleTimes(reservation.date, reservation.roomId);
+    },
+    dynamicSuccessRate: function(){
+        var games = Bolt.Collections.Games.find( { roomId: this._id } ).fetch();
+        var nbGames = 0;
+        var nbGamesWon = 0;
+        _.each( games, function( game ) {
+            if (game && game.won === true || game.won === false) {
+                nbGames++;
+                if (game.won) {
+                    nbGamesWon++;
+                }
+            }
+        });
+        if( nbGames < 10 ) {
+            return this.successRate;
+        }else{
+            return Math.ceil(nbGamesWon / nbGames * 100);
+        }
     }
 
 

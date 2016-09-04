@@ -1,17 +1,24 @@
+/**
+ * Game class
+ * @param args : MongoDB ID or object
+ * @constructor
+ */
 Bolt.Game = function( args ){
+
+    var data;
 
     // ID was provided
     if( typeof( args ) == 'string' ){
 
         // Grab data from DB
-        var data = Bolt.Collections.Games.findOne( args );
+        data = Bolt.Collections.Games.findOne( args );
 
-        // Data was provided
+    // Data was provided
     }else if( typeof( args ) == 'object' ){
-        var data;
+
+
         // Set properties of object with db data or straight up data
-        var game = Bolt.Collections.Games.findOne({date:args.date,time:args.time});
-        //console.log('Getting game from object',args,game);
+        var game = Bolt.Collections.Games.findOne({roomId: args.roomId, date:args.date,time:args.time});
         if( game ){
             data = game;
         }else{
@@ -20,7 +27,7 @@ Bolt.Game = function( args ){
 
         // Nothing provided; throw error
     }else{
-        throw new Meteor.Error( 'KER ERROR', 'Cannot create GAME object without data or id.' );
+        throw new Meteor.Error( '[Bolt][Game][constructor] Error', 'Cannot create GAME object without data or id.' );
     }
 
     // Set properties of object
@@ -28,22 +35,28 @@ Bolt.Game = function( args ){
         this[prop] = data[prop];
     }
 
-    var reservations = Bolt.Collections.Reservations.find({time:this.time,date:this.date,canceled:{$ne:true}}).fetch();
-    this.reservations = reservations;
-
-    if( !this.players ){
-        this.players = [];
-        var nbPlayers = 0;
-        if( this.reservations && this.reservations.length > 0 ){
-            _.each(reservations,function(reservation){
-                nbPlayers = nbPlayers + parseInt(reservation.nbPlayers);
-            });
-            for( var x = 0; x < nbPlayers; x++ ){
-                this.players.push( "" );
+    // Grab reservations for this game
+    var reservations = Bolt.Collections.Reservations.find(
+        {
+            $or: [
+                {
+                    roomId: this.roomId
+                },
+                {
+                    blocked: true
+                }
+            ],
+            time:this.time,
+            date:this.date,
+            canceled:{
+                $ne:true
             }
         }
-    }
+    ).fetch();
+    this.reservations = reservations;
 
+    // Check whether this game slot has been blocked by admins
+    // If a reservation has prop blocked => true, then it's blocked
     var isBlocked = false;
     if( this.reservations && this.reservations.length > 0 ){
         _.each(reservations,function(reservation){
@@ -53,32 +66,40 @@ Bolt.Game = function( args ){
         });
     }
     this.isBlocked = isBlocked;
-    
-    // //console.log('end of game constructor', this);
 
 }
 
+/**
+ * Save game
+ * @returns {*} : _id of document or false
+ */
 Bolt.Game.prototype.save = function(){
 
     var result;
 
-    //console.log( 'IN GAME SAVE', this, this._id );
-
     // Got ID; means game is already in DB; update document in DB
     if( this._id ){
+
         result = this.update();
 
-        // No ID; means trip is not in DB; insert document into DB
+    // No ID; means trip is not in DB; insert document into DB
     }else{
+
         result = this.create();
+
     }
 
     return result;
 
 }
 
+/**
+ * Update game
+ * @returns {any} : _id of document or false
+ *
+ * Never use this function directly; use save() instead.
+ */
 Bolt.Game.prototype.update = function(){
-    //console.log( 'IN GAME UPDATE', this );
 
     var result = Bolt.Collections.Games.update(
         {
@@ -89,64 +110,122 @@ Bolt.Game.prototype.update = function(){
         }
     );
 
-    return result;
+    if( result == 0 ){
+        throw new Meteor.Error( '[Bolt][Game][update] Error', 'No document updated.' );
+    }
+
+    return result > 0 ? this._id : false;
 
 }
 
+/**
+ * Create game
+ * @returns {*} : _id of document or false
+ *
+ * Never use this function directly; use save() instead.
+ */
 Bolt.Game.prototype.create = function() {
 
-    //console.log( 'IN GAME CREATE', this );
-
+    // Insert in DB
     var result = Bolt.Collections.Games.insert(this);
 
+    // If insert was successful, we get an ID back
+    // Assign ID to object to we don't have to re-generate it
     if( result ){
         this._id = result;
         return this._id;
     }else{
+        throw new Meteor.Error( '[Bolt][Game][create] Error', 'Could not insert document.' );
         return false;
     }
 
 }
 
-Bolt.Game.prototype.addPlayer = function( email ){
-    this.players.push( email );
+/**
+ * Add player
+ * @param player object with 2 properties: name, email
+ */
+Bolt.Game.prototype.addPlayer = function( player ){
+    if( !this.players ){
+        this.players = [];
+    }
+    this.players.push( player );
 }
-Bolt.Game.prototype.addPlayers = function( emails ){
+
+/**
+ * Add multiple players
+ * @param players
+ */
+Bolt.Game.prototype.addPlayers = function( players ){
     var game = this;
-    _.each( emails, function( email ){
-        game.addPlayer(email);
+    _.each( players, function( player ){
+        game.addPlayer( player );
     });
 }
+
+/**
+ * Send follow-up email to all players in the game
+ */
 Bolt.Game.prototype.sendFollowUpEmail = function(){
+
+    // CLIENT ONLY
     if( Meteor.isClient ) {
+
+        // Grab copy of this to avoid scope issues
         var game = this;
+        // Email vars
         var to;
+        var emailArray = [];
+
+        // If we have a valid game, with at least 1 player
         if (game._id && game.players && game.players.length > 0) {
-            to = game.players.join();
+
+            // Grab email of each player
+            _.each(this.players, function(player){
+                emailArray.push(player.email);
+            });
+
+            // Send follow-up message to all email addresses
+            // join() concatenates all values in array; comma-separated.
             Meteor.call(
                 'sendEmail',
-                to,
+                emailArray.join(),
                 '"Kauai Escape Room" info@escaperoomkauai.com',
                 'How did you like your Kauai Escape Room experience?',
                 Bolt.getFollowUpEmailBody(),
                 function (err, res) {
+
+                    // If error, log and notify user
                     if (err) {
-                        Notifications.error('Error', err.message);
+                        Notifications.error('Error', 'Could not send email. Please contact webmaster.');
+                        throw new Meteor.Error( '[Bolt][Game][sendFollowUpEmail] Error', 'Error message: ' + err.message );
+
+                    // If response OK, update game in DB and notify user
                     } else {
-                        Bolt.Collections.Games.update(
-                            game._id,
-                            {
-                                $set: {
-                                    followUpEmailSent: true
-                                }
-                            }
-                        );
+                        game.followUpEmailSent = true;
+                        game.save();
                         Notifications.success('Email sent', 'Email sent to ' + to);
                     }
                 }
             );
         }else{
-            Notifications.error('Error','No game ID or no players.');
+            Notifications.error('Error', 'Could not send email. Please contact webmaster.');
+            throw new Meteor.Error( '[Bolt][Game][sendFollowUpEmail] Error', 'No game ID or no players.' );
         }
     }
 }
+
+/**
+ * Get nb of players in game; adds up nb of players from all reservations in game
+ * @returns {number}
+ */
+Bolt.Game.prototype.getNbPlayers = function(){
+    var nbPlayers = 0;
+    if( this.reservations && this.reservations.length > 0 ){
+        _.each(this.reservations,function(reservation){
+            nbPlayers = nbPlayers + parseInt(reservation.nbPlayers);
+        });
+    }
+    return nbPlayers;
+}
+

@@ -14,10 +14,10 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="{{pathFor 'home'}}"><img src="/images/logo.png"></a>
-                        <div class="promo">
-                            <span class="promo-title">KAMA'AINA DISCOUNT</span><br>
-                            <span class="promo-text"><span class="currency">5$ off for each<br>Hawai'i resident<br>in your party.</span></span>
-                        </div>
+                        <!--<div class="promo">-->
+                            <!--<span class="promo-title">COMING 09.15</span><br>-->
+                            <!--<span class="promo-text"><span class="currency">Can you find the<br>lost Elvis record?<br><a style="color: #000; text-decoration: underline" href="{{pathFor 'room' slug='lost-elvis-record'}}">Book Now &rarr;</a> </span></span>-->
+                        <!--</div>-->
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,7 +36,7 @@
 
 
         </div>
-    {{>yield}}
+        {{>yield}}
 
 
         <footer style="padding: 2px 4px 0px">
@@ -62,7 +62,7 @@
                             &nbsp;&bull;&nbsp;
                             <a href="/room/mobile">Room: Mobile Escape Room</a>
                             <br>
-                            Version 1.1.14
+                            Version 1.1.16
                         </div>
                     </div>
                 </div>
@@ -71,4 +71,9 @@
         </footer>
 
     </div>
+</template>
+
+<template name="layoutEmpty">
+    {{> notifications}}
+    {{>yield}}
 </template>

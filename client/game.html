@@ -18,8 +18,95 @@
                 <div class="row">
 
                     <div class="col-xs-12">
+
+                        <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">Missing Scientist<br>{{humanReadableDate date format="short"}} @ {{time}}</h2>
+
+
+                        <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">
+                        {{nbWaivers}} of {{nbPlayers}} Waivers completed
+                        </h2>
+
+
+                        <ul style="padding-left: 0;">
+                            {{#each players}}
+                                <li style="background-color: #eee; list-style: none; padding: 10px 15px; margin-bottom: 2px; display: block">{{name}} &nbsp;&bull;&nbsp; {{email}} </li>
+                            {{/each}}
+                        </ul>
+
+                        {{#if nbWaivers}}
+                            {{#if followUpEmailSent}}
+
+                                <div style="background-color: #eee; padding: 20px;">
+                                &#10004; Follow-up email sent
+                                </div>
+
+                            {{else}}
+                                <a href="#" hook="send-follow-up" class="button button-unavailable">Send Follow-Up Email to {{nbWaivers}} players</a>
+                            {{/if}}
+                        {{/if}}
+                        <!--<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">-->
+                            <!--Room Setup Checklist-->
+                        <!--</h2>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Something-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Some task-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Some other task-->
+                            <!--</label>-->
+                        <!--</div>-->
+
+
+                        <!--<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">-->
+                            <!--Onboarding-->
+                        <!--</h2>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Waivers-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Brain warmers-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Restrooms-->
+                            <!--</label>-->
+                        <!--</div>-->
+
+
+                        <!--<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">-->
+                            <!--Pre-game briefing-->
+                        <!--</h2>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Rules-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Tips for success-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Hint system-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Writing pads-->
+                            <!--</label>-->
+                        <!--</div>-->
+
+
                         <form hook="send-message">
-                            <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">Missing Scientist<br>{{humanReadableDate date format="short"}} @ {{time}}</h2>
+                            <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">Game Monitoring</h2>
                             <div class="row">
                                 <div class="col-xs12 col-md-8">
                                     <div class="form-group">
@@ -31,10 +118,8 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
 
-                    <div class="col-xs-12">
-                        <h2 class="subheading" style=" text-align: left; width: 100%; max-width: 100%">Messages Sent</h2>
+                        <h2 class="subheading" style=" text-align: left; width: 100%; max-width: 100%">Messages Sent ({{messageCount}})</h2>
 
                         {{#each messages}}
                             <div style="background-color: #ddd;padding: 20px;">
@@ -45,6 +130,78 @@
                             </p>
 
                         {{/each}}
+
+                        <!--<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">-->
+                            <!--Post-game briefing-->
+                        <!--</h2>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Prep signs and winner stickers-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Walkthrough-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Photo op-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Check basket-->
+                            <!--</label>-->
+                            <!--<label>-->
+                                <!--<input type="checkbox">-->
+                                <!--Check pockets-->
+                            <!--</label>-->
+                        <!--</div>-->
+
+                        <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">
+                            Game Results
+                        </h2>
+
+                        <div class="form-group">
+                            {{#if gameResultLogged}}
+                                {{#if won}}
+                                <label>
+                                    <input type="radio" name="game-result" hook="set-game-result" hook-data-result="won" checked="checked">
+                                    Won
+                                </label>
+                                <label>
+                                    <input type="radio" name="game-result" hook="set-game-result" hook-data-result="lost">
+                                    Lost
+                                </label>
+                                {{else}}
+                                    <label>
+                                        <input type="radio" name="game-result" hook="set-game-result" hook-data-result="won">
+                                        Won
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="game-result" hook="set-game-result" hook-data-result="lost" checked="checked">
+                                        Lost
+                                    </label>
+                                {{/if}}
+                            {{else}}
+                                <label>
+                                    <input type="radio" name="game-result" hook="set-game-result" hook-data-result="won">
+                                    Won
+                                </label>
+                                <label>
+                                    <input type="radio" name="game-result" hook="set-game-result" hook-data-result="lost">
+                                    Lost
+                                </label>
+                            {{/if}}
+                        </div>
+                        {{#if won}}
+                            <div class="form-group">
+                                <label>
+                                    Time
+                                </label>
+                                <input type="text" class="form-control" style="width: 200px; margin-bottom: 4px;" placeholder="MM:SS" hook="game-time" value="{{timeLog}}">
+                                <button hook="set-game-time" class="button" style="width: 200px;">Save Game Time</button>
+                            </div>
+                        {{/if}}
                     </div>
 
                 </div>

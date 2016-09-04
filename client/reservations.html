@@ -22,106 +22,45 @@
                     <a href="#block" class="button button-unavailable btn-block" hook="unblock-date" hook-data-date="{{adminSelectedDate}}">Unblock Entire Day</a>
                 </div>
 
-                <div class="col-sm-8">
-                    {{#each games}}
-                        <div style=" padding: 15px 20px; margin-bottom: 20px; background: #ddd;">
+                <div class="col-sm-8 ">
+                    {{#each times}}
+                        <div style="clear: both; padding: 15px 20px; margin-bottom: 20px;" class="background-res-{{room.slug}}">
                             <span class="resTime">
+                                {{room.title}}<br>
                                 {{humanReadableDate date}} @ {{time}}
                             </span>
                             {{#if isBlocked}}
                                 <div class="label label-danger pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Blocked</div>
                                 <a href="#" class="red pull-right" style="padding-right: 10px;" hook="unblock-time" hook-data-date="{{date}}" hook-data-time="{{time}}">Unblock</a>
                             {{else}}
+                                {{#if canBlock}}
                                 <div class="label label-success pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Open</div>
                                 <a href="#" class="red pull-right" hook="block-time" style="padding-right: 10px;" hook-data-date="{{date}}" hook-data-time="{{time}}">Block</a>
+                                {{/if}}
                             {{/if}}
                         </div>
                         {{#unless isBlocked}}
-                            {{#if reservations}}
-                                <fieldset style="margin-bottom: 30px">
-                                    <legend style="width: auto; padding-right: 10px">The Missing Scientist <a href="{{pathFor 'game' slug='mad-scientist' date=date time=time}}">Game Master &rarr;</a></legend>
-                                    {{#each reservations}}
-                                        {{#unless blocked}}
-                                            {{>reservationOverview this}}
-                                        {{/unless}}
-                                    {{/each}}
+                            {{#each games}}
+                                {{#if reservations}}
+                                    <fieldset style="margin-bottom: 30px">
+                                        <legend style="width: auto; padding-right: 10px">The Missing Scientist <a href="{{pathFor 'game' roomId=roomId date=date time=time}}">Game Master &rarr;</a></legend>
+                                        {{#each reservations}}
+                                            {{#unless blocked}}
+                                                {{>reservationOverview this}}
+                                            {{/unless}}
+                                        {{/each}}
 
 
-                                    {{#if _id}}
-                                        &#10004; Game {{#if won}} Won :) {{else}} Lost :( {{/if}}<br>
-                                    {{/if}}
-                                    {{#if followUpEmailSent}}
-                                        &#10004; Follow-up email sent<br>
-                                    {{/if}}
-                                    <a href="#" hook="show-postgame" hook-data="{{date}}@{{time}}">Show Postgame</a>
-                                    <a href="#" hook="hide-postgame" hook-data="{{date}}@{{time}}" style="display: none">Hide Postgame</a>
-                                    <div hook="postgame-{{date}}@{{time}}" style="display: none;">
-                                        <div class="form-group" style="margin-bottom: 5px; margin-top: 10px; background-color: #eee; padding: 20px">
-                                            {{#if _id}}
-                                                &#10004; Game {{#if won}} Won :) {{else}} Lost :( {{/if}}
-                                            {{else}}
-                                                <label style="border: none; font-size: 14px;">Game Result</label>
-                                                <div class="checkbox" style="margin-bottom: 0">
-                                                    <label style="border-bottom: none; padding-left: 0">
-                                                        {{#if won}}
-                                                            <input hook="log-game-result" hook-data-result="won" checked="checked" hook-data-time="{{time}}" type="radio" name="log-game-result-{{time}}"> Won
-                                                        {{else}}
-                                                            <input hook="log-game-result" hook-data-result="won" hook-data-time="{{time}}" type="radio" name="log-game-result-{{time}}"> Won
-                                                        {{/if}}
-                                                    </label>
-                                                    <label style="border-bottom: none; padding-left: 0">
-                                                        {{#if _id}}
-                                                            {{#if won}}
-                                                                <input hook="log-game-result" hook-data-result="lost" hook-data-time="{{time}}" type="radio" name="log-game-result-{{time}}"> Lost
-                                                            {{else}}
-                                                                <input hook="log-game-result" hook-data-result="lost" checked="checked" hook-data-time="{{time}}" type="radio" name="log-game-result-{{time}}"> Lost
-                                                            {{/if}}
-                                                        {{else}}
-                                                            <input hook="log-game-result" hook-data-result="lost" hook-data-time="{{time}}" type="radio" id="log-game-result" name="log-game-result-{{time}}"> Lost
-                                                        {{/if}}
-                                                    </label>
-                                                </div>
-                                            {{/if}}
-                                        </div>
-                                        {{#if won}}
-                                            <form hook="time-log-form">
-                                                <div class="form-group" style="margin-bottom: 5px">
-                                                    <div style="background-color: #eee; padding: 20px;">
-
-                                                        {{#if timeLog}}
-                                                            &#10004; Time => {{timeLog}}
-                                                        {{else}}
-                                                            <label style="border: none; font-size: 14px;">Time ( HH:SS format )</label>
-
-                                                            <input type="text" class="form-control" name="time" style="margin-bottom: 5px;" placeholder="HH:SS">
-
-                                                            <a href="#" class="button btn-block text-center" hook="log-time" hook-data-time="{{time}}">Log Time</a>
-
-                                                        {{/if}}
-                                                    </div>
-                                                </div>
-                                            </form>
+                                        {{#if _id}}
+                                            &#10004; Game {{#if won}} Won {{#if timeLog}} in {{timeLog}}{{/if}}  :) {{else}} Lost :( {{/if}}<br>
                                         {{/if}}
                                         {{#if followUpEmailSent}}
-                                            <div style="background-color: #eee; padding: 20px;">
-                                                &#10004; Follow-up email sent
-                                            </div>
-                                        {{else}}
-                                            <form hook="players-form">
-                                                <div class="form-group" style="margin-bottom: 0px">
-                                                    <div style="background-color: #eee; padding: 20px;">
-                                                        <label style="border: none; font-size: 14px;">Players</label>
-                                                        {{#each players}}
-                                                            <input type="text" class="form-control" name="player-{{@index}}" style="margin-bottom: 5px;" placeholder="Email">
-                                                        {{/each}}
-                                                        <a href="#" class="button btn-block text-center" hook="send-follow-up" hook-data-time="{{time}}">Send Follow-Up Email</a>
-                                                     </div>
-                                                </div>
-                                            </form>
+                                            &#10004; Follow-up email sent<br>
                                         {{/if}}
-                                    </div>
-                                </fieldset>
-                            {{/if}}
+
+                                    </fieldset>
+                                {{/if}}
+                            {{/each}}
                         {{/unless}}
                     {{/each}}
                 </div>

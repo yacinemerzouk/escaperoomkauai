@@ -2,20 +2,63 @@ Template.reservations.helpers({
     adminSelectedDate: function(){
         return Session.get('adminSelectedDate');
     },
-    games: function(){
-
+    // games: function(){
+    //
+    //     var times = Bolt.getPossibleTimes(Session.get('adminSelectedDate'));
+    //     console.log('TIMES TO LOOP OVER', times);
+    //     var rooms = Bolt.Collections.Rooms.find({available:true}).fetch();
+    //     var games = [];
+    //     _.each(times,function(time){
+    //         _.each(rooms,function(room){
+    //             var game = new Bolt.Game({
+    //                 date: Session.get('adminSelectedDate'),
+    //                 time: time,
+    //                 roomId: room._id
+    //             });
+    //             games.push(game);
+    //         });
+    //     });
+    //     //console.log( 'GAMES?', games );
+    //     return games;
+    //
+    // },
+    times: function(){
         var times = Bolt.getPossibleTimes(Session.get('adminSelectedDate'));
-        var games = [];
-        _.each(times,function(time){
-            var game = new Bolt.Game({
+        var rooms = Bolt.Collections.Rooms.find({available:true}).fetch();
+        var timesArray = [];
+        // For each possible time
+        _.each(times,function(time) {
+
+            var timeObject = {
                 date: Session.get('adminSelectedDate'),
-                time: time
+                time: time,
+                games: [],
+                canBlock: true
+            };
+            // Add games to time
+            _.each(rooms,function(room){
+                var game = new Bolt.Game({
+                    date: Session.get('adminSelectedDate'),
+                    time: time,
+                    roomId: room._id
+                });
+                timeObject.games.push(game);
+                timeObject.isBlocked = game.isBlocked;
+                if( _.indexOf( room.startTimes, time ) !== -1 ){
+                    timeObject.room = room;
+                }
+                if( game.reservations && game.reservations.length > 0 ){
+                    timeObject.canBlock = false;
+                }
             });
-            games.push(game);
+            
+
+            timesArray.push( timeObject );
+
         });
 
-        return games;
-
+        console.log( 'Times array with games', timesArray );
+        return timesArray;
     }
 });
 
@@ -54,7 +97,7 @@ Template.reservations.events({
                 time: time
             });
         }
-        ////console.log(blockId);
+        //////console.log(blockId);
     },
 
     'click [hook="unblock-time"]': function(evt,tmpl) {
@@ -62,7 +105,7 @@ Template.reservations.events({
         var date = $(evt.target).attr('hook-data-date');
         var time = $(evt.target).attr('hook-data-time');
         Meteor.call('unblockTime', date, time, function(err,res){
-            ////console.log('back from unblockTime');
+            //////console.log('back from unblockTime');
         })
     },
 
@@ -79,19 +122,19 @@ Template.reservations.events({
                 playersArray.push(p);
             }
         });
-        //console.log( 'PLAYERS', players, playersArray );
+        ////console.log( 'PLAYERS', players, playersArray );
         game.players = playersArray;
-        //console.log( 'SENDING FOLLOWUP', game );
+        ////console.log( 'SENDING FOLLOWUP', game );
         game.sendFollowUpEmail();
 
     },
 
     'click [hook="unblock-date"]': function(evt,tmpl) {
         evt.preventDefault();
-        ////console.log('unblock?');
+        //////console.log('unblock?');
         var date = $(evt.target).attr('hook-data-date');
         Meteor.call('unblockDate', date, function(err,res){
-            ////console.log('back from unblockDate');
+            //////console.log('back from unblockDate');
         })
     },
 
@@ -102,9 +145,9 @@ Template.reservations.events({
         var time = $(evt.currentTarget).attr('hook-data-time');
         var game = new Bolt.Game({date:date,time:time});
         game.won = won;
-        //console.log( 'SAVING GAME', game);
+        ////console.log( 'SAVING GAME', game);
         game.save();
-        ////console.log( 'SAVE RES', res );
+        //////console.log( 'SAVE RES', res );
         // var roomId = $(evt.currentTarget).attr('hook-data-room-id');
         // var date = $(evt.currentTarget).attr('hook-data-date');
         // var time = $(evt.currentTarget).attr('hook-data-time');
@@ -199,7 +242,7 @@ Template.reservations.events({
         var time = $(evt.currentTarget).attr('hook-data-time');
         var game = new Bolt.Game({date:date,time:time});
         game.timeLog = timeLog;
-        //console.log( 'SAVING GAME', game);
+        ////console.log( 'SAVING GAME', game);
         game.save();
     }
 });

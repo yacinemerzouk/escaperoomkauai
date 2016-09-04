@@ -67,6 +67,7 @@ meteorhacks:picker@1.0.3
 minifier-css@1.2.14
 minifier-js@1.2.14
 minimongo@1.0.17
+miro:mailchimp@1.1.0
 mizzao:build-fetcher@0.3.2
 mizzao:jquery-ui@1.11.4
 mobile-experience@1.0.4

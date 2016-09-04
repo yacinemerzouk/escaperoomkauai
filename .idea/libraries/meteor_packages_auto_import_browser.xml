@@ -208,6 +208,7 @@
         <item url="file://$USER_HOME$/.meteor/packages/tracker/1.1.0/web.browser/deprecated.js" />
         <item url="file://$USER_HOME$/.meteor/packages/tracker/1.1.0/web.browser/tracker.js" />
         <item url="file://$USER_HOME$/.meteor/packages/iron_location/1.0.11/web.browser/lib/utils.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/miro_mailchimp/1.1.0/web.browser/packages/miro_mailchimp.js" />
         <item url="file://$USER_HOME$/.meteor/packages/iron_location/1.0.11/web.browser/lib/location.js" />
         <item url="file://$USER_HOME$/.meteor/packages/meteorhacks_picker/1.0.3/web.browser/packages/meteorhacks_picker.js" />
         <item url="file://$USER_HOME$/.meteor/packages/gadicohen_robots-txt/0.0.10/web.browser/packages/gadicohen_robots-txt.js" />
@@ -443,6 +444,7 @@
       <root url="file://$USER_HOME$/.meteor/packages/tracker/1.1.0/web.browser/deprecated.js" />
       <root url="file://$USER_HOME$/.meteor/packages/tracker/1.1.0/web.browser/tracker.js" />
       <root url="file://$USER_HOME$/.meteor/packages/iron_location/1.0.11/web.browser/lib/utils.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/miro_mailchimp/1.1.0/web.browser/packages/miro_mailchimp.js" />
       <root url="file://$USER_HOME$/.meteor/packages/iron_location/1.0.11/web.browser/lib/location.js" />
       <root url="file://$USER_HOME$/.meteor/packages/meteorhacks_picker/1.0.3/web.browser/packages/meteorhacks_picker.js" />
       <root url="file://$USER_HOME$/.meteor/packages/gadicohen_robots-txt/0.0.10/web.browser/packages/gadicohen_robots-txt.js" />
