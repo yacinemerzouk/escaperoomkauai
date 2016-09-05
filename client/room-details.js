@@ -69,7 +69,7 @@ Template.room.onCreated(function(){
                         " - " +
                         reservation.nbPlayers + " players" +
                         " - " +
-                        "$0.00"
+                        "$0.00";
                     Meteor.call('sendAdminNotificationSMS', SMSString, function(error,response){
                         if( error ) {
                             console.log( error );
