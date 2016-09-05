@@ -204,7 +204,7 @@ Bolt.Game.prototype.sendFollowUpEmail = function(){
                     } else {
                         game.followUpEmailSent = true;
                         game.save();
-                        Notifications.success('Email sent', 'Email sent to ' + to);
+                        Notifications.success('Email sent', 'Email sent to ' + emailArray.join());
                     }
                 }
             );
