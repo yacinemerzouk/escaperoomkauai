@@ -4,9 +4,9 @@
     <list default="true" id="b3ab2dd3-2ff8-4bd3-88c4-cdd518ab4e68" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/packages/bureaucrat-meteor-package" afterPath="$PROJECT_DIR$/packages/bureaucrat-meteor-package" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/packages/epoch-meteor-package" afterPath="$PROJECT_DIR$/packages/epoch-meteor-package" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/Game.js" afterPath="$PROJECT_DIR$/classes/Game.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/layout.html" afterPath="$PROJECT_DIR$/client/layout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/room-details.js" afterPath="$PROJECT_DIR$/client/room-details.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/waiver.html" afterPath="$PROJECT_DIR$/client/waiver.html" />
     </list>
     <ignored path="escaperoomkauai.com.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,16 +26,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="router.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/router.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-636">
-              <caret line="333" column="20" selection-start-line="333" selection-start-column="14" selection-end-line="333" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="room-details.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/room-details.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -56,21 +46,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Reservation.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/Reservation.js">
+      <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2945">
-              <caret line="171" column="27" selection-start-line="171" selection-start-column="27" selection-end-line="171" selection-end-column="27" />
+            <state relative-caret-position="-570">
+              <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/game.js">
+      <file leaf-file-name="stripe-config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/stripe-config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="94" column="10" selection-start-line="71" selection-start-column="8" selection-end-line="94" selection-end-column="10" />
+            <state relative-caret-position="38">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -82,8 +72,18 @@
             <state relative-caret-position="29">
               <caret line="64" column="42" selection-start-line="64" selection-start-column="42" selection-end-line="64" selection-end-column="42" />
               <folding>
-                <marker date="1473023487000" expanded="false" signature="1244:1283" ph="..." />
+                <marker date="1473045233000" expanded="false" signature="1244:1283" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="waiver.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/waiver.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,11 +98,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="room-box.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/room-box.js">
+      <file leaf-file-name="_namespace.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/_namespace.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
+            <state relative-caret-position="143">
+              <caret line="75" column="12" selection-start-line="75" selection-start-column="11" selection-end-line="75" selection-end-column="12" />
+              <folding>
+                <marker date="1472766443000" expanded="true" signature="4702:4740" ph="..." />
+                <marker date="1472766443000" expanded="true" signature="4775:4819" ph="..." />
+                <marker date="1472766443000" expanded="true" signature="5029:5102" ph="..." />
+                <marker date="1472766443000" expanded="true" signature="8657:8695" ph="..." />
+                <marker date="1472766443000" expanded="true" signature="8726:8770" ph="..." />
+                <marker date="1472766443000" expanded="true" signature="8964:9037" ph="..." />
+                <marker date="1472766443000" expanded="true" signature="10251:10289" ph="..." />
+                <marker date="1472766443000" expanded="true" signature="10320:10364" ph="..." />
+                <marker date="1472766443000" expanded="true" signature="10558:10631" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Game.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/Game.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="922">
+              <caret line="206" column="96" selection-start-line="206" selection-start-column="96" selection-end-line="206" selection-end-column="96" />
               <folding />
             </state>
           </provider>
@@ -119,16 +139,6 @@
                 <element signature="e#5449#5455#0#HTML" expanded="true" />
                 <element signature="e#5466#5473#0#HTML" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="room-details.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/room-details.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="20" column="78" selection-start-line="20" selection-start-column="60" selection-end-line="20" selection-end-column="78" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -168,12 +178,10 @@
         <option value="$PROJECT_DIR$/packages/epoch-meteor-package/zendy-epoch-functions.js" />
         <option value="$PROJECT_DIR$/client/main.html" />
         <option value="$PROJECT_DIR$/server/publications.js" />
-        <option value="$PROJECT_DIR$/client/waiver.html" />
         <option value="$PROJECT_DIR$/settings-dev.json" />
         <option value="$PROJECT_DIR$/settings-prod.json" />
         <option value="$PROJECT_DIR$/accounts.js" />
         <option value="$PROJECT_DIR$/client/waiver.js" />
-        <option value="$PROJECT_DIR$/classes/Game.js" />
         <option value="$PROJECT_DIR$/classes/Reservation.js" />
         <option value="$PROJECT_DIR$/client/css/reservations.less" />
         <option value="$PROJECT_DIR$/client/reservations.html" />
@@ -191,6 +199,8 @@
         <option value="$PROJECT_DIR$/client/home.html" />
         <option value="$PROJECT_DIR$/server/twilio.js" />
         <option value="$PROJECT_DIR$/client/room-details.js" />
+        <option value="$PROJECT_DIR$/client/waiver.html" />
+        <option value="$PROJECT_DIR$/classes/Game.js" />
         <option value="$PROJECT_DIR$/client/layout.html" />
       </list>
     </option>
@@ -515,12 +525,12 @@
       <workItem from="1472688320125" duration="10724000" />
       <workItem from="1472757964068" duration="9095000" />
       <workItem from="1472951907009" duration="978000" />
-      <workItem from="1473015883605" duration="4760000" />
+      <workItem from="1473015883605" duration="5328000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="207469000" />
+    <option name="totallyTimeSpent" value="208037000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -718,25 +728,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/stripe-config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/main.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/waiver.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -790,14 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/Game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="59" column="16" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/reservations.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="494">
@@ -809,24 +796,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/_namespace.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1482">
-          <caret line="78" column="64" selection-start-line="78" selection-start-column="64" selection-end-line="78" selection-end-column="64" />
-          <folding>
-            <marker date="1472766443000" expanded="true" signature="4702:4740" ph="..." />
-            <marker date="1472766443000" expanded="true" signature="4775:4819" ph="..." />
-            <marker date="1472766443000" expanded="true" signature="5029:5102" ph="..." />
-            <marker date="1472766443000" expanded="true" signature="8657:8695" ph="..." />
-            <marker date="1472766443000" expanded="true" signature="8726:8770" ph="..." />
-            <marker date="1472766443000" expanded="true" signature="8964:9037" ph="..." />
-            <marker date="1472766443000" expanded="true" signature="10251:10289" ph="..." />
-            <marker date="1472766443000" expanded="true" signature="10320:10364" ph="..." />
-            <marker date="1472766443000" expanded="true" signature="10558:10631" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -933,14 +902,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="94" column="10" selection-start-line="71" selection-start-column="8" selection-end-line="94" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/twilio.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
@@ -957,12 +918,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/waiver.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-570">
+          <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/stripe-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/_namespace.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="75" column="12" selection-start-line="75" selection-start-column="11" selection-end-line="75" selection-end-column="12" />
+          <folding>
+            <marker date="1472766443000" expanded="true" signature="4702:4740" ph="..." />
+            <marker date="1472766443000" expanded="true" signature="4775:4819" ph="..." />
+            <marker date="1472766443000" expanded="true" signature="5029:5102" ph="..." />
+            <marker date="1472766443000" expanded="true" signature="8657:8695" ph="..." />
+            <marker date="1472766443000" expanded="true" signature="8726:8770" ph="..." />
+            <marker date="1472766443000" expanded="true" signature="8964:9037" ph="..." />
+            <marker date="1472766443000" expanded="true" signature="10251:10289" ph="..." />
+            <marker date="1472766443000" expanded="true" signature="10320:10364" ph="..." />
+            <marker date="1472766443000" expanded="true" signature="10558:10631" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="922">
+          <caret line="206" column="96" selection-start-line="206" selection-start-column="96" selection-end-line="206" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/layout.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="29">
           <caret line="64" column="42" selection-start-line="64" selection-start-column="42" selection-end-line="64" selection-end-column="42" />
           <folding>
-            <marker date="1473023487000" expanded="false" signature="1244:1283" ph="..." />
+            <marker date="1473045233000" expanded="false" signature="1244:1283" ph="..." />
           </folding>
         </state>
       </provider>
