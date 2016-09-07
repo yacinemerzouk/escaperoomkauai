@@ -19,7 +19,7 @@ Template.roomBox.helpers({
     },
     showOpeningDate: function(){
         var today = Epoch.dateObjectToDateString( new Date() );
-        console.log( this.room, today );
+        // console.log( this.room, today );
         if( this.room.openingDate > today ){
             return true
         }else{

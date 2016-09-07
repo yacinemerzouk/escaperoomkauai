@@ -42,9 +42,9 @@ Template.reportsTransactionsList.helpers({
 
             }
         }else if( from ){
-            console.log( Epoch.dateStringToDateObject( from ) );
+            // console.log( Epoch.dateStringToDateObject( from ) );
         }else if( to ){
-            console.log( Epoch.dateStringToDateObject( to ) );
+            // console.log( Epoch.dateStringToDateObject( to ) );
         }
 
         return Bolt.Collections.Reservations.find(

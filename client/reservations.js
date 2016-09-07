@@ -2,111 +2,10 @@ Template.reservations.helpers({
     adminSelectedDate: function(){
         return Session.get('adminSelectedDate');
     },
-    // games: function(){
-    //
-    //     var times = Bolt.getPossibleTimes(Session.get('adminSelectedDate'));
-    //     console.log('TIMES TO LOOP OVER', times);
-    //     var rooms = Bolt.Collections.Rooms.find({available:true}).fetch();
-    //     var games = [];
-    //     _.each(times,function(time){
-    //         _.each(rooms,function(room){
-    //             var game = new Bolt.Game({
-    //                 date: Session.get('adminSelectedDate'),
-    //                 time: time,
-    //                 roomId: room._id
-    //             });
-    //             games.push(game);
-    //         });
-    //     });
-    //     //console.log( 'GAMES?', games );
-    //     return games;
-    //
-    // },
-    times: function(){
-        if( Session.get('adminSelectedDate') ) {
-            var times = Bolt.getPossibleTimes(Session.get('adminSelectedDate'));
-            // var rooms = Bolt.Collections.Rooms.find({available:true}).fetch();
-            var timesArray = [];
-            // For each possible time
-            _.each(times, function (time) {
-
-                var gamesData = Bolt.Collections.Games.find({
-                    date: Session.get('adminSelectedDate'),
-                    time: time
-                }).fetch();
-                var games = [];
-                _.each(gamesData,function(g){
-                    games.push( new Bolt.Game(g) );
-                })
-
-                var timeObject = {
-                    date: Session.get('adminSelectedDate'),
-                    time: time,
-                    // canBlock: true,
-                    possibleRooms: Bolt.Collections.Rooms.find({
-                        startTimes: {
-                            $in: [time]
-                        }
-                    }).fetch(),
-                    games: games
-                };
-
-                console.log( "args", {
-                    date: Session.get('adminSelectedDate'),
-                    time: time
-                });
-                console.log( "results", Bolt.Collections.Games.find({
-                    date: Session.get('adminSelectedDate'),
-                    time: time
-                }).fetch());
-                // var gamesData = Bolt.Collections.Games.find({
-                //     date: Session.get('adminSelectedDate'),
-                //     time: time,
-                //     roomId: room._id._str || room._id
-                // }).fetch();
-                //
-                // // Add games to time
-                // _.each(rooms,function(room){
-                //     timeObject.rooms = timeObject.rooms || [];
-                //     if( _.indexOf( room.startTimes, time ) !== -1 ){
-                //
-                //
-                //
-                //         room.games = [];
-                //         var gamesData = Bolt.Collections.Games.find({
-                //             date: Session.get('adminSelectedDate'),
-                //             time: time,
-                //             roomId: room._id._str || room._id
-                //         }).fetch();
-                //         console.log( 'found gamesData', {
-                //             date: Session.get('adminSelectedDate'),
-                //             time: time,
-                //             roomId: room._id._str || room._id
-                //         }, gamesData );
-                //         _.each( gamesData, function(gameData){
-                //             var g = new Bolt.Game( gameData );
-                //             room.games.push(g);
-                //         });
-                //
-                //
-
-                // timeObject.rooms.push( room );
-                // }
-
-                // });
-
-
-                timesArray.push(timeObject);
-
-            });
-
-            console.log('Times array with games', timesArray);
-
-
-            return timesArray;
-        }else{
-            return [];
-        }
+    adminDay: function(){
+        var adminDay = Bolt.getAdminDay( Session.get('adminSelectedDate') );
+        // console.log( 'adminDay helper', adminDay );
+        return adminDay;
     }
 });
 
@@ -132,15 +31,14 @@ Template.reservations.events({
         var date = $(evt.currentTarget).attr('hook-data-date');
         var time = $(evt.currentTarget).attr('hook-data-time');
         var roomId = $(evt.currentTarget).attr('hook-data-roomid');
-        var reservations = Bolt.Collections.Reservations.find({
-            date:date,
-            time:time,
-            roomId: roomId
-        }).fetch();
+        // var reservations = Bolt.Collections.Reservations.find({
+        //     date:date,
+        //     time:time,
+        //     roomId: roomId
+        // }).fetch();
+        //
+        // var alreadyHasReservations = reservations.length > 0 ? true : false;
 
-        var alreadyHasReservations = reservations.length > 0 ? true : false;
-
-        if( !alreadyHasReservations ) {
             var blockId = Bolt.Collections.Reservations.insert({
                 blocked: true,
                 date: date,
@@ -152,19 +50,19 @@ Template.reservations.events({
                 time: time,
                 roomId: roomId
             });
-        }
-        console.log('blocking?', {
-            date:date,
-            time:time,
-            roomId: roomId
-        }, reservations, blockId, gameId);
+        // console.log('blocking?', {
+        //     date:date,
+        //     time:time,
+        //     roomId: roomId
+        // }, reservations, blockId, gameId);
     },
 
     'click [hook="unblock-time"]': function(evt,tmpl) {
         evt.preventDefault();
         var date = $(evt.target).attr('hook-data-date');
         var time = $(evt.target).attr('hook-data-time');
-        Meteor.call('unblockTime', date, time, function(err,res){
+        var roomId = $(evt.currentTarget).attr('hook-data-roomid');
+        Meteor.call('unblockTime', date, time, roomId, function(err,res){
             //////console.log('back from unblockTime');
         })
     },

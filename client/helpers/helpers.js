@@ -150,7 +150,7 @@ UI.registerHelper('unixToHumanReadableDateTime', function( number ){
 
 
 UI.registerHelper('dump', function( data ){
-    return "RESERVATION OBJECT\n==================\n" + JSON.stringify(data,null,'\t');
+    return "DUMP\n==================\n" + JSON.stringify(data,null,'\t');
 });
 
 UI.registerHelper('centsToDollarsCurrency', function( n ){

@@ -24,6 +24,81 @@
                 </div>
 
                 <div class="col-xs-12 col-md-8">
+
+                    {{#with adminDay}}
+
+                        {{#each times}}
+
+                            <div class="background-res-mad-scientist" style="clear: both; padding: 15px 20px; margin-bottom: 20px; background-color: #DDD; color: #999;" >
+                            <span class="resTime">
+                                {{humanReadableDate ../date}} @ {{time}}
+                            </span>
+                            </div>
+
+                            {{#each rooms}}
+
+                                <fieldset style="margin-bottom: 30px">
+                                    <legend style="width: auto; padding-right: 10px">
+                                        {{title}}</legend>
+
+                                    {{#if game}}
+
+                                        {{#with game}}
+
+                                            {{#if isBlocked}}
+                                                <div class="label label-danger" style="font-size: 16px; position:relative; bottom: 1px; display: block; padding: 9px 0 10px 0">BLOCKED &nbsp;&bull;&nbsp; <a href="#" style="color:#FFF; text-decoration: underline;" hook="unblock-time" hook-data-date="{{../../../date}}" hook-data-time="{{time}}"  hook-data-roomid="{{../_id}}">UNBLOCK IT</a></div>
+                                            {{else}}
+                                                <div class="label label-info" style="font-size: 16px; position:relative; bottom: 1px; display: block; padding: 9px 0 10px 0; margin-bottom: 10px">BOOKED &nbsp;&bull;&nbsp; <a href="{{pathFor 'game' roomId=roomId date=date time=time}}" style="color:#FFF; text-decoration: underline;">GAME MASTER</a></div>
+                                                {{#each reservations}}
+                                                    {{>reservationOverview this}}
+                                                {{/each}}
+                                            {{/if}}
+
+                                        {{/with}}
+
+                                    {{else}}
+
+                                        <div class="label label-success" style="font-size: 16px; position:relative; bottom: 1px; display: block; padding: 9px 0 10px 0">OPEN &nbsp;&bull;&nbsp; <a href="#" class="red" hook="block-time" style="color:#FFF; text-decoration: underline;" hook-data-date="{{../../date}}" hook-data-time="{{../time}}" hook-data-roomid="{{_id}}">BLOCK IT</a></div>
+
+                                    {{/if}}
+
+                                </fieldset>
+
+                            {{/each}}
+
+                        {{/each}}
+
+                    {{/with}}
+
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+                    <hr>
+
                     {{#each times}}
                         <div class="background-res-mad-scientist" style="clear: both; padding: 15px 20px; margin-bottom: 20px; background-color: #DDD; color: #999;" >
                             <span class="resTime">
