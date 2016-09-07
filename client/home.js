@@ -1,3 +1,6 @@
+Template.home.onCreated(function(){
+    Meteor.subscribe( 'rooms' );
+});
 Template.home.events({
     'click [hook="explainer"]': function(evt,tmpl){
         evt.preventDefault();

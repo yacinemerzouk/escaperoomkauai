@@ -1,3 +1,8 @@
+Template.rooms.onCreated(function(){
+    Meteor.subscribe( 'rooms' );
+    Meteor.subscribe( 'games' );
+});
+
 Template.rooms.rendered = function(){
     $( "#datepicker" ).datepicker();
 }

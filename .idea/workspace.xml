@@ -2,20 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3ab2dd3-2ff8-4bd3-88c4-cdd518ab4e68" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/css/switches.less" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/packages/bureaucrat-meteor-package" afterPath="$PROJECT_DIR$/packages/bureaucrat-meteor-package" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/packages/epoch-meteor-package" afterPath="$PROJECT_DIR$/packages/epoch-meteor-package" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/Game.js" afterPath="$PROJECT_DIR$/classes/Game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/Reservation.js" afterPath="$PROJECT_DIR$/classes/Reservation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/game.js" afterPath="$PROJECT_DIR$/client/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/helpers/helpers.js" afterPath="$PROJECT_DIR$/client/helpers/helpers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/home.js" afterPath="$PROJECT_DIR$/client/home.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/layout.html" afterPath="$PROJECT_DIR$/client/layout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/reservations.html" afterPath="$PROJECT_DIR$/client/reservations.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/reservations.js" afterPath="$PROJECT_DIR$/client/reservations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/_namespace.js" afterPath="$PROJECT_DIR$/lib/_namespace.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/twilio.js" afterPath="$PROJECT_DIR$/server/twilio.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings-dev.json" afterPath="$PROJECT_DIR$/settings-dev.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/rooms.js" afterPath="$PROJECT_DIR$/client/rooms.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/router.js" afterPath="$PROJECT_DIR$/router.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings-prod.json" afterPath="$PROJECT_DIR$/settings-prod.json" />
     </list>
     <ignored path="escaperoomkauai.com.iws" />
@@ -56,41 +49,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/game.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="13" column="50" selection-start-line="13" selection-start-column="50" selection-end-line="13" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Game.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/Game.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="29" column="55" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="router.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7201">
-              <caret line="388" column="19" selection-start-line="388" selection-start-column="14" selection-end-line="388" selection-end-column="19" />
+            <state relative-caret-position="333">
+              <caret line="80" column="9" selection-start-line="75" selection-start-column="7" selection-end-line="80" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="helpers.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/helpers/helpers.js">
+      <file leaf-file-name="rooms.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/rooms.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="584">
-              <caret line="183" column="30" selection-start-line="183" selection-start-column="19" selection-end-line="183" selection-end-column="30" />
+            <state relative-caret-position="38">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/home.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -105,16 +88,6 @@
                 <marker date="1473209435000" expanded="false" signature="5309:5328" ph="..." />
                 <marker date="1473209435000" expanded="false" signature="5393:5425" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="switches.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/css/switches.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1805">
-              <caret line="95" column="27" selection-start-line="95" selection-start-column="27" selection-end-line="95" selection-end-column="27" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -144,6 +117,26 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="29">
               <caret line="67" column="42" selection-start-line="67" selection-start-column="42" selection-end-line="67" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings-prod.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings-prod.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="room-details.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/room-details.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="78">
+              <caret line="343" column="59" selection-start-line="343" selection-start-column="59" selection-end-line="343" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -184,11 +177,7 @@
         <option value="$PROJECT_DIR$/accounts.js" />
         <option value="$PROJECT_DIR$/client/waiver.js" />
         <option value="$PROJECT_DIR$/client/css/reservations.less" />
-        <option value="$PROJECT_DIR$/client/room-details.html" />
         <option value="$PROJECT_DIR$/client/coupons.js" />
-        <option value="$PROJECT_DIR$/client/rooms.js" />
-        <option value="$PROJECT_DIR$/client/home.js" />
-        <option value="$PROJECT_DIR$/router.js" />
         <option value="$PROJECT_DIR$/client/game.html" />
         <option value="$PROJECT_DIR$/client/css/_global.less" />
         <option value="$PROJECT_DIR$/client/room-box.js" />
@@ -198,7 +187,6 @@
         <option value="$PROJECT_DIR$/client/main.html" />
         <option value="$PROJECT_DIR$/classes/Reservation.js" />
         <option value="$PROJECT_DIR$/settings-dev.json" />
-        <option value="$PROJECT_DIR$/settings-prod.json" />
         <option value="$PROJECT_DIR$/server/twilio.js" />
         <option value="$PROJECT_DIR$/client/css/switches.less" />
         <option value="$PROJECT_DIR$/client/helpers/helpers.js" />
@@ -207,6 +195,11 @@
         <option value="$PROJECT_DIR$/client/reservations.html" />
         <option value="$PROJECT_DIR$/client/reservations.js" />
         <option value="$PROJECT_DIR$/lib/_namespace.js" />
+        <option value="$PROJECT_DIR$/settings-prod.json" />
+        <option value="$PROJECT_DIR$/client/room-details.html" />
+        <option value="$PROJECT_DIR$/client/home.js" />
+        <option value="$PROJECT_DIR$/router.js" />
+        <option value="$PROJECT_DIR$/client/rooms.js" />
         <option value="$PROJECT_DIR$/client/layout.html" />
       </list>
     </option>
@@ -533,12 +526,12 @@
       <workItem from="1472951907009" duration="978000" />
       <workItem from="1473015883605" duration="5654000" />
       <workItem from="1473106273162" duration="9135000" />
-      <workItem from="1473191583040" duration="4529000" />
+      <workItem from="1473191583040" duration="5307000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="222027000" />
+    <option name="totallyTimeSpent" value="222805000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -763,20 +756,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/rooms.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="62" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="62" selection-start-line="17" selection-start-column="62" selection-end-line="17" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/game.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="67">
@@ -788,13 +767,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="614" column="30" selection-start-line="614" selection-start-column="30" selection-end-line="614" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/room-details.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="78" selection-start-line="20" selection-start-column="60" selection-end-line="20" selection-end-column="78" />
           <folding />
         </state>
       </provider>
@@ -810,6 +782,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2451">
           <caret line="129" column="10" selection-start-line="129" selection-start-column="10" selection-end-line="129" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -817,6 +790,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2888">
           <caret line="152" column="24" selection-start-line="152" selection-start-column="24" selection-end-line="152" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -856,13 +830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings-prod.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/room-details.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -890,14 +857,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="584">
           <caret line="183" column="30" selection-start-line="183" selection-start-column="19" selection-end-line="183" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7201">
-          <caret line="388" column="19" selection-start-line="388" selection-start-column="14" selection-end-line="388" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -960,6 +919,46 @@
             <marker date="1473209753000" expanded="true" signature="10756:10800" ph="..." />
             <marker date="1473209753000" expanded="true" signature="10994:11067" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings-prod.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/room-details.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="343" column="59" selection-start-line="343" selection-start-column="59" selection-end-line="343" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="80" column="9" selection-start-line="75" selection-start-column="7" selection-end-line="80" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/rooms.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
