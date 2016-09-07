@@ -34,9 +34,9 @@ Router.route('/', {
     sitemap: true,
     changefreq: 'daily',
     priority: '1.0',
-    waitOn: function(){
-        return Meteor.subscribe( 'rooms' );
-    },
+    // waitOn: function(){
+    //     return Meteor.subscribe( 'rooms' );
+    // },
     ironMeta: true,
     meta: function(){
         var title = 'Kauai Escape Room - Escape Games, Puzzle Rooms';
@@ -73,12 +73,12 @@ Router.route('/rooms', {
     sitemap: true,
     changefreq: 'monthly',
     priority: '0.9',
-    waitOn: function(){
-        return [
-            Meteor.subscribe( 'rooms' ),
-            Meteor.subscribe( 'games' )
-        ]
-    },
+    // waitOn: function(){
+    //     return [
+    //         Meteor.subscribe( 'rooms' ),
+    //         Meteor.subscribe( 'games' )
+    //     ]
+    // },
     ironMeta: true,
     meta: function(){
         var title = 'Our Escape Rooms - Kauai Escape Room - Escape Games, Puzzle Rooms';
