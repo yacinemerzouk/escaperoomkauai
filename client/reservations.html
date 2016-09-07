@@ -20,48 +20,88 @@
                     <br>
                     <a href="#block" class="button button-unavailable btn-block" hook="block-date" hook-data-date="{{adminSelectedDate}}">Block Entire Day</a>
                     <a href="#block" class="button button-unavailable btn-block" hook="unblock-date" hook-data-date="{{adminSelectedDate}}">Unblock Entire Day</a>
+                    <hr class="clear">
                 </div>
 
-                <div class="col-sm-8 ">
+                <div class="col-xs-12 col-md-8">
                     {{#each times}}
-                        <div style="clear: both; padding: 15px 20px; margin-bottom: 20px;" class="background-res-{{room.slug}}">
+                        <div style="clear: both; padding: 15px 20px; margin-bottom: 20px;" class="background-res-mad-scientist">
                             <span class="resTime">
-                                {{room.title}}<br>
                                 {{humanReadableDate date}} @ {{time}}
                             </span>
-                            {{#if isBlocked}}
-                                <div class="label label-danger pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Blocked</div>
-                                <a href="#" class="red pull-right" style="padding-right: 10px;" hook="unblock-time" hook-data-date="{{date}}" hook-data-time="{{time}}">Unblock</a>
-                            {{else}}
-                                {{#if canBlock}}
-                                <div class="label label-success pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Open</div>
-                                <a href="#" class="red pull-right" hook="block-time" style="padding-right: 10px;" hook-data-date="{{date}}" hook-data-time="{{time}}">Block</a>
-                                {{/if}}
-                            {{/if}}
                         </div>
-                        {{#unless isBlocked}}
-                            {{#each games}}
-                                {{#if reservations}}
-                                    <fieldset style="margin-bottom: 30px">
-                                        <legend style="width: auto; padding-right: 10px">The Missing Scientist <a href="{{pathFor 'game' roomId=roomId date=date time=time}}">Game Master &rarr;</a></legend>
-                                        {{#each reservations}}
-                                            {{#unless blocked}}
-                                                {{>reservationOverview this}}
-                                            {{/unless}}
+                                    {{#if games}}
+                                        {{#each games}}
+                                            {{#if reservations}}
+                                                <fieldset style="margin-bottom: 30px">
+                                                <legend style="width: auto; padding-right: 10px">{{roomTitle roomId}} <a href="{{pathFor 'game' roomId=roomId date=date time=time}}">Game Master &rarr;</a></legend>
+                                                    {{#each reservations}}
+                                                        {{#unless blocked}}
+                                                            {{>reservationOverview this}}
+                                                        {{/unless}}
+                                                    {{/each}}
+
+
+                                                    {{#if gameHasResult this}}
+                                                        &#10004; Game {{#if won}} Won {{#if timeLog}} in {{timeLog}}{{/if}}  :) {{else}} Lost :( {{/if}}<br>
+                                                    {{/if}}
+                                                    {{#if followUpEmailSent}}
+                                                        &#10004; Follow-up email sent<br>
+                                                    {{/if}}
+
+                                                </fieldset>
+
+                                            {{/if}}
                                         {{/each}}
+                                    {{else}}
+                                        {{#each possibleRooms}}
+                                        <fieldset style="margin-bottom: 30px; position: relative">
+                                            <legend style="width: auto; padding-right: 10px">{{title}}</legend>
+                                            <!--<div class="toggles-container">-->
+                                                <!--<div id="toggles">-->
+                                                    <!--<input type="checkbox" name="checkbox1" id="checkbox" class="ios-toggle" checked/>-->
+                                                    <!--<label for="checkbox1" class="checkbox-label" data-off="BLOCKED" data-on="OPEN"></label>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                            <div class="label label-success" style="font-size: 16px; position:relative; bottom: 1px;">Open</div>
+                                            <a href="#" class="red" hook="block-time" style="padding-right: 10px;" hook-data-date="{{date}}" hook-data-time="{{time}}">Block</a>
+                                        </fieldset>
+                                            {{/each}}
+                                    {{/if}}
+
+                            <!--{{#if isBlocked}}-->
+                                <!--<div class="label label-danger pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Blocked</div>-->
+                                <!--<a href="#" class="red pull-right" style="padding-right: 10px;" hook="unblock-time" hook-data-date="{{date}}" hook-data-time="{{time}}">Unblock</a>-->
+                            <!--{{else}}-->
+                                <!--{{#if canBlock}}-->
+                                <!--<div class="label label-success pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Open</div>-->
+                                <!--<a href="#" class="red pull-right" hook="block-time" style="padding-right: 10px;" hook-data-date="{{date}}" hook-data-time="{{time}}">Block</a>-->
+                                <!--{{/if}}-->
+                            <!--{{/if}}-->
+
+                        <!--{{#unless isBlocked}}-->
+                            <!--{{#each games}}-->
+                                <!--{{#if reservations}}-->
+                                    <!--<fieldset style="margin-bottom: 30px">-->
+                                        <!--<legend style="width: auto; padding-right: 10px">The Missing Scientist <a href="{{pathFor 'game' roomId=roomId date=date time=time}}">Game Master &rarr;</a></legend>-->
+                                        <!--{{#each reservations}}-->
+                                            <!--{{#unless blocked}}-->
+                                                <!--{{>reservationOverview this}}-->
+                                            <!--{{/unless}}-->
+                                        <!--{{/each}}-->
 
 
-                                        {{#if _id}}
-                                            &#10004; Game {{#if won}} Won {{#if timeLog}} in {{timeLog}}{{/if}}  :) {{else}} Lost :( {{/if}}<br>
-                                        {{/if}}
-                                        {{#if followUpEmailSent}}
-                                            &#10004; Follow-up email sent<br>
-                                        {{/if}}
+                                        <!--{{#if _id}}-->
+                                            <!--&#10004; Game {{#if won}} Won {{#if timeLog}} in {{timeLog}}{{/if}}  :) {{else}} Lost :( {{/if}}<br>-->
+                                        <!--{{/if}}-->
+                                        <!--{{#if followUpEmailSent}}-->
+                                            <!--&#10004; Follow-up email sent<br>-->
+                                        <!--{{/if}}-->
 
-                                    </fieldset>
-                                {{/if}}
-                            {{/each}}
-                        {{/unless}}
+                                    <!--</fieldset>-->
+                                <!--{{/if}}-->
+                            <!--{{/each}}-->
+                        <!--{{/unless}}-->
                     {{/each}}
                 </div>
 
@@ -87,4 +127,7 @@
 
     {{/if}}
 
+    <a href="#" hook="populate-games">Pop</a>
+
+    <a href="#" hook="bts">Pop bTS</a>
 </template>

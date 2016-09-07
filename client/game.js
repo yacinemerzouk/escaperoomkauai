@@ -1,14 +1,20 @@
-Template.game.onCreated(function(){
-    var game =  new Bolt.Game({
-        date: this.date,
-        time: this.time,
-        roomId: this.roomId
+Template.game.onRendered(function(){
+
+    var self = this
+    this.autorun(function(){
+        // var game =  new Bolt.Game({
+        //     date: this.currentData.date,
+        //     time: this.currentData.time,
+        //     roomId: this.currentData.roomId
+        // });
+        // if( !game._id ){
+        //     game.save();
+        // }
+        // console.log( 'GAME', this, game );
+        console.log( 'Game onRendered', this, self );
     });
-    console.log( 'GAME', this, game );
-    if( !game._id ){
-        game.save();
-    }
-    console.log( game );
+
+
 });
 Template.game.helpers({
    game: function(){

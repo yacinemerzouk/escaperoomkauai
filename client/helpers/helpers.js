@@ -176,3 +176,11 @@ UI.registerHelper('loopCount', function(count){
 UI.registerHelper('kamaainaPerPlayer', function(room){
     return room.pricePerPlayer - room.kamaainaDiscountPerPlayer;
 })
+
+UI.registerHelper('gameHasResult', function(game){
+    return game.won === true ||  game.won === false;
+})
+
+UI.registerHelper('stringifyId', function(id){
+    return id && typeOf(id) == "String" ? id : id._str;
+})

@@ -7,6 +7,11 @@
             "bcc": "notifications@zendy.net",
             "MAIL_URL": "smtp://mailman@escaperoomkauai.com:Ozozw27NMX@secure.emailsrvr.com:465/"
         },
+        "SMS": {
+            "notifications": [
+                "+18086342466"
+            ]
+        },
         "stripe": {
             "secretKey": "pNVbtQUJwt5HhEiWIEYghnmSzfMlY44m"
         },
