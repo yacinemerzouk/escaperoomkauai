@@ -14,6 +14,11 @@ Meteor.publish('room', function( slug ){
     return room;
 });
 
+Meteor.publish('pastGameResults', function( slug ){
+    var games = Bolt.Collections.Games.find( { date: {$lte: Epoch.dateObjectToDateString(new Date())} }, {fields: {_id:1, roomId: 1, won:1}} );
+    return games;
+});
+
 /**
  * RESERVATIONS: publish all reservations, all data
  * TODO: better pubsub

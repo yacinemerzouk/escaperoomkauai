@@ -339,7 +339,7 @@ Router.route('/room/:slug', {
             Meteor.subscribe( 'coupons' ),
             Meteor.subscribe( 'futureReservations' ),
             Meteor.subscribe( 'reservationNumbers' ),
-            Meteor.subscribe( 'games' )
+            Meteor.subscribe( 'pastGameResults' )
         ]
     },
     ironMeta: true,

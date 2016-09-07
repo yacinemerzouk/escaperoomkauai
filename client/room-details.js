@@ -1,4 +1,5 @@
 Template.room.onCreated(function(){
+
     this.updateReservation = function( formData ){
 
         var formData = formData || Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
@@ -183,7 +184,6 @@ Template.room.onCreated(function(){
     }
 });
 Template.room.onRendered(function(){
-
 
     var reservation = new Bolt.Reservation( Session.get('reservation') || {room: this.data, date:Epoch.dateObjectToDateString(new Date())} );
 
