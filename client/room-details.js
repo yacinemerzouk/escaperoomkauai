@@ -73,10 +73,10 @@ Template.room.onCreated(function(){
                         "$0.00";
                     Meteor.call('sendAdminNotificationSMS', SMSString, function(error,response){
                         if( error ) {
-                            console.log( error );
+                            // console.log( error );
                             new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
                         }else{
-                            console.log( response );
+                            // console.log( response );
                         }
 
                     });
@@ -157,10 +157,10 @@ Template.room.onCreated(function(){
                                     "$" + reservation.total;
                                 Meteor.call('sendAdminNotificationSMS', SMSString, function(error,response){
                                     if( error ) {
-                                        console.log( error );
+                                        // console.log( error );
                                         new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
                                     }else{
-                                        console.log( response );
+                                        // console.log( response );
                                     }
 
                                 });

@@ -47,16 +47,7 @@ Bolt.Game = function( args ){
         }
     ).fetch();
 
-    console.log( 'CONS ARGS', {
-        roomId: this.roomId,
-        time: this.time,
-        date: this.date,
-        canceled: {
-            $ne: true
-        }
-    })
 
-    console.log( 'CONS RES', reservations);
     this.reservations = reservations;
 
     // Check whether this game slot has been blocked by admins

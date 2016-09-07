@@ -11,7 +11,7 @@ Template.game.onRendered(function(){
         //     game.save();
         // }
         // console.log( 'GAME', this, game );
-        console.log( 'Game onRendered', this, self );
+        // console.log( 'Game onRendered', this, self );
     });
 
 
