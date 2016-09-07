@@ -136,9 +136,46 @@ Template.room.onCreated(function(){
                                 }
 
                                 // Track conversion
-                                analytics.track("Completed Order", {
-                                    eventName: reservation.room.title,
-                                    couponValue: reservation.total,
+                                // analytics.track("Completed Order", {
+                                //     eventName: reservation.room.title,
+                                //     couponValue: reservation.total,
+                                // });
+                                var discount = reservation.discount ? reservation.discount : reservation.discountKamaaina;
+                                var revenue = parseFloat( reservation.subtotal - discount ).toFixed(2);
+                                var coupon = reservation.couponData && reservation.couponData.coupon ? reservation.couponData.coupon : "";
+                                var room = Bolt.Collections.Rooms.findOne(reservation.roomId);
+                                var products = [
+                                    {
+                                        product_id: reservation.roomId,
+                                        sku: 'KER-'+reservation.roomId,
+                                        name: room.title,
+                                        price: room.pricePerPlayer,
+                                        quantity: reservation.nbPlayers,
+                                        category: 'Escape Room'
+                                    }
+                                ];
+                                if( reservation.closeRoom ){
+                                    products.push({
+                                        product_id: 'CLOSEDROOMFEE',
+                                        sku: 'KER-CLOSEDROOMFEE',
+                                        name: 'Closed Room Fee',
+                                        price: room.priceToClose,
+                                        quantity: 1,
+                                        category: 'Escape Room'
+                                    });
+                                }
+                                var trackRes = analytics.track("Order Completed", {
+                                    checkout_id: reservation.publicId,
+                                    order_id: reservation._id,
+                                    affiliation: 'Kauai Escape Room',
+                                    total: reservation.total,
+                                    revenue: revenue,
+                                    shipping: 0,
+                                    tax: reservation.taxes,
+                                    discount: discount,
+                                    coupon: coupon,
+                                    currency: 'USD',
+                                    products: products
                                 });
 
                                 reservation.sendConfirmationEmail();
@@ -166,6 +203,19 @@ Template.room.onCreated(function(){
                                 });
 
                                 $('.processing-bg').hide();
+                                console.log( 'track res', trackRes, {
+                                    checkout_id: reservation.publicId,
+                                    order_id: reservation._id,
+                                    affiliation: 'Kauai Escape Room',
+                                    total: reservation.total,
+                                    revenue: revenue,
+                                    shipping: 0,
+                                    tax: reservation.taxes,
+                                    discount: discount,
+                                    coupon: coupon,
+                                    currency: 'USD',
+                                    products: products
+                                } )
                                 Router.go('confirmation', {_id:resId});
 
                             } else {
