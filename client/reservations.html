@@ -18,56 +18,70 @@
                 <div class="col-xs-12 col-md-4">
                     <div id="datepicker"></div>
                     <br>
-                    <a href="#block" class="button button-unavailable btn-block" hook="block-date" hook-data-date="{{adminSelectedDate}}">Block Entire Day</a>
-                    <a href="#block" class="button button-unavailable btn-block" hook="unblock-date" hook-data-date="{{adminSelectedDate}}">Unblock Entire Day</a>
+                    <!--<a href="#block" class="button button-unavailable btn-block" hook="block-date" hook-data-date="{{adminSelectedDate}}">Block Entire Day</a>-->
+                    <!--<a href="#block" class="button button-unavailable btn-block" hook="unblock-date" hook-data-date="{{adminSelectedDate}}">Unblock Entire Day</a>-->
                     <hr class="clear">
                 </div>
 
                 <div class="col-xs-12 col-md-8">
                     {{#each times}}
-                        <div style="clear: both; padding: 15px 20px; margin-bottom: 20px;" class="background-res-mad-scientist">
+                        <div class="background-res-mad-scientist" style="clear: both; padding: 15px 20px; margin-bottom: 20px; background-color: #DDD; color: #999;" >
                             <span class="resTime">
                                 {{humanReadableDate date}} @ {{time}}
                             </span>
                         </div>
-                                    {{#if games}}
-                                        {{#each games}}
-                                            {{#if reservations}}
-                                                <fieldset style="margin-bottom: 30px">
-                                                <legend style="width: auto; padding-right: 10px">{{roomTitle roomId}} <a href="{{pathFor 'game' roomId=roomId date=date time=time}}">Game Master &rarr;</a></legend>
-                                                    {{#each reservations}}
-                                                        {{#unless blocked}}
-                                                            {{>reservationOverview this}}
-                                                        {{/unless}}
-                                                    {{/each}}
-
-
-                                                    {{#if gameHasResult this}}
-                                                        &#10004; Game {{#if won}} Won {{#if timeLog}} in {{timeLog}}{{/if}}  :) {{else}} Lost :( {{/if}}<br>
-                                                    {{/if}}
-                                                    {{#if followUpEmailSent}}
-                                                        &#10004; Follow-up email sent<br>
-                                                    {{/if}}
-
-                                                </fieldset>
-
+                            {{#if games}}
+                                {{#each games}}
+                                    <fieldset style="margin-bottom: 30px">
+                                        <legend style="width: auto; padding-right: 10px">
+                                            {{roomTitle roomId}}&nbsp;&bull;&nbsp;
+                                            {{#if isBlocked}}
+                                                <a href="#" class="red pull-right" style="" hook="unblock-time" hook-data-date="{{date}}" hook-data-time="{{time}}">Unblock</a>
+                                            {{else}}
+                                                {{#if reservations}}
+                                                    <a href="{{pathFor 'game' roomId=roomId date=date time=time}}">Game Master &rarr;</a>
+                                                {{/if}}
                                             {{/if}}
-                                        {{/each}}
-                                    {{else}}
-                                        {{#each possibleRooms}}
-                                        <fieldset style="margin-bottom: 30px; position: relative">
-                                            <legend style="width: auto; padding-right: 10px">{{title}}</legend>
-                                            <!--<div class="toggles-container">-->
-                                                <!--<div id="toggles">-->
-                                                    <!--<input type="checkbox" name="checkbox1" id="checkbox" class="ios-toggle" checked/>-->
-                                                    <!--<label for="checkbox1" class="checkbox-label" data-off="BLOCKED" data-on="OPEN"></label>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <div class="label label-success" style="font-size: 16px; position:relative; bottom: 1px;">Open</div>
-                                            <a href="#" class="red" hook="block-time" style="padding-right: 10px;" hook-data-date="{{date}}" hook-data-time="{{time}}">Block</a>
-                                        </fieldset>
+                                        </legend>
+                                        {{#if isBlocked}}
+                                            <div class="label label-danger" style="font-size: 16px; position:relative; bottom: 1px; display: block; padding: 9px 0 10px 0">BLOCKED</div>
+
+                                        {{else}}
+                                            {{#each reservations}}
+                                                {{#unless blocked}}
+                                                    {{>reservationOverview this}}
+                                                {{/unless}}
                                             {{/each}}
-                                    {{/if}}
+
+
+                                            {{#if gameHasResult this}}
+                                                &#10004; Game {{#if won}} Won {{#if timeLog}} in {{timeLog}}{{/if}}  :) {{else}} Lost :( {{/if}}<br>
+                                            {{/if}}
+                                            {{#if followUpEmailSent}}
+                                                &#10004; Follow-up email sent<br>
+                                            {{/if}}
+
+                                        {{/if}}
+
+                                    </fieldset>
+
+                                {{/each}}
+                            {{else}}
+                                {{#each possibleRooms}}
+                                    <fieldset style="margin-bottom: 30px; position: relative">
+                                        <legend style="width: auto; padding-right: 10px">{{title}}&nbsp;&bull;&nbsp;<a href="#" class="red" hook="block-time" style=" " hook-data-date="{{../date}}" hook-data-time="{{../time}}" hook-data-roomid="{{_id}}">Block</a></legend>
+                                        <!--<div class="toggles-container">-->
+                                            <!--<div id="toggles">-->
+                                                <!--<input type="checkbox" name="checkbox1" id="checkbox" class="ios-toggle" checked/>-->
+                                                <!--<label for="checkbox1" class="checkbox-label" data-off="BLOCKED" data-on="OPEN"></label>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+
+                                        <div class="label label-success" style="font-size: 16px; position:relative; bottom: 1px; display: block; padding: 9px 0 10px 0">OPEN</div>
+
+                                    </fieldset>
+                                {{/each}}
+                            {{/if}}
 
                             <!--{{#if isBlocked}}-->
                                 <!--<div class="label label-danger pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Blocked</div>-->

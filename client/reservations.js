@@ -30,6 +30,15 @@ Template.reservations.helpers({
             // For each possible time
             _.each(times, function (time) {
 
+                var gamesData = Bolt.Collections.Games.find({
+                    date: Session.get('adminSelectedDate'),
+                    time: time
+                }).fetch();
+                var games = [];
+                _.each(gamesData,function(g){
+                    games.push( new Bolt.Game(g) );
+                })
+
                 var timeObject = {
                     date: Session.get('adminSelectedDate'),
                     time: time,
@@ -39,10 +48,7 @@ Template.reservations.helpers({
                             $in: [time]
                         }
                     }).fetch(),
-                    games: Bolt.Collections.Games.find({
-                        date: Session.get('adminSelectedDate'),
-                        time: time
-                    }).fetch()
+                    games: games
                 };
 
                 console.log( "args", {
@@ -123,11 +129,13 @@ Template.reservations.onRendered(function(){
 Template.reservations.events({
     'click [hook="block-time"]': function(evt,tmpl){
         evt.preventDefault();
-        var date = $(evt.target).attr('hook-data-date');
-        var time = $(evt.target).attr('hook-data-time');
+        var date = $(evt.currentTarget).attr('hook-data-date');
+        var time = $(evt.currentTarget).attr('hook-data-time');
+        var roomId = $(evt.currentTarget).attr('hook-data-roomid');
         var reservations = Bolt.Collections.Reservations.find({
             date:date,
-            time:time
+            time:time,
+            roomId: roomId
         }).fetch();
 
         var alreadyHasReservations = reservations.length > 0 ? true : false;
@@ -136,10 +144,20 @@ Template.reservations.events({
             var blockId = Bolt.Collections.Reservations.insert({
                 blocked: true,
                 date: date,
-                time: time
+                time: time,
+                roomId: roomId
+            });
+            var gameId = Bolt.Collections.Games.insert({
+                date: date,
+                time: time,
+                roomId: roomId
             });
         }
-        //////console.log(blockId);
+        console.log('blocking?', {
+            date:date,
+            time:time,
+            roomId: roomId
+        }, reservations, blockId, gameId);
     },
 
     'click [hook="unblock-time"]': function(evt,tmpl) {
@@ -286,69 +304,69 @@ Template.reservations.events({
         game.timeLog = timeLog;
         ////console.log( 'SAVING GAME', game);
         game.save();
-    },
-    'click [hook="populate-games"]': function(evt,tmpl){
-        evt.preventDefault();
-        var reservations = Bolt.Collections.Reservations.find({
-
-        }).fetch();
-        _.each( reservations, function( reservation ){
-            var gameData = Bolt.Collections.Games.find({
-                roomId: reservation.roomId,
-                time: reservation.time,
-                date: reservation.date
-            }).fetch();
-
-            if( ! gameData || gameData.length == 0 ){
-                var g;
-                reservation.roomId = reservation.roomId || "gieyznWfyJMTBWYBT";
-                if( reservation.date && reservation.time && reservation.roomId){
-
-                    console.log( 'GAME DATA', gameData, {
-                        roomId: reservation.roomId,
-                        time: reservation.time,
-                        date: reservation.date
-                    } );
-
-                    g = new Bolt.Game({
-                        roomId: reservation.roomId,
-                        time: reservation.time,
-                        date: reservation.date
-                    });
-                    g.save();
-                }
-            }
-        })
-    },
-    'click [hook="bts"]': function(evt,tmpl){
-        evt.preventDefault();
-        var res = Bolt.Collections.Rooms.insert({
-            "title" : "Halloween: Break The Spell",
-            "image" : "/images/hero-mobile.jpg",
-            "opening" : "September 24",
-            "slug" : "halloween-2016",
-            "startTimes" : [
-                "5:00pm",
-                "7:00pm",
-                "8:30pm",
-                "11:00am",
-                "1:00pm",
-                "3:00pm"
-            ],
-            "duration" : 45,
-            "pricePerPlayer" : 25,
-            "priceToClose" : 20,
-            "minPlayers" : 2,
-            "maxPlayers" : 6,
-            "successRate" : 50,
-            "excerpt" : "An evil spell has been cast. Can you break it?",
-            "description" : "You are sent to a witch’s lair to acquire the counterspell to an evil charm. The witch is nowhere to be found. Can you discover and cast the counterspell in time?",
-            "order" : 3,
-            "kamaainaDiscountPerPlayer" : 5,
-            "ribbon" : "Book Now",
-            "available" : true,
-            "openingDate" : "2016-09-05"
-        });
-        console.log( 'INSERT', res );
     }
+    // 'click [hook="populate-games"]': function(evt,tmpl){
+    //     evt.preventDefault();
+    //     var reservations = Bolt.Collections.Reservations.find({
+    //
+    //     }).fetch();
+    //     _.each( reservations, function( reservation ){
+    //         var gameData = Bolt.Collections.Games.find({
+    //             roomId: reservation.roomId,
+    //             time: reservation.time,
+    //             date: reservation.date
+    //         }).fetch();
+    //
+    //         if( ! gameData || gameData.length == 0 ){
+    //             var g;
+    //             reservation.roomId = reservation.roomId || "gieyznWfyJMTBWYBT";
+    //             if( reservation.date && reservation.time && reservation.roomId){
+    //
+    //                 console.log( 'GAME DATA', gameData, {
+    //                     roomId: reservation.roomId,
+    //                     time: reservation.time,
+    //                     date: reservation.date
+    //                 } );
+    //
+    //                 g = new Bolt.Game({
+    //                     roomId: reservation.roomId,
+    //                     time: reservation.time,
+    //                     date: reservation.date
+    //                 });
+    //                 g.save();
+    //             }
+    //         }
+    //     })
+    // },
+    // 'click [hook="bts"]': function(evt,tmpl){
+    //     evt.preventDefault();
+    //     var res = Bolt.Collections.Rooms.insert({
+    //         "title" : "Halloween: Break The Spell",
+    //         "image" : "/images/hero-mobile.jpg",
+    //         "opening" : "September 24",
+    //         "slug" : "halloween-2016",
+    //         "startTimes" : [
+    //             "5:00pm",
+    //             "7:00pm",
+    //             "8:30pm",
+    //             "11:00am",
+    //             "1:00pm",
+    //             "3:00pm"
+    //         ],
+    //         "duration" : 45,
+    //         "pricePerPlayer" : 25,
+    //         "priceToClose" : 20,
+    //         "minPlayers" : 2,
+    //         "maxPlayers" : 6,
+    //         "successRate" : 50,
+    //         "excerpt" : "An evil spell has been cast. Can you break it?",
+    //         "description" : "You are sent to a witch’s lair to acquire the counterspell to an evil charm. The witch is nowhere to be found. Can you discover and cast the counterspell in time?",
+    //         "order" : 3,
+    //         "kamaainaDiscountPerPlayer" : 5,
+    //         "ribbon" : "Book Now",
+    //         "available" : true,
+    //         "openingDate" : "2016-09-05"
+    //     });
+    //     console.log( 'INSERT', res );
+    // }
 });

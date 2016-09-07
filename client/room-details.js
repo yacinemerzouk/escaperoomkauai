@@ -195,7 +195,10 @@ Template.room.onRendered(function(){
         // hack to force the autorun to reevaluate
         Template.currentData();
 
-
+        // check that time is in startTimes array
+        if( _.indexOf(self.data.startTimes, reservation.time) === -1 ){
+            delete reservation.time;
+        }
 
         reservation.roomId = self.data._id;
         reservation.room = self.data;
