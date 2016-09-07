@@ -149,6 +149,20 @@ Bolt.Reservation.prototype.create = function() {
     // Assign ID to object to we don't have to re-generate it
     if( result ){
         this._id = result;
+
+        var game = new Bolt.Game({
+            date: this.date,
+            time: this.time,
+            roomId: this.roomId
+        });
+
+        if( !game._id ){
+            game.save();
+        }
+
+
+
+
         return this._id;
     }else{
         throw new Meteor.Error( '[Bolt][Reservation][update] Error', 'Could not create document.' );

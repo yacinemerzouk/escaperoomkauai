@@ -14,7 +14,7 @@ Bolt.Game = function( args ){
         data = Bolt.Collections.Games.findOne( args );
 
     // Data was provided
-    }else if( typeof( args ) == 'object' ){
+    }else if( typeof( args ) == 'object' && args.date && args.time && args.roomId ){
 
 
         // Set properties of object with db data or straight up data
@@ -27,7 +27,7 @@ Bolt.Game = function( args ){
 
         // Nothing provided; throw error
     }else{
-        throw new Meteor.Error( '[Bolt][Game][constructor] Error', 'Cannot create GAME object without data or id.' );
+        throw new Meteor.Error( '|Bolt|Game|constructor', 'Cannot create GAME object without data or id.' );
     }
 
     // Set properties of object
@@ -38,21 +38,25 @@ Bolt.Game = function( args ){
     // Grab reservations for this game
     var reservations = Bolt.Collections.Reservations.find(
         {
-            $or: [
-                {
-                    roomId: this.roomId
-                },
-                {
-                    blocked: true
-                }
-            ],
-            time:this.time,
-            date:this.date,
-            canceled:{
-                $ne:true
+            roomId: this.roomId,
+            time: this.time,
+            date: this.date,
+            canceled: {
+                $ne: true
             }
         }
     ).fetch();
+
+    console.log( 'CONS ARGS', {
+        roomId: this.roomId,
+        time: this.time,
+        date: this.date,
+        canceled: {
+            $ne: true
+        }
+    })
+
+    console.log( 'CONS RES', reservations);
     this.reservations = reservations;
 
     // Check whether this game slot has been blocked by admins

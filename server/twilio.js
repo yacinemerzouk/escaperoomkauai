@@ -21,18 +21,31 @@ Meteor.methods({
             token: Meteor.settings.TWILIO.TOKEN
         });
 
-        // Send a message
-        var yacine = client.sendSMS({
-            to: '+18086342466',
-            body: message
+        var notifications = Meteor.settings.private.SMS.notifications;
+        var notificationsSent = true;
+
+        _.each( notifications, function( n ){
+            var sent = client.sendSMS({
+                to: n,
+                body: message
+            });
+            if(!sent){
+                notificationsSent = false;
+            }
         });
 
-        // Send a message
-        var michelle = client.sendSMS({
-            to: '+18086525224',
-            body: message
-        });
+        // // Send a message
+        // var yacine = client.sendSMS({
+        //     to: '+18086342466',
+        //     body: message
+        // });
+        //
+        // // Send a message
+        // var michelle = client.sendSMS({
+        //     to: '+18086525224',
+        //     body: message
+        // });
 
-        return yacine && michelle ? [yacine,michelle] : false;
+        return notificationsSent;
     }
 })
