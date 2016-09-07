@@ -18,10 +18,10 @@ Template.room.onCreated(function(){
 
         if( reservation.isValid() ){
 
-            analytics.track("Booking", {
-                name: reservation.room.title + ' Booking',
-                revenue: reservation.total
-            });
+            // analytics.track("Booking", {
+            //     name: reservation.room.title + ' Booking',
+            //     revenue: reservation.total
+            // });
 
             $('.processing-bg').show()
 
