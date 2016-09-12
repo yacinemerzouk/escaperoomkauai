@@ -254,6 +254,15 @@ Router.route('/directions', {
 
 });
 
+
+
+/**
+ * Admin Dashboard
+ */
+Router.route('/admin', {
+    name: 'admin',
+});
+
 /**
  * Reservations - Admin page
  */
