@@ -67,7 +67,7 @@ Bolt.Game = function( args ){
 * Populate - Update multiple attributes at once; only overwrites attributes passed, not entire object data.
 * @param data
 */
-Bolt.Game.prototype.populate = function(){
+Bolt.Game.prototype.populate = function( data ){
 
     // Set properties of object
     for (var prop in data) {

@@ -254,12 +254,12 @@ Bolt.Reservation.prototype.sendNotificationEmail = function(){
  */
 Bolt.Reservation.prototype.canClose = function(){
 
-    // // Get all existing reservations for requested time slot
-    // var reservations = Bolt.Collections.Reservations.find({
-    //     roomId: this.room._id,
-    //     time: this.time,
-    //     date: this.date
-    // }).fetch();
+    // Get all existing reservations for requested time slot
+    var reservations = Bolt.Collections.Reservations.find({
+        roomId: this.room._id,
+        time: this.time,
+        date: this.date
+    }).fetch();
 
     // Calculate how many spots are available before current reservation request
     var spotsLeft = Bolt.spotsLeft(this.room._id, this.date, this.time);
