@@ -1,2 +1,5 @@
 node_modules/
 settings-prod.json
+settings-dev.json
+.idea
+
