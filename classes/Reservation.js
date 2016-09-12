@@ -115,6 +115,7 @@ Bolt.Reservation.prototype.save = function(){
  */
 Bolt.Reservation.prototype.update = function(){
 
+    // Update DB
     var result = Bolt.Collections.Reservations.update(
         {
             _id: this._id
@@ -124,6 +125,7 @@ Bolt.Reservation.prototype.update = function(){
         }
     );
 
+    // If the number of documents updated was 0
     if( result == 0 ){
         throw new Meteor.Error( '[Bolt][Reservation][update] Error', 'No document updated.' );
     }
@@ -138,6 +140,7 @@ Bolt.Reservation.prototype.update = function(){
  */
 Bolt.Reservation.prototype.create = function() {
 
+    // Insert data, but not credit card stuff, in DB
     var result = Bolt.Collections.Reservations.insert(
         _.omit(
             this,
@@ -147,45 +150,63 @@ Bolt.Reservation.prototype.create = function() {
 
     // If insert was successful, we get an ID back
     // Assign ID to object to we don't have to re-generate it
+    // And create game object as needed
     if( result ){
+
+        // Assign ID
         this._id = result;
 
+        // For each room time slot, there's a game
+        // There can be multiple reservations for a single game
+        // After we create a reservation, we may need to create a game as well
+        // So...
+        //
+        // Get Game object
         var game = new Bolt.Game({
             date: this.date,
             time: this.time,
             roomId: this.roomId
         });
 
+        // Save to DB if game doesn't exist for time slot (room, date, & time)
         if( !game._id ){
             game.save();
         }
 
-
-
-
+        // Return ID of reservation
         return this._id;
+
     }else{
+
         throw new Meteor.Error( '[Bolt][Reservation][update] Error', 'Could not create document.' );
         return false;
+
     }
 
 }
 
 /**
- * Send confirmation email
+ * Send confirmation email; sent to customer who paid for reservation
  */
 Bolt.Reservation.prototype.sendConfirmationEmail = function(){
 
+    // Run on client only and call method
     if( Meteor.isClient ){
+
         var reservation = this;
 
+        // Call 'sendEmail' method
         Meteor.call(
-            'sendEmail',
-            reservation.email,
-            '"Kauai Escape Room" ' + Meteor.settings.public.smtp.email,
-            'Booking confirmation - RESERVATION #' + reservation.publicId,
-            Bolt.getConfirmationEmailBody(reservation._id),
-            function (error, result) {
+            'sendEmail',                                                        // Method
+            reservation.email,                                                  // Customer email
+            '"Kauai Escape Room" ' + Meteor.settings.public.smtp.email,         // Our name & email
+            'Booking confirmation - RESERVATION #' + reservation.publicId,      // Subject
+            Bolt.getConfirmationEmailBody(reservation._id),                     // Message body
+            function (error, result) {                                          // Callback
+
+                // Handle errors as needed
+                // We don't handle successful responses from sendEmail; should we?
+                // TODO: decide what to do with successful responses
                 if (error) {
                     throw new Meteor.Error( '[Bolt][Reservation][sendConfirmationEmail] Error', 'Error while sending booking confirmation. ||| Error message: ' + error.message + ' ||| Error object: ' + JSON.stringify(error) );
                 }
@@ -196,20 +217,27 @@ Bolt.Reservation.prototype.sendConfirmationEmail = function(){
 }
 
 /**
- * Send notification to admin
+ * Send notification to admin; sent to all admins after each new reservation
  */
 Bolt.Reservation.prototype.sendNotificationEmail = function(){
 
+    // Run on client only; call method
     if( Meteor.isClient ){
 
+        // create var from this to prevent scope issues in callback
         var reservation = this;
+
+        // Call sendEMail methods
         Meteor.call(
-            'sendEmail',
-            Meteor.settings.public.smtp.notifications,
-            '"Kauai Escape Room" ' + Meteor.settings.public.smtp.mailman,
-            'Booking notification - RESERVATION #' + reservation.publicId,
-            Bolt.getNotificationEmailBody(reservation._id),
-            function (error, result) {
+            'sendEmail',                                                            // Method
+            Meteor.settings.public.smtp.notifications,                              // To
+            '"Kauai Escape Room" ' + Meteor.settings.public.smtp.mailman,           // From
+            'Booking notification - RESERVATION #' + reservation.publicId,          // Subject
+            Bolt.getNotificationEmailBody(reservation._id),                         // Message body
+            function (error, result) {                                              // Callback
+
+                // Handle errors;
+                // We don't handle successful responses from sendEmail; should we?
                 if (error) {
                     throw new Meteor.Error( '[Bolt][Reservation][sendNotificationEmail] Error', 'Error while sending notification email to admin. ||| Error message: ' + error.message + ' ||| Error object: ' + JSON.stringify(error) );
                 }
@@ -226,12 +254,12 @@ Bolt.Reservation.prototype.sendNotificationEmail = function(){
  */
 Bolt.Reservation.prototype.canClose = function(){
 
-    // Get all existing reservations for requested time slot
-    var reservations = Bolt.Collections.Reservations.find({
-        roomId: this.room._id,
-        time: this.time,
-        date: this.date
-    }).fetch();
+    // // Get all existing reservations for requested time slot
+    // var reservations = Bolt.Collections.Reservations.find({
+    //     roomId: this.room._id,
+    //     time: this.time,
+    //     date: this.date
+    // }).fetch();
 
     // Calculate how many spots are available before current reservation request
     var spotsLeft = Bolt.spotsLeft(this.room._id, this.date, this.time);
@@ -250,17 +278,24 @@ Bolt.Reservation.prototype.canClose = function(){
  */
 Bolt.Reservation.prototype.isValid = function(){
 
+    // Set up var to track result
     var isValid = true;
 
-    var firstNameOK = this.firstName && this.firstName != '';
-    var lastNameOK = this.lastName && this.lastName != '';
-    var emailOK = this.email && this.email != '';
-    var phoneOK = this.phone && this.phone != '';
-    var nbPlayersOK = this.nbPlayers && parseInt( this.nbPlayers ) > 0 ;
-    var ccOK = this.total == 0 || this.cc && this.cc != '';
-    var ccExpMonthOK = this.total == 0 || this.ccExpMonth && this.ccExpMonth != '';
-    var ccExpYearOK = this.total == 0 || this.ccExpYear && this.ccExpYear != '';
-    var cvvOK = this.total == 0 || this.cvv && this.cvv != '';
+    // Check all fields
+    var firstNameOK = this.firstName ? true : false;                                    // First name is required
+    var lastNameOK = this.lastName ? true : false;                                      // Last name is required
+    var emailOK = this.email ? true : false;                                            // Email is required; email format checked by browser input attribute type=email
+    var phoneOK = this.phone ? true : false;                                            // Phone is required
+    var nbPlayersOK = this.nbPlayers && parseInt( this.nbPlayers ) > 0 ;                // Number of players is required
+    var ccOK = this.total == 0 || this.cc;                                              // Credit card number is required if order total not 0
+    var ccExpMonthOK = this.total == 0 || this.ccExpMonth;                              // Credit card expiration is required if order total not 0
+    var ccExpYearOK = this.total == 0 || this.ccExpYear;                                // Credit card expiration is required if order total not 0
+    var cvvOK = this.total == 0 || this.cvv;                                            // Credit card verification code is required if order total not 0
+
+    // For all the possible errors
+    // If field value is not OK
+    // Output notifications
+    // And set isValid to false
 
     if( !nbPlayersOK ){
         Notifications.error('Missing Info', 'Please select number of players in your party.');
@@ -299,5 +334,7 @@ Bolt.Reservation.prototype.isValid = function(){
         isValid = false;
     }
 
+    // We're done here...
     return isValid;
+
 }
