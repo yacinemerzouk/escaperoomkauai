@@ -79,12 +79,12 @@ mongo-id@1.0.5
 mongo-livedata@1.0.12
 mrgalaxy:stripe@2.2.2
 npm-bcrypt@0.9.1
-npm-mongo@1.5.48
+npm-mongo@1.5.49
 observe-sequence@1.0.12
-okgrow:analytics@1.0.9
+okgrow:analytics@2.0.0
 okgrow:router-autoscroll@0.1.8
 ordered-dict@1.0.8
-promise@0.8.4
+promise@0.8.7
 random@1.0.10
 rate-limit@1.0.5
 reactive-dict@1.1.8

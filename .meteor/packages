@@ -23,7 +23,6 @@ less@2.7.5
 andrei:iron-router-body-class
 mizzao:jquery-ui
 mdg:seo
-okgrow:analytics
 okgrow:router-autoscroll
 session@1.1.6
 zendy:epoch
@@ -45,3 +44,4 @@ fortawesome:fontawesome
 shell-server@0.2.1
 dispatch:twilio
 miro:mailchimp
+okgrow:analytics
