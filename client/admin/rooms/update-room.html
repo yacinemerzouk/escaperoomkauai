@@ -1,0 +1,23 @@
+<template name="updateRoom">
+
+    <div class="hero hero-home-bg room-box-bg-mad-scientist">
+        <div class="overlay">
+            <div class="content">
+                <h1>Update Room</h1>
+            </div>
+        </div>
+    </div>
+
+    {{#if currentUser}}
+        <div class="container-fluid" style="margin: 40px auto;">
+            <div class="row">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                    <h2 class="subheading">{{title}}</h2>
+                   {{> roomForm}}
+                </div>
+            </div>
+        </div>
+    {{else}}
+        {{> loginButtons}}
+    {{/if}}
+</template>

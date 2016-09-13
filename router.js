@@ -260,8 +260,43 @@ Router.route('/directions', {
  * Admin Dashboard
  */
 Router.route('/admin', {
-    name: 'admin',
+    name: 'admin'
 });
+
+/**
+ * Admin Rooms (List)
+ */
+Router.route('/admin/rooms', {
+    name: 'adminRooms',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('rooms')
+        ]
+    }
+});
+
+/**
+ * Admin Rooms (Create)
+ */
+Router.route('/admin/create-room', {
+    name: 'createRoom'
+});
+
+/**
+ * Admin Rooms (Create)
+ */
+Router.route('/admin/update-room/:_id', {
+    name: 'updateRoom',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('rooms')
+        ]
+    },
+    data: function(){
+        return Bolt.Collections.Rooms.findOne(this.params._id);
+    }
+});
+
 
 /**
  * Reservations - Admin page

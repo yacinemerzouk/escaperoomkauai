@@ -1,0 +1,87 @@
+<template name="roomForm">
+    <form>
+        <form hook="room-form" style="padding: 12px 15px">
+            <div class="form-group">
+                <label for="title">Room Title</label>
+                <input type="text" hook="coupon" class="form-control" id="title" name="title" value="{{title}}">
+            </div>
+
+            <div class="form-group">
+                <label for="slug">URL Slug</label>
+                <input type="text" hook="slug" class="form-control" id="slug" name="slug" value="{{slug}}">
+            </div>
+
+            <div class="form-group">
+                <label for="image">Cover Image</label>
+                <input type="text" hook="image" class="form-control" id="image" name="image" value="{{image}}">
+            </div>
+
+            <div class="form-group">
+                <label for="excerpt">Excerpt</label>
+                <input type="text" hook="excerpt" class="form-control" id="excerpt" name="excerpt" value="{{excerpt}}">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea hook="description" class="form-control" id="description" name="description" value="{{description}}"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="available">Is this room available?</label>
+                <input type="checkbox" hook="available" class="form-control" id="available" name="available" value="{{available}}">
+            </div>
+
+            <div class="form-group">
+                <label for="opening">When will it be available?</label>
+                <input type="text" hook="opening" class="form-control" id="opening" name="opening" value="{{opening}}">
+            </div>
+
+            <div class="form-group">
+                <label for="ribbon">Ribbon Promo Text</label>
+                <input type="text" hook="ribbon" class="form-control" id="ribbon" name="ribbon" value="{{ribbon}}">
+            </div>
+
+            <div class="form-group">
+                <label for="duration">Duration (Mins)</label>
+                <input type="text" hook="duration" class="form-control" id="duration" name="duration" value="{{duration}}">
+            </div>
+
+            <div class="form-group">
+                <label for="pricePerPlayer">Price Per Player</label>
+                <input type="text" hook="pricePerPlayer" class="form-control" id="pricePerPlayer" name="pricePerPlayer" value="{{pricePerPlayer}}">
+            </div>
+
+            <div class="form-group">
+                <label for="priceToClose">Cost to Close Room (Private)</label>
+                <input type="text" hook="priceToClose" class="form-control" id="priceToClose" name="priceToClose" value="{{priceToClose}}">
+            </div>
+
+            <div class="form-group">
+                <label for="kamaainaDiscountPerPlayer">Resident Discount (Per Player)</label>
+                <input type="text" hook="kamaainaDiscountPerPlayer" class="form-control" id="kamaainaDiscountPerPlayer" name="kamaainaDiscountPerPlayer" value="{{kamaainaDiscountPerPlayer}}">
+            </div>
+
+            <div class="form-group">
+                <label for="minPlayers">Minimum Number of Players</label>
+                <input type="text" hook="minPlayers" class="form-control" id="minPlayers" name="minPlayers" value="{{minPlayers}}">
+            </div>
+
+            <div class="form-group">
+                <label for="maxPlayers">Maximum Number of Players</label>
+                <input type="text" hook="maxPlayers" class="form-control" id="maxPlayers" name="maxPlayers" value="{{maxPlayers}}">
+            </div>
+
+            <div class="form-group">
+                <label for="successRate">Success Rate (Estimated)</label>
+                <input type="text" hook="successRate" class="form-control" id="successRate" name="successRate" value="{{successRate}}">
+            </div>
+
+            <div class="form-group">
+                <label for="order">Display Order</label>
+                <input type="text" hook="order" class="form-control" id="order" name="order" value="{{order}}">
+            </div>
+
+            <input type="submit" class="button btn-block" value="Save Room">
+        </form>
+    </form>
+</template>
