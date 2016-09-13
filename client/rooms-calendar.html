@@ -15,42 +15,49 @@
         <div class="row">
 
 
+            {{#if days}}
 
-            {{#each days}}
+                {{#each days}}
 
-                <div class="col-xs-12 col-md-6 col-lg-4">
-                    <h2 class="subheading" style="margin-bottom: 30px">{{humanReadableDate date}}</h2>
-                    {{#each times}}
-                        {{#each rooms}}
+                    <div class="col-xs-12 col-md-6 col-lg-4">
+                        <h2 class="subheading" style="margin-bottom: 30px">{{humanReadableDate date}}</h2>
+                        {{#each times}}
+                            {{#each rooms}}
 
-                            {{#if game}}
+                                {{#if game}}
 
-                                {{#with game}}
+                                    {{#with game}}
 
-                                    {{#if spotsLeft}}
-                                        <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px; margin-bottom: 10px">
-                                            {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; {{spotsLeft}} Spots left
+                                        {{#if spotsLeft}}
+                                            <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px; margin-bottom: 10px">
+                                                {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; {{spotsLeft}} Spots left
+                                            </div>
+                                        {{else}}
+                                            <div class="label label-danger" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
+                                                {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; Sold Out
+                                            </div>
+                                        {{/if}}
+
+                                    {{/with}}
+
+                                {{else}}
+                                    <a  hook="set-time" hook-data="{{../time}}" href="{{pathFor 'room' slug=slug}}" style="text-decoration: none">
+                                        <div class="label label-success" style="text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
+                                            {{../time}} &nbsp;&bull;&nbsp; {{title}} &nbsp;&bull;&nbsp; Book Now
                                         </div>
-                                    {{else}}
-                                        <div class="label label-danger" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
-                                            {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; Sold Out
-                                        </div>
-                                    {{/if}}
+                                    </a>
+                                {{/if}}
+                            {{/each}}
 
-                                {{/with}}
-
-                            {{else}}
-                                <a href="{{pathFor 'room' slug=slug}}" style="text-decoration: none">
-                                    <div class="label label-success" style="text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
-                                        {{../time}} &nbsp;&bull;&nbsp; {{title}} &nbsp;&bull;&nbsp; Book Now
-                                    </div>
-                                </a>
-                            {{/if}}
                         {{/each}}
+                    </div>
+                {{/each}}
 
-                    {{/each}}
-                </div>
-            {{/each}}
+            {{else}}
+
+                <h2 class="subheading">Loading Calendar...</h2>
+
+            {{/if}}
 
         </div>
 
