@@ -67,3 +67,11 @@ Meteor.publish('games', function(){
     var games = Bolt.Collections.Games.find();
     return games;
 });
+
+Meteor.publish('futureGames', function(){
+    var today = Epoch.dateObjectToDateString(new Date());
+
+    var games = Bolt.Collections.Games.find({date:{$gte:today}});
+    return games;
+
+});

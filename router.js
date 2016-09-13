@@ -115,13 +115,13 @@ Router.route('/rooms/calendar', {
     sitemap: true,
     changefreq: 'monthly',
     priority: '0.9',
-    waitOn: function(){
-        return [
-            Meteor.subscribe('reservations'),
-            Meteor.subscribe('rooms'),
-            Meteor.subscribe('games')
-        ]
-    },
+    // waitOn: function(){
+    //     return [
+    //         Meteor.subscribe('futureReservations'),
+    //         Meteor.subscribe('rooms'),
+    //         Meteor.subscribe('games')
+    //     ]
+    // },
     ironMeta: true,
     meta: function(){
         var title = 'Availability Calendar - Kauai Escape Room - Escape Games, Puzzle Rooms';
