@@ -1,0 +1,59 @@
+<template name="roomsCalendar">
+
+    <div class="hero hero-home-bg">
+        <div class="overlay">
+            <div class="content">
+                <h1>Availability Calendar</h1>
+                <p style="margin-bottom: 0">Each one of our escape rooms is themed and set-designed to offer a unique immersive experience.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <div class="row">
+
+
+
+            {{#each days}}
+
+                <div class="col-xs-12 col-md-6 col-lg-4">
+                    <h2 class="subheading" style="margin-bottom: 30px">{{humanReadableDate date}}</h2>
+                    {{#each times}}
+                        {{#each rooms}}
+
+                            {{#if game}}
+
+                                {{#with game}}
+
+                                    {{#if spotsLeft}}
+                                        <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px; margin-bottom: 10px">
+                                            {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; {{spotsLeft}} Spots left
+                                        </div>
+                                    {{else}}
+                                        <div class="label label-danger" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
+                                            {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; Sold Out
+                                        </div>
+                                    {{/if}}
+
+                                {{/with}}
+
+                            {{else}}
+                                <a href="{{pathFor 'room' slug=slug}}" style="text-decoration: none">
+                                    <div class="label label-success" style="text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
+                                        {{../time}} &nbsp;&bull;&nbsp; {{title}} &nbsp;&bull;&nbsp; Book Now
+                                    </div>
+                                </a>
+                            {{/if}}
+                        {{/each}}
+
+                    {{/each}}
+                </div>
+            {{/each}}
+
+        </div>
+
+    </div>
+
+</template>
