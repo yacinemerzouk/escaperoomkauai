@@ -59,6 +59,16 @@ Bolt.Game = function( args ){
             }
         });
     }
+
+    var room = Bolt.Collections.Rooms.findOne(this.roomId);
+    var maxPlayers = parseInt( room.maxPlayers );
+    var nbPlayers = parseInt( this.getNbPlayers() );
+    if( nbPlayers == maxPlayers || nbPlayers == maxPlayers - 1 || isBlocked ){
+        this.spotsLeft = 0;
+    }else{
+        this.spotsLeft = maxPlayers - nbPlayers
+    }
+
     this.isBlocked = isBlocked;
 
 }
