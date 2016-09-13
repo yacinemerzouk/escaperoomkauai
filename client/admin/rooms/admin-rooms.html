@@ -1,0 +1,28 @@
+<template name="adminRooms">
+
+    <div class="hero hero-home-bg room-box-bg-mad-scientist">
+        <div class="overlay">
+            <div class="content">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div>
+
+    {{#if currentUser}}
+        <div class="container-fluid" style="margin: 40px auto;">
+            <div class="row">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                    <a href="{{pathFor route="createRoom"}}" class="button btn-block text-center">Create A New Room</a><br>
+                        {{#each rooms}}
+                           <a href="{{pathFor route="updateRoom"}}" class="btn btn-block btn-default">
+                               <h2>{{title}}</h2>
+                               <p>{{excerpt}}</p>
+                           </a>
+                        {{/each}}
+                </div>
+            </div>
+        </div>
+    {{else}}
+        {{> loginButtons}}
+    {{/if}}
+</template>
