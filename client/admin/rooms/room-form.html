@@ -1,6 +1,5 @@
 <template name="roomForm">
-    <form>
-        <form hook="room-form" style="padding: 12px 15px">
+        <form hook="save-room" class="save-room" style="padding: 12px 15px">
             <div class="form-group">
                 <label for="title">Room Title</label>
                 <input type="text" hook="coupon" class="form-control" id="title" name="title" value="{{title}}">
@@ -28,7 +27,7 @@
 
             <div class="form-group">
                 <label for="available">Is this room available?</label>
-                <input type="checkbox" hook="available" class="form-control" id="available" name="available" value="{{available}}">
+                <input type="checkbox" hook="available" class="form-control" id="available" name="available" checked="{{available}}">
             </div>
 
             <div class="form-group">
@@ -81,7 +80,12 @@
                 <input type="text" hook="order" class="form-control" id="order" name="order" value="{{order}}">
             </div>
 
+            <input type="hidden" hook="published" class="form-control" id="published" name="published" value="{{published}}"><br>
+
             <input type="submit" class="button btn-block" value="Save Room">
         </form>
-    </form>
+
+        {{#if updatingRoom}}
+            <a href="#" hook="delete-room" class="btn-block text-center " style="color: red; margin: 40px 0;">Delete Room</a>
+        {{/if}}
 </template>
