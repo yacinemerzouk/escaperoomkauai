@@ -26,6 +26,8 @@
                     <h4>Transactions list</h4>
                     {{#each reservations}}
                         {{>reservationDetails this}}
+                        <a class="button button-unavailable" style="margin-bottom: 40px;" href="#" hook="resend-confirmation" hook-data="{{_id}}">Re-send confirmation email.</a>
+                        <hr style="margin: 20px 0">
                     {{/each}}
                 </div>
 
