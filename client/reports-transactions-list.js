@@ -82,5 +82,16 @@ Template.reportsTransactionsList.events({
         if( evt.currentTarget.value == '' ){
             Session.set( 'reportsTransactionsListTo', false );
         }
+    },
+    'click [hook="resend-confirmation"]': function( evt, tmpl ){
+        evt.preventDefault();
+        var resId = $(evt.currentTarget).attr('hook-data');
+        var res = new Bolt.Reservation( resId );
+        // if( res.sendConfirmationEmail() ){
+        //TODO: do a real callback before displaying success message; right not this is here so the game master don't send the email a bunch of times in a row.
+        Notifications.success( "Confirmation re-sent" );
+        // }else{
+        //     Notifications.error( "ERROR", "Confirmation NOT re-sent. Contact webmaster" );
+        // }
     }
 });
