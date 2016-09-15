@@ -133,7 +133,7 @@ Bolt.Room.prototype.create = function() {
  *
  * Sets published key to value of false
  */
-Bolt.Room.prototype.trash = function(){
+Bolt.Room.prototype.unpublish = function(){
 
     // Update DB
     var result = Bolt.Collections.Rooms.update(
