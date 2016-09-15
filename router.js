@@ -183,6 +183,14 @@ Router.route('/faq', {
     changefreq: 'monthly',
     priority: '0.5',
     ironMeta: true,
+    waitOn: function(){
+        return [
+            Meteor.subscribe( 'settings' )
+        ]
+    },
+    data: function(){
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
+    },
     meta: function() {
         var title = 'FAQ - Frequently Asked Questions - Kauai Escape Room';
         var description = 'First time players always have a lot of questions. We understand. Here are the most common ones. Feel free to call us for more info.';
