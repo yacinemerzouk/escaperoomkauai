@@ -18,7 +18,7 @@ Template.home.events({
 
 Template.home.helpers({
     rooms: function(){
-        return Bolt.Collections.Rooms.find({},{sort:{order:1}});
+        return Bolt.Collections.Rooms.find({ published: {$not: false}}, {sort:{order:1}});
     },
     mostPopular: function(){
         return Bolt.Collections.Rooms.findOne({slug:'mad-scientist'})

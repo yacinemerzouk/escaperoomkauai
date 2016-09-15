@@ -1,10 +1,10 @@
 <template name="rooms">
 
-    <div class="hero hero-home-bg">
+    <div class="hero" style="background-image: url({{roomsCover}});">
         <div class="overlay">
             <div class="content">
                 <h1>Rooms</h1>
-                <p style="margin-bottom: 0">Each one of our escape rooms is themed and set-designed to offer a unique immersive experience.</p>
+                <p style="margin-bottom: 0">{{roomsIntro}}</p>
             </div>
         </div>
     </div>
@@ -115,7 +115,7 @@
 
                 <h2 class="subheading">More Info</h2>
 
-                <p class="lead">Do you have questions about our escape games? Check out or <a href="{{pathFor 'faq'}}">frequently asked questions</a> or call us at <a href="tel:18086356957">1.808.635.6957</a>. You can also contact us by email at <a href="mailto:info@escaperoomkauai.com">info@escaperoomkauai.com</a>.</p>
+                <p class="lead">Do you have questions about our escape games? Check out or <a href="{{pathFor 'faq'}}">frequently asked questions</a> or call us at <a href="tel:{{phone}}">{{phone}}</a>. You can also contact us by email at <a href="mailto:{{email}}">{{email}}</a>.</p>
                 <p>&nbsp;</p>
                 <p class="lead-buttons">
                     <a href="{{pathFor 'rooms'}}" class="button">View All Our Rooms</a>
