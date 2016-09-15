@@ -1,10 +1,10 @@
 <template name="directions">
 
-    <div class="hero hero-home-bg hero-fullscreen">
+    <div class="hero hero-fullscreen" style="background-image: url({{directionsCover}});">
         <div class="overlay">
             <div class="content">
                 <h1>Directions</h1>
-                <p>We are located at 4353 Rice Street Unit #1. <a target="_blank" href="https://goo.gl/maps/it4knh86DxB2">View and get directions on Google Maps &rarr;</a></p>
+                <p>We are located at {{address}}. <a target="_blank" href="{{gMapDirections}}">View and get directions on Google Maps &rarr;</a></p>
             </div>
         </div>
     </div>

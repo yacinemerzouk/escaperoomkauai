@@ -75,3 +75,12 @@ Meteor.publish('futureGames', function(){
     return games;
 
 });
+
+
+/**
+ * SETTINGS: Publish all settings
+ */
+Meteor.publish('settings', function(){
+    var settings = Bolt.Collections.Settings.find({},{sort:{order:1}});
+    return settings;
+});

@@ -1,0 +1,158 @@
+<template name="settingsForm">
+
+    <form hook="update-settings" class="update-settings" style="padding: 12px 15px">
+
+        <h2 class="subheading">Global Settings</h2>
+
+        <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" hook="companyName" class="form-control" id="companyName" name="companyName" value="{{companyName}}">
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" hook="address" class="form-control" id="address" name="address" value="{{address}}">
+        </div>
+
+        <div class="form-group">
+            <label for="gMapDirections">Google Directions URL</label>
+            <input type="text" hook="gMapDirections" class="form-control" id="gMapDirections" name="gMapDirections" value="{{gMapDirections}}">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" hook="phone" class="form-control" id="phone" name="phone" value="{{phone}}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="text" hook="email" class="form-control" id="email" name="email" value="{{email}}">
+        </div>
+
+        <!--Homepage  -->
+
+        <h2 class="subheading">Homepage</h2>
+
+        <div class="form-group">
+            <label for="homepageHeroTitle">Hero Title</label>
+            <input type="text" hook="homepageHeroTitle" class="form-control" id="homepageHeroTitle" name="homepageHeroTitle" value="{{homepageHeroTitle}}">
+        </div>
+
+        <div class="form-group">
+            <label for="homepageHeroTagline">Hero Tagline</label>
+            <input type="text" hook="homepageHeroTagline" class="form-control" id="homepageHeroTagline" name="homepageHeroTagline" value="{{homepageHeroTagline}}">
+        </div>
+
+        <div class="form-group">
+            <label for="homepageCover">Cover Image URL</label>
+            <input type="text" hook="homepageCover" class="form-control" id="homepageCover" name="homepageCover" value="{{homepageCover}}">
+        </div>
+
+        <div class="form-group">
+            <label for="homepageWhatEscape">What are escape rooms?</label>
+            <textarea hook="homepageWhatEscape" class="form-control" id="homepageWhatEscape" name="homepageWhatEscape" value="{{homepageWhatEscape}}"></textarea>
+        </div>
+
+        <!--About Us  -->
+
+        <h2 class="subheading">About Us</h2>
+
+        <div class="form-group">
+            <label for="aboutDescription">About Us</label>
+            <textarea hook="aboutDescription" class="form-control" id="aboutDescription" name="aboutDescription" value="{{aboutDescription}}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="aboutCover">Cover Image URL</label>
+            <input type="text" hook="aboutCover" class="form-control" id="aboutCover" name="aboutCover" value="{{aboutCover}}">
+        </div>
+
+
+        <!--Rooms  -->
+
+        <h2 class="subheading">Rooms</h2>
+
+        <div class="form-group">
+            <label for="roomsIntro">Introduction</label>
+            <textarea hook="roomsIntro" class="form-control" id="roomsIntro" name="roomsIntro" value="{{roomsIntro}}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="roomsCover">Cover Image URL</label>
+            <input type="text" hook="roomsCover" class="form-control" id="roomsCover" name="roomsCover" value="{{roomsCover}}">
+        </div>
+
+
+        <!--Calendar  -->
+
+        <h2 class="subheading">Calendar</h2>
+
+        <div class="form-group">
+            <label for="calendarIntro">Introduction</label>
+            <textarea hook="calendarIntro" class="form-control" id="calendarIntro" name="calendarIntro" value="{{calendarIntro}}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="calendarCover">Cover Image URL</label>
+            <input type="text" hook="calendarCover" class="form-control" id="calendarCover" name="calendarCover" value="{{calendarCover}}">
+        </div>
+
+
+        <!--FAQ  -->
+
+        <h2 class="subheading">FAQ</h2>
+
+        <div class="form-group">
+            <label for="faqIntro">Introduction</label>
+            <textarea hook="faqIntro" class="form-control" id="faqIntro" name="faqIntro" value="{{faqIntro}}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="faqCover">Cover Image URL</label>
+            <input type="text" hook="faqCover" class="form-control" id="faqCover" name="faqCover" value="{{faqCover}}">
+        </div>
+
+
+        <!--Other Pages  -->
+
+        <h2 class="subheading">Other Pages</h2>
+
+        <div class="form-group">
+            <label for="contactCover">Contact Cover Image URL</label>
+            <input hook="contactCover" class="form-control" id="contactCover" name="contactCover" value="{{contactCover}}">
+        </div>
+
+        <div class="form-group">
+            <label for="directionsCover">Directions Cover Image URL</label>
+            <input type="text" hook="directionsCover" class="form-control" id="directionsCover" name="directionsCover" value="{{directionsCover}}">
+        </div>
+
+
+        <!--Testimonials  -->
+
+        <h2 class="subheading">What Players Are Saying</h2>
+
+        <div class="form-group">
+            <label for="firstTestimonial">Testimonial</label>
+            <textarea hook="firstTestimonial" class="form-control" id="firstTestimonial" name="firstTestimonial" value="{{firstTestimonial}}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="firstCite">Cite</label>
+            <input type="text" hook="firstCite" class="form-control" id="firstCite" name="firstCite" value="{{firstCite}}">
+        </div>
+
+        <div class="form-group">
+            <label for="secondTestimonial">Testimonial</label>
+            <textarea hook="secondTestimonial" class="form-control" id="secondTestimonial" name="secondTestimonial" value="{{secondTestimonial}}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="secondCite">Cite</label>
+            <input type="text" hook="secondCite" class="form-control" id="secondCite" name="secondCite" value="{{secondCite}}">
+        </div>
+
+        <input type="submit" class="button btn-block" value="Update Settings">
+    </form>
+
+</template>

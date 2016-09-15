@@ -39,12 +39,12 @@ Template.roomForm.events({
     'click [hook="delete-room"]': function(evt) {
         evt.preventDefault();
 
-        //Get existing room and change published status to false (trash)
+        //Get existing room and change published status to false (unpublish)
         var room = new Bolt.Room(this._id);
-        room.trash();
+        room.unpublish();
 
         //Notify and reroute to Rooms list
-        Notifications.error("Room Deleted", "This room has been trashed.");
+        Notifications.error("Room Deleted", "This room has been deleted.");
         Router.go('adminRooms');
     }
 
