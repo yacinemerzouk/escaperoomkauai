@@ -38,6 +38,14 @@ Router.route('/', {
     //     return Meteor.subscribe( 'rooms' );
     // },
     ironMeta: true,
+    waitOn: function(){
+        return [
+            Meteor.subscribe('settings')
+        ]
+    },
+    data: function(){
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
+    },
     meta: function(){
         var title = 'Kauai Escape Room - Escape Games, Puzzle Rooms';
         var description = 'Kauai Escape Room offers live action escape games and puzzle rooms. We are located on Rice Street in Lihue, Kauai, Hawaii.';
@@ -79,6 +87,14 @@ Router.route('/rooms', {
     //         Meteor.subscribe( 'games' )
     //     ]
     // },
+     waitOn: function(){
+         return [
+             Meteor.subscribe( 'settings' )
+         ]
+     },
+    data: function(){
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
+    },
     ironMeta: true,
     meta: function(){
         var title = 'Our Escape Rooms - Kauai Escape Room - Escape Games, Puzzle Rooms';
@@ -122,6 +138,14 @@ Router.route('/rooms/calendar', {
     //         Meteor.subscribe('games')
     //     ]
     // },
+    waitOn: function(){
+        return [
+            Meteor.subscribe( 'settings' )
+        ]
+    },
+    data: function(){
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
+    },
     ironMeta: true,
     meta: function(){
         var title = 'Availability Calendar - Kauai Escape Room - Escape Games, Puzzle Rooms';
@@ -195,6 +219,14 @@ Router.route('/about', {
     changefreq: 'monthly',
     priority: '0.5',
     ironMeta: true,
+    waitOn: function(){
+        return [
+            Meteor.subscribe('settings')
+        ]
+    },
+    data: function(){
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
+    },
     meta: function() {
         var title = 'About Us - Kauai Escape Room - Escape Games, Puzzle Rooms';
         var description = 'We are a couple from Kapaa. He is a published game designer and storytelling enthusiast. She is an educator with a creative mind. We have been making our own escape room games since 2015.';
@@ -232,6 +264,14 @@ Router.route('/contact', {
     changefreq: 'monthly',
     priority: '0.5',
     ironMeta: true,
+    waitOn: function(){
+        return [
+            Meteor.subscribe('settings')
+        ]
+    },
+    data: function(){
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
+    },
     meta: function() {
         var title = 'Contact Us - Kauai Escape Room - Escape Games, Puzzle Rooms';
         var description = 'Email us at info@escaperoomkauai.com. You can also call us at 1.808.635.6957 to ask questions or book over the phone. Of course you can also book online.';
@@ -269,6 +309,14 @@ Router.route('/directions', {
     changefreq: 'monthly',
     priority: '0.1',
     ironMeta: true,
+    waitOn: function(){
+        return [
+            Meteor.subscribe('settings')
+        ]
+    },
+    data: function(){
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
+    },
     meta: function() {
         var title = 'Directions - Kauai Escape Room - Escape Games, Puzzle Rooms';
         var description = 'We are located at 4353 Rice Street, Unit #1. Reserve online before showing up.';
@@ -355,6 +403,9 @@ Router.route('/admin/settings', {
         return [
             Meteor.subscribe('settings')
         ]
+    },
+    data: function(){
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
     }
 });
 
