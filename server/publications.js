@@ -78,7 +78,7 @@ Meteor.publish('futureGames', function(){
 
 
 /**
- * ROOMS: publish all settings
+ * SETTINGS: Publish all settings
  */
 Meteor.publish('settings', function(){
     var settings = Bolt.Collections.Settings.find({},{sort:{order:1}});
