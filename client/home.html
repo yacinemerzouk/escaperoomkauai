@@ -3,8 +3,8 @@
     <div class="hero hero-home-bg">
         <div class="overlay">
             <div class="content col-xs-12 text-center">
-                <h1>Can you escape?</h1>
-                <p>Find clues and solve puzzles to unravel the mysteries of the room.</p>
+                <h1>{{homepageHeroTitle}}</h1>
+                <p>{{homepageHeroTagline}}</p>
                 <a href="{{pathFor 'rooms'}}" class="button">Our Rooms</a>
                 <a href="#" hook="explainer" class="button button-unavailable">How It Works</a>
             </div>
@@ -19,7 +19,7 @@
 
             <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
                 <h2 class="subheading">What are escape rooms?</h2>
-                <p class="lead"><strong>Escape rooms are live action games</strong>. Enter a room with your group, find clues and solve puzzles to unravel the mysteries of the room and escape within a set time limit. <strong>It's a fun and exciting rush of adrenaline</strong>. Are you up for the challenge?</p>
+                <p class="lead">{{homepageWhatEscape}}</p>
                 <p class="lead"><a href="{{pathFor 'faq'}}">Learn more &rarr;</a></p>
             </div>
 
@@ -50,13 +50,13 @@
                 <h2 class="subheading">What Players Say</h2>
 
                 <div class="testimonial">
-                    <p class="testimonial-quote">"Awesome Adventure! If you're on Kaua'i you have to check out this adventure. It was great family fun."</p>
-                    <p class="testimonial-author">-- Caroline F, Tripadvisor</p>
+                    <p class="testimonial-quote">"{{firstTestimonial}}"</p>
+                    <p class="testimonial-author">-- {{firstCite}}</p>
                 </div>
 
                 <div class="testimonial">
-                    <p class="testimonial-quote">"Escape rooms are recognized worldwide as one of the best & most fun group activities you can engage in. Kauai's Escape Room is no exception. The quality of puzzles & set design are superb."</p>
-                    <p class="testimonial-author">-- Rolo B, Facebook</p>
+                    <p class="testimonial-quote">"{{secondTestimonial}}"</p>
+                    <p class="testimonial-author">-- {{secondCite}}</p>
                 </div>
 
             </div>
@@ -89,7 +89,7 @@
 
                 <h2 class="subheading">More Info</h2>
 
-                <p class="lead">Do you have questions about our escape games? Check out or <a href="{{pathFor 'faq'}}">frequently asked questions</a> or call us at <a href="tel:18086356957">1.808.635.6957</a>. You can also contact us by email at <a href="mailto:info@escaperoomkauai.com">info@escaperoomkauai.com</a>.</p>
+                <p class="lead">Do you have questions about our escape games? Check out or <a href="{{pathFor 'faq'}}">frequently asked questions</a> or call us at <a href="tel:{{phone}}">{{phone}}</a>. You can also contact us by email at <a href="mailto:{{email}}">{{email}}</a>.</p>
                 <p>&nbsp;</p>
                 <p class="text-center">
                     <a href="{{pathFor 'rooms'}}" class="button">View All Our Rooms</a>
