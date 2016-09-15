@@ -322,7 +322,12 @@ Router.route('/admin/rooms', {
  * Admin Rooms (Create)
  */
 Router.route('/admin/create-room', {
-    name: 'createRoom'
+    name: 'createRoom',
+    waitOn: function() {
+        return [
+            Meteor.subscribe('rooms')
+        ]
+    }
 });
 
 /**
@@ -340,6 +345,18 @@ Router.route('/admin/update-room/:_id', {
     }
 });
 
+
+/**
+ * Admin Settings
+ */
+Router.route('/admin/settings', {
+    name: 'adminSettings',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('settings')
+        ]
+    }
+});
 
 /**
  * Reservations - Admin page
