@@ -14,15 +14,14 @@
                             <span class="icon-bar"></span>
                         </button>
                         {{#with settings}}
+                            <!--Logo-->
                             <a class="navbar-brand" href="{{pathFor 'home'}}"><img src="{{logoURL}}"></a>
+                            <!--Announcement Box-->
+                            <div class="promo">
+                                <span class="promo-title">{{announcementTitle}}</span><br>
+                                <span class="promo-text">{{textareaToHTML announcementContent}}</span>
+                            </div>
                         {{/with}}
-                        <div class="promo">
-                            <span class="promo-title">2 NEW GAMES!</span><br>
-                            <span class="promo-text">
-                                <div style="padding-bottom: 5px;"><a style="color: #000; text-decoration: underline" href="{{pathFor 'room' slug='lost-elvis-record'}}"><span class="currency">The Lost<br>Elvis Record &rarr;</span></a></div>
-                                <a style="color: #000; text-decoration: underline" href="{{pathFor 'room' slug='halloween-2016'}}"><span class="currency">Halloween:<br>Break The Spell &rarr;</span></a>
-                            </span>
-                        </div>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
