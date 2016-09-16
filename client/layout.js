@@ -17,3 +17,9 @@ Template.layout.rendered = function(){
         $('body, #bs-example-navbar-collapse-2').removeClass('in');
     })
 };
+
+Template.layout.helpers({
+    settings: function () {
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
+    }
+});
