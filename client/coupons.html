@@ -1,5 +1,6 @@
 <template name="coupons">
 
+    <!-- HERO BANNER -->
     <div class="hero hero-home-bg room-box-bg-mad-scientist">
         <div class="overlay">
             <div class="content">
@@ -9,29 +10,38 @@
         </div>
     </div>
 
+    <!-- ONLY FOR ADMINS -->
     {{#if currentUser}}
 
+        <!-- CONTENT -->
         <div class="container">
 
             <div class="row">
 
+                <!-- FORM TO CREATE NEW COUPON -->
                 <div class="col-xs-12">
                     <form hook="create-coupon" style="padding: 12px 15px">
                         <h2>New coupon</h2>
+
+                        <!-- COUPON CODE -->
                         <div class="form-group">
                             <label for="coupon">Coupon Code</label>
                             <input type="text" hook="coupon" class="form-control" id="coupon" name="coupon" value="{{coupon}}">
                         </div>
 
+                        <!-- DISCOUNT PERCENTAGE -->
                         <div class="form-group">
                             <label for="discount">Discount %</label>
                             <input type="text" hook="discount" class="form-control" id="discount" name="discount" value="{{discount}}">
                         </div>
 
+                        <!-- LIMIT USES -->
                         <div class="form-group">
                             <label for="coupon">Maximum Uses (leave blank for unlimited)</label>
                             <input type="text" hook="maxUses" class="form-control" id="maxUses" name="maxUses" value="{{maxUses}}">
                         </div>
+
+                        <!-- EXPIRATION -->
                         <div class="form-group">
                             <label for="expiration">Expiration (YYYY-MM-DD)  (leave blank for unlimited)</label>
                             <input type="text" hook="expiration" class="form-control" id="expiration" name="expiration" value="{{maxUses}}">
@@ -40,6 +50,7 @@
                     </form>
                 </div>
 
+                <!-- LIST OF EXISTING COUPONS; TODO: FILTER AND PAGINATE -->
                 <div class="col-xs-12">
                     <h2>Coupons List</h2>
 
@@ -51,6 +62,7 @@
                         Uses: <span class="currency">{{uses}}</span>
                         <hr>
                     {{/each}}
+
                 </div>
 
             </div>

@@ -27,7 +27,6 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                         <ul class="nav navbar-nav">
-                            <!--<li class="{{activeFlag 'home'}}"><a href="{{pathFor 'home'}}">Home</a></li>-->
                             <li class="{{activeFlag 'rooms'}}"><a href="{{pathFor 'rooms'}}">Rooms</a></li>
                             <li class="{{activeFlag 'roomsCalendar'}}"><a href="{{pathFor 'roomsCalendar'}}">Calendar</a></li>
                             <li class="{{activeFlag 'faq'}}"><a href="{{pathFor 'faq'}}">FAQ</a></li>
@@ -44,38 +43,7 @@
         {{>yield}}
 
 
-        <footer style="padding: 2px 4px 0px">
-            <div class="footer-bg" style="background-color: #f0f0f0; padding: 30px 0">
-                <div class="container" style="clear: both;">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <a href="{{pathFor 'home'}}">Home</a>
-                            &nbsp;&bull;&nbsp;
-                            <a href="{{pathFor 'rooms'}}">Rooms</a>
-                            &nbsp;&bull;&nbsp;
-                            <a href="{{pathFor 'contact'}}">Contact</a>
-                            &nbsp;&bull;&nbsp;
-                            <a href="{{pathFor 'directions'}}">Directions</a>
-                            &nbsp;&bull;&nbsp;
-                            <a href="{{pathFor 'about'}}">About</a>
-                            <br>
-                            <a href="/room/mad-scientist">Room: Missing Scientist</a>
-                            &nbsp;&bull;&nbsp;
-                            <a href="/room/lost-elvis-record">Room: Lost Elvis Record</a>
-                            <br>
-                            <a href="/room/tiki-lounge">Room: Tiki Lounge</a>
-                            &nbsp;&bull;&nbsp;
-                            <a href="/room/mobile">Room: Mobile Escape Room</a>
-                            <br>
-                            <a href="{{pathFor 'admin'}}">Administrator Login →</a>
-                            <br>
-                            Version 1.2.10
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </footer>
+        {{>footer}}
 
     </div>
 </template>
