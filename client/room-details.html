@@ -1,5 +1,6 @@
 <template name="room">
 
+    <!-- HERO BANNER -->
     <div class="hero hero-home-bg" style="background-image: url({{image}});">
         <div class="overlay">
             <div class="content">
@@ -33,20 +34,22 @@
 
 
 
+    <!-- CONTENT -->
     <div class="container">
-
 
         <div class="row">
 
-
             <div class="col-xs-12 col-md-8">
+
+                <!-- TITLE MAY CHANGE DEPENDING ON GAME AVAILABILITY -->
                 <h3 class="subheading">{{#if available}}Book Now{{else}}Coming Soon{{/if}}</h3>
 
+                <!-- BOOKING FORM -->
                 <form class="" hook="reservation-form" style="background-color: #f0f0f0; padding: 30px; clear: both">
-
 
                     <div class="row">
 
+                        <!-- PLAYER PRICING AND NB OF PLAYERS -->
                         <div class="col-xs-12">
                             {{#if reservation}}
                                 {{#if reservation.room.available}}
@@ -66,46 +69,32 @@
                             {{/if}}
                         </div>
 
+                        <!-- DATE SELECTION -->
                         <div class="col-xs-12 col-md-6 {{#unless available}}hidden{{/unless}}">
 
                             <label for="Date" style="margin-bottom: 10px;">Select date <span class="label label-success pull-right" style="font-size: 14px; position: relative; top: 1px; background-color: #007300">{{humanReadableDate reservation.date}}</span></label>
 
+                            <!-- DATEPICKER; HIDDEN IF DATE & TIME ALREADY SELECTED BY USER -->
                             <div id="datepicker" class="datepicker-full-width {{#if reservation.time}}hidden{{/if}}"></div>
 
-
-
-
-
-
                         </div>
+
+                        <!-- TIME SELECTION -->
                         {{#if reservation}}
                             {{#if reservation.room.available}}
                                 {{#with reservation}}
 
                                     <div class="col-xs-12 col-md-6">
 
-
                                         <label>Select time {{#if time}} <span class="label label-success pull-right" style="font-size: 14px; position: relative; top: 1px; background-color: #007300">{{time}}</span>{{/if}}</label>
 
                                         <div id="times">
-                                            <!--{{#if time}}-->
-                                                <!--<div>-->
-                                                    <!--<h5>-->
 
-
-                                                            <!--@ {{time}} <a href="#" hook="set-time" hook-data=""><span style="font-size: 12px; font-weight: normal; color: #cc0000">change time</span></a>-->
-
-                                                        <!--<br>-->
-                                                        <!--&lt;!&ndash;<a href="#"><span style="font-size: 12px; font-weight: normal; color: #666">View availability for all rooms &rarr;</span></a>&ndash;&gt;-->
-                                                    <!--</h5>-->
-                                                <!--</div>-->
-                                            <!--{{/if}}-->
-
-
-
+                                            <!-- UNLESS TIME HAS ALREADY BEEN SELECTED BY USER -->
                                             {{#unless time}}
-                                                {{#each startTimes}}
 
+                                                <!-- LOOP OVER START TIMES -->
+                                                {{#each startTimes}}
 
                                                         {{#if canBook ../roomId ../date this}}
                                                             <a href="#" hook="set-time" hook-data="{{this}}" class="label label-time {{#if hasEnoughSpots  ../roomId ../date this ../nbPlayers}}  label-time-green {{else}}  label-time-grey {{/if}}">{{this}} &nbsp;&bull;&nbsp; {{spotsLeft  ../roomId ../date this}}  spots left</a>
@@ -116,27 +105,14 @@
                                                 {{/each}}
                                             {{/unless}}
 
-                                            <!--<div>-->
-                                                <!--<div class="form-group" style="padding:0">-->
-                                                    <!--<label for="nbPlayers">Number of players</label>-->
-                                                    <!--<select class="form-control" hook="update-players" id="nbPlayers" name="nbPlayers" style="width: 300px; max-width: 100%">-->
-                                                        <!--<option value="0"> NUMBER OF PLAYERS </option>-->
-                                                        <!--{{#each nbPlayersOptions}}-->
-                                                            <!--<option value="{{this}}" {{selected this ../nbPlayers}}>{{this}} players</option>-->
-                                                        <!--{{/each}}-->
-                                                    <!--</select>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
                                         </div>
                                     </div>
 
-
+                                    <!-- SELECTED TIME & DATE; ONLY SHOWS IF BOTH CHOICES HAVE BEEN MADE BY USER -->
                                     <div class="col-xs-12">
 
-
-
                                         {{#if time}}
-                                            <!--<p style="background-color: #FFF; border: 1px solid #AAA; padding: 8px 12px;"><span style="color: #888;"> Selected Date &amp; Time:</span> <b>{{humanReadableDate date}} @ {{time}}</b> <a href="#" hook="set-time" hook-data="" class="pull-right"><span style="font-size: 12px; font-weight: normal; color: #cc0000">CHANGE</span></a></p>-->
+
                                             <p style="text-align: center; margin-bottom: 25px;">
                                                 <a href="#" hook="set-time" hook-data="" style="display: block; background-color: #ddd; padding: 8px 12px 12px; text-decoration: none">
                                                     <span style="font-size: 12px; font-weight: normal; color: #666; font-weight: bold">{{humanReadableDate date}} @{{time}}</span><br>
@@ -144,21 +120,26 @@
                                                 </a>
                                             </p>
 
+
+                                            <!-- FIRST NAME -->
                                             <div class="form-group">
                                                 <label for="firstName">First Name</label>
                                                 <input type="text" hook="update-reservation" class="form-control" id="firstName" name="firstName" value="{{firstName}}">
                                             </div>
 
+                                            <!-- LAST NAME -->
                                             <div class="form-group">
                                                 <label for="lastName">Last Name</label>
                                                 <input type="text" hook="update-reservation" class="form-control" id="lastName" name="lastName" value="{{lastName}}">
                                             </div>
 
+                                            <!-- EMAIL -->
                                             <div class="form-group">
                                                 <label for="email">Email</label>
                                                 <input type="email" hook="update-reservation" class="form-control" id="email" name="email" value="{{email}}">
                                             </div>
 
+                                            <!-- PHONE -->
                                             <div class="form-group">
                                                 <label for="phone">Phone</label>
                                                 <input type="text" hook="update-reservation" class="form-control" id="phone" name="phone" value="{{phone}}">
@@ -166,6 +147,7 @@
 
 
 
+                                            <!-- DISPLAY CLOSED ROOM OPTION IF APPROPRIATE -->
                                             {{#if canClose}}
                                                 <div class="form-group">
                                                     <label>Close Room</label>
@@ -183,6 +165,7 @@
                                                 </div>
                                             {{/if}}
 
+                                            <!-- COUPON CODE -->
                                             <div class="form-group">
                                                 <label for="coupon">Coupon Code</label>
                                                 <p>If you have a coupon code, enter it here. Coupon codes cannot be combined with the Kama'aina discount.</p>
@@ -196,6 +179,7 @@
                                                 {{/if}}
                                             </div>
 
+                                            <!-- DISPLAY RESIDENT DISCOUNT OPTION IF NO COUPON CODE WAS USED. -->
                                             {{#unless discount}}
                                                 <div class="form-group">
                                                     <label for="nbKamaaina">Kama'aina Discount</label>
@@ -210,18 +194,21 @@
                                             {{/unless}}
 
 
+                                            <!-- SOURCE TRACKING -->
                                             <div class="form-group">
                                                 <label for="source">How did you hear about us?</label>
                                                 <input type="text" hook="update-reservation" class="form-control" id="source" name="source" value="{{source}}">
                                             </div>
 
 
-
+                                            <!-- REVIEW ORDER -->
                                             {{#if nbPlayers}}
 
                                                 <label for="subtotal">Review Order</label>
                                                 <table class="table table-striped table-bordered table-responsive">
                                                     <tbody>
+
+                                                    <!-- NB PLAYERS / TIME / DATE -->
                                                     <tr>
                                                         <th colspan="2" style="font-size: 1.4em">
                                                             <span class="label label-success" style="position: relative; bottom: 3px; background-color: #007300">{{nbPlayers}} players</span>
@@ -229,10 +216,14 @@
                                                             <span class="label label-success" style="position: relative; bottom: 3px; background-color: #007300">{{time}}</span>
                                                         </th>
                                                     </tr>
+
+                                                    <!-- COST OF PLAYERS -->
                                                     <tr>
                                                         <td>{{nbPlayers}} players &nbsp;&times;&nbsp; {{toCurrency room.pricePerPlayer}}</td>
                                                         <td class="currency">{{toCurrency costOfPlayers}}</td>
                                                     </tr>
+
+                                                    <!-- COST OF CLOSED ROOM -->
                                                     {{#if canClose}}
                                                         {{#if closeRoom}}
                                                             <tr>
@@ -241,16 +232,22 @@
                                                             </tr>
                                                         {{/if}}
                                                     {{/if}}
+
+                                                    <!-- SUBTOTAL BEFORE DISCOUNTS AND TAXES -->
                                                     <tr style="font-weight:bold;">
                                                         <td>Subtotal</td>
                                                         <td class="currency">{{toCurrency subtotal}}</td>
                                                     </tr>
+
+                                                    <!-- DISCOUNT FROM COUPON CODE -->
                                                     {{#if discount}}
                                                         <tr>
                                                             <td class="discount text-uppercase">Coupon "{{couponData.coupon}}" {{couponData.discount}}% OFF</td>
                                                             <td class="currency discount">&mdash; {{toCurrency discount}}</td>
                                                         </tr>
                                                     {{/if}}
+
+                                                    <!-- DISCOUNT FROM KAMAAINA -->
                                                     {{#unless discount}}
                                                         {{#if discountKamaaina}}
                                                             <tr>
@@ -259,28 +256,34 @@
                                                             </tr>
                                                         {{/if}}
                                                     {{/unless}}
+
+                                                    <!-- TAXES -->
                                                     <tr>
                                                         <td>Taxes</td>
                                                         <td class="currency">{{toCurrency taxes}}</td>
                                                     </tr>
+
+                                                    <!-- TOTAL -->
                                                     <tr style="font-size: 18px;">
                                                         <th>TOTAL</th>
                                                         <th class="currency">{{toCurrency total}}</th>
                                                     </tr>
+
                                                     </tbody>
                                                 </table>
 
+                                                <!-- CREDIT CARD FOR; IF TOTAL > 0 -->
                                                 {{#unless isFree}}
                                                     <div class="row">
 
+                                                        <!-- CREDIT CARD NUMBER -->
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="cc">Credit Card Number</label>
                                                             <input type="text" hook="update-reservation" class="form-control" id="cc" name="cc" value="{{cc}}">
                                                         </div>
 
-
+                                                        <!-- EXPIRATION -->
                                                         <div class="form-group col-xs-8 col-md-4">
-
 
                                                             <label for="ccExpMonth">Expiration</label>
 
@@ -313,15 +316,15 @@
 
                                                             </div>
 
-
                                                         </div>
 
+                                                        <!-- CREDIT CARD VERIFICATION NUMBER -->
                                                         <div class="form-group col-xs-4 col-md-2">
                                                             <label for="cvv">CVV <a href="#"  data-toggle="modal" data-target="#myModal" hook="show-cvv-explainer" class="label label-info pull-right" style="color: #FFF; position: relative; top: 2px; text-decoration: none">?</a></label>
                                                             <input type="text" hook="update-reservation" class="form-control" id="cvv" name="cvv" value="{{cvv}}">
                                                         </div>
 
-                                                        <!-- Modal -->
+                                                        <!-- MODAL; EXPLAINER OF WHAT CVV IS -->
                                                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
@@ -343,6 +346,7 @@
                                                     </div>
                                                 {{/unless}}
 
+                                                <!-- KACHING! -->
                                                 <input type="submit" hook="checkout" class="button btn-block button-available text-center" value="Complete Order">
 
                                             {{/if}}
@@ -360,28 +364,14 @@
 
                     {{#if reservation}}
 
-                        {{#if reservation.room.available}}
-
-                            {{#with reservation}}
-
-
-
-
-
-
-                            {{/with}}
-
-
-                        {{else}}
-
-
+                        {{#unless reservation.room.available}}
 
                             <h3 style="margin-top: 0; font-size: 16px; color: #444; font-weight: bold;">Opening very soon!!!</h3>
                             <div id="datepicker" style="display: none"></div>
 
                             <!-- Begin MailChimp Signup Form -->
                             <div id="mc_embed_signup">
-                                <form action="//zendylabs.us4.list-manage.com/subscribe/post?u=39a2a8b95a361766451ab131e&amp;id=cd90eebeec" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                <form action="//escaperoomkauai.us13.list-manage.com/subscribe/post?u=2653aee4fbfd050c5eb64631b&amp;id=2381bdabff" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                                     <div id="mc_embed_signup_scroll">
                                         <!--<h2 class="featurette-heading">Opening Very Soon!!!</h2>-->
                                         <p class="lead">This room will be available in <strong>{{opening}}</strong>. In the meantime, you can make a reservation for <a href="{{pathFor 'room' slug='mad-scientist'}}">The Missing Scientist</a>, which is now open! You can also sign up for our newsletter to be notified of new games opening at Kauai Escape Room.</p>
@@ -406,11 +396,10 @@
                                     </div>
                                 </form>
                             </div>
-
                             <!--End mc_embed_signup-->
 
 
-                        {{/if}}
+                        {{/unless}}
 
                     {{else}}
 
@@ -418,16 +407,16 @@
 
                     {{/if}}
                 </form>
+
+                <!-- SECURE PADLOCK AND CREDIT CARD LOGOS BELOW FORM -->
                 <div class="text-center">
                     <img src="/images/secure2.jpeg" style="margin-top: 20px; width: 100%; max-width: 200px">
                 </div>
             </div>
 
+            <!-- TESTIMONIALS -->
             <div class="col-xs-12 col-md-4 hidden-xs hidden-sm" style="padding-top: 140px;">
-                <!--<h3 class="subheading">Synopsis</h3>-->
-                <!--<p class="lead" style="font-size: 16px; line-height: 24px; text-align: left">{{description}}</p>-->
 
-                <!--<h3 class="subheading" style="margin-bottom: 23px">What players say about<br>{{title}}</h3>-->
                 {{#with settings}}
                     <p class="testimonial" style="margin-left: 0; margin-right:0; max-width: none; padding: 0; margin-bottom: 20px;">
                         <span class="testimonial-quote" style="font-size: 16px; line-height: 24px;">
@@ -456,45 +445,9 @@
             </div>
         </div>
     </div>
-                <!--<div class="room-boxes">-->
 
 
-
-                    <!--<div class="row featurette">-->
-
-                        <!--<div class="col-xs-12 col-md-8">-->
-                            <!--<div class="booking-container">-->
-                                <!--<h3 style="margin-top: 0; font-size: 16px; color: #444; font-weight: bold;">Book Now</h3>-->
-
-                                <!--<div id="datepicker"></div>-->
-
-                            <!--</div>-->
-                            <!--<div style="text-align: center">-->
-                                <!--<img src="/images/secure2.jpeg" style="margin-top: 20px; width: 100%; max-width: 200px">-->
-                            <!--</div>-->
-                        <!--</div>-->
-
-                    <!--</div>-->
-
-                    <!--<div class="col-xs-12 col-md-4">-->
-                        <!--<h2 class="subheading">Synopsis</h2>-->
-                        <!--<p class="lead">{{description}}</p>-->
-
-                        <!--<div class="home-section-container">-->
-                            <!--<h2 class="subheading">What Players Say About<br>{{title}}</h2>-->
-                            <!--<div class="testimonial">-->
-                                <!--<p class="testimonial-quote">"Escape rooms are recognized worldwide as one of the best & most fun group activities you can engage in. Kauai's Escape Room is no exception. The quality of puzzles & set design are superb."</p>-->
-                                <!--<p class="testimonial-author">- Rolo B, Facebook</p>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-                <!--</div>-->
-
-            <!--</div>-->
-
-    <!--</div>-->
-
+    <!-- UI OVERLAY WHEN PROCESSING PAYMENT -->
     <div class="processing-bg">
         <div class="processing">
             PROCESSING ORDER<br><img style="position: relative; bottom: 10px; left: 1px" src="/images/loading.gif">

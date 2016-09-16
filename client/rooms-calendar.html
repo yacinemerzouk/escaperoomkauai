@@ -1,5 +1,6 @@
 <template name="roomsCalendar">
 
+    <!-- HERO BANNER -->
     <div class="hero" style="background-image: url({{calendarCover}});">
         <div class="overlay">
             <div class="content">
@@ -10,28 +11,41 @@
     </div>
 
 
+    <!-- CONTENT -->
     <div class="container">
 
         <div class="row">
 
-
+            <!-- IF DAYS ARRAY IS OK (IF NOT, IT'S PROBABLY A LATENCY OR PUBSUB ISSUE) -->
             {{#if days}}
 
+                <!-- LOOP OVER DAYS -->
                 {{#each days}}
 
                     <div class="col-xs-12 col-md-6 col-lg-4">
+
+                        <!-- DATE -->
                         <h2 class="subheading" style="margin-bottom: 30px">{{humanReadableDate date}}</h2>
-                        {{#each times}}
+
+                        <!-- LOOP OVER POSSIBLE TIME SLOTS -->
+                        {{#each times}}4
+
+                            <!-- FOR EACH TIME SLOT, LOOP OVER ROOMS -->
                             {{#each rooms}}
 
+                                <!-- IF GAME DATA IS AVAILABLE, IT MEANS WE HAVE RESERVATIONS OR THE TIME SLOTS WAS BLOCKED -->
                                 {{#if game}}
+
 
                                     {{#with game}}
 
+                                        <!-- DISPLAY NUMBER OF SPOTS LEFT -->
                                         {{#if spotsLeft}}
                                             <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px; margin-bottom: 10px">
                                                 {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; {{spotsLeft}} Spots left
                                             </div>
+
+                                        <!-- OR DISPLAY SOLD OUT -->
                                         {{else}}
                                             <div class="label label-danger" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
                                                 {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; Sold Out
@@ -40,6 +54,7 @@
 
                                     {{/with}}
 
+                                <!-- NO GAME DATA MEANS TIME SLOT HAS NEVER BEEN BOOKED OR SLOT -->
                                 {{else}}
                                     <a  hook="set-time" hook-data="{{../time}}" href="{{pathFor 'room' slug=slug}}" style="text-decoration: none">
                                         <div class="label label-success" style="text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
@@ -47,6 +62,7 @@
                                         </div>
                                     </a>
                                 {{/if}}
+
                             {{/each}}
 
                         {{/each}}
@@ -55,6 +71,7 @@
 
             {{else}}
 
+                <!-- TODO: FIX THIS, IT NEVER SHOWS UP; THE PAGE JUST FREEZES UNTIL DATA IS RENDERED? -->
                 <h2 class="subheading">Loading Calendar...</h2>
 
             {{/if}}
