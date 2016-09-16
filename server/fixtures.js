@@ -20,6 +20,7 @@ if (Bolt.Collections.Settings.find().count() === 0) {
         homepageHeroTagline: "Find clues and solve puzzles to unravel the mysteries of the room!",
         homepageHeroTitle: "You will escape...",
         homepageWhatEscape: "Escape rooms are live action games. Enter a room with your group, find clues and solve puzzles to unravel the mysteries of the room and escape within a set time limit. It's a fun and exciting rush of adrenaline. Are you up for the challenge?",
+        logoURL: '/images/logo.png',
         phone: "(808) 123-4567",
         roomsCover: "/images/hero-generic.jpg",
         roomsIntro: "Each one of our escape rooms is themed and set-designed to offer a unique and immersive experience.",
