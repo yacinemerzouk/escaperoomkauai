@@ -16,7 +16,12 @@
 Router.configure({
     layoutTemplate: 'layout',
     loadingTemplate: 'loading',
-    notFoundTemplate: 'notFound'
+    notFoundTemplate: 'notFound',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('settings')
+        ]
+    }
     // waitOn: function(){
     //     return [
     //         Meteor.subscribe('rooms'),
@@ -38,11 +43,6 @@ Router.route('/', {
     //     return Meteor.subscribe( 'rooms' );
     // },
     ironMeta: true,
-    waitOn: function(){
-        return [
-            Meteor.subscribe('settings')
-        ]
-    },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     },
@@ -87,11 +87,6 @@ Router.route('/rooms', {
     //         Meteor.subscribe( 'games' )
     //     ]
     // },
-     waitOn: function(){
-         return [
-             Meteor.subscribe( 'settings' )
-         ]
-     },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     },
@@ -138,11 +133,6 @@ Router.route('/rooms/calendar', {
     //         Meteor.subscribe('games')
     //     ]
     // },
-    waitOn: function(){
-        return [
-            Meteor.subscribe( 'settings' )
-        ]
-    },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     },
@@ -183,11 +173,6 @@ Router.route('/faq', {
     changefreq: 'monthly',
     priority: '0.5',
     ironMeta: true,
-    waitOn: function(){
-        return [
-            Meteor.subscribe( 'settings' )
-        ]
-    },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     },
@@ -227,11 +212,6 @@ Router.route('/about', {
     changefreq: 'monthly',
     priority: '0.5',
     ironMeta: true,
-    waitOn: function(){
-        return [
-            Meteor.subscribe('settings')
-        ]
-    },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     },
@@ -272,11 +252,6 @@ Router.route('/contact', {
     changefreq: 'monthly',
     priority: '0.5',
     ironMeta: true,
-    waitOn: function(){
-        return [
-            Meteor.subscribe('settings')
-        ]
-    },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     },
@@ -317,11 +292,6 @@ Router.route('/directions', {
     changefreq: 'monthly',
     priority: '0.1',
     ironMeta: true,
-    waitOn: function(){
-        return [
-            Meteor.subscribe('settings')
-        ]
-    },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     },
@@ -407,11 +377,6 @@ Router.route('/admin/update-room/:_id', {
  */
 Router.route('/admin/settings', {
     name: 'adminSettings',
-    waitOn: function(){
-        return [
-            Meteor.subscribe('settings')
-        ]
-    },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     }
