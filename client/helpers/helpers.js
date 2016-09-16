@@ -184,3 +184,8 @@ UI.registerHelper('gameHasResult', function(game){
 UI.registerHelper('stringifyId', function(id){
     return id && typeOf(id) == "String" ? id : id._str;
 })
+
+//Text Area to HTML Helper
+UI.registerHelper('textareaToHTML', function( content ) {
+    return Spacebars.SafeString( content.replace(/\n/g, '<br><br>') );
+});
