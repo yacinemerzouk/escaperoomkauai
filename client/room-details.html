@@ -428,22 +428,24 @@
                 <!--<p class="lead" style="font-size: 16px; line-height: 24px; text-align: left">{{description}}</p>-->
 
                 <!--<h3 class="subheading" style="margin-bottom: 23px">What players say about<br>{{title}}</h3>-->
-                <p class="testimonial" style="margin-left: 0; margin-right:0; max-width: none; padding: 0; margin-bottom: 20px;">
-                    <span class="testimonial-quote" style="font-size: 16px; line-height: 24px;">
-                        "Awesome Adventure! If you're on Kaua'i you have to check out this adventure. It was great family fun."
-                        </span><br>
-                    <span class="testimonial-author" style="font-size: 14px; line-height: 22px;">
-                         &mdash; Caroline F, Tripadvisor
-                    </span>
-                </p>
-                <p class="testimonial" style=" margin-left: 0; margin-right:0; max-width: none;  padding: 0; margin-bottom: 20px;">
-                    <span class="testimonial-quote" style="font-size: 16px; line-height: 24px;">
-                        "The quality of puzzles & set design are superb."
-                        </span><br>
-                    <span class="testimonial-author" style="font-size: 14px; line-height: 22px;">
-                         &mdash; Rolo B, Facebook
-                    </span>
-                </p>
+                {{#with settings}}
+                    <p class="testimonial" style="margin-left: 0; margin-right:0; max-width: none; padding: 0; margin-bottom: 20px;">
+                        <span class="testimonial-quote" style="font-size: 16px; line-height: 24px;">
+                            "{{firstTestimonial}}"
+                            </span><br>
+                        <span class="testimonial-author" style="font-size: 14px; line-height: 22px;">
+                             &mdash; {{firstCite}}
+                        </span>
+                    </p>
+                    <p class="testimonial" style=" margin-left: 0; margin-right:0; max-width: none;  padding: 0; margin-bottom: 20px;">
+                        <span class="testimonial-quote" style="font-size: 16px; line-height: 24px;">
+                            "{{secondTestimonial}}"
+                            </span><br>
+                        <span class="testimonial-author" style="font-size: 14px; line-height: 22px;">
+                             &mdash; {{secondCite}}
+                        </span>
+                    </p>
+                {{/with}}
 
                 <p>
                     <img src="/images/tripadvisor.jpg" style="width:100px;">

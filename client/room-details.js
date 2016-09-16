@@ -366,8 +366,10 @@ Template.room.helpers({
         }else{
             return Math.ceil(nbGamesWon / nbGames * 100);
         }
+    },
+    settings: function () {
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
     }
-
 
 });
 
