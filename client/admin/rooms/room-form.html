@@ -27,7 +27,11 @@
 
             <div class="form-group">
                 <label for="available">Is this room available?</label>
-                <input type="checkbox" hook="available" class="form-control" id="available" name="available" checked="{{available}}">
+                {{#if available}}
+                    <input type="checkbox" hook="available" class="form-control" id="available" name="available" checked="checked">
+                {{else}}
+                    <input type="checkbox" hook="available" class="form-control" id="available" name="available">
+                {{/if}}
             </div>
 
             <div class="form-group">

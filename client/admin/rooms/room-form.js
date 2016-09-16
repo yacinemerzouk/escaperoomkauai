@@ -12,6 +12,8 @@ Template.roomForm.events({
         var formObject = $(evt.target);
         var formData = Bureaucrat.getFormData( formObject );
 
+        console.log( 'SUBMITTING ROOM DATA', formData );
+
         //Check if room already exists
         if (this._id !== undefined) {
 
