@@ -464,6 +464,7 @@ Router.route('/room/:slug', {
     waitOn: function(){
         return [
             Meteor.subscribe( 'room', this.params.slug ),
+            Meteor.subscribe( 'rooms' ),
             Meteor.subscribe( 'coupons' ),
             Meteor.subscribe( 'futureReservations' ),
             Meteor.subscribe( 'reservationNumbers' ),
