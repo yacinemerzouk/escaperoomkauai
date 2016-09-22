@@ -203,19 +203,19 @@ Template.room.onCreated(function(){
                                 });
 
                                 $('.processing-bg').hide();
-                                console.log( 'track res', trackRes, {
-                                    checkout_id: reservation.publicId,
-                                    order_id: reservation._id,
-                                    affiliation: 'Kauai Escape Room',
-                                    total: reservation.total,
-                                    revenue: revenue,
-                                    shipping: 0,
-                                    tax: reservation.taxes,
-                                    discount: discount,
-                                    coupon: coupon,
-                                    currency: 'USD',
-                                    products: products
-                                } )
+                                // console.log( 'track res', trackRes, {
+                                //     checkout_id: reservation.publicId,
+                                //     order_id: reservation._id,
+                                //     affiliation: 'Kauai Escape Room',
+                                //     total: reservation.total,
+                                //     revenue: revenue,
+                                //     shipping: 0,
+                                //     tax: reservation.taxes,
+                                //     discount: discount,
+                                //     coupon: coupon,
+                                //     currency: 'USD',
+                                //     products: products
+                                // } )
                                 Router.go('confirmation', {_id:resId});
 
                             } else {
