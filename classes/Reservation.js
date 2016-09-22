@@ -173,34 +173,9 @@ Bolt.Reservation.prototype.create = function() {
             game.save();
         }
 
-        // TODO: change this later
-        // For all other rooms, create blocked red
-        var roomIDs = [
-            "gieyznWfyJMTBWYBT",
-            "fdPQNRf3qYyN3XnSy",
-            "8Zfc8dZSS4zHqsRuv"
-        ];
 
-        var resData = Bolt.Collections.Reservations.findOne(result);
-        var newRes = new Bolt.Reservation(resData);
-        _.each( roomIDs, function( roomId ){
-            console.log("looping over " + roomId, newRes );
-            // var room = Bolt.Collections.Rooms.findOne(roomId);
-            if( roomId !== resData.roomId ){
-                Bolt.Collections.Games.insert({
-                    date: newRes.date,
-                    time: newRes.time,
-                    roomId: roomId,
-                    blocked: true
-                });
-                Bolt.Collections.Reservations.insert({
-                    date: newRes.date,
-                    time: newRes.time,
-                    roomId: roomId,
-                    blocked: true
-                });
-
-            }
+        Meteor.call('blockAllForSameTimeSlot', result, function( error, response ){
+            // console.log( 'blockAllForSameTimeSlot', error, response );
         });
 
         // Return ID of reservation
