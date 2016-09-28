@@ -2,14 +2,28 @@
 
     <div class="hero hero-home-bg room-box-bg-mad-scientist">
         <div class="overlay">
-            <div class="content">
-                <h1>Reservations</h1>
-                <p>Admins only...</p>
-            </div>
+            <!--<div class="content">-->
+                <!--<h1>Reservations</h1>-->
+                <!--<p>Admins only...</p>-->
+            <!--</div>-->
         </div>
     </div>
 
     {{#if currentUser}}
+
+        <div style="padding: 15px 0; margin-bottom: 40px; background: #eee;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="{{pathFor 'admin'}}">
+                            Admin
+                        </a>
+                        &raquo;
+                        Reservations
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="container">
 
