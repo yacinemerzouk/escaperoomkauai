@@ -153,6 +153,16 @@ Template.game.events({
                Notifications.error("Intro NOT sent.");
                throw new Meteor.Error("Game|click|send-intro",error.message);
            }else{
+               var game = new Bolt.Game({
+                   date: tmpl.data.date,
+                   time: tmpl.data.time,
+                   roomId: tmpl.data.roomId
+               });
+               if( !game.messages ){
+                   game.messages = []
+               }
+               game.messages.push(response);
+               game.save();
                Notifications.success("Intro sent.");
            }
         });
@@ -166,6 +176,16 @@ Template.game.events({
                 Notifications.error("Outro NOT sent.");
                 throw new Meteor.Error("Game|click|send-outro",error.message);
             }else{
+                var game = new Bolt.Game({
+                    date: tmpl.data.date,
+                    time: tmpl.data.time,
+                    roomId: tmpl.data.roomId
+                });
+                if( !game.messages ){
+                    game.messages = []
+                }
+                game.messages.push(response);
+                game.save();
                 Notifications.success("Outro sent.");
             }
         });
