@@ -23,8 +23,14 @@ Meteor.publish('pastGameResults', function( slug ){
  * RESERVATIONS: publish all reservations, all data
  * TODO: better pubsub
  */
-Meteor.publish('reservations', function(){
-    var reservations = Bolt.Collections.Reservations.find();
+Meteor.publish('reservations', function( date ){
+    var args;
+    if( date ){
+        args = {date:date};
+    }else{
+        args = {};
+    }
+    var reservations = Bolt.Collections.Reservations.find(args);
     return reservations;
 });
 
@@ -63,8 +69,14 @@ Meteor.publish('coupons', function(){
     return coupons;
 });
 
-Meteor.publish('games', function(){
-    var games = Bolt.Collections.Games.find();
+Meteor.publish('games', function(date){
+    var args;
+    if( date ){
+        args = {date:date};
+    }else{
+        args = {};
+    }
+    var games = Bolt.Collections.Games.find(args);
     return games;
 });
 

@@ -387,12 +387,34 @@ Router.route('/admin/settings', {
  */
 Router.route('/reservations', {
     name: 'reservations',
+    // waitOn: function(){
+    //     return [
+    //         Meteor.subscribe('reservations'),
+    //         Meteor.subscribe('rooms'),
+    //         Meteor.subscribe('games')
+    //     ]
+    // }
+    onBeforeAction: function(){
+        Router.go('reservationsByDate', {date: Epoch.dateObjectToDateString( new Date() ) })
+    }
+});
+
+/**
+ * Reservations - Admin page
+ */
+Router.route('/reservations/:date', {
+    name: 'reservationsByDate',
     waitOn: function(){
         return [
-            Meteor.subscribe('reservations'),
+            Meteor.subscribe('reservations', this.params.date),
             Meteor.subscribe('rooms'),
-            Meteor.subscribe('games')
+            Meteor.subscribe('games', this.params.date)
         ]
+    },
+    data: function(){
+        return {
+            date: this.params.date
+        }
     }
 });
 
