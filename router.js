@@ -126,13 +126,13 @@ Router.route('/rooms/calendar', {
     sitemap: true,
     changefreq: 'monthly',
     priority: '0.9',
-    // waitOn: function(){
-    //     return [
-    //         Meteor.subscribe('futureReservations'),
-    //         Meteor.subscribe('rooms'),
-    //         Meteor.subscribe('games')
-    //     ]
-    // },
+    waitOn: function(){
+        return [
+            Meteor.subscribe('futureReservations'),
+            Meteor.subscribe('rooms'),
+            Meteor.subscribe('futureGames')
+        ]
+    },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     },
@@ -541,9 +541,9 @@ Router.route('/game/:roomId/:date/:time', {
     name: 'game',
     waitOn: function(){
         return [
-            Meteor.subscribe( 'rooms' ),
-            Meteor.subscribe( 'reservations' ),
-            Meteor.subscribe( 'games' )
+            Meteor.subscribe( 'roomById', this.params.roomId ),
+            Meteor.subscribe( 'reservationsForGame', this.params.roomId, this.params.date, this.params.time ),
+            Meteor.subscribe( 'game', this.params.roomId, this.params.date, this.params.time )
         ]
     },
     data: function(){

@@ -9,7 +9,7 @@ Meteor.methods({
 
         // Send a message
         return client.sendSMS({
-            to: '+18086352099',
+            to: '+18086342466',
             body: message
         });
     },

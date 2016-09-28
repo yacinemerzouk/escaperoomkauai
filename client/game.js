@@ -26,6 +26,10 @@ Template.game.helpers({
        //console.log( 'IN HELPER', game );
        return game;
    },
+    room: function(){
+        var room = Bolt.Collections.Rooms.findOne(this.roomId);
+        return room;
+    },
     nbPlayers: function(){
         var game =  new Bolt.Game({
             date: this.date,
@@ -140,5 +144,43 @@ Template.game.events({
         });
 
         game.sendFollowUpEmail();
+    },
+    'click [hook="send-intro"]': function(evt,tmpl) {
+        Notifications.info("Sending intro");
+        var room = Bolt.Collections.Rooms.findOne(tmpl.data.roomId);
+        Meteor.call('sendSMS', room.intro, function(error,response){
+           if( error ){
+               Notifications.error("Intro NOT sent.");
+               throw new Meteor.Error("Game|click|send-intro",error.message);
+           }else{
+               Notifications.success("Intro sent.");
+           }
+        });
+
+    },
+    'click [hook="send-outro"]': function(evt,tmpl) {
+        Notifications.info("Sending outro");
+        var room = Bolt.Collections.Rooms.findOne(tmpl.data.roomId);
+        Meteor.call('sendSMS', room.outro, function(error,response){
+            if( error ){
+                Notifications.error("Outro NOT sent.");
+                throw new Meteor.Error("Game|click|send-outro",error.message);
+            }else{
+                Notifications.success("Outro sent.");
+            }
+        });
+
+    },
+    'click [hook="send-demo"]': function(evt,tmpl) {
+        Notifications.info("Sending demo");
+        Meteor.call('sendSMS', 'Example of message', function(error,response){
+            if( error ){
+                Notifications.error("Demo NOT sent.");
+                throw new Meteor.Error("Game|click|send-demo",error.message);
+            }else{
+                Notifications.success("Demo sent.");
+            }
+        });
+
     }
 });
