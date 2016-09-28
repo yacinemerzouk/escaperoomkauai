@@ -1,7 +1,7 @@
 Template.roomsCalendar.onCreated(function(){
-    Meteor.subscribe('futureReservations'),
-    Meteor.subscribe('rooms'),
-    Meteor.subscribe('futureGames')
+    // Meteor.subscribe('futureReservations'),
+    // Meteor.subscribe('rooms'),
+    // Meteor.subscribe('futureGames')
 
 });
 Template.roomsCalendar.helpers({

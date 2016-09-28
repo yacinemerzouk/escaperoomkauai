@@ -13,6 +13,10 @@ Meteor.publish('room', function( slug ){
     var room = Bolt.Collections.Rooms.find( { slug:slug } );
     return room;
 });
+Meteor.publish('roomById', function( roomId ){
+    var room = Bolt.Collections.Rooms.find( { _id:roomId } );
+    return room;
+});
 
 Meteor.publish('pastGameResults', function( slug ){
     // var games = Bolt.Collections.Games.find( { date: {$lte: Epoch.dateObjectToDateString(new Date())} }, {fields: {_id:1, roomId: 1, won:1}} );
@@ -140,10 +144,38 @@ Meteor.publish('games', function(date){
 Meteor.publish('futureGames', function(){
     var today = Epoch.dateObjectToDateString(new Date());
 
-    var games = Bolt.Collections.Games.find({date:{$gte:today}});
+    var games = Bolt.Collections.Games.find(
+        {
+            date: {
+                $gte:today
+            }
+        }
+    );
     return games;
 
 });
+
+Meteor.publish('game',function( roomId, date, time ){
+    var games = Bolt.Collections.Games.find(
+        {
+            date: date,
+            time: time,
+            roomId: roomId
+        }
+    );
+    return games;
+});
+
+Meteor.publish('reservationsForGame',function( roomId, date, time ){
+    var res = Bolt.Collections.Reservations.find(
+        {
+            date: date,
+            time: time,
+            roomId: roomId
+        }
+    );
+    return res;
+})
 
 
 /**
