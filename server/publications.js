@@ -15,7 +15,26 @@ Meteor.publish('room', function( slug ){
 });
 
 Meteor.publish('pastGameResults', function( slug ){
-    var games = Bolt.Collections.Games.find( { date: {$lte: Epoch.dateObjectToDateString(new Date())} }, {fields: {_id:1, roomId: 1, won:1}} );
+    // var games = Bolt.Collections.Games.find( { date: {$lte: Epoch.dateObjectToDateString(new Date())} }, {fields: {_id:1, roomId: 1, won:1}} );
+    // return games;
+    var room = Bolt.Collections.Rooms.findOne({slug:slug});
+    var date = Epoch.dateObjectToDateString( new Date() );
+    var games = Bolt.Collections.Games.find(
+        {
+            date: {
+                $lte: date
+            },
+            roomId: room._id
+        },
+        {
+            fields: {
+                won: 1,
+                _id: 1,
+                roomId: 1
+            }
+        }
+
+    );
     return games;
 });
 
@@ -36,7 +55,25 @@ Meteor.publish('reservations', function( date ){
 
 Meteor.publish('futureReservations', function(){
     var today = Epoch.dateObjectToDateString(new Date());
-    var reservations = Bolt.Collections.Reservations.find({date:{$gte:today}, canceled:{$ne:true}});
+    var reservations = Bolt.Collections.Reservations.find(
+        {
+            date: {
+                $gte:today
+            },
+            canceled:{
+                $ne:true
+            }
+        },
+        {
+            fields: {
+                _id: 1,
+                roomId: 1,
+                date: 1,
+                time: 1,
+                nbPlayers: 1
+            }
+        }
+    );
     return reservations;
 });
 
@@ -79,6 +116,26 @@ Meteor.publish('games', function(date){
     var games = Bolt.Collections.Games.find(args);
     return games;
 });
+
+// Meteor.publish('gameDataForStats', function(roomId){
+//     var date = Epoch.dateObjectToDateString( new Date() );
+//     var games = Bolt.Collections.Games.find(
+//         {
+//             date: {
+//                 $lte: date
+//             },
+//             roomId: roomId
+//         },
+//         {
+//             fields: {
+//                 won: 1
+//             }
+//         }
+//
+//     );
+//     return games;
+// });
+
 
 Meteor.publish('futureGames', function(){
     var today = Epoch.dateObjectToDateString(new Date());
