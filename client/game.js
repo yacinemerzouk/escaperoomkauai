@@ -77,10 +77,10 @@ Template.game.events({
         Notifications.info('Sending message...');
         $('[type="submit"]').attr("disabled","disabled");
         var formData = Bureaucrat.getFormData($(evt.currentTarget));
-        //console.log('form data', formData);
+        console.log('form data', formData, $('[name="device"]:checked').val() );
 
         // Configure the Twilio client
-        Meteor.call('sendSMS', formData.message, function(error,response){
+        Meteor.call('sendSMS', formData.message, $('[name="device"]:checked').val(), function(error,response){
             if( error ){
                 //console.log( error );
                 Notifications.error( error.message );
@@ -148,7 +148,7 @@ Template.game.events({
     'click [hook="send-intro"]': function(evt,tmpl) {
         Notifications.info("Sending intro");
         var room = Bolt.Collections.Rooms.findOne(tmpl.data.roomId);
-        Meteor.call('sendSMS', room.intro, function(error,response){
+        Meteor.call('sendSMS', room.intro, $('[name="device"]:checked').val(), function(error,response){
            if( error ){
                Notifications.error("Intro NOT sent.");
                throw new Meteor.Error("Game|click|send-intro",error.message);
@@ -171,7 +171,7 @@ Template.game.events({
     'click [hook="send-outro"]': function(evt,tmpl) {
         Notifications.info("Sending outro");
         var room = Bolt.Collections.Rooms.findOne(tmpl.data.roomId);
-        Meteor.call('sendSMS', room.outro, function(error,response){
+        Meteor.call('sendSMS', room.outro, $('[name="device"]:checked').val(), function(error,response){
             if( error ){
                 Notifications.error("Outro NOT sent.");
                 throw new Meteor.Error("Game|click|send-outro",error.message);
@@ -193,7 +193,7 @@ Template.game.events({
     },
     'click [hook="send-demo"]': function(evt,tmpl) {
         Notifications.info("Sending demo");
-        Meteor.call('sendSMS', 'Example of message', function(error,response){
+        Meteor.call('sendSMS', 'Example of message', $('[name="device"]:checked').val(), function(error,response){
             if( error ){
                 Notifications.error("Demo NOT sent.");
                 throw new Meteor.Error("Game|click|send-demo",error.message);

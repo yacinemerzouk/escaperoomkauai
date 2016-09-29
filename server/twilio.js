@@ -1,5 +1,5 @@
 Meteor.methods({
-    'sendSMS': function( message ){
+    'sendSMS': function( message, number ){
         // Configure the Twilio client
         var client = new Twilio({
             from: Meteor.settings.TWILIO.FROM,
@@ -8,8 +8,10 @@ Meteor.methods({
         });
 
         // Send a message
+        var to = number || '+18086352099';
+        if( number)
         return client.sendSMS({
-            to: '+18086352099',
+            to: to,
             body: message
         });
     },
