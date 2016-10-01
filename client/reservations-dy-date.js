@@ -1,6 +1,7 @@
 Template.reservationsByDate.helpers({
     adminDay: function(){
         var adminDay = Bolt.getAdminDay( this.date );
+        console.log( 'adminDay helper', adminDay );
         return adminDay;
     }
 });
@@ -13,7 +14,7 @@ Template.reservationsByDate.onRendered(function(){
 
     $('#datepicker').datepicker({
         dateFormat: 'yy-mm-dd',
-        defaultDate: Session.get( 'adminSelectedDate' ),
+        defaultDate: this.date,
         onSelect: function( dateText, inst ){
             $('.ui-state-highlight').removeClass("ui-state-highlight");
             Session.set( 'adminSelectedDate', dateText );
@@ -67,7 +68,7 @@ Template.reservationsByDate.events({
 
     'click [hook="send-follow-up"]': function(evt,tmpl) {
         evt.preventDefault();
-        var date = Session.get('adminSelectedDate');
+        var date = tmpl.data.date;
         var time = $(evt.currentTarget).attr('hook-data-time');
         var game = new Bolt.Game({date:date,time:time});
         var players = Bureaucrat.getFormData( $(evt.currentTarget).parents('[hook="players-form"]') );
@@ -96,7 +97,7 @@ Template.reservationsByDate.events({
     'click [hook="log-game-result"]': function(evt,tmpl) {
         evt.preventDefault();
         var won = $(evt.currentTarget).attr('hook-data-result') == "won" ? true : false;
-        var date = Session.get('adminSelectedDate');
+        var date = tmpl.data.date;
         var time = $(evt.currentTarget).attr('hook-data-time');
         var game = new Bolt.Game({date:date,time:time});
         game.won = won;
@@ -193,7 +194,7 @@ Template.reservationsByDate.events({
     'click [hook="log-time"]': function(evt,tmpl){
         evt.preventDefault();
         var timeLog = $(evt.currentTarget).siblings('input').val()
-        var date = Session.get('adminSelectedDate');
+        var date = tmpl.data.date;
         var time = $(evt.currentTarget).attr('hook-data-time');
         var game = new Bolt.Game({date:date,time:time});
         game.timeLog = timeLog;

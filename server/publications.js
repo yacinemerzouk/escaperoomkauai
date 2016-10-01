@@ -74,7 +74,9 @@ Meteor.publish('futureReservations', function(){
                 roomId: 1,
                 date: 1,
                 time: 1,
-                nbPlayers: 1
+                nbPlayers: 1,
+                closeRoom: 1,
+                blocked: 1
             }
         }
     );

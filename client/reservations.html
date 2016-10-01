@@ -64,7 +64,9 @@
                                             {{else}}
                                                 <div class="label label-info" style="font-size: 16px; position:relative; bottom: 1px; display: block; padding: 9px 0 10px 0; margin-bottom: 10px">BOOKED &nbsp;&bull;&nbsp; <a href="{{pathFor 'game' roomId=roomId date=date time=time}}" style="color:#FFF; text-decoration: underline;">GAME MASTER</a></div>
                                                 {{#each reservations}}
-                                                    {{>reservationOverview this}}
+                                                    {{#unless isCanceled this}}
+                                                        {{>reservationOverview this}}
+                                                    {{/unless}}
                                                 {{/each}}
                                             {{/if}}
 

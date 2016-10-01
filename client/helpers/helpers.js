@@ -189,3 +189,7 @@ UI.registerHelper('stringifyId', function(id){
 UI.registerHelper('textareaToHTML', function( content ) {
     return Spacebars.SafeString( content.replace(/\n/g, '<br><br>') );
 });
+
+UI.registerHelper('isCanceled', function(reservation){
+    return reservation.status == 'canceled';
+})
