@@ -4,6 +4,9 @@ Template.waiver.helpers({
     },
     boltUI: function(){
         return Session.get('boltUI');
+    },
+    allTimes: function(){
+        return Bolt.getAdminStartTimes();
     }
 });
 
@@ -57,12 +60,11 @@ Template.waiver.events({
                 roomId: formData.room
             });
 
-            //console.log(game);
             game.addPlayer({
                 name: formData.name,
                 email: formData.email
             });
-            //console.log(game);
+
             if (game.save()) {
                 Notifications.success("THANK YOU!", "Waiver submitted successfully.");
                 $('[name="name"],[name="email"]').val("");

@@ -1,0 +1,77 @@
+<template name="adminCalendar">
+    <div class="hero hero-home-bg room-box-bg-mad-scientist">
+        <div class="overlay">
+            <!--<div class="content">-->
+            <!--<h1>Reservations</h1>-->
+            <!--<p>Admins only...</p>-->
+            <!--</div>-->
+        </div>
+    </div>
+
+    {{#if currentUser}}
+        <div style="padding: 15px 0; margin-bottom: 00px; background: #eee; border-bottom: 1px solid #000">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="{{pathFor 'admin'}}">
+                            Admin
+                        </a>
+                        &raquo;
+                        Reservations
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+
+            <div style="width:30%; height: 500px; float:left; border-right: 1px solid #000">
+                <ul>
+                    <li>
+                        <h5>Games</h5>
+                        <ul>
+                            <li><a href="{{pathFor 'adminCalendar'}}">Calendar</a></li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <h5>Reservations</h5>
+                        <ul>
+                            <li>Transaction List</li>
+                            <li>Create Reservation</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div style="width:70%; height: 500px; float:left">
+                <form class="form">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input class="form-control" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Time</label>
+                        <input class="form-control" name="time">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    {{else}}
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <h1>Admins only</h1>
+                    <br>
+                    {{> loginButtons}}
+                </div>
+
+            </div>
+
+        </div>
+
+    {{/if}}
+</template>

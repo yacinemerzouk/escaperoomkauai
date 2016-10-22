@@ -13,7 +13,7 @@
                     <div class="row">
 
                         <!-- GAME INFO -->
-                        <div class="form-group col-xs-6">
+                        <div class="form-group col-xs-12">
                             <label for="name">Game</label>
                             <select class="form-control" hook="room" name="room" id="room">
                                 <option value="0">--- SELECT GAME ---</option>
@@ -24,16 +24,14 @@
                         </div>
 
                         <!-- TIME SLOT -->
-                        <div class="form-group col-xs-6">
+                        <div class="form-group col-xs-12">
                             {{#if boltUI.waiver.room}}
                                 <label for="name">Start time</label>
                                 <select class="form-control" name="time" id="time">
                                     <option value="0">--- SELECT TIME ---</option>
-                                    {{#with boltUI.waiver.room}}
-                                        {{#each startTimes}}
-                                            <option>{{this}}</option>
-                                        {{/each}}
-                                    {{/with}}
+                                    {{#each allTimes}}
+                                        <option>{{this}}</option>
+                                    {{/each}}
                                 </select>
                             {{/if}}
                         </div>
@@ -41,11 +39,11 @@
 
                     <!-- PLAYER INFO -->
                     <div class="row">
-                        <div class="form-group col-xs-6">
+                        <div class="form-group col-xs-12">
                             <label for="name">Full Name</label>
                             <input type="text" class="form-control" name="name" id="name">
                         </div>
-                        <div class="form-group col-xs-6">
+                        <div class="form-group col-xs-12">
                             <label for="email">Email Address</label>
                             <input type="email" class="form-control" name="email" id="email">
                         </div>
@@ -56,7 +54,7 @@
 
                         <label for="terms">ACCIDENT WAIVER AND RELEASE OF LIABILITY</label>
 
-                        <textarea class="form-control" rows="15" id="terms" disabled="disabled">ALL OF THE RISKS OF PARTICIPATING IN ANY/ALL ACTIVITIES ASSOCIATED WITH THIS KAUAI ESCAPE ROOM EVENT, including by way of example and not limitation, any risks that may arise from negligence or carelessness on the part of the persons or entities being released, from dangerous or defective equipment or property owned, maintained, or controlled by them, or because of their possible liability without fault.
+                        <p style='font-size: 14px; line-height:24px; font-family: Menlo, Monaco, Consolas, "Courier New", monospace'>ALL OF THE RISKS OF PARTICIPATING IN ANY/ALL ACTIVITIES ASSOCIATED WITH THIS KAUAI ESCAPE ROOM EVENT, including by way of example and not limitation, any risks that may arise from negligence or carelessness on the part of the persons or entities being released, from dangerous or defective equipment or property owned, maintained, or controlled by them, or because of their possible liability without fault.
 
 I certify that I understand this activity has potential risks including but not limited to:
 
@@ -89,7 +87,7 @@ I understand while participating in this activity, I may be photographed. I agre
 The Accident Waiver and Release of Liability Form shall be construed broadly to provide a release and waiver to the maximum extent permissible under applicable law.
 
 I CERTIFY THAT I HAVE READ THIS DOCUMENT AND I FULLY UNDERSTAND ITS CONTENT. I AM AWARE THAT THIS IS A RELEASE OF LIABILITY AND A CONTRACT AND I SIGN IT OF MY OWN FREE WILL.
-                        </textarea>
+                        </p>
 
                     </div>
 

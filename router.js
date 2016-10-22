@@ -400,6 +400,23 @@ Router.route('/reservations', {
 });
 
 /**
+ * Create Reservations - Admin page
+ */
+Router.route('/admin/reservations/create', {
+    name: 'reservationsCreate',
+    waitOn: function(){
+        return Meteor.subscribe('rooms');
+    }
+});
+
+/**
+ * Admin Calendar - Admin page
+ */
+Router.route('/admin/games/calendar', {
+    name: 'adminCalendar'
+});
+
+/**
  * Reservations - Admin page
  */
 Router.route('/reservations/:date', {

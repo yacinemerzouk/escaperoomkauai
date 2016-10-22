@@ -19,7 +19,7 @@ Template.reservations.onRendered(function(){
         dateFormat: 'yy-mm-dd',
         defaultDate: Session.get( 'adminSelectedDate' ),
         onSelect: function( dateText, inst ){
-            $('.ui-state-highlight').removeClass("ui-state-highlight");
+            // $('.ui-state-highlight').removeClass("ui-state-highlight");
             Session.set( 'adminSelectedDate', dateText );
         }
     });
