@@ -12,13 +12,14 @@ Template.reservationsByDate.onRendered(function(){
         Session.set( 'adminSelectedDate', Epoch.dateObjectToDateString( new Date() ) );
     };
 
+    console.log( 'cal', this.data.date );
     $('#datepicker').datepicker({
         dateFormat: 'yy-mm-dd',
-        defaultDate: this.date,
+        defaultDate: this.data.date,
         onSelect: function( dateText, inst ){
-            $('.ui-state-highlight').removeClass("ui-state-highlight");
+            // $('.ui-state-highlight').removeClass("ui-state-highlight");
             Session.set( 'adminSelectedDate', dateText );
-            Router.go( 'reservationsByDate', {date:dateText} );
+            Router.go( 'reservationsByDate', { date: dateText } );
         }
     });
 });
