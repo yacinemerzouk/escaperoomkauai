@@ -191,7 +191,7 @@ Bolt.Reservation.prototype.create = function() {
 }
 
 /**
- * Send confirmation email; sent to customer who paid for reservation
+ * Send confirmation email; sent to views who paid for reservation
  */
 Bolt.Reservation.prototype.sendConfirmationEmail = function(){
 

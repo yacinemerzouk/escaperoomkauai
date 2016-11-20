@@ -404,9 +404,18 @@ Router.route('/reservations', {
  */
 Router.route('/admin/reservations/create', {
     name: 'reservationsCreate',
+    layoutTemplate: 'layoutAdmin',
     waitOn: function(){
         return Meteor.subscribe('rooms');
     }
+});
+
+/**
+ * Test
+ */
+Router.route('/test', {
+    name: 'layoutTest',
+    layoutTemplate: 'layoutAdmin'
 });
 
 /**
@@ -440,6 +449,7 @@ Router.route('/reservations/:date', {
  */
 Router.route('/coupons', {
     name: 'coupons',
+    layoutTemplate: 'layoutAdmin',
     waitOn: function(){
         return [
             Meteor.subscribe('coupons')

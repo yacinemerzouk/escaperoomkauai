@@ -1,0 +1,159 @@
+<template name="reservationsCreate" xmlns="http://www.w3.org/1999/html">
+
+    <h1 class="page-header">New Reservation</h1>
+
+
+    {{#if currentUser}}
+        <form class="" hook="reservation-form">
+
+            <div class="row">
+
+                <!-- PLAYER PRICING AND NB OF PLAYERS -->
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="roomId">Select Room</label>
+                        <select class="form-control" hook="update-room" id="roomId" name="roomId" style="width: 100%; max-width: 100%;">
+                            <option value="0">-- ROOM --</option>
+                            {{#each rooms}}
+                                <option value="{{_id}}" >{{title}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nbPlayers">Select number of players</label>
+                        <select class="form-control" hook="update-players" id="nbPlayers" name="nbPlayers" style="width: 100%; max-width: 100%;">
+                            <option value="0">-- NUMBER OF PLAYERS --</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- DATE SELECTION -->
+                <div class="col-xs-12">
+                    <div class="form-group">
+
+
+                        <label for="Date" style="margin-bottom: 10px;">Select date <span class="label label-success pull-right" style="font-size: 14px; position: relative; top: 1px; background-color: #007300">{{humanReadableDate reservation.date}}</span></label>
+
+                        <!-- DATEPICKER; HIDDEN IF DATE & TIME ALREADY SELECTED BY USER -->
+                        <input id="datepicker" class="form-control" name="date">
+
+                    </div>
+
+                </div>
+
+                <!-- TIME SELECTION -->
+
+                <div class="col-xs-12">
+
+                    <div class="form-group">
+                    <label>Select time {{#if time}} <span class="label label-success pull-right" style="font-size: 14px; position: relative; top: 1px; background-color: #007300">{{time}}</span>{{/if}}</label>
+
+
+
+                            <select class="form-control" name="time">
+                                <option value="0">--- TIME ---</option>
+                                <!-- LOOP OVER START TIMES -->
+                                {{#each startTimes}}
+                                    <option>{{this}}</option>
+                                {{/each}}
+                            </select>
+
+
+                    </div>
+                </div>
+
+                <!-- SELECTED TIME & DATE; ONLY SHOWS IF BOTH CHOICES HAVE BEEN MADE BY USER -->
+                <div class="col-xs-12">
+
+                    <!-- FIRST NAME -->
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" hook="update-reservation" class="form-control" id="firstName" name="firstName" value="{{firstName}}">
+                    </div>
+
+                    <!-- LAST NAME -->
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" hook="update-reservation" class="form-control" id="lastName" name="lastName" value="{{lastName}}">
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" hook="update-reservation" class="form-control" id="email" name="email" value="{{email}}">
+                    </div>
+
+                    <!-- PHONE -->
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" hook="update-reservation" class="form-control" id="phone" name="phone" value="{{phone}}">
+                    </div>
+
+                    <!-- DISPLAY CLOSED ROOM OPTION IF APPROPRIATE -->
+                    <div class="form-group">
+                        <label>Close Room</label>
+
+                        <div class="checkbox">
+                            <label style="border-bottom: none">
+                                    <input hook="update-reservation" type="checkbox" id="closeRoom" name="closeRoom"> Yes, close the room.
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- DISPLAY RESIDENT DISCOUNT OPTION IF NO COUPON CODE WAS USED. -->
+                    <div class="form-group">
+                        <label for="nbKamaaina">Kama'aina Discount</label>
+                        <p>How many Hawai'i residents in the party?</p>
+                        <select class="form-control" hook="update-reservation" id="nbKamaaina" name="nbKamaaina" style="width: 100%">
+                            <option value="0">-- SELECT NUMBER OF HAWAII RESIDENTS --</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+
+                    <!-- SOURCE TRACKING -->
+                    <div class="form-group">
+                        <label for="source">How did they hear about us?</label>
+                        <input type="text" hook="update-reservation" class="form-control" id="source" name="source" value="{{source}}">
+                    </div>
+
+                    <!-- KACHING! -->
+                    <input type="submit" hook="checkout" class="button btn-block button-available text-center" value="Create Reservation">
+
+                </div>
+
+            </div>
+
+        </form>
+
+    {{else}}
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <h1>Admins only</h1>
+                    <br>
+                    {{> loginButtons}}
+                </div>
+
+            </div>
+
+        </div>
+
+    {{/if}}
+
+
+</template>
