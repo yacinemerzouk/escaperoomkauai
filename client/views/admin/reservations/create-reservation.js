@@ -19,15 +19,16 @@ Template.reservationsCreate.events({
     'submit form': function(evt,tmpl){
         evt.preventDefault();
         var formData = Bureaucrat.getFormData($('form'));
-        console.log( formData );
+        //console.log( formData );
         Meteor.call(
             'adminCreateReservation',
             formData,
             function( error, response ){
                 if( error ) {
-                    throw new Meteor.Error('reservationsCreate|submit form');
+                    throw new Meteor.Error('reservationsCreate|submit form' + error.message);
+
                 }else{
-                    console.log( 'RESPONSE', response );
+                    //console.log( 'RESPONSE', response );
                     if( response === true ){
                         Notifications.success(
                             "Reservation created",

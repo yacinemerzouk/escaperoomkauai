@@ -94,18 +94,33 @@ Bolt.Game.prototype.save = function(){
 
     var result;
 
+    var dataToSave = {
+        date: this.date,
+        time: this.time,
+        roomId: this.roomId,
+        isBlocked: this.isBlocked ? true : false,
+        room: this.room,
+        messages: this.messages ? this.messages : [],
+        timeLog: this.timeLog ? this.timeLog : "",
+        players: this.players ? this.players : []
+
+    };
+    if( this.won === true || this.won === false ){
+        dataToSave.won = this.won;
+    }
+
     // Got ID; means game is already in DB; update document in DB
     if( this._id ){
 
-        result = this.update();
+        result = this.update( dataToSave );
 
     // No ID; means trip is not in DB; insert document into DB
     }else{
 
-        result = this.create();
+        result = this.create( dataToSave );
 
     }
-
+    //console.log( 'GAME SAVE?', this, result );
     return result;
 
 }
@@ -116,7 +131,7 @@ Bolt.Game.prototype.save = function(){
  *
  * Never use this function directly; use save() instead.
  */
-Bolt.Game.prototype.update = function(){
+Bolt.Game.prototype.update = function( dataToSave ){
 
     // Update DB
     var result = Bolt.Collections.Games.update(
@@ -124,7 +139,7 @@ Bolt.Game.prototype.update = function(){
             _id: this._id
         },
         {
-            $set: _.omit( this, '_id' )
+            $set: _.omit( dataToSave, '_id' )
         }
     );
 
@@ -144,10 +159,10 @@ Bolt.Game.prototype.update = function(){
  *
  * Never use this function directly; use save() instead.
  */
-Bolt.Game.prototype.create = function() {
+Bolt.Game.prototype.create = function( dataToSave ) {
 
     // Insert in DB
-    var result = Bolt.Collections.Games.insert(this);
+    var result = Bolt.Collections.Games.insert( dataToSave );
 
     // If insert was successful, we get an ID back
     // Assign ID to object to we don't have to re-generate it

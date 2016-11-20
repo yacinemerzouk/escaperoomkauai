@@ -253,16 +253,22 @@ Template.room.onRendered(function(){
         reservation.roomId = self.data._id;
         reservation.room = self.data;
 
-        var minDate = 0;
-        if( reservation.room && reservation.room.openingDate ){
+        var minDate = Epoch.dateObjectToDateString(new Date());
+        //console.log( minDate );
+        if( reservation.room && reservation.room.openingDate && reservation.room.openingDate > minDate ){
             minDate = reservation.room.openingDate;
         }
         if( reservation.date < reservation.room.openingDate ){
             reservation.date = reservation.room.openingDate;
         }
+        var maxDate = '2016-12-31';
+        if( reservation.room && reservation.room._id == "8Zfc8dZSS4zHqsRuv" ){
+            maxDate = '2016-11-20';
+        }
 
         $('#datepicker').datepicker({
             minDate: minDate,
+            maxDate: maxDate,
             dateFormat: 'yy-mm-dd',
             defaultDate: reservation.date,
             onSelect: function (dateText, inst) {

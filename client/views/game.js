@@ -77,7 +77,7 @@ Template.game.events({
         Notifications.info('Sending message...');
         $('[type="submit"]').attr("disabled","disabled");
         var formData = Bureaucrat.getFormData($(evt.currentTarget));
-        console.log('form data', formData, $('[name="device"]:checked').val() );
+        //console.log('form data', formData, $('[name="device"]:checked').val() );
 
         // Configure the Twilio client
         Meteor.call('sendSMS', formData.message, $('[name="device"]:checked').val(), function(error,response){

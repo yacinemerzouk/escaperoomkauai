@@ -1,7 +1,7 @@
 Template.reservationsByDate.helpers({
     adminDay: function(){
         var adminDay = Bolt.getAdminDay( this.date );
-        console.log( 'adminDay helper', adminDay );
+        //console.log( 'adminDay helper', adminDay );
         return adminDay;
     }
 });
@@ -12,7 +12,7 @@ Template.reservationsByDate.onRendered(function(){
         Session.set( 'adminSelectedDate', Epoch.dateObjectToDateString( new Date() ) );
     };
 
-    console.log( 'cal', this.data.date );
+    //console.log( 'cal', this.data.date );
     $('#datepicker').datepicker({
         dateFormat: 'yy-mm-dd',
         defaultDate: this.data.date,
@@ -30,13 +30,6 @@ Template.reservationsByDate.events({
         var date = $(evt.currentTarget).attr('hook-data-date');
         var time = $(evt.currentTarget).attr('hook-data-time');
         var roomId = $(evt.currentTarget).attr('hook-data-roomid');
-        // var reservations = Bolt.Collections.Reservations.find({
-        //     date:date,
-        //     time:time,
-        //     roomId: roomId
-        // }).fetch();
-        //
-        // var alreadyHasReservations = reservations.length > 0 ? true : false;
 
         var blockId = Bolt.Collections.Reservations.insert({
             blocked: true,
