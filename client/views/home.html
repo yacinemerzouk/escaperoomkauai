@@ -191,7 +191,11 @@
                             {{#if showAvailabilityCTA}}
                                 View Availability
                             {{else}}
-                                Room Info &amp; Schedule
+                                {{#if room.available}}
+                                    Room Info &amp; Schedule
+                                {{else}}
+                                    Room Info
+                                {{/if}}
                             {{/if}}
                         </a>
                     </div>
