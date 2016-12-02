@@ -42,7 +42,7 @@
             <div class="col-xs-12 col-md-8">
 
                 <!-- TITLE MAY CHANGE DEPENDING ON GAME AVAILABILITY -->
-                <h3 class="subheading">{{#if available}}Book Now{{else}}Coming Soon{{/if}}</h3>
+                <h3 class="subheading">{{#if available}}Book Now{{else}}{{#if retired}}Retired{{else}}Coming Soon{{/if}}{{/if}}</h3>
 
                 <!-- BOOKING FORM -->
                 <form class="" hook="reservation-form" style="background-color: #f0f0f0; padding: 30px; clear: both">
@@ -366,7 +366,7 @@
 
                         {{#unless reservation.room.available}}
 
-                            <h3 style="margin-top: 0; font-size: 16px; color: #444; font-weight: bold;">Opening very soon!!!</h3>
+                            <h3 style="margin-top: 0; font-size: 16px; color: #444; font-weight: bold;">{{#if retired}}This game had been retired.{{else}}Opening very soon!!!{{/if}}</h3>
                             <div id="datepicker" style="display: none"></div>
 
                             <!-- Begin MailChimp Signup Form -->
@@ -374,7 +374,11 @@
                                 <form action="//escaperoomkauai.us13.list-manage.com/subscribe/post?u=2653aee4fbfd050c5eb64631b&amp;id=2381bdabff" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                                     <div id="mc_embed_signup_scroll">
                                         <!--<h2 class="featurette-heading">Opening Very Soon!!!</h2>-->
-                                        <p class="lead">This room will be available in <strong>{{opening}}</strong>. In the meantime, you can make a reservation for <a href="{{pathFor 'room' slug='mad-scientist'}}">The Missing Scientist</a>, which is now open! You can also sign up for our newsletter to be notified of new games opening at Kauai Escape Room.</p>
+                                        {{#if retired}}
+                                            <p class="lead">This room is no longer available. It had a good run but it has now been decomissioned to make way for newer, better games. Please make a reservation for <a href="{{pathFor 'room' slug='mad-scientist'}}">The Missing Scientist</a>, which is now open, or one of our <a href="{{pathFor 'rooms'}}">other escape games</a>! You can also sign up for our newsletter to be notified of new games opening at Kauai Escape Room.</p>
+                                        {{else}}
+                                            <p class="lead">This room will be available in <strong>{{opening}}</strong>. In the meantime, you can make a reservation for <a href="{{pathFor 'room' slug='mad-scientist'}}">The Missing Scientist</a>, which is now open! You can also sign up for our newsletter to be notified of new games opening at Kauai Escape Room.</p>
+                                        {{/if}}
                                         <div class="mc-field-group form-group">
                                             <label for="mce-EMAIL">Email Address </label>
                                             <input type="email" value="" name="EMAIL" class="form-control required email" id="mce-EMAIL">
