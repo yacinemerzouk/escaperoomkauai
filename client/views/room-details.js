@@ -261,13 +261,14 @@ Template.room.onRendered(function(){
         if( reservation.date < reservation.room.openingDate ){
             reservation.date = reservation.room.openingDate;
         }
-        // var maxDate = '2017-12-31';
-        // if( reservation.room && reservation.room._id == "8Zfc8dZSS4zHqsRuv" ){
-        //     maxDate = '2016-11-20';
-        // }
+        var maxDate = '2017-12-31';
+        if( reservation.room && reservation.room.maxDate ){
+            maxDate = reservation.room.maxDate;
+        }
 
         $('#datepicker').datepicker({
             minDate: minDate,
+            maxDate: maxDate,
             dateFormat: 'yy-mm-dd',
             defaultDate: reservation.date,
             onSelect: function (dateText, inst) {
