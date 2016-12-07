@@ -445,7 +445,7 @@ Router.route('/reservations/:date', {
 });
 
 /**
- * Reservations - Admin page
+ * Coupons
  */
 Router.route('/coupons', {
     name: 'coupons',
@@ -456,6 +456,25 @@ Router.route('/coupons', {
         ]
     }
 });
+
+
+/**
+ * Gift Cards
+ */
+Router.route('/gift-cards', {
+    name: 'giftCards'
+});
+
+Router.route('/gift-cards/purchase-confirmed/:_id',{
+    name: 'giftCardPurchaseConfirmed',
+    layoutTemplate: 'layoutConfirmation',
+    waitOn: function(){
+        Meteor.subscribe( 'couponById', this.params._id )
+    },
+    data: function(){
+        return Bolt.Collections.Coupons.findOne(this.params._id);
+    }
+})
 
 /**
  * Waivers

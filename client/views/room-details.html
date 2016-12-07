@@ -242,8 +242,12 @@
                                                     <!-- DISCOUNT FROM COUPON CODE -->
                                                     {{#if discount}}
                                                         <tr>
-                                                            <td class="discount text-uppercase">Coupon "{{couponData.coupon}}" {{couponData.discount}}% OFF</td>
-                                                            <td class="currency discount">&mdash; {{toCurrency discount}}</td>
+                                                            {{#if couponData.type}}
+                                                                <td class="discount text-uppercase">Coupon "{{couponData.coupon}}" ${{couponData.discount}} OFF</td>
+                                                            {{else}}
+                                                                <td class="discount text-uppercase">Coupon "{{couponData.coupon}}" {{couponData.discount}}% OFF</td>
+                                                            {{/if}}
+                                                            <td class="currency discount">&mdash; {{toCurrency couponData.discount}}</td>
                                                         </tr>
                                                     {{/if}}
 
