@@ -112,6 +112,12 @@ Meteor.publish('coupons', function(){
     return coupons;
 });
 
+
+Meteor.publish('couponById', function( _id ){
+    var coupons = Bolt.Collections.Coupons.find({_id:_id});
+    return coupons;
+});
+
 Meteor.publish('games', function(date){
     var args;
     if( date ){

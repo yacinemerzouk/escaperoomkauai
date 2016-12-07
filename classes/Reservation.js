@@ -74,7 +74,23 @@ Bolt.Reservation.prototype.populate = function( data ){
         }
 
         // Discount amount for coupon
-        this.discount = this.couponData ? ( parseFloat(this.subtotal) * ( this.couponData.discount / 100 ) ).toFixed(2) : 0;
+        if( this.couponData && this.couponData.type == 'DOLLARS' ){
+
+            this.discount = parseFloat( this.couponData.discount ).toFixed(2);
+            // console.log( 'got dollars', this.discount, this.couponData.discount, this.subtotal );
+
+            if( parseFloat(this.discount) > parseFloat(this.subtotal) ){
+                this.discount = this.subtotal;
+            }
+
+            // console.log( 'got dollars2', this.discount, this.couponData.discount );
+
+
+        }else if( this.couponData ){
+            this.discount = ( parseFloat(this.subtotal) * ( this.couponData.discount / 100 ) ).toFixed(2);
+        }else{
+            this.discount = 0;
+        }
 
         // Discount amount for residents
         this.discountKamaaina = !this.discount && parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
@@ -84,6 +100,7 @@ Bolt.Reservation.prototype.populate = function( data ){
 
         // Total
         this.total = ( parseFloat(this.subtotal) - parseFloat(this.discount) - parseFloat(this.discountKamaaina) + parseFloat(this.taxes) ).toFixed(2);
+
     }
 
 }

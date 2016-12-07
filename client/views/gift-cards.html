@@ -1,0 +1,246 @@
+<template name="giftCards">
+
+    <!-- HERO BANNER -->
+    <div class="hero hero-home-bg" style="background-image: url({{image}});">
+        <div class="overlay">
+            <div class="content">
+                <h1 style="margin: 0 0 20px">Gift Cards</h1>
+                <p style="width: 100%; max-width: 600px; margin: 0 0 20px;">Purchase a gift card. It can be delivered electronically or by mail.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- CONTENT -->
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-xs-12 col-md-8">
+
+                <h3 class="subheading">Gift Cards</h3>
+
+                <form class="" hook="reservation-form" style="background-color: #f0f0f0; padding: 30px; clear: both">
+
+                    <div class="row">
+
+                        <!-- GIFT CARD AMOUNT -->
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="nbPlayers">Gift Card Amount</label>
+                                <b>$</b> <input hook="update-amount" type="number" name="amount" class="form-control" style="width: 70px; display: inline"> <b>.00</b>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nbPlayers">Your First Name</label>
+                                <input type="text" name="sender" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nbPlayers">Your Email Address</label>
+                                <input type="email" name="senderEmail" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nbPlayers">Recipient's First Name</label>
+                                <input type="text" name="recipient" class="form-control">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Delivery Option</label>
+                                <p>You can send this gift card by email for free. You can can also pay $5.00 to send a physical card in the mail.</p>
+
+                                <div class="checkbox">
+                                    <label style="border-bottom: none">
+                                        <input hook="change-delivery" type="radio" id="delivery" name="delivery" value="email" checked> Email the gift certificate<br>
+                                    </label>
+                                    <label style="border-bottom: none">
+                                        <input hook="change-delivery" type="radio" id="delivery" name="delivery" value="mail"> Send the gift certificate by mail ($5 fee, 3 to 5 business days, HAWAII ADDRESSES ONLY)
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" hook="email-section">
+                                <label for="nbPlayers">Recipient's Email Address</label>
+                                <input type="email" name="recipientEmail" class="form-control">
+                            </div>
+
+                            <div class="form-group hidden" hook="address-section">
+                                <label for="nbPlayers">Recipient's Address (HAWAII ADDRESSES ONLY)</label>
+                                <textarea name="recipientAddress" class="form-control" rows="5"></textarea>
+                            </div>
+
+
+                            <label for="subtotal">Review Order</label>
+                            <table class="table table-striped table-bordered table-responsive">
+                                <tbody>
+
+                                <!-- NB PLAYERS / TIME / DATE -->
+                                <tr>
+                                    <th colspan="2" style="font-size: 1.4em">
+                                        <span class="label label-success" style="position: relative; bottom: 3px; background-color: #007300">Gift Card Purchase</span>
+                                    </th>
+                                </tr>
+
+                                <!-- SUBTOTAL BEFORE DISCOUNTS AND TAXES -->
+                                <tr style="font-weight:bold;">
+                                    <td>Coupon Amount</td>
+                                    <td class="currency">{{toCurrency couponAmount}}</td>
+                                </tr>
+                                <tr style="font-weight:bold;">
+                                    <td>Delivery Fee</td>
+                                    <td class="currency">{{toCurrency deliveryFee}}</td>
+                                </tr>
+                                <tr style="font-weight:bold;">
+                                    <td>Subtotal</td>
+                                    <td class="currency">{{toCurrency subtotal}}</td>
+                                </tr>
+
+                                <!-- TAXES -->
+                                <tr>
+                                    <td>Taxes</td>
+                                    <td class="currency">{{toCurrency taxes}}</td>
+                                </tr>
+
+                                <!-- TOTAL -->
+                                <tr style="font-size: 18px;">
+                                    <th>TOTAL</th>
+                                    <th class="currency">{{toCurrency total}}</th>
+                                </tr>
+
+                                </tbody>
+                            </table>
+
+                            <!-- CREDIT CARD FOR; IF TOTAL > 0 -->
+                            {{#unless isFree}}
+                                <div class="row">
+
+                                    <input type="hidden" name="total" id="total">
+
+                                    <!-- CREDIT CARD NUMBER -->
+                                    <div class="form-group col-xs-12 col-md-6">
+                                        <label for="cc">Credit Card Number</label>
+                                        <input type="text" hook="update-reservation" class="form-control" id="cc" name="cc" value="{{cc}}">
+                                    </div>
+
+                                    <!-- EXPIRATION -->
+                                    <div class="form-group col-xs-8 col-md-4">
+
+                                        <label for="ccExpMonth">Expiration</label>
+
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <select hook="update-reservation" class="form-control col-xs-6" id="ccExpMonth" name="ccExpMonth">
+                                                    <option value="">Month</option>
+                                                    <option value="01" {{selected ccExpMonth '01'}}>01 - January</option>
+                                                    <option value="02" {{selected ccExpMonth '02'}}>02 - February</option>
+                                                    <option value="03" {{selected ccExpMonth '03'}}>03 - March</option>
+                                                    <option value="04" {{selected ccExpMonth '04'}}>04 - April</option>
+                                                    <option value="05" {{selected ccExpMonth '05'}}>05 - May</option>
+                                                    <option value="06" {{selected ccExpMonth '06'}}>06 - June</option>
+                                                    <option value="07" {{selected ccExpMonth '07'}}>07 - July</option>
+                                                    <option value="08" {{selected ccExpMonth '08'}}>08 - August</option>
+                                                    <option value="09" {{selected ccExpMonth '09'}}>09 - September</option>
+                                                    <option value="10" {{selected ccExpMonth '10'}}>10 - October</option>
+                                                    <option value="11" {{selected ccExpMonth '11'}}>11 - November</option>
+                                                    <option value="12" {{selected ccExpMonth '12'}}>12 - December</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <select hook="update-reservation" class="form-control col-xs-6" id="ccExpYear" name="ccExpYear">
+                                                    <option value="">Year</option>
+                                                    {{#each years}}
+                                                        <option value="{{this}}" {{selected ../ccExpYear this}}>{{this}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- CREDIT CARD VERIFICATION NUMBER -->
+                                    <div class="form-group col-xs-4 col-md-2">
+                                        <label for="cvv">CVV <a href="#"  data-toggle="modal" data-target="#myModal" hook="show-cvv-explainer" class="label label-info pull-right" style="color: #FFF; position: relative; top: 2px; text-decoration: none">?</a></label>
+                                        <input type="text" hook="update-reservation" class="form-control" id="cvv" name="cvv" value="{{cvv}}">
+                                    </div>
+
+                                    <!-- MODAL; EXPLAINER OF WHAT CVV IS -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">CVV</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>CVV is a credit card verification number. You can find it on your credit card:</p>
+                                                    <img src="/images/cvv-explainer.png" style="width: 100%; max-width: 300px">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default button" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {{/unless}}
+
+                            <!-- KACHING! -->
+                            <input type="submit" hook="checkout" class="button btn-block button-available text-center" value="Complete Order">
+
+
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- TESTIMONIALS -->
+            <div class="col-xs-12 col-md-4 hidden-xs hidden-sm" style="padding-top: 140px;">
+
+                {{#with settings}}
+                    <p class="testimonial" style="margin-left: 0; margin-right:0; max-width: none; padding: 0; margin-bottom: 20px;">
+                        <span class="testimonial-quote" style="font-size: 16px; line-height: 24px;">
+                            "{{firstTestimonial}}"
+                            </span><br>
+                        <span class="testimonial-author" style="font-size: 14px; line-height: 22px;">
+                             &mdash; {{firstCite}}
+                        </span>
+                    </p>
+                    <p class="testimonial" style=" margin-left: 0; margin-right:0; max-width: none;  padding: 0; margin-bottom: 20px;">
+                        <span class="testimonial-quote" style="font-size: 16px; line-height: 24px;">
+                            "{{secondTestimonial}}"
+                            </span><br>
+                        <span class="testimonial-author" style="font-size: 14px; line-height: 22px;">
+                             &mdash; {{secondCite}}
+                        </span>
+                    </p>
+                {{/with}}
+
+                <p>
+                    <img src="/images/tripadvisor.jpg" style="width:100px;">
+                </p>
+                <p>
+                    <img src="/images/yelp.png" style="width:100px; padding: 5px;">
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- UI OVERLAY WHEN PROCESSING PAYMENT -->
+    <div class="processing-bg">
+        <div class="processing">
+            PROCESSING ORDER<br><img style="position: relative; bottom: 10px; left: 1px" src="/images/loading.gif">
+        </div>
+    </div>
+
+</template>
