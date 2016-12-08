@@ -102,8 +102,8 @@ Bolt.Game.prototype.save = function(){
         room: this.room,
         messages: this.messages ? this.messages : [],
         timeLog: this.timeLog ? this.timeLog : "",
-        players: this.players ? this.players : []
-
+        players: this.players ? this.players : [],
+        followUpEmailSent: this.followUpEmailSent ? this.followUpEmailSent : false
     };
     if( this.won === true || this.won === false ){
         dataToSave.won = this.won;
