@@ -53,7 +53,7 @@ Template.giftCards.onRendered(function(){
                                 '<div style="background-color: #fff; padding: 30px; max-width: 380px; margin: 0 auto; ">' +
                                 'KAUAI ESCAPE ROOM - GIFT CARD PURCHASE CONFIRMATION</b>' +
                                 '<br><br>' +
-                                'Gift card sent to: ' + couponData.recipient + ' ' + ( couponData.delivery == "email" ? couponData.recipientEmail : couponData.recipientAddress ) +
+                                'Gift card for: ' + couponData.recipient +
                                 '<br><br>' +
                                 'Gift card amount: $' + parseFloat( couponData.discount ).toFixed(2) +
                                 '<br><br>' +
@@ -61,7 +61,11 @@ Template.giftCards.onRendered(function(){
                                 '<br><br>' +
                                 'DELIVERY OPTION' +
                                 '<br><br>' +
-                                ( couponData.delivery == 'mail' ? 'WILL BE DELIVERED BY USPS MAIL IN 3-5 BUSINESS DAYS' : 'Delivered by email to ' + couponData.recipientEmail ) +
+                                ( couponData.delivery == 'mail' ? 'WILL BE DELIVERED BY USPS MAIL IN 3-5 BUSINESS DAYS' : '' ) +
+                                ( couponData.delivery == 'email' ? 'Delivered by email to ' + couponData.recipientEmail : '' ) +
+                                ( couponData.delivery == 'pickup' ? 'CALL 808.635.6957 TO ARRANGE A TIME FOR PICKUP. Our staff is often unavailable during games.' : '' ) +
+
+                                //Delivered by email to ' + couponData.recipientEmail
                                 '<br><br>' +
                                 'Amount charged: $' + ( couponData.transaction.amount / 100 ).toFixed(2) +
                                 '<br><br>' +
@@ -121,22 +125,24 @@ Template.giftCards.onRendered(function(){
                             '</div>';
 
                         // Call 'sendEmail' method
-                        Meteor.call(
-                            'sendEmail',                                                        // Method
-                            couponData.recipientEmail,                                                  // Customer email
-                            '"Kauai Escape Room" ' + Meteor.settings.public.smtp.email,         // Our name & email
-                            couponData.sender + ' thinks you are smart enough for this gift!',      // Subject
-                            bodyGift,                     // Message body
-                            function (error, result) {                                          // Callback
+                        if( couponData.delivery == 'email' ) {
+                            Meteor.call(
+                                'sendEmail',                                                        // Method
+                                couponData.recipientEmail,                                                  // Customer email
+                                '"Kauai Escape Room" ' + Meteor.settings.public.smtp.email,         // Our name & email
+                                couponData.sender + ' thinks you are smart enough for this gift!',      // Subject
+                                bodyGift,                     // Message body
+                                function (error, result) {                                          // Callback
 
-                                // Handle errors as needed
-                                // We don't handle successful responses from sendEmail; should we?
-                                // TODO: decide what to do with successful responses
-                                if (error) {
-                                    throw new Meteor.Error( '[Bolt][Reservation][sendConfirmationEmail] Error', 'Error while sending booking confirmation. ||| Error message: ' + error.message + ' ||| Error object: ' + JSON.stringify(error) );
+                                    // Handle errors as needed
+                                    // We don't handle successful responses from sendEmail; should we?
+                                    // TODO: decide what to do with successful responses
+                                    if (error) {
+                                        throw new Meteor.Error('[Bolt][Reservation][sendConfirmationEmail] Error', 'Error while sending booking confirmation. ||| Error message: ' + error.message + ' ||| Error object: ' + JSON.stringify(error));
+                                    }
                                 }
-                            }
-                        );
+                            );
+                        }
 
                         // Call 'sendEmail' method
                         Meteor.call(
@@ -178,7 +184,11 @@ Template.giftCards.onRendered(function(){
 
 
                         // Configure the Twilio client
-                        var SMSString = "New Gift Card Purchase - $" + parseFloat(couponData.discount).toFixed(2) + " - From " + couponData.sender + " to " + couponData.recipient + " - " + ( couponData.delivery == 'mail' ? 'TO BE DELIVERED BY USPS MAIL' : 'delivered by email' );
+                        var SMSString = "New Gift Card Purchase - $" + parseFloat(couponData.discount).toFixed(2) + " - From " + couponData.sender + " to " + couponData.recipient + " - " +
+                            ( couponData.delivery == 'mail' ? 'TO BE DELIVERED BY USPS MAIL' : '' ) +
+                            ( couponData.delivery == 'email' ? 'Delivered by email' : '' ) +
+                            ( couponData.delivery == 'pickup' ? 'WILL CALL FOR PICKUP' : '' );
+
                         Meteor.call('sendAdminNotificationSMS', SMSString, function(error,response){
                             if( error ) {
                                 // console.log( error );
@@ -234,6 +244,10 @@ Template.giftCards.events({
             $('[hook="email-section"]').addClass('hidden');
             $('[hook="address-section"]').removeClass('hidden');
             Session.set('deliveryFee',5);
+        }else{
+            $('[hook="email-section"]').addClass('hidden');
+            $('[hook="address-section"]').addClass('hidden');
+            Session.set('deliveryFee',0);
         }
     }
 });
