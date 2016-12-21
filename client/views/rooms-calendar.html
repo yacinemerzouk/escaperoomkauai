@@ -40,11 +40,12 @@
                                     {{#with game}}
 
                                         <!-- DISPLAY NUMBER OF SPOTS LEFT -->
-                                        {{#if spotsLeft}}
-                                            <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px; margin-bottom: 10px">
-                                                {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; {{spotsLeft}} Spots left
+                                        {{#if this.spotsLeft}}
+                                        <a  hook="set-time" hook-data="{{time}}" href="{{pathFor 'roomByDate' slug=../slug date=date}}" style="text-decoration: none">
+                                            <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px;">
+                                                {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; {{this.spotsLeft}} Spots left
                                             </div>
-
+                                        </a>
                                         <!-- OR DISPLAY SOLD OUT -->
                                         {{else}}
                                             <div class="label label-danger" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
@@ -56,7 +57,7 @@
 
                                 <!-- NO GAME DATA MEANS TIME SLOT HAS NEVER BEEN BOOKED OR SLOT -->
                                 {{else}}
-                                    <a  hook="set-time" hook-data="{{../time}}" href="{{pathFor 'room' slug=slug}}" style="text-decoration: none">
+                                    <a  hook="set-time" hook-data="{{../time}}" href="{{pathFor 'roomByDate' slug=slug date=../../date}}" style="text-decoration: none">
                                         <div class="label label-success" style="text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
                                             {{../time}} &nbsp;&bull;&nbsp; {{title}} &nbsp;&bull;&nbsp; Book Now
                                         </div>

@@ -83,6 +83,29 @@ Meteor.publish('futureReservations', function(){
     return reservations;
 });
 
+Meteor.publish('reservationsForDate', function( date ){
+    var reservations = Bolt.Collections.Reservations.find(
+        {
+            date: date,
+            canceled:{
+                $ne:true
+            }
+        },
+        {
+            fields: {
+                _id: 1,
+                roomId: 1,
+                date: 1,
+                time: 1,
+                nbPlayers: 1,
+                closeRoom: 1,
+                blocked: 1
+            }
+        }
+    );
+    return reservations;
+});
+
 Meteor.publish('reservationNumbers', function(){
     var reservations = Bolt.Collections.Reservations.find(
         {},

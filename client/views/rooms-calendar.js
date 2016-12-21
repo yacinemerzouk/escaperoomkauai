@@ -17,7 +17,7 @@ Template.roomsCalendar.helpers({
             var nextDay = Epoch.addDaysToDate(1,prevDay.date);
             days.push( Bolt.getCalendarDay(nextDay) );
         }
-
+        console.log( 'DAYS', days );
         return days;
     }
 });

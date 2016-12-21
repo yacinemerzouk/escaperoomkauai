@@ -1,4 +1,4 @@
-<template name="room">
+<template name="roomByDate">
 
     <!-- HERO BANNER -->
     <div class="hero hero-home-bg" style="background-image: url({{image}});">
@@ -7,26 +7,26 @@
                 <h1 style="margin: 0 0 20px">{{title}}</h1>
                 <p style="width: 100%; max-width: 600px; margin: 0 0 20px;">{{description}}</p>
                 <p style="width: 100%; max-width: 100%; margin: 0;">
-                    <div class="specs">
-                        <i class="fa fa-users" aria-hidden="true" style=""></i>
-                        <span class="spec-value" style="">{{minPlayers}} - {{maxPlayers}}</span><br>
-                        <span class="spec-key" style="">Players</span>
-                    </div>
-                    <div class="specs">
-                        <i class="fa fa-clock-o" aria-hidden="true" style=""></i>
-                        <span class="spec-value" style="">{{duration}}</span><br>
-                        <span class="spec-key" style="">Minutes</span>
-                    </div>
-                    <div class="specs" style="width: 160px">
-                        <i class="fa fa-trophy" aria-hidden="true"></i>
-                        <span class="spec-value" style="">{{dynamicSuccessRate}}%</span><br>
-                        <span class="spec-key" style="">Success Rate</span>
-                    </div>
-                    <div class="specs">
-                        <i class="fa fa-credit-card" aria-hidden="true"></i>
-                        <span class="spec-value" style="">${{kamaainaPerPlayer this}} - ${{pricePerPlayer}}</span><br>
-                        <span class="spec-key" style="">Per Player</span>
-                    </div>
+                <div class="specs">
+                    <i class="fa fa-users" aria-hidden="true" style=""></i>
+                    <span class="spec-value" style="">{{minPlayers}} - {{maxPlayers}}</span><br>
+                    <span class="spec-key" style="">Players</span>
+                </div>
+                <div class="specs">
+                    <i class="fa fa-clock-o" aria-hidden="true" style=""></i>
+                    <span class="spec-value" style="">{{duration}}</span><br>
+                    <span class="spec-key" style="">Minutes</span>
+                </div>
+                <div class="specs" style="width: 160px">
+                    <i class="fa fa-trophy" aria-hidden="true"></i>
+                    <span class="spec-value" style="">{{dynamicSuccessRate}}%</span><br>
+                    <span class="spec-key" style="">Success Rate</span>
+                </div>
+                <div class="specs">
+                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                    <span class="spec-value" style="">${{kamaainaPerPlayer this}} - ${{pricePerPlayer}}</span><br>
+                    <span class="spec-key" style="">Per Player</span>
+                </div>
                 </p>
             </div>
         </div>
@@ -96,11 +96,11 @@
                                                 <!-- LOOP OVER START TIMES -->
                                                 {{#each startTimes}}
 
-                                                        {{#if canBook ../roomId ../date this}}
-                                                            <a href="#" hook="set-time" hook-data="{{this}}" class="label label-time {{#if hasEnoughSpots  ../roomId ../date this ../nbPlayers}}  label-time-green {{else}}  label-time-grey {{/if}}">{{this}} &nbsp;&bull;&nbsp; {{spotsLeft  ../roomId ../date this}}  spots left</a>
-                                                        {{else}}
-                                                            <span class="label label-time label-time-red">{{this}} &nbsp;&bull;&nbsp; Sold Out</span>
-                                                        {{/if}}
+                                                    {{#if canBook ../roomId ../date this}}
+                                                        <a href="#" hook="set-time" hook-data="{{this}}" class="label label-time {{#if hasEnoughSpots  ../roomId ../date this ../nbPlayers}}  label-time-green {{else}}  label-time-grey {{/if}}">{{this}} &nbsp;&bull;&nbsp; {{spotsLeft  ../roomId ../date this}}  spots left</a>
+                                                    {{else}}
+                                                        <span class="label label-time label-time-red">{{this}} &nbsp;&bull;&nbsp; Sold Out</span>
+                                                    {{/if}}
 
                                                 {{/each}}
                                             {{/unless}}
@@ -160,7 +160,7 @@
                                                             {{else}}
                                                                 <input hook="update-reservation" type="checkbox" id="closeRoom" name="closeRoom"> Yes, I want to pay a ${{room.priceToClose}} closed room fee.
                                                             {{/if}}
-                                                            </label>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             {{/if}}

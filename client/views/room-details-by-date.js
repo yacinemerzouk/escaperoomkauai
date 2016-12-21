@@ -1,4 +1,4 @@
-Template.room.onCreated(function(){
+Template.roomByDate.onCreated(function(){
 
     Meteor.subscribe( 'rooms' );
     Meteor.subscribe( 'rooms' );
@@ -236,12 +236,12 @@ Template.room.onCreated(function(){
 
     }
 });
-Template.room.onRendered(function(){
+Template.roomByDate.onRendered(function(){
 
-    console.log(this.data);
+    var date = window.location.pathname.substring(window.location.pathname.length -10, window.location.pathname.length );
 
     var reservation = new Bolt.Reservation( Session.get('reservation') || {room: this.data, date:Epoch.dateObjectToDateString(new Date())} );
-
+    reservation.date = date;
 
     var self = this;
 
@@ -304,7 +304,7 @@ Template.room.onRendered(function(){
 
 });
 
-Template.room.helpers({
+Template.roomByDate.helpers({
 
     years: function(){
         var currentYear = new Date().getFullYear();
@@ -393,7 +393,7 @@ Template.room.helpers({
 
 });
 
-Template.room.events({
+Template.roomByDate.events({
 
     'change [hook="update-reservation"]': function( evt, tmpl ){
 
