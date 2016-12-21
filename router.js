@@ -532,11 +532,72 @@ Router.route('/room/:slug', {
     waitOn: function(){
         return [
             Meteor.subscribe( 'room', this.params.slug ),
-            Meteor.subscribe( 'rooms' ),
+            //Meteor.subscribe( 'rooms' ),
             Meteor.subscribe( 'coupons' ),
-            Meteor.subscribe( 'futureReservations' ),
+            //Meteor.subscribe( 'futureReservations' ),
+            Meteor.subscribe('reservationsForDate', Epoch.dateObjectToDateString(new Date())),
             Meteor.subscribe( 'reservationNumbers' ),
             Meteor.subscribe( 'pastGameResults', this.params.slug )
+        ]
+    },
+    sitemap: true,
+    changefreq: 'monthly',
+    priority: '0.9',
+    ironMeta: true,
+    meta: function(){
+        var room =  Bolt.Collections.Rooms.findOne({slug:this.params.slug});
+        var title, image, description, slug;
+        if( room ){
+            title = room.title + ' - Kauai Escape Room';
+            image = 'https://www.escaperoomkauai.com' + room.image;
+            description = room.description;
+        }else{
+            title = 'Kauai Escape Room';
+            image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
+            description = 'An escape game by Kauai Escape Room';
+        }
+        return {
+            title: title,
+            description: description,
+            keywords: 'kauai, escape room, escape game, puzzle room',
+            canonical: 'https://www.escaperoomkauai.com/room/'+this.params.slug,
+            "og:title": title,
+            "og:type": 'website',
+            "og:url": 'https://www.escaperoomkauai.com/room/'+this.params.slug,
+            "og:description": description,
+            "og:site_name": 'Kauai Escape Room',
+            "og:image": image,
+            "og:image:width": '1200',
+            "og:image:height": '630',
+            "twitter:card": 'summary_large_image',
+            "twitter:site": '@kauaiescaperoom',
+            "twitter:creator": '@kauaiescaperoom',
+            "twitter:title": title,
+            "twitter:description": description,
+            "twitter:image": image
+        }
+    },
+    data: function(){
+        var room =  Bolt.Collections.Rooms.findOne({slug:this.params.slug});
+        return room;
+    }
+});
+
+
+/**
+ * Room details by date
+ */
+Router.route('/room/:slug/:date', {
+    name: 'roomByDate',
+    waitOn: function(){
+        return [
+            Meteor.subscribe( 'room', this.params.slug ),
+            Meteor.subscribe( 'rooms' ),
+            Meteor.subscribe( 'coupons' ),
+            //Meteor.subscribe( 'futureReservations' ),
+            Meteor.subscribe('reservationsForDate', this.params.date),
+            Meteor.subscribe( 'reservationNumbers' ),
+            //Meteor.subscribe( 'pastGameResults', this.params.slug )
         ]
     },
     ironMeta: true,

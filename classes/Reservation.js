@@ -191,9 +191,9 @@ Bolt.Reservation.prototype.create = function() {
         }
 
 
-        Meteor.call('blockAllForSameTimeSlot', result, function( error, response ){
+        //Meteor.call('blockAllForSameTimeSlot', result, function( error, response ){
             // console.log( 'blockAllForSameTimeSlot', error, response );
-        });
+        //});
 
         // Return ID of reservation
         return this._id;
