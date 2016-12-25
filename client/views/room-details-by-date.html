@@ -239,6 +239,17 @@
                                                         <td class="currency">{{toCurrency subtotal}}</td>
                                                     </tr>
 
+                                                    <!-- DISCOUNT FROM KAMAAINA -->
+
+                                                    {{#if discountKamaaina}}
+                                                        <tr>
+                                                            <td class="discount">Kama'aina Discount &nbsp;&bull;&nbsp; {{nbKamaaina}} residents &nbsp;&times;&nbsp; &mdash; {{toCurrency room.kamaainaDiscountPerPlayer}}</td>
+                                                            <td class="currency discount">&mdash; {{toCurrency discountKamaaina}}</td>
+                                                        </tr>
+                                                    {{/if}}
+
+
+
                                                     <!-- DISCOUNT FROM COUPON CODE -->
                                                     {{#if discount}}
                                                         <tr>
@@ -251,15 +262,6 @@
                                                         </tr>
                                                     {{/if}}
 
-                                                    <!-- DISCOUNT FROM KAMAAINA -->
-                                                    {{#unless discount}}
-                                                        {{#if discountKamaaina}}
-                                                            <tr>
-                                                                <td class="discount">Kama'aina Discount &nbsp;&bull;&nbsp; {{nbKamaaina}} residents &nbsp;&times;&nbsp; &mdash; {{toCurrency room.kamaainaDiscountPerPlayer}}</td>
-                                                                <td class="currency discount">&mdash; {{toCurrency discountKamaaina}}</td>
-                                                            </tr>
-                                                        {{/if}}
-                                                    {{/unless}}
 
                                                     <!-- TAXES -->
                                                     <tr>

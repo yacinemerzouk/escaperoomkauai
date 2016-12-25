@@ -143,7 +143,7 @@ Template.room.onCreated(function(){
                                 //     eventName: reservation.room.title,
                                 //     couponValue: reservation.total,
                                 // });
-                                var discount = reservation.discount ? reservation.discount : reservation.discountKamaaina;
+                                var discount = parseFloat( reservation.discount ) + parseFloat( reservation.discountKamaaina );
                                 var revenue = parseFloat( reservation.subtotal - discount ).toFixed(2);
                                 var coupon = reservation.couponData && reservation.couponData.coupon ? reservation.couponData.coupon : "";
                                 var room = Bolt.Collections.Rooms.findOne(reservation.roomId);

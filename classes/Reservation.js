@@ -93,7 +93,8 @@ Bolt.Reservation.prototype.populate = function( data ){
         }
 
         // Discount amount for residents
-        this.discountKamaaina = !this.discount && parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
+        //this.discountKamaaina = !this.discount && parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
+        this.discountKamaaina = parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
 
         // Taxes
         this.taxes = ( ( parseFloat(this.subtotal) - parseFloat(this.discount) - parseFloat(this.discountKamaaina) ) * 0.04166 ).toFixed(2);
@@ -101,6 +102,13 @@ Bolt.Reservation.prototype.populate = function( data ){
         // Total
         this.total = ( parseFloat(this.subtotal) - parseFloat(this.discount) - parseFloat(this.discountKamaaina) + parseFloat(this.taxes) ).toFixed(2);
 
+        if( this.taxes < 0 ){
+            this.taxes = 0;
+        }
+
+        if( this.total < 0 ){
+            this.total = 0;
+        }
     }
 
 }
