@@ -1,7 +1,6 @@
 Template.roomByDate.onCreated(function(){
 
     Meteor.subscribe( 'rooms' );
-    Meteor.subscribe( 'rooms' );
 
     this.updateReservation = function( formData ){
 

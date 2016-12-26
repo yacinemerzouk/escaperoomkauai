@@ -190,7 +190,8 @@ Bolt.Reservation.prototype.create = function() {
         var game = new Bolt.Game({
             date: this.date,
             time: this.time,
-            roomId: this.roomId
+            roomId: this.roomId,
+            blocked: this.blocked || false
         });
 
         // Save to DB if game doesn't exist for time slot (room, date, & time)
@@ -199,9 +200,9 @@ Bolt.Reservation.prototype.create = function() {
         }
 
 
-        //Meteor.call('blockAllForSameTimeSlot', result, function( error, response ){
-            // console.log( 'blockAllForSameTimeSlot', error, response );
-        //});
+        Meteor.call('blockAllForSameTimeSlot', result, function( error, response ){
+            console.log( 'blockAllForSameTimeSlot', error, response );
+        });
 
         // Return ID of reservation
         return this._id;
