@@ -1,6 +1,5 @@
 Template.room.onCreated(function(){
 
-    Meteor.subscribe( 'rooms' );
 
     this.updateReservation = function( formData ){
 
@@ -237,19 +236,67 @@ Template.room.onCreated(function(){
 });
 Template.room.onRendered(function(){
 
-    console.log(this.data);
+    Session.set('calendarReservationsReady',false);
+    Session.set('calendarGamesReady',false);
 
-    var reservation = new Bolt.Reservation( Session.get('reservation') || {room: this.data, date:Epoch.dateObjectToDateString(new Date())} );
+
+
+    Meteor.subscribe( 'coupons' );
+    Meteor.subscribe( 'reservationNumbers' );
+
+
+
+    // var date = window.location.pathname.substring(window.location.pathname.length -10, window.location.pathname.length );
+    //
+    //
+
 
 
     var self = this;
 
     this.autorun(function() {
 
-        // hack to force the autorun to reevaluate
-        Template.currentData();
+        console.log( 'STARTING AUTORUN FOR NEW SUBS' );
+        // var date = Session.get('roomCalendarDay');
+        var reservation = new Bolt.Reservation( Session.get('reservation') || {room: this.data, date:Epoch.dateObjectToDateString(new Date())} );
+        var date;
+        if( reservation && reservation.date ){
+            date = reservation.date;
+        }else{
+            date = Epoch.dateObjectToDateString(new Date());
+        }
 
+        Meteor.subscribe(
+            'reservations',
+            date,
+            {
+                onReady: function () {
+                    console.log('reservations ready');
+                    Session.set('calendarReservationsReady', true);
+                },
+                onError: function(){
+                    console.log('error in reservations subscription');
+                }
+            }
+        );
+        Meteor.subscribe(
+            'games',
+            date,
+            {
+                onReady: function () {
+                    console.log('games ready');
+                    Session.set('calendarGamesReady', true);
+                },
+                onError: function(){
+                    console.log('error in games subscription');
+                }
+            }
+        );
 
+        // // hack to force the autorun to reevaluate
+        // Template.currentData();
+
+        //var reservation = new Bolt.Reservation( Session.get('reservation') || {room: this.data, date:Epoch.dateObjectToDateString(new Date())} );
 
         // check that time is in startTimes array
         if( _.indexOf(self.data.startTimes, reservation.time) === -1 ){
@@ -258,6 +305,7 @@ Template.room.onRendered(function(){
 
         reservation.roomId = self.data._id;
         reservation.room = self.data;
+        Meteor.subscribe( 'pastGameResults', reservation.room.slug );
 
         var minDate = Epoch.dateObjectToDateString(new Date());
         //console.log( minDate );
@@ -285,18 +333,27 @@ Template.room.onRendered(function(){
                 }
                 reservation.date = dateText;
                 reservation.time = false;
+                Session.set('calendarReservationsReady',false);
+                Session.set('calendarGamesReady',false);
                 Session.set('reservation', reservation);
-                Router.go('roomByDate',{slug:reservation.room.slug,date:dateText});
+                // Router.go('roomByDate',{slug:reservation.room.slug,date:dateText});
                 //Router.go('/room/'+reservation.room.slug+'/'+dateText+'#booknow');
                 // console.log('Route change?');
             }
         });
 
+        // Make sure we don't carry time when switching rooms, pages
+        if( reservation ){
+            reservation.time = "";
+            if( Session.get('selectedTimeFromCalendar') ){
+                var t = Session.get('selectedTimeFromCalendar');
+                reservation.time = t;
+                Session.set('selectedTimeFromCalendar',false);
+            }
+        }
+
         Session.set( 'reservation', reservation );
 
-        if( window.location.pathname !== '/room/'+reservation.room.slug ){
-            $('html, body').scrollTop($('#booknow').offset().top);
-        }
 
     });
 
@@ -364,10 +421,50 @@ Template.room.helpers({
     },
 
     startTimes: function(){
-        var reservation = new Bolt.Reservation(Session.get('reservation'));
-        //console.log( 'in startTimes', reservation.date );
-        return Bolt.getPossibleTimes(reservation.date, reservation.roomId);
+        var reservation = Session.get('reservation');
+
+        if(
+            Session.get('calendarReservationsReady') == true &&
+            Session.get('calendarGamesReady') == true
+
+        ){
+            var day = Bolt.getAdminDay(reservation.date);
+            var startTimes = [];
+            _.each(day.times,function(t){
+                console.log(t);
+                startTimes.push(t.time);
+            })
+            console.log('NEW START TIMES',startTimes);
+            return startTimes;
+        }else{
+            console.log('Subscriptions not ready');
+
+            return false
+        }
     },
+    // day: function(){
+    //     var date = window.location.pathname.substring(window.location.pathname.length -10, window.location.pathname.length );
+    //
+    //     if(
+    //         Session.get('calendarReservationsReady') == true &&
+    //         Session.get('calendarGamesReady') == true
+    //
+    //     ){
+    //         var day = Bolt.getAdminDay(date);
+    //         var reservation = Session.get('reservation');
+    //         reservation.startTimes = [];
+    //         _.each(day.times,function(t){
+    //             console.log(t);
+    //             reservation.startTimes.push(t.time);
+    //         })
+    //         console.log('RESERVATION WITH NEW START TIMES',reservation);
+    //         Session.set('reservation',reservation);
+    //     }else{
+    //         console.log('Subscriptions not ready');
+    //
+    //         return false
+    //     }
+    // },
     dynamicSuccessRate: function(){
         var games = Bolt.Collections.Games.find( { roomId: this._id } ).fetch();
         var nbGames = 0;

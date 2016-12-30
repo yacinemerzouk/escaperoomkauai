@@ -58,7 +58,7 @@
                                             <label for="nbPlayers">Select number of players</label>
                                             <p style="font-size: 14px; font-weight: bold;">{{toCurrency ../pricePerPlayer}} per player<br><span class="discount">{{toCurrency ../kamaainaDiscountPerPlayer}} off for each Hawaii resident</span></p>
                                             <select class="form-control" hook="update-players" id="nbPlayers" name="nbPlayers" style="width: 100%; max-width: 100%;">
-                                                <option value="0">-- NUMBER OF PLAYERS --</option>
+                                                <option value="0"> NUMBER OF PLAYERS </option>
                                                 {{#each nbPlayersOptions}}
                                                     <option value="{{this}}" {{selected this ../nbPlayers}}>{{this}} players</option>
                                                 {{/each}}
@@ -80,6 +80,8 @@
                         </div>
 
                         <!-- TIME SELECTION -->
+
+
                         {{#if reservation}}
                             {{#if reservation.room.available}}
                                 {{#with reservation}}
@@ -93,8 +95,10 @@
                                             <!-- UNLESS TIME HAS ALREADY BEEN SELECTED BY USER -->
                                             {{#unless time}}
 
-                                                <!-- LOOP OVER START TIMES -->
-                                                {{#each startTimes}}
+                                                {{#if startTimes}}
+
+                                                    <!-- LOOP OVER START TIMES -->
+                                                    {{#each startTimes}}
 
                                                         {{#if canBook ../roomId ../date this}}
                                                             <a href="#" hook="set-time" hook-data="{{this}}" class="label label-time {{#if hasEnoughSpots  ../roomId ../date this ../nbPlayers}}  label-time-green {{else}}  label-time-grey {{/if}}">{{this}} &nbsp;&bull;&nbsp; {{spotsLeft  ../roomId ../date this}}  spots left</a>
@@ -102,7 +106,10 @@
                                                             <span class="label label-time label-time-red">{{this}} &nbsp;&bull;&nbsp; Sold Out</span>
                                                         {{/if}}
 
-                                                {{/each}}
+                                                    {{/each}}
+                                                {{else}}
+                                                    <img src="/images/loading.gif">
+                                                {{/if}}
                                             {{/unless}}
 
                                         </div>
@@ -185,7 +192,7 @@
                                                     <label for="nbKamaaina">Kama'aina Discount</label>
                                                     <p>How many Hawai'i residents in your party? Hawai'i residents each get $5 off. HAWAII ID REQUIRED.</p>
                                                     <select class="form-control" hook="update-reservation" id="nbKamaaina" name="nbKamaaina" style="width: 100%">
-                                                        <option value="0">-- SELECT NUMBER OF HAWAII RESIDENTS --</option>
+                                                        <option value="0"> SELECT NUMBER OF HAWAII RESIDENTS </option>
                                                         {{#each kamaainaPlayersOptions}}
                                                             <option value="{{this}}" {{selected this ../nbKamaaina}}>{{this}}</option>
                                                         {{/each}}
@@ -412,6 +419,11 @@
                         ERROR. No room / reservation data.
 
                     {{/if}}
+
+                    <!--<h3 style="margin-top: 0; font-size: 16px; color: #444; font-weight: bold;">Online Booking System Temporary Maintenance</h3>-->
+                    <!--<p>-->
+                        <!--Call 808.635.6957 to schedule a game. Thanks!-->
+                    <!--</p>-->
                 </form>
 
                 <!-- SECURE PADLOCK AND CREDIT CARD LOGOS BELOW FORM -->

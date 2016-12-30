@@ -51,11 +51,15 @@ Bolt.Game = function( args ){
 
     // Check whether this game slot has been blocked by admins
     // If a reservation has prop blocked => true, then it's blocked
-    var isBlocked = false;
+    var blocked = false;
+    var closeRoom = false;
     if( this.reservations && this.reservations.length > 0 ){
         _.each(reservations,function(reservation){
             if( reservation.blocked == true ){
-                isBlocked = true;
+                blocked = true;
+            }
+            if( reservation.closeRoom == true ){
+                closeRoom = true;
             }
         });
     }
@@ -63,13 +67,13 @@ Bolt.Game = function( args ){
     var room = Bolt.Collections.Rooms.findOne(this.roomId);
     var maxPlayers = parseInt( room.maxPlayers );
     var nbPlayers = parseInt( this.getNbPlayers() );
-    if( nbPlayers == maxPlayers || nbPlayers == maxPlayers - 1 || isBlocked ){
+    if( nbPlayers == maxPlayers || nbPlayers == maxPlayers - 1 || blocked || closeRoom ){
         this.spotsLeft = 0;
     }else{
         this.spotsLeft = maxPlayers - nbPlayers
     }
 
-    this.isBlocked = isBlocked;
+    this.blocked = blocked;
 
 }
 
@@ -98,7 +102,7 @@ Bolt.Game.prototype.save = function(){
         date: this.date,
         time: this.time,
         roomId: this.roomId,
-        isBlocked: this.isBlocked ? true : false,
+        blocked: this.blocked ? true : false,
         room: this.room,
         messages: this.messages ? this.messages : [],
         timeLog: this.timeLog ? this.timeLog : "",

@@ -127,11 +127,8 @@ Router.route('/rooms/calendar', {
     changefreq: 'monthly',
     priority: '0.9',
     waitOn: function(){
-        return [
-            Meteor.subscribe('futureReservations'),
-            Meteor.subscribe('rooms'),
-            Meteor.subscribe('futureGames')
-        ]
+        var date = Session.get('calendarDay') || Epoch.dateObjectToDateString(new Date());
+        return Meteor.subscribe('rooms');
     },
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
@@ -411,6 +408,41 @@ Router.route('/admin/reservations/create', {
 });
 
 /**
+ * Admin - Schedule
+ */
+Router.route('/admin/schedule', {
+    name: 'adminSchedule',
+    layoutTemplate: 'layoutAdmin',
+    waitOn: function(){
+        return Meteor.subscribe('rooms');
+    }
+});
+
+/**
+ * Admin - Schedule - Date
+ */
+Router.route('/admin/schedule/:date', {
+    name: 'adminScheduleDay',
+    template: 'adminSchedule',
+    layoutTemplate: 'layoutAdmin',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('rooms'),
+            Meteor.subscribe('futureGames')
+        ]
+    },
+    data: function(){
+        var games = Bolt.Collections.Games.find();
+        console.log( games.fetch() );
+        return {
+            date: this.params.date,
+            games: games
+        }
+    }
+});
+
+
+/**
  * Test
  */
 Router.route('/test', {
@@ -531,13 +563,7 @@ Router.route('/room/:slug', {
     name: 'room',
     waitOn: function(){
         return [
-            Meteor.subscribe( 'room', this.params.slug ),
-            //Meteor.subscribe( 'rooms' ),
-            Meteor.subscribe( 'coupons' ),
-            //Meteor.subscribe( 'futureReservations' ),
-            Meteor.subscribe('reservationsForDate', Epoch.dateObjectToDateString(new Date())),
-            Meteor.subscribe( 'reservationNumbers' ),
-            Meteor.subscribe( 'pastGameResults', this.params.slug )
+            Meteor.subscribe( 'room', this.params.slug )
         ]
     },
     sitemap: true,
@@ -591,13 +617,7 @@ Router.route('/room/:slug/:date', {
     name: 'roomByDate',
     waitOn: function(){
         return [
-            Meteor.subscribe( 'room', this.params.slug ),
-            Meteor.subscribe( 'rooms' ),
-            Meteor.subscribe( 'coupons' ),
-            //Meteor.subscribe( 'futureReservations' ),
-            Meteor.subscribe('reservationsForDate', this.params.date),
-            Meteor.subscribe( 'reservationNumbers' ),
-            //Meteor.subscribe( 'pastGameResults', this.params.slug )
+            Meteor.subscribe( 'room', this.params.slug )
         ]
     },
     ironMeta: true,

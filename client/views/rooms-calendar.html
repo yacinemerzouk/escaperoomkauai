@@ -17,15 +17,29 @@
         <div class="row">
 
             <!-- IF DAYS ARRAY IS OK (IF NOT, IT'S PROBABLY A LATENCY OR PUBSUB ISSUE) -->
-            {{#if days}}
+            {{#if day}}
 
                 <!-- LOOP OVER DAYS -->
-                {{#each days}}
+                {{#with day}}
 
                     <div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 
                         <!-- DATE -->
-                        <h2 class="subheading" style="margin-bottom: 30px">{{humanReadableDate date}}</h2>
+                        <h2 class="subheading">
+                            <span class="prev-day">
+                                <a href="#" hook="subtract-day">
+                                    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                                </a>
+                            </span>
+
+                            {{humanReadableDate date}}
+                            <span class="next-day">
+                                <a href="#" hook="add-day">
+                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                </a>
+                            </span>
+
+                        </h2>
 
                         <!-- LOOP OVER POSSIBLE TIME SLOTS -->
                         {{#each times}}
@@ -68,7 +82,7 @@
 
                         {{/each}}
                     </div>
-                {{/each}}
+                {{/with}}
 
                 <h2 class="subheading" style="clear: both; padding-top: 70px;">Advance Bookings &amp; Large Groups</h2>
                 <p class="text-center">
@@ -81,8 +95,17 @@
             {{else}}
 
                 <!-- TODO: FIX THIS, IT NEVER SHOWS UP; THE PAGE JUST FREEZES UNTIL DATA IS RENDERED? -->
-                <h2 class="subheading">Loading Calendar...</h2>
+                <h2 class="subheading">
 
+
+                    Loading...
+
+
+                </h2>
+
+                <div class="text-center" style="margin-bottom: 1000px">
+                    <img src="/images/loading.gif">
+                </div>
             {{/if}}
 
         </div>

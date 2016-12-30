@@ -1,0 +1,27 @@
+<template name="adminScheduleDay">
+
+    <div class="day">
+        <div class="date">
+            {{date}}
+        </div>
+
+
+        <div class="games">
+            {{#each games}}
+                <a href="#">
+                    <div class="game booked">
+                        {{time}}<br>
+                        {{roomTitle roomId}}<br>
+                        X Players
+                    </div>
+                </a>
+            {{/each}}
+        </div>
+        <div class="add-game">
+            <a href="#">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i> ADD GAME
+            </a>
+        </div>
+    </div>
+
+</template>
