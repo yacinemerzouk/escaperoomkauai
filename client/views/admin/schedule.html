@@ -1,0 +1,36 @@
+<template name="adminSchedule" xmlns="http://www.w3.org/1999/html">
+
+    <h1 class="page-header">Schedule</h1>
+
+    {{#if currentUser}}
+
+        <div class="calendar">
+            {{>adminScheduleDay this}}
+            <!--{{>adminScheduleDay date="2016-12-28"}}-->
+            <!--{{>adminScheduleDay date="2016-12-29"}}-->
+            <!--{{>adminScheduleDay date="2016-12-30"}}-->
+            <!--{{>adminScheduleDay date="2016-12-31"}}-->
+            <!--{{>adminScheduleDay date="2017-01-01"}}-->
+            <!--{{>adminScheduleDay date="2017-01-02"}}-->
+        </div>
+
+    {{else}}
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <h1>Admins only</h1>
+                    <br>
+                    {{> loginButtons}}
+                </div>
+
+            </div>
+
+        </div>
+
+    {{/if}}
+
+
+</template>

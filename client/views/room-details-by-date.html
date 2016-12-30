@@ -58,7 +58,7 @@
                                             <label for="nbPlayers">Select number of players</label>
                                             <p style="font-size: 14px; font-weight: bold;">{{toCurrency ../pricePerPlayer}} per player<br><span class="discount">{{toCurrency ../kamaainaDiscountPerPlayer}} off for each Hawaii resident</span></p>
                                             <select class="form-control" hook="update-players" id="nbPlayers" name="nbPlayers" style="width: 100%; max-width: 100%;">
-                                                <option value="0">-- NUMBER OF PLAYERS --</option>
+                                                <option value="0">NUMBER OF PLAYERS</option>
                                                 {{#each nbPlayersOptions}}
                                                     <option value="{{this}}" {{selected this ../nbPlayers}}>{{this}} players</option>
                                                 {{/each}}
@@ -82,6 +82,7 @@
                         <!-- TIME SELECTION -->
                         {{#if reservation}}
                             {{#if reservation.room.available}}
+
                                 {{#with reservation}}
 
                                     <div class="col-xs-12 col-md-6">
@@ -185,7 +186,7 @@
                                                     <label for="nbKamaaina">Kama'aina Discount</label>
                                                     <p>How many Hawai'i residents in your party? Hawai'i residents each get $5 off. HAWAII ID REQUIRED.</p>
                                                     <select class="form-control" hook="update-reservation" id="nbKamaaina" name="nbKamaaina" style="width: 100%">
-                                                        <option value="0">-- SELECT NUMBER OF HAWAII RESIDENTS --</option>
+                                                        <option value="0"> SELECT NUMBER OF HAWAII RESIDENTS </option>
                                                         {{#each kamaainaPlayersOptions}}
                                                             <option value="{{this}}" {{selected this ../nbKamaaina}}>{{this}}</option>
                                                         {{/each}}
@@ -416,6 +417,8 @@
                         ERROR. No room / reservation data.
 
                     {{/if}}
+
+
                 </form>
 
                 <!-- SECURE PADLOCK AND CREDIT CARD LOGOS BELOW FORM -->

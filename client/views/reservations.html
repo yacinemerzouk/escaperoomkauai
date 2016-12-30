@@ -60,7 +60,7 @@
 
                                         {{#with game}}
 
-                                            {{#if isBlocked}}
+                                            {{#if blocked}}
                                                 <div class="label label-danger" style="font-size: 16px; position:relative; bottom: 1px; display: block; padding: 9px 0 10px 0">BLOCKED &nbsp;&bull;&nbsp; <a href="#" style="color:#FFF; text-decoration: underline;" hook="unblock-time" hook-data-date="{{../../../date}}" hook-data-time="{{time}}"  hook-data-roomid="{{../_id}}">UNBLOCK IT</a></div>
                                             {{else}}
                                                 <div class="label label-info" style="font-size: 16px; position:relative; bottom: 1px; display: block; padding: 9px 0 10px 0; margin-bottom: 10px">BOOKED &nbsp;&bull;&nbsp; <a href="{{pathFor 'game' roomId=roomId date=date time=time}}" style="color:#FFF; text-decoration: underline;">GAME MASTER</a></div>
@@ -127,7 +127,7 @@
                                     <fieldset style="margin-bottom: 30px">
                                         <legend style="width: auto; padding-right: 10px">
                                             {{roomTitle roomId}}&nbsp;&bull;&nbsp;
-                                            {{#if isBlocked}}
+                                            {{#if blocked}}
                                                 <a href="#" class="red pull-right" style="" hook="unblock-time" hook-data-date="{{date}}" hook-data-time="{{time}}">Unblock</a>
                                             {{else}}
                                                 {{#if reservations}}
@@ -135,7 +135,8 @@
                                                 {{/if}}
                                             {{/if}}
                                         </legend>
-                                        {{#if isBlocked}}
+                                        {{#if blocked}}
+
                                             <div class="label label-danger" style="font-size: 16px; position:relative; bottom: 1px; display: block; padding: 9px 0 10px 0">BLOCKED</div>
 
                                         {{else}}
@@ -175,7 +176,7 @@
                                 {{/each}}
                             {{/if}}
 
-                            <!--{{#if isBlocked}}-->
+                            <!--{{#if blocked}}-->
                                 <!--<div class="label label-danger pull-right" style="font-size: 16px; position:relative; bottom: 1px;">Blocked</div>-->
                                 <!--<a href="#" class="red pull-right" style="padding-right: 10px;" hook="unblock-time" hook-data-date="{{date}}" hook-data-time="{{time}}">Unblock</a>-->
                             <!--{{else}}-->
@@ -185,7 +186,7 @@
                                 <!--{{/if}}-->
                             <!--{{/if}}-->
 
-                        <!--{{#unless isBlocked}}-->
+                        <!--{{#unless blocked}}-->
                             <!--{{#each games}}-->
                                 <!--{{#if reservations}}-->
                                     <!--<fieldset style="margin-bottom: 30px">-->
