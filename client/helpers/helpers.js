@@ -28,7 +28,7 @@ UI.registerHelper('activeFlag', function( routeName ) {
 UI.registerHelper('canBook', function( roomId, date, time ) {
 
     var spotsLeft = Bolt.spotsLeft(roomId, date, time);
-    console.log( 'CAN BOOK', roomId, date, time, spotsLeft );
+    // console.log( 'CAN BOOK', roomId, date, time, spotsLeft );
 
     return spotsLeft >= 2;
 

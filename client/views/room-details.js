@@ -74,10 +74,10 @@ Template.room.onCreated(function(){
                         "$0.00";
                     Meteor.call('sendAdminNotificationSMS', SMSString, function(error,response){
                         if( error ) {
-                            // console.log( error );
+                            // //console.log( error );
                             new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
                         }else{
-                            // console.log( response );
+                            // //console.log( response );
                         }
 
                     });
@@ -195,16 +195,16 @@ Template.room.onCreated(function(){
                                     "$" + reservation.total;
                                 Meteor.call('sendAdminNotificationSMS', SMSString, function(error,response){
                                     if( error ) {
-                                        // console.log( error );
+                                        // //console.log( error );
                                         new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
                                     }else{
-                                        // console.log( response );
+                                        // //console.log( response );
                                     }
 
                                 });
 
                                 $('.processing-bg').hide();
-                                // console.log( 'track res', trackRes, {
+                                // //console.log( 'track res', trackRes, {
                                 //     checkout_id: reservation.publicId,
                                 //     order_id: reservation._id,
                                 //     affiliation: 'Kauai Escape Room',
@@ -253,10 +253,13 @@ Template.room.onRendered(function(){
 
 
     var self = this;
+    var r = new Bolt.Reservation( Session.get('reservation') || {room: this.data, date:Epoch.dateObjectToDateString(new Date())} );
+    r.time = "";
+    Session.set('reservation',r);
 
     this.autorun(function() {
 
-        console.log( 'STARTING AUTORUN FOR NEW SUBS' );
+        //console.log( 'STARTING AUTORUN FOR NEW SUBS' );
         // var date = Session.get('roomCalendarDay');
         var reservation = new Bolt.Reservation( Session.get('reservation') || {room: this.data, date:Epoch.dateObjectToDateString(new Date())} );
         var date;
@@ -271,11 +274,11 @@ Template.room.onRendered(function(){
             date,
             {
                 onReady: function () {
-                    console.log('reservations ready');
+                    //console.log('reservations ready');
                     Session.set('calendarReservationsReady', true);
                 },
                 onError: function(){
-                    console.log('error in reservations subscription');
+                    //console.log('error in reservations subscription');
                 }
             }
         );
@@ -284,11 +287,11 @@ Template.room.onRendered(function(){
             date,
             {
                 onReady: function () {
-                    console.log('games ready');
+                    //console.log('games ready');
                     Session.set('calendarGamesReady', true);
                 },
                 onError: function(){
-                    console.log('error in games subscription');
+                    //console.log('error in games subscription');
                 }
             }
         );
@@ -308,21 +311,25 @@ Template.room.onRendered(function(){
         Meteor.subscribe( 'pastGameResults', reservation.room.slug );
 
         var minDate = Epoch.dateObjectToDateString(new Date());
-        //console.log( minDate );
+        ////console.log( minDate );
         if( reservation.room && reservation.room.openingDate && reservation.room.openingDate > minDate ){
             minDate = reservation.room.openingDate;
         }
         if( reservation.date < reservation.room.openingDate ){
             reservation.date = reservation.room.openingDate;
         }
-        var maxDate = '2017-12-31';
-        if( reservation.room && reservation.room.maxDate ){
-            maxDate = reservation.room.maxDate;
+        var closingDate = '2017-12-31';
+        // if( reservation.room._id == "PFkTRYQ8kqfJzZRmP" ){
+        //     closingDate = '2017-01-10';
+        // }
+        if( reservation.room && reservation.room.closingDate ){
+            closingDate = reservation.room.closingDate;
         }
+        console.log( 'Closing Date:', closingDate );
 
         $('#datepicker').datepicker({
             minDate: minDate,
-            maxDate: maxDate,
+            maxDate: closingDate,
             dateFormat: 'yy-mm-dd',
             defaultDate: reservation.date,
             onSelect: function (dateText, inst) {
@@ -338,13 +345,12 @@ Template.room.onRendered(function(){
                 Session.set('reservation', reservation);
                 // Router.go('roomByDate',{slug:reservation.room.slug,date:dateText});
                 //Router.go('/room/'+reservation.room.slug+'/'+dateText+'#booknow');
-                // console.log('Route change?');
+                // //console.log('Route change?');
             }
         });
 
         // Make sure we don't carry time when switching rooms, pages
         if( reservation ){
-            reservation.time = "";
             if( Session.get('selectedTimeFromCalendar') ){
                 var t = Session.get('selectedTimeFromCalendar');
                 reservation.time = t;
@@ -372,6 +378,7 @@ Template.room.helpers({
     },
 
     reservation: function(){
+        console.log( 'Running reservation helper' );
         return Session.get( 'reservation' );
     },
 
@@ -399,7 +406,7 @@ Template.room.helpers({
                 }
             }
         }
-        // //console.log('nbPlayersOptions', this, nbPlayersOptions);
+        // ////console.log('nbPlayersOptions', this, nbPlayersOptions);
         return nbPlayersOptions;
     },
     kamaainaPlayersOptions: function(){
@@ -431,13 +438,13 @@ Template.room.helpers({
             var day = Bolt.getAdminDay(reservation.date);
             var startTimes = [];
             _.each(day.times,function(t){
-                console.log(t);
+                //console.log(t);
                 startTimes.push(t.time);
             })
-            console.log('NEW START TIMES',startTimes);
+            //console.log('NEW START TIMES',startTimes);
             return startTimes;
         }else{
-            console.log('Subscriptions not ready');
+            //console.log('Subscriptions not ready');
 
             return false
         }
@@ -454,13 +461,13 @@ Template.room.helpers({
     //         var reservation = Session.get('reservation');
     //         reservation.startTimes = [];
     //         _.each(day.times,function(t){
-    //             console.log(t);
+    //             //console.log(t);
     //             reservation.startTimes.push(t.time);
     //         })
-    //         console.log('RESERVATION WITH NEW START TIMES',reservation);
+    //         //console.log('RESERVATION WITH NEW START TIMES',reservation);
     //         Session.set('reservation',reservation);
     //     }else{
-    //         console.log('Subscriptions not ready');
+    //         //console.log('Subscriptions not ready');
     //
     //         return false
     //     }
@@ -533,6 +540,7 @@ Template.room.events({
             reservation.time = $(evt.currentTarget).attr('hook-data');
             Session.set( 'reservation',reservation );
         }
+        console.log('time set', reservation);
     },
     // 'change [hook="nbPlayers"]': function(evt,tmpl){
     //     var nbPlayers = $(evt.currentTarget).val();
