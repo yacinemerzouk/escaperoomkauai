@@ -319,14 +319,14 @@ Template.roomByDate.onRendered(function(){
         if( reservation.date < reservation.room.openingDate ){
             reservation.date = reservation.room.openingDate;
         }
-        var maxDate = '2017-12-31';
-        if( reservation.room && reservation.room.maxDate ){
-            maxDate = reservation.room.maxDate;
+        var closingDate = '2017-12-31';
+        if( reservation.room && reservation.room.closingDate ){
+            closingDate = reservation.room.closingDate;
         }
 
         $('#datepicker').datepicker({
             minDate: minDate,
-            maxDate: maxDate,
+            closingDate: closingDate,
             dateFormat: 'yy-mm-dd',
             defaultDate: reservation.date,
             onSelect: function (dateText, inst) {
