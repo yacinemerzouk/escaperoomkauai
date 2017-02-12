@@ -1,4 +1,4 @@
-/**
+    /**
  * Game class
  * @param args : MongoDB ID or object
  * @constructor
@@ -13,19 +13,28 @@ Bolt.Game = function( args ){
 
         // Grab data from DB
         data = Bolt.Collections.Games.findOne( args );
+        // console.log( 'string', data );
 
     // Data was provided
-    }else if( typeof( args ) == 'object' && args.date && args.time && args.roomId ){
+    }else if( typeof( args ) == 'object' && args.date && args.roomId ){
 
-
-        // Set properties of object with db data or straight up data
-        var game = Bolt.Collections.Games.findOne({roomId: args.roomId, date:args.date,time:args.time});
-        if( game ){
-            data = game;
-        }else{
+        if( args.time ) {
+            // Set properties of object with db data or straight up data
+            var game = Bolt.Collections.Games.findOne({roomId: args.roomId, date: args.date, time: args.time});
+            if (game) {
+                data = game;
+            } else {
+                data = args;
+            }
+        }else {
             data = args;
         }
 
+        // Nothing provided; throw error
+    }else if( typeof( args ) == 'object' && args.reservationPublicId  ){
+
+        data = Bolt.Collections.Games.findOne({"reservations.publicId": parseInt( args.reservationPublicId ) });
+        //console.log( 'Building Game from resId',  args, data );
         // Nothing provided; throw error
     }else{
         throw new Meteor.Error( '|Bolt|Game|constructor', 'Cannot create GAME object without data or id.' );
@@ -33,47 +42,6 @@ Bolt.Game = function( args ){
 
     // Set properties of object
     this.populate(data);
-
-    // Grab reservations for this game
-    var reservations = Bolt.Collections.Reservations.find(
-        {
-            roomId: this.roomId,
-            time: this.time,
-            date: this.date,
-            canceled: {
-                $ne: true
-            }
-        }
-    ).fetch();
-
-
-    this.reservations = reservations;
-
-    // Check whether this game slot has been blocked by admins
-    // If a reservation has prop blocked => true, then it's blocked
-    var blocked = false;
-    var closeRoom = false;
-    if( this.reservations && this.reservations.length > 0 ){
-        _.each(reservations,function(reservation){
-            if( reservation.blocked == true ){
-                blocked = true;
-            }
-            if( reservation.closeRoom == true ){
-                closeRoom = true;
-            }
-        });
-    }
-
-    var room = Bolt.Collections.Rooms.findOne(this.roomId);
-    var maxPlayers = parseInt( room.maxPlayers );
-    var nbPlayers = parseInt( this.getNbPlayers() );
-    if( nbPlayers == maxPlayers || nbPlayers == maxPlayers - 1 || blocked || closeRoom ){
-        this.spotsLeft = 0;
-    }else{
-        this.spotsLeft = maxPlayers - nbPlayers
-    }
-
-    this.blocked = blocked;
 
 }
 
@@ -99,15 +67,16 @@ Bolt.Game.prototype.save = function(){
     var result;
 
     var dataToSave = {
+        roomId: this.roomId,
+        userId: this.userId,
         date: this.date,
         time: this.time,
-        roomId: this.roomId,
         blocked: this.blocked ? true : false,
-        room: this.room,
         messages: this.messages ? this.messages : [],
         timeLog: this.timeLog ? this.timeLog : "",
         players: this.players ? this.players : [],
-        followUpEmailSent: this.followUpEmailSent ? this.followUpEmailSent : false
+        followUpEmailSent: this.followUpEmailSent ? this.followUpEmailSent : false,
+        reservations: this.reservations || []
     };
     if( this.won === true || this.won === false ){
         dataToSave.won = this.won;
@@ -121,10 +90,21 @@ Bolt.Game.prototype.save = function(){
     // No ID; means trip is not in DB; insert document into DB
     }else{
 
-        result = this.create( dataToSave );
+        // Check for "any" game
+        var gameCheck = new Bolt.Game({
+            roomId: 'any',
+            date: this.date,
+            time: this.time
+        });
+        if( gameCheck._id ){
+            this._id = gameCheck._id;
+            result = this.update(dataToSave);
+        }else{
+            result = this.create( dataToSave );
+        }
+
 
     }
-    //console.log( 'GAME SAVE?', this, result );
     return result;
 
 }
@@ -212,6 +192,7 @@ Bolt.Game.prototype.addPlayers = function( players ){
 
         // Add player
         game.addPlayer( player );
+
     });
 }
 
@@ -284,13 +265,152 @@ Bolt.Game.prototype.getNbPlayers = function(){
         // Loop over reservations
         _.each(this.reservations,function(reservation){
 
-            // Add number of players
-            nbPlayers = nbPlayers + parseInt(reservation.nbPlayers);
-
+            if( reservation.canceled !== true ) {
+                // Add number of players
+                nbPlayers = nbPlayers + parseInt(reservation.nbPlayers);
+            }
         });
     }
 
     // Return number of players
     return nbPlayers;
+
 }
 
+/**
+ * Get nb of available player spots left for game; subtracts nb of players from all reservations in game from max players for room
+ * @returns {number}
+ */
+Bolt.Game.prototype.getNbAvailableSpots = function(){
+    var room = new Bolt.Room( this.roomId );
+    // console.log('getting nb avail spots', this.roomId, this.getNbPlayers() );
+    return parseInt( room.maxPlayers ) - this.getNbPlayers();
+}
+
+Bolt.Game.prototype.canBeClosed = function( nbPlayers ){
+    if( !nbPlayers ){
+        return false;
+    }
+    if( this.reservations && this.reservations.length != 0 ){
+        return false;
+    }
+    var room = new Bolt.Room( this.roomId );
+    if( nbPlayers >= room.maxPlayers - 1 ){
+        return false;
+    }
+
+    return true;
+
+}
+
+Bolt.Game.prototype.canBeBooked = function( nbPlayers ){
+    // console.log( 'canBeBooked', this );
+    var room = new Bolt.Room( this.roomId );
+    if( !this.reservations || this.reservations.length == 0 ){
+        return true;
+    }else if( this.reservations.length > 0 ) {
+        // console.log( 'IN RES ARRAY' );
+        var closeRoom = false;
+        var totalPlayers = this.getNbPlayers();
+        _.each( this.reservations, function( reservation ){
+            if( reservation.closeRoom ){
+                closeRoom = true;
+            }
+        });
+        // console.log( 'IN RES ARRAY', closeRoom, totalPlayers, room.maxPlayers );
+        if( closeRoom || totalPlayers >= room.maxPlayers - 1 ){
+            return false;
+        }else{
+            return true;
+        }
+    }else{
+        return false;
+    }
+
+
+
+}
+
+Bolt.Game.prototype.addReservation = function( reservation ){
+    if( !this.reservations ){
+        this.reservations = [];
+    }
+    if(!reservation.publicId){
+        reservation.publicId = Math.floor(10000000 + Math.random() * 90000000);
+    }
+    if(!reservation.paid){
+        reservation.paid = 0;
+    }
+    if(!reservation.due){
+        reservation.due = parseFloat( reservation.total ).toFixed(2);
+    }
+    this.reservations.push(
+        _.pick(
+            reservation,
+            'publicId',
+            'roomId',
+            'nbPlayers',
+            'date',
+            'time',
+            'firstName',
+            'lastName',
+            'email',
+            'phone',
+            'closeRoom',
+            'nbKamaaina',
+            'source',
+            'room',
+            'total',
+            'transactions',
+            'due',
+            'paid'
+        )
+    );
+    return reservation.publicId;
+}
+
+Bolt.Game.prototype.updateReservation = function( args ){
+    var publicId = args.publicId;
+
+    _.each( this.reservations, function( reservation ){
+        if( reservation.publicId == publicId ){
+            console.log( 'RESERVATION BEFORE UPDATE', reservation );
+            console.log( 'DATA FOR UPDATE', args );
+            reservation = _.extend( reservation, args );
+            reservation.due = ( parseFloat( reservation.total ) - parseFloat( reservation.paid ) ).toFixed(2);
+            console.log( 'RESERVATION AFTER UPDATE', reservation );
+        }
+    });
+}
+
+Bolt.Game.prototype.addTransaction = function( args ){
+    var publicId = args.reservationPublicId;
+    _.each( this.reservations, function( reservation ){
+        if( reservation.publicId == publicId ){
+            console.log( reservation );
+            if( !reservation.transactions ){
+                reservation.transactions = [];
+            }
+
+            // Add transaction details
+            reservation.transactions.push(args);
+
+            // Update amount paid
+            if( !reservation.paid ){
+                reservation.paid = 0;
+            }
+            reservation.paid = ( parseFloat( reservation.paid ) + parseFloat( args.amount ) ).toFixed(2);
+
+            // Update amount due
+            if( !reservation.due && reservation.due !== 0 ){
+                reservation.due = reservation.total;
+            }
+            reservation.due = ( parseFloat( reservation.due ) - parseFloat( args.amount ) ).toFixed(2);
+
+        }
+    });
+
+    console.log( 'In addTransaction', args, this );
+
+
+}

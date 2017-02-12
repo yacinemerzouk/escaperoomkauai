@@ -1,13 +1,6 @@
 <template name="adminSettings">
 
-    <div class="hero hero-home-bg room-box-bg-mad-scientist">
-        <div class="overlay">
-            <div class="content">
-                <h1>Settings</h1>
-            </div>
-        </div>
-    </div>
-
+    <h1>Settings</h1>
 
     {{#if currentUser}}
         <div class="container-fluid" style="margin: 40px auto;">
@@ -20,4 +13,5 @@
     {{else}}
         {{> loginButtons}}
     {{/if}}
+
 </template>

@@ -1,27 +1,40 @@
 <template name="adminScheduleDay">
 
     <div class="day">
-        <div class="date">
-            {{date}}
-        </div>
 
+        <div class="date">
+            {{this.date}}
+        </div>
 
         <div class="games">
             {{#each games}}
-                <a href="#">
-                    <div class="game booked">
-                        {{time}}<br>
-                        {{roomTitle roomId}}<br>
-                        X Players
-                    </div>
-                </a>
+                {{#if canBeBooked this}}
+                    <a href="#" hook="edit-game" hook-data="{{_id}}">
+                        <div class="game available">
+                            {{time}}<br>
+                            {{roomTitle roomId}}<br>
+                            {{calculateNbPlayers this}} Players
+                        </div>
+                    </a>
+                {{else}}
+                    <a href="#" hook="edit-game" hook-data="{{_id}}">
+                        <div class="game booked">
+                            {{time}}<br>
+                            {{roomTitle roomId}}<br>
+                            {{calculateNbPlayers this}} Players
+                        </div>
+                    </a>
+                {{/if}}
             {{/each}}
         </div>
+
         <div class="add-game">
-            <a href="#">
+            <a href="#" hook="add-game" hook-data="{{date}}">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i> ADD GAME
             </a>
         </div>
+
     </div>
 
 </template>
+

@@ -1,0 +1,96 @@
+<template name="calendarFormEditGame">
+    <div class="calendarFormContainer">
+        <div class="calendar-form-background" hook="calendar-form-background"></div>
+        <form hook="edit-game-form" class="calendarForm">
+            <div class="calendar-form-close" hook="calendar-form-close">CLOSE</div>
+            <h2 class="subheading" style="margin-top: 0">Edit Game</h2>
+
+            <div class="form-group">
+                <label>Game Master</label>
+                <select name="userId" class="form-control">
+                    <option value="0">---</option>
+                    {{#each gameMaster in gameMasters}}
+                        <option value="{{id}}" {{selected gameMaster._id gameData.userId}}>{{gameMaster.username}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Room</label>
+                <select name="roomId" class="form-control">
+                    <option value="any">Any Game GM is trained for</option>
+                    {{#each roomsList}}
+                        {{#if isSelected}}
+                            <option value="{{_id}}" selected="selected">{{title}}</option>
+                        {{else}}
+                            <option value="{{_id}}">{{title}}</option>
+                        {{/if}}
+                    {{/each}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Date</label>
+                <input hook="edit-game-datepicker" type="text" name="date" class="form-control" value="{{gameData.date}}">
+            </div>
+            <div class="form-group">
+                <label>Time</label>
+                <select name="time" class="form-control">
+                    {{#each timesList}}
+                        {{#if isSelected}}
+                            <option selected>{{time}}</option>
+                        {{else}}
+                            <option>{{time}}</option>
+                        {{/if}}
+                    {{/each}}
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label>Reservations</label>
+                {{#if gameData.reservations}}
+                    {{#each gameData.reservations}}
+                        <div style="padding: 10px; background: #ccc; margin-bottom: 5px;">
+                            {{#if canceled}}
+                                <div class="label label-danger text-center" style="font-size: 16px; width: 100%; display: block">CANCELED</div>
+                            {{/if}}
+                            Reservation #{{publicId}}
+                            &bull; <a href="{{pathFor 'confirmation' _id=publicId}}" target="_blank">View</a>
+                            &bull; <a href="#" hook="edit-reservation" hook-data-reservation-id="{{publicId}}">Edit</a>
+                            &bull; <a href="#" hook="cancel-reservation" hook-data-id="{{publicId}}">Cancel</a><br>
+                            {{firstName}} {{lastName}} &bull; {{nbPlayers}} Players<br>
+                            {{#if transactions}}
+                                Transactions List:
+                                <ul style="padding-left: 17px; margin-bottom: 2px">
+                                    {{#each transactions}}
+                                        <li>
+                                            Trans. #{{ccTransaction.id}} &bull; {{amount}} &bull; <a href="#" hook="show-refund" hook-data="{{ccTransaction.id}}">Refund</a>
+                                            <div hook="refund-{{ccTransaction.id}}" style="display: none">
+                                                $<input type="text" style="width:50px;" hook="refund-amount-{{ccTransaction.id}}"><a href="#" hook="issue-refund" hook-data="{{ccTransaction.id}}" hook-data-reservation="{{../publicId}}" style="padding: 3px 5px; font-size: 12px; background: #660000; color: #fff;">Refund</a>
+                                            </div>
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                            {{/if}}
+                            {{#if isZero due}}
+                                <span class="label label-success">PAID IN FULL</span>
+                            {{else}}
+                                <span class="label label-danger" style="font-size: 14px">{{toCurrency due}} DUE </span> &nbsp;
+                                <a href="#" hook="add-payment" hook-data="{{publicId}}">Add Payment</a>
+                            {{/if}}
+                        </div>
+                    {{/each}}
+                {{else}}
+                    No reservations yet...
+                {{/if}}
+
+                <a href="#" hook="add-reservation">Add Reservation</a>
+
+            </div>
+
+
+            <input type="hidden" value="{{gameData._id}}" name="_id">
+            <input type="submit" value="Save" class="btn btn-block button">
+        </form>
+    </div>
+</template>

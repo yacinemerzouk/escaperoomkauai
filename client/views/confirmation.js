@@ -8,6 +8,20 @@ Template.confirmation.rendered = function(){
 }
 
 Template.confirmation.helpers({
+    // game: function(){
+    //     var gameObject = new Bolt.Game( this.publicId );
+    //     console.log( 'GAME', gameObject );
+    //     return gameObject;
+    // },
+    reservation: function(){
+        var resObject = new Bolt.Reservation(parseInt(this.publicId));
+        // console.log( 'RESERVATION', resObject );
+        var gameObject = new Bolt.Game( {reservationPublicId: parseInt(this.publicId) } );
+        resObject.game = gameObject;
+        // console.log( 'GAME', gameObject );
+        resObject.game = gameObject;
+        return resObject;
+    },
     total: function(){
         return ( this.transaction.amount / 100 ).toFixed(2);
     },

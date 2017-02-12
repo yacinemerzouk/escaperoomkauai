@@ -164,7 +164,7 @@ label{
 	position: fixed;
 	top: 0;
 	left: 0;
-	background: #FFF;
+	background: none;
 	z-index: 9999;
 }
 
@@ -199,7 +199,25 @@ label{
 
 // Notifications styling -- see gfk:notifications
 ul.notifications {
+	width: 100%;
 	position: fixed;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	left: 0;
+	li{
+		margin-top: 0;
+		border-radius: 0;
+		border-bottom: 1px solid #fff;
+	}
+	li.success{
+		background: darkgreen;
+	}
+	li.notification div.closeButton{
+		top: 2px;
+		right: 17px;
+		font-size: 30px;
+	}
 }
 
 // Calendar styles

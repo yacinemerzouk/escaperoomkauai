@@ -61,15 +61,30 @@ Template.roomsCalendar.helpers({
             console.log( 'Everything NOT ready; returning false' );
             return false;
         }
+    },
+    canBeBooked: function( gameData ){
+        var game = new Bolt.Game( gameData );
+        return game.canBeBooked( 0 );
+    },
+    calculateSpotsLeft: function( gameData ){
+        var game = new Bolt.Game( gameData );
+        return game.getNbAvailableSpots();
     }
 });
 
 Template.roomsCalendar.events({
     'click [hook="set-time"]': function(evt,tmpl){
-        // evt.preventDefault();
-        Session.set( 'selectedTimeFromCalendar', $(evt.currentTarget).attr('hook-data') );
-        console.log( "SETTING TIME FOR CALENDAR", evt.currentTarget );
+        evt.preventDefault();
+        var date = $(evt.currentTarget).attr('hook-data-date');
+        var time = $(evt.currentTarget).attr('hook-data-time');
+        var roomId = $(evt.currentTarget).attr('hook-data-room-id');
+        var room = new Bolt.Room(roomId);
+        Session.set('userSelections', {date:date,time:time,roomId:roomId});
+        console.log('CALENDAR ROOM',room);
+        // Session.set( 'selectedTimeFromCalendar', $(evt.currentTarget).attr('hook-data') );
+        // console.log( "SETTING TIME FOR CALENDAR", evt.currentTarget );
         // Router.go( url );
+        Router.go('room',{slug:room.slug});
     },
     'click [hook="add-day"]': function(evt,tmpl){
         // console.log(Session.get('calendarDay'),'Adding 1 day',Epoch.addDaysToDate(1, Session.get('calendarDay')));

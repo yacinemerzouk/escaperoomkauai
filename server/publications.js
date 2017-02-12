@@ -1,8 +1,49 @@
 /**
+ * GAME MASTERS: publish all rooms, all data
+ */
+Meteor.publish('gameMasters', function(){
+    var gameMasters = Meteor.users.find({},{fields:{profile:1,username:1}});
+    return gameMasters;
+});
+
+/**
  * ROOMS: publish all rooms, all data
  */
 Meteor.publish('rooms', function(){
     var rooms = Bolt.Collections.Rooms.find({},{sort:{order:1}});
+    return rooms;
+});
+
+/**
+ * ROOMS: publish all rooms, basic data
+ */
+Meteor.publish('roomsMeta', function(){
+    var rooms = Bolt.Collections.Rooms.find(
+        {},
+        {
+            fields: {
+                title: 1,
+                opening: 1,
+                startTimes: 1,
+                slug: 1,
+                duration: 1,
+                pricePerPlayer: 1,
+                priceToClose: 1,
+                minPlayers: 1,
+                maxPlayers: 1,
+                successRate: 1,
+                available: 1,
+                order: 1,
+                kamaainaDiscountPerPlayer: 1,
+                openingDate: 1
+            }
+        },
+        {
+            sort:{
+                order:1
+            }
+        }
+    );
     return rooms;
 });
 
@@ -186,12 +227,10 @@ Meteor.publish('futureGames', function(){
 
 });
 
-Meteor.publish('game',function( roomId, date, time ){
+Meteor.publish('game',function( gameId ){
     var games = Bolt.Collections.Games.find(
         {
-            date: date,
-            time: time,
-            roomId: roomId
+            _id: gameId
         }
     );
     return games;

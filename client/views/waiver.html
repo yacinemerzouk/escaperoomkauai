@@ -14,28 +14,17 @@
 
                         <!-- GAME INFO -->
                         <div class="form-group col-xs-12">
-                            <label for="name">Game</label>
-                            <select class="form-control" hook="room" name="room" id="room">
+                            <label for="game">Game</label>
+                            <select class="form-control" hook="game" name="game" id="game">
                                 <option value="0">--- SELECT GAME ---</option>
-                                {{#each rooms}}
-                                    <option value="{{_id}}">{{title}}</option>
+                                {{#each games}}
+                                    <option value="{{_id}}">{{roomTitle roomId}} @ {{time}}</option>
                                 {{/each}}
                             </select>
                         </div>
 
-                        <!-- TIME SLOT -->
-                        <div class="form-group col-xs-12">
-                            {{#if boltUI.waiver.room}}
-                                <label for="name">Start time</label>
-                                <select class="form-control" name="time" id="time">
-                                    <option value="0">--- SELECT TIME ---</option>
-                                    {{#each allTimes}}
-                                        <option>{{this}}</option>
-                                    {{/each}}
-                                </select>
-                            {{/if}}
-                        </div>
                     </div>
+
 
                     <!-- PLAYER INFO -->
                     <div class="row">
@@ -43,68 +32,87 @@
                             <label for="name">Full Name</label>
                             <input type="text" class="form-control" name="name" id="name">
                         </div>
-                        <div class="form-group col-xs-12">
-                            <label for="email">Email Address</label>
-                            <input type="email" class="form-control" name="email" id="email">
+                    </div>
+
+
+                    <div class="row">
+
+                        <!-- AGREE TO WAIVER -->
+                        <div class="form-group  col-xs-12">
+                            <label for="adult" style="border:none">
+                                <input hook="adult" type="checkbox" id="adult" name="adult" style="transform:scale(2, 2); position: relative; left: 7px;">
+                                <span style="position:relative; left: 17px;">I am 18 years of age or older</span>
+                            </label>
                         </div>
                     </div>
 
-                    <!-- WAIVER -->
-                    <div class="form-group">
+                    <div hook="adult-form" class="adultForm">
 
-                        <label for="terms">ACCIDENT WAIVER AND RELEASE OF LIABILITY</label>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control" name="email" id="email">
+                            </div>
+                        </div>
 
-                        <p style='font-size: 14px; line-height:24px; font-family: Menlo, Monaco, Consolas, "Courier New", monospace'>ALL OF THE RISKS OF PARTICIPATING IN ANY/ALL ACTIVITIES ASSOCIATED WITH THIS KAUAI ESCAPE ROOM EVENT, including by way of example and not limitation, any risks that may arise from negligence or carelessness on the part of the persons or entities being released, from dangerous or defective equipment or property owned, maintained, or controlled by them, or because of their possible liability without fault.
+                        <!-- AGREE TO WAIVER -->
+                        <div class="form-group">
+                            <label for="agree" style="border:none">
+                                <input type="checkbox" id="agree" name="agree" style="transform:scale(2, 2); position: relative; left: 7px;">
+                                <span style="position:relative; left: 17px;">I agree to the terms of the <a href="#" hook="toggle-legalese" class="btn-link" style="font-weight: bold; text-decoration: underline">Kauai Escape Room ACCIDENT WAIVER AND RELEASE OF LIABILITY</a></span>
+                            </label>
+                        </div>
 
-I certify that I understand this activity has potential risks including but not limited to:
+                        <!-- WAIVER -->
+                        <div class="form-group legalese" hook="legalese">
 
-Use of simple tools;
+                            <label for="terms">ACCIDENT WAIVER AND RELEASE OF LIABILITY</label>
 
-Potentially moving or lifting objects of not more than twenty pounds;
+                            <p style='font-size: 14px; line-height:24px; font-family: Menlo, Monaco, Consolas, "Courier New", monospace'>ALL OF THE RISKS OF PARTICIPATING IN ANY/ALL ACTIVITIES ASSOCIATED WITH THIS KAUAI ESCAPE ROOM EVENT, including by way of example and not limitation, any risks that may arise from negligence or carelessness on the part of the persons or entities being released, from dangerous or defective equipment or property owned, maintained, or controlled by them, or because of their possible liability without fault.
 
-Mental stress and anxiety;
+                                I certify that I understand this activity has potential risks including but not limited to:
 
-Being in a reasonably small space with up to 5 persons;
+                                Use of simple tools;
 
-Possibility of failure to win the games offered by KAUAI ESCAPE ROOM in the allotted time.
+                                Potentially moving or lifting objects of not more than twenty pounds;
 
-I have no physical or mental illness that precludes my participation in a safe manner for myself or others. I am not under the influence of drugs or alcohol which impairs my ability to maintain my safety awareness or endangers others.
+                                Mental stress and anxiety;
 
-I acknowledge that this Accident Waiver and Release of Liability Form will be used by the organizers of the activity in which I may participate, and that it will govern my actions and responsibilities at said activity. I agree that all staff or authorized agents may, in their sole discretion, determine it is unsafe for myself or others for my participation to continue, remove me from the premises by any lawful means.
+                                Being in a reasonably small space with up to 5 persons;
 
-In consideration of my application and permitting me to participate in this activity, I hereby take action for myself, my executors, administrators, heirs, next of kin, successors, and assigns as follows:
+                                Possibility of failure to win the games offered by KAUAI ESCAPE ROOM in the allotted time.
 
-(A) I WAIVE, RELEASE, AND DISCHARGE from any and all liability, including but not limited to, liability arising from the negligence or fault of the entities or persons released, for my death, disability, personal injury, property damage, property theft, or actions of any kind which may hereafter occur to me, THE FOLLOWING ENTITIES OR PERSONS:  The directors, officers, employees, volunteers, representatives, and agents of any and all entities authorizing this activity;
+                                I have no physical or mental illness that precludes my participation in a safe manner for myself or others. I am not under the influence of drugs or alcohol which impairs my ability to maintain my safety awareness or endangers others.
 
-(B) INDEMNIFY, HOLD HARMLESS, AND PROMISE NOT TO SUE the entities or persons mentioned in this paragraph from any and all liabilities or claims made as a result of participation in this activity, whether caused by the negligence of release or otherwise.
+                                I acknowledge that this Accident Waiver and Release of Liability Form will be used by the organizers of the activity in which I may participate, and that it will govern my actions and responsibilities at said activity. I agree that all staff or authorized agents may, in their sole discretion, determine it is unsafe for myself or others for my participation to continue, remove me from the premises by any lawful means.
 
-I acknowledge that the directors, officers, employees, volunteers, representatives, and agents of any authorizing entity are NOT responsible for the errors, omissions, acts, or failures to act of any party or entity conducting a specific activity on their behalf.
+                                In consideration of my application and permitting me to participate in this activity, I hereby take action for myself, my executors, administrators, heirs, next of kin, successors, and assigns as follows:
 
-I hereby consent to receive medical treatment which may be deemed advisable in the event of injury, accident, and/or illness during this activity.
+                                (A) I WAIVE, RELEASE, AND DISCHARGE from any and all liability, including but not limited to, liability arising from the negligence or fault of the entities or persons released, for my death, disability, personal injury, property damage, property theft, or actions of any kind which may hereafter occur to me, THE FOLLOWING ENTITIES OR PERSONS:  The directors, officers, employees, volunteers, representatives, and agents of any and all entities authorizing this activity;
 
-I understand while participating in this activity, I may be photographed. I agree to allow my photo, video, or film likeness to be used for any legitimate purpose this authorizing entity decides, and assigns.
+                                (B) INDEMNIFY, HOLD HARMLESS, AND PROMISE NOT TO SUE the entities or persons mentioned in this paragraph from any and all liabilities or claims made as a result of participation in this activity, whether caused by the negligence of release or otherwise.
 
-The Accident Waiver and Release of Liability Form shall be construed broadly to provide a release and waiver to the maximum extent permissible under applicable law.
+                                I acknowledge that the directors, officers, employees, volunteers, representatives, and agents of any authorizing entity are NOT responsible for the errors, omissions, acts, or failures to act of any party or entity conducting a specific activity on their behalf.
 
-I CERTIFY THAT I HAVE READ THIS DOCUMENT AND I FULLY UNDERSTAND ITS CONTENT. I AM AWARE THAT THIS IS A RELEASE OF LIABILITY AND A CONTRACT AND I SIGN IT OF MY OWN FREE WILL.
-                        </p>
+                                I hereby consent to receive medical treatment which may be deemed advisable in the event of injury, accident, and/or illness during this activity.
 
-                    </div>
+                                I understand while participating in this activity, I may be photographed. I agree to allow my photo, video, or film likeness to be used for any legitimate purpose this authorizing entity decides, and assigns.
 
-                    <!-- AGREE TO WAIVER -->
-                    <div class="form-group">
-                        <label for="agree" style="border:none">
-                            <input type="checkbox" id="agree" name="agree" style="transform:scale(2, 2); position: relative; left: 7px;">
-                            <span style="position:relative; left: 17px;">I agree to the terms of the Kauai Escape Room ACCIDENT WAIVER AND RELEASE OF LIABILITY</span>
-                        </label>
-                    </div>
+                                The Accident Waiver and Release of Liability Form shall be construed broadly to provide a release and waiver to the maximum extent permissible under applicable law.
 
-                    <!-- NEWSLETTER SIGNUP -->
-                    <div class="form-group">
-                        <label for="newsletter" style="border:none;">
-                            <input type="checkbox" id="newsletter" name="newsletter" style="transform:scale(2, 2); position: relative; left: 7px;">
-                            <span style="position:relative; left: 17px;">Let me know by email when you have deals, special events, or new games available.</span>
-                        </label>
+                                I CERTIFY THAT I HAVE READ THIS DOCUMENT AND I FULLY UNDERSTAND ITS CONTENT. I AM AWARE THAT THIS IS A RELEASE OF LIABILITY AND A CONTRACT AND I SIGN IT OF MY OWN FREE WILL.
+                            </p>
+
+                        </div>
+
+                        <!-- NEWSLETTER SIGNUP -->
+                        <div class="form-group">
+                            <label for="newsletter" style="border:none;">
+                                <input type="checkbox" id="newsletter" name="newsletter" style="transform:scale(2, 2); position: relative; left: 7px;">
+                                <span style="position:relative; left: 17px;">Let me know by email when you have deals, special events, or new games available.</span>
+                            </label>
+                        </div>
+
                     </div>
 
                     <!-- DO IT -->

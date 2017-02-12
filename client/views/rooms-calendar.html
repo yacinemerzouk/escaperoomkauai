@@ -42,45 +42,55 @@
                         </h2>
 
                         <!-- LOOP OVER POSSIBLE TIME SLOTS -->
-                        {{#each times}}
-
-                            <!-- FOR EACH TIME SLOT, LOOP OVER ROOMS -->
-                            {{#each rooms}}
-
-                                <!-- IF GAME DATA IS AVAILABLE, IT MEANS WE HAVE RESERVATIONS OR THE TIME SLOTS WAS BLOCKED -->
-                                {{#if game}}
+                        {{#if games}}
+                            {{#each games}}
 
 
-                                    {{#with game}}
 
-                                        <!-- DISPLAY NUMBER OF SPOTS LEFT -->
-                                        {{#if this.spotsLeft}}
-                                        <a  hook="set-time" hook-data="{{time}}" href="{{pathFor 'roomByDate' slug=../slug date=date}}" style="text-decoration: none">
+                                <!-- DISPLAY NUMBER OF SPOTS LEFT -->
+                                {{#if canBeBooked this}}
+
+                                    {{#if canChooseRoom roomId}}
+                                        {{#each roomChoices gameId=_id}}
+
+                                            <a  hook="set-time" hook-data-time="{{../time}}" hook-data-date="{{../date}}" hook-data-room-id="{{_id}}" href="#" style="text-decoration: none">
+                                                <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px;">
+                                                    {{../time}} &nbsp;&bull;&nbsp;
+                                                    {{roomTitle _id}} &nbsp;&bull;&nbsp;
+                                                    {{maxPlayers}} Spots left
+
+                                                </div>
+                                            </a>
+
+
+                                            <!--{{roomTitle _id}} &bull; {{maxPlayers}} Spots left-->
+                                        {{/each}}
+                                    {{else}}
+                                        <a  hook="set-time" hook-data-time="{{time}}" hook-data-date="{{date}}" hook-data-room-id="{{roomId}}" href="#" style="text-decoration: none">
                                             <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px;">
-                                                {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; {{this.spotsLeft}} Spots left
+                                                {{time}} &nbsp;&bull;&nbsp;
+                                                {{roomTitle roomId}} &nbsp;&bull;&nbsp;
+                                                {{calculateSpotsLeft this}} Spots left
+
                                             </div>
                                         </a>
-                                        <!-- OR DISPLAY SOLD OUT -->
-                                        {{else}}
-                                            <div class="label label-danger" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
-                                                {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; Sold Out
-                                            </div>
-                                        {{/if}}
+                                    {{/if}}
 
-                                    {{/with}}
-
-                                <!-- NO GAME DATA MEANS TIME SLOT HAS NEVER BEEN BOOKED OR SLOT -->
+                                <!-- OR DISPLAY SOLD OUT -->
                                 {{else}}
-                                    <a  hook="set-time" hook-data="{{../time}}" href="{{pathFor 'roomByDate' slug=slug date=../../date}}" style="text-decoration: none">
-                                        <div class="label label-success" style="text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
-                                            {{../time}} &nbsp;&bull;&nbsp; {{title}} &nbsp;&bull;&nbsp; Book Now
-                                        </div>
-                                    </a>
+                                    <div class="label label-danger" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px">
+                                        {{time}} &nbsp;&bull;&nbsp; {{roomTitle roomId}} &nbsp;&bull;&nbsp; Sold Out
+                                    </div>
                                 {{/if}}
 
-                            {{/each}}
 
-                        {{/each}}
+
+
+
+                            {{/each}}
+                        {{else}}
+                            <p class="text-center">No games scheduled for this day.</p>
+                        {{/if}}
                     </div>
                 {{/with}}
 

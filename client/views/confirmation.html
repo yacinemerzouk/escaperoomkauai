@@ -10,25 +10,25 @@
                 <table class="table table-responsive table-bordered table-striped">
                     <tbody>
                     <tr>
-                        <th>Reservation #{{publicId}}</th>
+                        <th>Reservation #{{reservation.publicId}}</th>
                     </tr>
 
                     <tr>
-                        <td>{{roomTitle roomId}}</td>
+                        <td>{{roomTitle reservation.roomId}}</td>
                     </tr>
                     <tr>
-                        <td>{{humanReadableDate date}} @ {{time}}</td>
+                        <td>{{humanReadableDate reservation.game.date}} @ {{reservation.game.time}}</td>
                     </tr>
                     <tr>
-                        <td>{{nbPlayers}} players</td>
+                        <td>{{reservation.nbPlayers}} players</td>
                     </tr>
                     <tr>
-                        <td>Reserved under {{firstName}} {{lastName}} &nbsp;&bull;&nbsp; {{email}} &nbsp;&bull;&nbsp; {{phone}}</td>
+                        <td>Reserved under {{reservation.firstName}} {{reservation.lastName}} &nbsp;&bull;&nbsp; {{reservation.email}} &nbsp;&bull;&nbsp; {{reservation.phone}}</td>
                     </tr>
 
                     {{#if closeRoom}}
                     <tr>
-                        <td>Closed Room<br>You will play the room with only members of your party of {{nbPlayers}}. No one else can join this time slot.</td>
+                        <td>Closed Room<br>You will play the room with only members of your party of {{reservation.nbPlayers}}. No one else can join this time slot.</td>
                     </tr>
                     {{/if}}
 
@@ -38,30 +38,27 @@
 
                 <table class="table table-responsive table-bordered table-striped">
                     <tbody class="text-right">
-                        <tr>
-                            <th>Credit Card Transaction Number</th>
-                            <td class="currency">{{transaction.id}}</td>
-                        </tr>
+
                         <tr>
                             <th>Amount Charged</th>
-                            <td class="currency">{{toCurrency total}}</td>
+                            <td class="currency">{{toCurrency reservation.total}}</td>
                         </tr>
-                        {{#if adjustments}}
-                            {{#if refund}}
+                        {{#if reservation.adjustments}}
+                            {{#if reservation.refund}}
                             <tr>
                                 <th>Amount Refunded (may take 5-10 days to appear on your statement)</th>
-                                <td class="currency">{{toCurrency refund}}</td>
+                                <td class="currency">{{toCurrency reservation.refund}}</td>
                             </tr>
                             {{/if}}
-                            {{#if extra}}
+                            {{#if reservation.extra}}
                             <tr>
                                 <th>Extra Charges</th>
-                                <td class="currency">{{toCurrency extra}}</td>
+                                <td class="currency">{{toCurrency reservation.extra}}</td>
                             </tr>
                             {{/if}}
                             <tr>
                                 <th>Corrected Amount Charged</th>
-                                <td class="currency">{{toCurrency correctedAmount}}</td>
+                                <td class="currency">{{toCurrency reservation.correctedAmount}}</td>
                             </tr>
                             {{/if}}
                     </tbody>

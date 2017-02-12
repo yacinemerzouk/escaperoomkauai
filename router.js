@@ -19,7 +19,8 @@ Router.configure({
     notFoundTemplate: 'notFound',
     waitOn: function(){
         return [
-            Meteor.subscribe('settings')
+            Meteor.subscribe('settings'),
+            Meteor.subscribe('gameMasters')
         ]
     }
     // waitOn: function(){
@@ -325,8 +326,9 @@ Router.route('/directions', {
 /**
  * Admin Dashboard
  */
-Router.route('/admin', {
-    name: 'admin'
+Router.route('/admin/dashboard', {
+    name: 'adminDashboard',
+    layoutTemplate: 'layoutAdmin'
 });
 
 /**
@@ -334,6 +336,7 @@ Router.route('/admin', {
  */
 Router.route('/admin/rooms', {
     name: 'adminRooms',
+    layoutTemplate: 'layoutAdmin',
     waitOn: function(){
         return [
             Meteor.subscribe('rooms')
@@ -374,6 +377,7 @@ Router.route('/admin/update-room/:_id', {
  */
 Router.route('/admin/settings', {
     name: 'adminSettings',
+    layoutTemplate: 'layoutAdmin',
     data: function(){
         return Bolt.Collections.Settings.findOne({settingType: 'global'});
     }
@@ -414,7 +418,10 @@ Router.route('/admin/schedule', {
     name: 'adminSchedule',
     layoutTemplate: 'layoutAdmin',
     waitOn: function(){
-        return Meteor.subscribe('rooms');
+        return [
+            Meteor.subscribe('futureGames'),
+            Meteor.subscribe('rooms')
+        ]
     }
 });
 
@@ -454,7 +461,8 @@ Router.route('/test', {
  * Admin Calendar - Admin page
  */
 Router.route('/admin/games/calendar', {
-    name: 'adminCalendar'
+    name: 'adminGamesCalendar',
+    layoutTemplate: 'layoutAdmin'
 });
 
 /**
@@ -479,8 +487,8 @@ Router.route('/reservations/:date', {
 /**
  * Coupons
  */
-Router.route('/coupons', {
-    name: 'coupons',
+Router.route('/admin/coupons/list', {
+    name: 'adminCouponsList',
     layoutTemplate: 'layoutAdmin',
     waitOn: function(){
         return [
@@ -513,14 +521,7 @@ Router.route('/gift-cards/purchase-confirmed/:_id',{
  */
 Router.route('/waiver', {
     name: 'waiver',
-    layoutTemplate: 'layoutEmpty',
-    waitOn: function(){
-        return [
-            Meteor.subscribe('rooms'),
-            Meteor.subscribe('reservations'),
-            Meteor.subscribe('games')
-        ]
-    }
+    layoutTemplate: 'layoutEmpty'
 });
 
 /**
@@ -546,15 +547,71 @@ Router.route('/confirmation/:_id', {
     waitOn: function(){
         return [
             Meteor.subscribe('reservation', this.params._id),
-            Meteor.subscribe('rooms')
+            Meteor.subscribe('rooms'),
+            Meteor.subscribe('games')
         ]
     },
     data: function(){
-        return Bolt.Collections.Reservations.findOne(this.params._id);
+        return {
+            publicId: this.params._id
+        }
     }
 });
 
 
+
+/**
+ * Room details
+ */
+// Router.route('/room/:slug', {
+//     name: 'room',
+//     waitOn: function(){
+//         return [
+//             Meteor.subscribe( 'room', this.params.slug )
+//         ]
+//     },
+//     sitemap: true,
+//     changefreq: 'monthly',
+//     priority: '0.9',
+//     ironMeta: true,
+//     meta: function(){
+//         var room =  Bolt.Collections.Rooms.findOne({slug:this.params.slug});
+//         var title, image, description, slug;
+//         if( room ){
+//             title = room.title + ' - Kauai Escape Room';
+//             image = 'https://www.escaperoomkauai.com' + room.image;
+//             description = room.description;
+//         }else{
+//             title = 'Kauai Escape Room';
+//             image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
+//             description = 'An escape game by Kauai Escape Room';
+//         }
+//         return {
+//             title: title,
+//             description: description,
+//             keywords: 'kauai, escape room, escape game, puzzle room',
+//             canonical: 'https://www.escaperoomkauai.com/room/'+this.params.slug,
+//             "og:title": title,
+//             "og:type": 'website',
+//             "og:url": 'https://www.escaperoomkauai.com/room/'+this.params.slug,
+//             "og:description": description,
+//             "og:site_name": 'Kauai Escape Room',
+//             "og:image": image,
+//             "og:image:width": '1200',
+//             "og:image:height": '630',
+//             "twitter:card": 'summary_large_image',
+//             "twitter:site": '@kauaiescaperoom',
+//             "twitter:creator": '@kauaiescaperoom',
+//             "twitter:title": title,
+//             "twitter:description": description,
+//             "twitter:image": image
+//         }
+//     },
+//     data: function(){
+//         var room =  Bolt.Collections.Rooms.findOne({slug:this.params.slug});
+//         return room;
+//     }
+// });
 
 /**
  * Room details
@@ -605,10 +662,13 @@ Router.route('/room/:slug', {
     },
     data: function(){
         var room =  Bolt.Collections.Rooms.findOne({slug:this.params.slug});
-        return room;
+        var settings = Bolt.Collections.Settings.findOne({settingType: 'global'});
+        return {
+            room: room,
+            settings: settings
+        };
     }
 });
-
 
 /**
  * Room details by date
@@ -664,40 +724,43 @@ Router.route('/room/:slug/:date', {
 /**
  * Game management
  */
-Router.route('/game/:roomId/:date/:time', {
-    name: 'game',
+Router.route('/game/play/:_id', {
+    name: 'gamePlay',
+    layoutTemplate: 'layoutAdmin',
     waitOn: function(){
         return [
-            Meteor.subscribe( 'roomById', this.params.roomId ),
-            Meteor.subscribe( 'reservationsForGame', this.params.roomId, this.params.date, this.params.time ),
-            Meteor.subscribe( 'game', this.params.roomId, this.params.date, this.params.time )
+            Meteor.subscribe( 'game', this.params._id ),
+            Meteor.subscribe( 'roomsMeta' )
         ]
     },
     data: function(){
-        var gameData = {
-            date: this.params.date,
-            time: this.params.time,
-            roomId: this.params.roomId
-        };
-        // var game = new Bolt.Game( gameData );
-        // if( !game._id ){
-        //     game.save();
-        // }
-        // if( ! gameData ){
-        //     var gameId = Bolt.Collections.Games.insert({
-        //         slug: 'mad-scientist',
-        //         date: this.data.date,
-        //         time: this.data.time
-        //     });
-        //     gameData = {
-        //         _id: gameId,
-        //         date: this.params.date,
-        //         time: this.params.time
-        //     }
-        // }
-        //var game = Bolt.Collections.Games.findOne( gameData );
-        return gameData;
+        return {_id:this.params._id}
     }
+    // data: function(){
+    //     // var gameData = {
+    //     //     date: this.params.date,
+    //     //     time: this.params.time,
+    //     //     roomId: this.params.roomId
+    //     // };
+    //     // var game = new Bolt.Game( gameData );
+    //     // if( !game._id ){
+    //     //     game.save();
+    //     // }
+    //     // if( ! gameData ){
+    //     //     var gameId = Bolt.Collections.Games.insert({
+    //     //         slug: 'mad-scientist',
+    //     //         date: this.data.date,
+    //     //         time: this.data.time
+    //     //     });
+    //     //     gameData = {
+    //     //         _id: gameId,
+    //     //         date: this.params.date,
+    //     //         time: this.params.time
+    //     //     }
+    //     // }
+    //     //var game = Bolt.Collections.Games.findOne( gameData );
+    //     return gameData;
+    // }
 });
 
 /**

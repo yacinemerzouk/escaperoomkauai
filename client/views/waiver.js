@@ -1,6 +1,37 @@
+Template.waiver.onRendered(function(){
+    Bolt.showLoadingAnimation();
+    var roomsReady = false;
+    var gamesReady = false;
+    Meteor.subscribe(
+        'roomsMeta',
+        {
+            onReady: function(){
+                roomsReady = true;
+                if( roomsReady && gamesReady ) {
+                    Bolt.hideLoadingAnimation();
+                }
+            }
+        }
+    );
+    Meteor.subscribe(
+        'games',
+        Epoch.today(),
+        {
+            onReady: function(){
+                gamesReady = true;
+                if( roomsReady && gamesReady ) {
+                    Bolt.hideLoadingAnimation();
+                }
+            }
+        }
+    );
+});
 Template.waiver.helpers({
     rooms: function(){
         return Bolt.Collections.Rooms.find({available:true});
+    },
+    games: function(){
+        return Bolt.Collections.Games.find();
     },
     boltUI: function(){
         return Session.get('boltUI');
@@ -11,6 +42,22 @@ Template.waiver.helpers({
 });
 
 Template.waiver.events({
+    'click [hook="toggle-legalese"]': function(){
+        var legalese = $('[hook="legalese"]');
+        if( legalese.is(':visible') ){
+            legalese.hide();
+        }else{
+            legalese.show();
+        }
+    },
+    'change [hook="adult"]': function(){
+        var adult = $('[hook="adult"]');
+        if( adult.is(':checked') ){
+            $('[hook="adult-form"]').show();
+        }else{
+            $('[hook="adult-form"]').hide();
+        }
+    },
     'change [hook="room"]': function(evt,tmpl){
         var roomId = evt.currentTarget.value;
         var room = Bolt.Collections.Rooms.findOne(roomId);
@@ -20,21 +67,16 @@ Template.waiver.events({
         Session.set('boltUI',boltUI);
     },
     'submit [hook="submit-waiver"]': function(evt,tmpl){
+
         evt.preventDefault();
 
         var formData = Bureaucrat.getFormData( $('[hook="submit-waiver"]') );
-        //console.log( 'submitting waiver', formData );
 
         isWaiverValid = true;
 
-        if( !formData.room || formData.room == "0" ){
+        if( !formData.game || formData.game == "0" ){
             isWaiverValid = false;
             Notifications.error( "Please select game." );
-        }
-
-        if( !formData.time || formData.time == "0" ){
-            isWaiverValid = false;
-            Notifications.error( "Please select time." );
         }
 
         if( !formData.name || formData.name == "" ){
@@ -42,23 +84,23 @@ Template.waiver.events({
             Notifications.error( "Please enter your name." );
         }
 
-        if( !formData.email || formData.email == "" ){
-            isWaiverValid = false;
-            Notifications.error( "Please enter your email address." );
-        }
+        if( $('[hook="adult"]').is(':checked') ){
 
-        if( !formData.agree ){
-            isWaiverValid = false;
-            Notifications.error( "You must agree to the terms of the waiver and release of liability." );
+            if( !formData.email || formData.email == "" ){
+                isWaiverValid = false;
+                Notifications.error( "Please enter your email address." );
+            }
+
+            if( !formData.agree ){
+                isWaiverValid = false;
+                Notifications.error( "You must agree to the terms of the waiver and release of liability." );
+            }
+
         }
 
         if( isWaiverValid ) {
 
-            var game = new Bolt.Game({
-                date: Epoch.dateObjectToDateString(new Date()),
-                time: formData.time,
-                roomId: formData.room
-            });
+            var game = new Bolt.Game(formData.game);
 
             game.addPlayer({
                 name: formData.name,

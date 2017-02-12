@@ -1,4 +1,6 @@
 <template name="layoutAdmin">
+    {{>loadingAnimatedToggle}}
+
     {{>notifications}}
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -29,15 +31,15 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li class="active"><a href="/admin/reservations">Schedule</a></li>
-                    <li><a href="/admin/reservations/create">New Reservation</a></li>
+                    <li class="{{activeFlag 'adminDashboard'}}"><a href="{{pathFor 'adminDashboard'}}">Dashboard</a></li>
+                    <li class="{{activeFlag 'adminGamesCalendar'}}"><a href="{{pathFor 'adminGamesCalendar'}}">Games</a></li>
+                    <li class="{{activeFlag 'adminCouponsList'}}"><a href="{{pathFor 'adminCouponsList'}}">Coupons</a></li>
+                    <li class="{{activeFlag 'adminRooms'}}"><a href="{{pathFor 'adminRooms'}}">Rooms</a></li>
+                    <li class="{{activeFlag 'adminSettings'}}"><a href="{{pathFor 'adminSettings'}}">Settings</a></li>
                 </ul>
-                <ul class="nav nav-sidebar">
-                    <li><a href="/admin/coupons">Coupons</a></li>
-                    <li><a href="/admin/rooms">Rooms</a></li>
-                    <li><a href="/admin/reports">Reports</a></li>
-                    <li><a href="/admin/settings">Settings</a></li>
-                </ul>
+                {{#if currentUser}}
+                    <div style="padding-left: 15px">{{>loginButtons}}</div>
+                {{/if}}
             </div>
             <div class="col-sm-9 col-md-10 main">
                 {{>yield}}
