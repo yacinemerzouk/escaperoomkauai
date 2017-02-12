@@ -1,0 +1,30 @@
+<template name="adminGamesCalendarDay">
+
+    <!-- SINGLE DAY CONTAINER FOR CALENDAR -->
+    <div class="admin-games-calendar-day">
+
+        <!-- TITLE / DATE: {{date}} -->
+        <h2>{{humanReadableDate date format='short'}}</h2>
+
+        {{#if gamesReady}}
+            {{#if games}}
+                {{#each games}}
+                    {{>adminGamesCalendarGame}}
+                {{/each}}
+            {{else}}
+            <div class="admin-games-calendar-game">
+                Nothing scheduled...
+            </div>
+            {{/if}}
+        {{else}}
+            Loading...
+        {{/if}}
+
+
+        <div class="add-game">
+            <a href="#" hook="add-game" hook-data-date="{{date}}">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i> ADD GAME
+            </a>
+        </div>
+    </div>
+</template>

@@ -1,230 +1,211 @@
-<template name="game">
-
-    <!-- HERO BANNER -->
-    <div class="hero hero-home-bg room-box-bg-mad-scientist">
-        <div class="overlay">
-            <div class="content">
-                <h1>Game Management</h1>
-                <p>Admins only...</p>
-            </div>
-        </div>
-    </div>
+<template name="gamePlay">
 
     {{#if currentUser}}
 
+
         {{#with game}}
 
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="col-xs-12">
-
-                        <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">{{roomTitle roomId}}<br>{{humanReadableDate date format="short"}} @ {{time}}</h2>
+            <!-- TITLE -->
+            <h1>{{roomTitle roomId}} &nbsp;&bull;&nbsp;{{humanReadableDate date format="short"}} @ {{time}}</h1>
 
 
-                        <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">
-                        {{nbWaivers}} of {{nbPlayers}} Waivers completed
-                        </h2>
+            <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">
+                {{nbWaivers}} of {{nbPlayers}} Waivers completed
+            </h2>
 
 
-                        <ul style="padding-left: 0;">
-                            {{#each players}}
-                                <li style="background-color: #eee; list-style: none; padding: 10px 15px; margin-bottom: 2px; display: block">{{name}} &nbsp;&bull;&nbsp; {{email}} </li>
-                            {{/each}}
-                        </ul>
+            <ul style="padding-left: 0;">
+                {{#each players}}
+                    <li style="background-color: #eee; list-style: none; padding: 10px 15px; margin-bottom: 2px; display: block">{{name}} &nbsp;&bull;&nbsp; {{email}} </li>
+                {{/each}}
+            </ul>
 
-                        {{#if nbWaivers}}
-                            {{#if followUpEmailSent}}
+            {{#if nbWaivers}}
+                {{#if followUpEmailSent}}
 
-                                <div style="background-color: #eee; padding: 20px;">
-                                &#10004; Follow-up email sent
-                                </div>
-
-                            {{else}}
-                                <a href="#" hook="send-follow-up" class="button button-unavailable">Send Follow-Up Email to {{nbWaivers}} players</a>
-                            {{/if}}
-                        {{/if}}
-                        <!--<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">-->
-                            <!--Room Setup Checklist-->
-                        <!--</h2>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Something-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Some task-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Some other task-->
-                            <!--</label>-->
-                        <!--</div>-->
-
-
-                        <!--<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">-->
-                            <!--Onboarding-->
-                        <!--</h2>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Waivers-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Brain warmers-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Restrooms-->
-                            <!--</label>-->
-                        <!--</div>-->
-
-
-                        <!--<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">-->
-                            <!--Pre-game briefing-->
-                        <!--</h2>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Rules-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Tips for success-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Hint system-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Writing pads-->
-                            <!--</label>-->
-                        <!--</div>-->
-
-
-                        <form hook="send-message">
-                            <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">Game Monitoring</h2>
-                            <div class="row">
-                                <div class="col-xs12 col-md-8">
-                                    <div class="form-group">
-                                        <textarea class="form-control sms" name="message" id="message"  rows="10"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-4">
-                                    <div class="form-group">
-                                        <label for="device">
-                                            <input type="radio" name="device" value="+18086352099" checked>
-                                            Send to hint device #1 <code>+1.808.635.2099</code>
-                                        </label>
-                                        <label for="device">
-                                            <input type="radio" name="device" value="+18086315911">
-                                            Send to hint device #2 <code>+1.808.631.5911</code>
-                                        </label>
-                                    </div>
-                                    <input type="submit" class="button btn-block" value="Send Message">
-                                    <a href="#" hook="send-demo" class="button button-unavailable btn-block text-center" style="margin-top: 30px">Send Demo</a>
-                                    {{#if room.intro}}
-                                        <a href="#" hook="send-intro" class="button button-unavailable btn-block text-center" style="margin-top: 5px">Send Intro</a>
-                                    {{/if}}
-                                    {{#if room.outro}}
-                                        <a href="#" hook="send-outro" class="button button-unavailable btn-block text-center" style="margin-top: 5px">Send Outro</a>
-                                    {{/if}}
-                                </div>
-                            </div>
-                        </form>
-
-                        <h2 class="subheading" style=" text-align: left; width: 100%; max-width: 100%">Messages Sent ({{messageCount}})</h2>
-
-                        {{#each messages}}
-                            <div style="background-color: #ddd;padding: 20px;">
-                                <span class="currency">{{body}}</span>
-                            </div>
-                            <p class="text-right">
-                                <small style="color: #888; font-style: italic;">{{dateCreated}}</small>
-                            </p>
-
-                        {{/each}}
-
-                        <!--<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">-->
-                            <!--Post-game briefing-->
-                        <!--</h2>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Prep signs and winner stickers-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Walkthrough-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Photo op-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Check basket-->
-                            <!--</label>-->
-                            <!--<label>-->
-                                <!--<input type="checkbox">-->
-                                <!--Check pockets-->
-                            <!--</label>-->
-                        <!--</div>-->
-
-                        <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">
-                            Game Results
-                        </h2>
-
-                        <div class="form-group">
-                            {{#if gameResultLogged}}
-                                {{#if won}}
-                                <label>
-                                    <input type="radio" name="game-result" hook="set-game-result" hook-data-result="won" checked="checked">
-                                    Won
-                                </label>
-                                <label>
-                                    <input type="radio" name="game-result" hook="set-game-result" hook-data-result="lost">
-                                    Lost
-                                </label>
-                                {{else}}
-                                    <label>
-                                        <input type="radio" name="game-result" hook="set-game-result" hook-data-result="won">
-                                        Won
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="game-result" hook="set-game-result" hook-data-result="lost" checked="checked">
-                                        Lost
-                                    </label>
-                                {{/if}}
-                            {{else}}
-                                <label>
-                                    <input type="radio" name="game-result" hook="set-game-result" hook-data-result="won">
-                                    Won
-                                </label>
-                                <label>
-                                    <input type="radio" name="game-result" hook="set-game-result" hook-data-result="lost">
-                                    Lost
-                                </label>
-                            {{/if}}
-                        </div>
-                        {{#if won}}
-                            <div class="form-group">
-                                <label>
-                                    Time
-                                </label>
-                                <input type="text" class="form-control" style="width: 200px; margin-bottom: 4px;" placeholder="MM:SS" hook="game-time" value="{{timeLog}}">
-                                <button hook="set-game-time" class="button" style="width: 200px;">Save Game Time</button>
-                            </div>
-                        {{/if}}
+                    <div style="background-color: #eee; padding: 20px;">
+                        &#10004; Follow-up email sent
                     </div>
 
-                </div>
+                {{else}}
+                    <a href="#" hook="send-follow-up" class="button button-unavailable">Send Follow-Up Email to {{nbWaivers}} players</a>
+                {{/if}}
+            {{/if}}
+            <!--&lt;!&ndash;<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">&ndash;&gt;-->
+            <!--&lt;!&ndash;Room Setup Checklist&ndash;&gt;-->
+            <!--&lt;!&ndash;</h2>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Something&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Some task&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Some other task&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
+
+            <!--&lt;!&ndash;<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">&ndash;&gt;-->
+            <!--&lt;!&ndash;Onboarding&ndash;&gt;-->
+            <!--&lt;!&ndash;</h2>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Waivers&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Brain warmers&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Restrooms&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+            <!--&lt;!&ndash;<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">&ndash;&gt;-->
+            <!--&lt;!&ndash;Pre-game briefing&ndash;&gt;-->
+            <!--&lt;!&ndash;</h2>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Rules&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Tips for success&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Hint system&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Writing pads&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+            <form hook="send-message">
+                <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">Game Monitoring</h2>
+                <div class="row">
+                    <div class="col-xs12 col-md-8">
+                        <div class="form-group">
+                            <textarea class="form-control sms" name="message" id="message"  rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <label for="device">
+                                <input type="radio" name="device" value="+18086352099" checked>
+                                Send to hint device #1 <code>+1.808.635.2099</code>
+                            </label>
+                            <label for="device">
+                                <input type="radio" name="device" value="+18086315911">
+                                Send to hint device #2 <code>+1.808.631.5911</code>
+                            </label>
+                        </div>
+                        <input type="submit" class="button btn-block" value="Send Message">
+                        <a href="#" hook="send-demo" class="button button-unavailable btn-block text-center" style="margin-top: 30px">Send Demo</a>
+                        {{#if room.intro}}
+                            <a href="#" hook="send-intro" class="button button-unavailable btn-block text-center" style="margin-top: 5px">Send Intro</a>
+                        {{/if}}
+                        {{#if room.outro}}
+                            <a href="#" hook="send-outro" class="button button-unavailable btn-block text-center" style="margin-top: 5px">Send Outro</a>
+                        {{/if}}
+                    </div>
+                </div>
+            </form>
+
+            <h2 class="subheading" style=" text-align: left; width: 100%; max-width: 100%">Messages Sent ({{messageCount}})</h2>
+
+            {{#each messages}}
+                <div style="background-color: #ddd;padding: 20px;">
+                    <span class="currency">{{body}}</span>
+                </div>
+                <p class="text-right">
+                    <small style="color: #888; font-style: italic;">{{dateCreated}}</small>
+                </p>
+
+            {{/each}}
+
+            <!--&lt;!&ndash;<h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">&ndash;&gt;-->
+            <!--&lt;!&ndash;Post-game briefing&ndash;&gt;-->
+            <!--&lt;!&ndash;</h2>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Prep signs and winner stickers&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Walkthrough&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Photo op&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Check basket&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="checkbox">&ndash;&gt;-->
+            <!--&lt;!&ndash;Check pockets&ndash;&gt;-->
+            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+            <h2 class="subheading" style="line-height: 32px; text-align: left; width: 100%; max-width: 100%">
+                Game Results
+            </h2>
+
+            <div class="form-group">
+                {{#if gameResultLogged}}
+                    {{#if won}}
+                        <label>
+                            <input type="radio" name="game-result" hook="set-game-result" hook-data-result="won" checked="checked">
+                            Won
+                        </label>
+                        <label>
+                            <input type="radio" name="game-result" hook="set-game-result" hook-data-result="lost">
+                            Lost
+                        </label>
+                    {{else}}
+                        <label>
+                            <input type="radio" name="game-result" hook="set-game-result" hook-data-result="won">
+                            Won
+                        </label>
+                        <label>
+                            <input type="radio" name="game-result" hook="set-game-result" hook-data-result="lost" checked="checked">
+                            Lost
+                        </label>
+                    {{/if}}
+                {{else}}
+                    <label>
+                        <input type="radio" name="game-result" hook="set-game-result" hook-data-result="won">
+                        Won
+                    </label>
+                    <label>
+                        <input type="radio" name="game-result" hook="set-game-result" hook-data-result="lost">
+                        Lost
+                    </label>
+                {{/if}}
             </div>
+            {{#if won}}
+                <div class="form-group">
+                    <label>
+                        Time
+                    </label>
+                    <input type="text" class="form-control" style="width: 200px; margin-bottom: 4px;" placeholder="MM:SS" hook="game-time" value="{{timeLog}}">
+                    <button hook="set-game-time" class="button" style="width: 200px;">Save Game Time</button>
+                </div>
+            {{/if}}
 
         {{/with}}
 

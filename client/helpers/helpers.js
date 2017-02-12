@@ -18,7 +18,7 @@ UI.registerHelper('activeFlag', function( routeName ) {
  * Checks whether a time slot is available to be booked -- does not check nb of players requested, so
  * any time slot with 2 or more available spots should return true
  *
- * TODO: allow single-player reservations
+ * TODO: allow single-player re5servations
  *
  * @param roomId : String : a room _id
  * @param date: String : a MySQL-formatted date
@@ -121,10 +121,14 @@ UI.registerHelper('checked', function( checked ){
  * @returns String : the room title
  */
 UI.registerHelper('roomTitle', function( roomId ){
-    var room = Bolt.Collections.Rooms.findOne({
-        _id: roomId
-    });
-    return room.title ? room.title : "";
+    if(roomId == 'any'){
+        return 'Any Game For GM';
+    }else {
+        var room = Bolt.Collections.Rooms.findOne({
+            _id: roomId
+        });
+        return room && room.title ? room.title : "";
+    }
 });
 
 /**
@@ -194,3 +198,82 @@ UI.registerHelper('textareaToHTML', function( content ) {
 UI.registerHelper('isCanceled', function(reservation){
     return reservation.status == 'canceled';
 })
+
+UI.registerHelper('calculateNbPlayers',function(game){
+    var nbPlayers = 0;
+    if( game.reservations ) {
+        _.each(game.reservations, function (reservation) {
+            if( reservation.canceled !== true ) {
+                nbPlayers += parseInt(reservation.nbPlayers);
+            }
+        });
+    }
+    return nbPlayers;
+})
+
+UI.registerHelper('canBeBooked',function( gameData ){
+    //console.log( 'GAME DATA', gameData );
+    var game = new Bolt.Game( gameData );
+    var nbPlayers = game.getNbPlayers();
+    return game.canBeBooked( nbPlayers );
+});
+
+UI.registerHelper('isZero',function( n ){
+    return parseInt(n) == 0 ? true : false;
+});
+
+UI.registerHelper('hasReservations',function( game ){
+    var nbRes = 0;
+    if( game.reservations && game.reservations.length > 0 ) {
+        _.each(game.reservations, function (reservation) {
+            if (reservation.canceled !== true) {
+                nbRes += 1;
+            }
+        });
+    }
+    return nbRes > 0 ? true : false;
+});
+
+UI.registerHelper('isClosedRoom',function( game ){
+    var isClosedRoom = false;
+    var game = new Bolt.Game( game );
+    _.each( game.reservations, function(reservation){
+        if( reservation.closeRoom ){
+            isClosedRoom = true;
+        }
+    });
+    return isClosedRoom;
+});
+
+UI.registerHelper('isPaidInFull',function( game ){
+    var isPaidInFull = true;
+    var game = new Bolt.Game( game );
+    _.each( game.reservations, function(reservation){
+        if( parseInt( reservation.due ) != 0 ){
+            isPaidInFull = false;
+        }
+    });
+    return isPaidInFull;
+});
+
+UI.registerHelper('gameMasterName',function( userId ){
+    var user = Meteor.users.findOne(userId);
+    return user.username;
+});
+
+UI.registerHelper('canChooseRoom',function( roomId ){
+    return roomId == 'any' ? true : false;
+});
+
+UI.registerHelper('roomChoices',function( args ){
+    console.log(args.hash.gameId);
+    var gameId = args.hash.gameId;
+    var game = new Bolt.Game(gameId);
+    var user = Meteor.users.findOne(game.userId);
+    console.log('roomchoices', game);
+    var rooms = [];
+    _.each(user.profile.rooms, function(roomId){
+        rooms.push( new Bolt.Room( roomId ) );
+    });
+    return rooms;
+});

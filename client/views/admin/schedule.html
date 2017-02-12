@@ -1,17 +1,16 @@
 <template name="adminSchedule" xmlns="http://www.w3.org/1999/html">
 
-    <h1 class="page-header">Schedule</h1>
-
     {{#if currentUser}}
 
+        <div class="calendarNav">
+            <a href="#">Previous</a>
+            <a href="#">Next</a>
+        </div>
+
         <div class="calendar">
-            {{>adminScheduleDay this}}
-            <!--{{>adminScheduleDay date="2016-12-28"}}-->
-            <!--{{>adminScheduleDay date="2016-12-29"}}-->
-            <!--{{>adminScheduleDay date="2016-12-30"}}-->
-            <!--{{>adminScheduleDay date="2016-12-31"}}-->
-            <!--{{>adminScheduleDay date="2017-01-01"}}-->
-            <!--{{>adminScheduleDay date="2017-01-02"}}-->
+            {{#each days}}
+                {{>adminScheduleDay date=this}}
+            {{/each}}
         </div>
 
     {{else}}
@@ -31,6 +30,5 @@
         </div>
 
     {{/if}}
-
 
 </template>

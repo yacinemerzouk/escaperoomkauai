@@ -1,0 +1,214 @@
+<template name="calendarFormEditReservation">
+
+        <div class="calendarFormContainer">
+            <div class="calendar-form-background" hook="calendar-form-background"></div>
+            <form hook="edit-reservation-form" class="calendarForm">
+                <div class="calendar-form-close" hook="calendar-form-close">CLOSE</div>
+                <h2 class="subheading" style="margin-top: 0">
+                    Edit Reservation
+                    <br>
+                    <small>
+                        Reservation #{{reservation.publicId}}<br>
+                        {{reservation.firstName}} {{reservation.lastName}} &bull;
+                        {{reservation.nbPlayers}} Players<br>
+                        {{toCurrency reservation.due}} Due
+                    </small>
+                </h2>
+
+                <!-- PLAYER PRICING AND NB OF PLAYERS -->
+
+
+                    <div class="form-group">
+                        <label for="nbPlayers">Select number of players</label>
+                        <select class="form-control" hook="update-reservation" id="nbPlayers" name="nbPlayers" style="width: 100%; max-width: 100%;">
+                            <option value="0">-- NUMBER OF PLAYERS --</option>
+                            <option value="1" {{selected reservation.nbPlayers 1}}>1</option>
+                            <option value="2" {{selected reservation.nbPlayers 2}}>2</option>
+                            <option value="3" {{selected reservation.nbPlayers 3}}>3</option>
+                            <option value="4" {{selected reservation.nbPlayers 4}}>4</option>
+                            <option value="5" {{selected reservation.nbPlayers 5}}>5</option>
+                            <option value="6" {{selected reservation.nbPlayers 6}}>6</option>
+                            <option value="7" {{selected reservation.nbPlayers 7}}>7</option>
+                            <option value="8" {{selected reservation.nbPlayers 8}}>8</option>
+                            <option value="9" {{selected reservation.nbPlayers 9}}>9</option>
+                            <option value="10" {{selected reservation.nbPlayers 10}}>10</option>
+                        </select>
+                    </div>
+
+
+
+                <!-- FIRST NAME -->
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" hook="update-reservation" class="form-control" id="firstName" name="firstName" value="{{reservation.firstName}}">
+                </div>
+
+                <!-- LAST NAME -->
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" hook="update-reservation" class="form-control" id="lastName" name="lastName" value="{{reservation.lastName}}">
+                </div>
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" hook="update-reservation" class="form-control" id="email" name="email" value="{{reservation.email}}">
+                </div>
+
+                <!-- PHONE -->
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" hook="update-reservation" class="form-control" id="phone" name="phone" value="{{reservation.phone}}">
+                </div>
+
+
+
+                <!-- DISPLAY CLOSED ROOM OPTION IF APPROPRIATE -->
+                <div class="form-group">
+                    <label>Close Room</label>
+                    <p>Groups of 2-4 players can choose to pay a ${{reservation.room.priceToClose}} fee to keep players outside of their own party from reserving the same game and time slot. Groups of 5 or 6 players will never be joined by players outside of their own party.</p>
+
+                    <div class="checkbox">
+                        <label style="border-bottom: none">
+                            {{#if reservation.closeRoom}}
+                                <input hook="update-reservation" type="checkbox" id="closeRoom" name="closeRoom" checked> Yes, I want to pay a ${{room.priceToClose}} closed room fee.
+                            {{else}}
+                                <input hook="update-reservation" type="checkbox" id="closeRoom" name="closeRoom"> Yes, I want to pay a ${{room.priceToClose}} closed room fee.
+                            {{/if}}
+                        </label>
+                    </div>
+                </div>
+
+                <!-- COUPON CODE -->
+                <div class="form-group">
+                    <label for="coupon">Coupon Code</label>
+                    <p>If you have a coupon code, enter it here. Coupon codes cannot be combined with the Kama'aina discount.</p>
+                    <input type="text" hook="update-coupon" class="form-control" id="coupon" name="coupon" value="{{reservation.coupon}}">
+                    {{#if reservation.coupon}}
+                        {{#if reservation.discount}}
+                            <span class="label label-success">Coupon applied</span>
+                        {{else}}
+                            <span class="label label-danger">Enter valid coupon code</span>
+                        {{/if}}
+                    {{/if}}
+                </div>
+
+                <!-- DISPLAY RESIDENT DISCOUNT OPTION IF NO COUPON CODE WAS USED. -->
+
+                <div class="form-group">
+                    <label for="nbKamaaina">Kama'aina Discount</label>
+                    <p>How many Hawai'i residents in your party? Hawai'i residents each get $5 off. HAWAII ID REQUIRED.</p>
+                    <select class="form-control" hook="update-reservation" id="nbKamaaina" name="nbKamaaina" style="width: 100%">
+                        <option value="0"> SELECT NUMBER OF HAWAII RESIDENTS </option>
+                        <option value="1" {{selected reservation.nbKamaaina 1}}>1</option>
+                        <option value="2" {{selected reservation.nbKamaaina 2}}>2</option>
+                        <option value="3" {{selected reservation.nbKamaaina 3}}>3</option>
+                        <option value="4" {{selected reservation.nbKamaaina 4}}>4</option>
+                        <option value="5" {{selected reservation.nbKamaaina 5}}>5</option>
+                        <option value="6" {{selected reservation.nbKamaaina 6}}>6</option>
+                        <option value="7" {{selected reservation.nbKamaaina 7}}>7</option>
+                        <option value="8" {{selected reservation.nbKamaaina 8}}>8</option>
+                        <option value="9" {{selected reservation.nbKamaaina 9}}>9</option>
+                        <option value="10" {{selected reservation.nbKamaaina 10}}>10</option>
+                    </select>
+                </div>
+
+                <!-- SOURCE TRACKING -->
+                <div class="form-group">
+                    <label for="source">How did you hear about us?</label>
+                    <input type="text" hook="update-reservation" class="form-control" id="source" name="source" value="{{reservation.source}}">
+                </div>
+
+
+                <!-- REVIEW ORDER -->
+
+
+                <label for="subtotal">Review Order</label>
+                <table class="table table-striped table-bordered table-responsive">
+                    <tbody>
+
+                    <!-- NB PLAYERS / TIME / DATE -->
+                    <tr>
+                        <th colspan="2" style="font-size: 1.4em">
+                            <span class="label label-success" style="position: relative; bottom: 3px; background-color: #007300">{{reservation.nbPlayers}} players</span>
+                            <span class="label label-success" style="position: relative; bottom: 3px; background-color: #007300">{{humanReadableDate game.date}}</span>
+                            <span class="label label-success" style="position: relative; bottom: 3px; background-color: #007300">{{game.time}}</span>
+                        </th>
+                    </tr>
+
+                    <!-- COST OF PLAYERS -->
+                    <tr>
+                        <td>{{reservation.nbPlayers}} players &nbsp;&times;&nbsp; {{toCurrency reservation.room.pricePerPlayer}}</td>
+                        <td class="currency">{{toCurrency reservation.costOfPlayers}}</td>
+                    </tr>
+
+                    <!-- COST OF CLOSED ROOM -->
+                    {{#if reservation.closeRoom}}
+                        <tr>
+                            <td>Closed room</td>
+                            <td class="currency">{{toCurrency reservation.costOfCloseRoom}}</td>
+                        </tr>
+                    {{/if}}
+
+                    <!-- SUBTOTAL BEFORE DISCOUNTS AND TAXES -->
+                    <tr style="font-weight:bold;">
+                        <td>Subtotal</td>
+                        <td class="currency">{{toCurrency reservation.subtotal}}</td>
+                    </tr>
+
+                    <!-- OVERRIDE SUBTOTAL BEFORE DISCOUNTS AND TAXES -->
+                    <tr style="font-weight:bold;">
+                        <td>OVERRIDE SUBTOTAL</td>
+                        <td class="currency"><input hook="update-reservation" type="text" name="overrideSubtotal" value="" style="text-align:right"></td>
+                    </tr>
+
+                    <!-- DISCOUNT FROM KAMAAINA -->
+                    {{#if reservation.discountKamaaina}}
+                        <tr>
+                            <td class="discount">Kama'aina Discount &nbsp;&bull;&nbsp; {{reservation.nbKamaaina}} residents &nbsp;&times;&nbsp; &mdash; {{toCurrency reservation.room.kamaainaDiscountPerPlayer}}</td>
+                            <td class="currency discount">&mdash; {{toCurrency reservation.discountKamaaina}}</td>
+                        </tr>
+                    {{/if}}
+
+
+                    <!-- DISCOUNT FROM COUPON CODE -->
+                    {{#if reservation.discount}}
+                        <tr>
+                            {{#if reservation.couponData.type}}
+                                <td class="discount text-uppercase">Coupon "{{reservation.couponData.coupon}}" ${{reservation.couponData.discount}} OFF</td>
+                            {{else}}
+                                <td class="discount text-uppercase">Coupon "{{reservation.couponData.coupon}}" {{reservation.couponData.discount}}% OFF</td>
+                            {{/if}}
+                            <td class="currency discount">&mdash; {{toCurrency reservation.discount}}</td>
+                        </tr>
+                    {{/if}}
+                    <!-- TAXES -->
+                    <tr>
+                        <td>Taxes</td>
+                        <td class="currency">{{toCurrency reservation.taxes}}</td>
+                    </tr>
+
+                    <!-- TOTAL -->
+                    <tr style="font-size: 18px;">
+                        <th>TOTAL</th>
+                        <th class="currency">{{toCurrency reservation.total}}</th>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+
+
+
+
+
+
+                <input type="hidden" value="{{game._id}}" name="_id">
+                <input type="hidden" value="{{game.roomId}}" name="roomId">
+
+                <input type="submit" value="Update" class="btn btn-block button">
+
+            </form>
+        </div>
+
+</template>

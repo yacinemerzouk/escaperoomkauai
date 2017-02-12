@@ -1,33 +1,13 @@
-Template.game.onRendered(function(){
-
-    var self = this
-    this.autorun(function(){
-        // var game =  new Bolt.Game({
-        //     date: this.currentData.date,
-        //     time: this.currentData.time,
-        //     roomId: this.currentData.roomId
-        // });
-        // if( !game._id ){
-        //     game.save();
-        // }
-        // console.log( 'GAME', this, game );
-        // console.log( 'Game onRendered', this, self );
-    });
-
-
-});
-Template.game.helpers({
+Template.gamePlay.helpers({
    game: function(){
-       var game =  new Bolt.Game({
-           date: this.date,
-           time: this.time,
-           roomId: this.roomId
-       });
-       //console.log( 'IN HELPER', game );
+       var gameData = Bolt.Collections.Games.findOne(this._id);
+       var game = new Bolt.Game(gameData);
        return game;
    },
     room: function(){
-        var room = Bolt.Collections.Rooms.findOne(this.roomId);
+        var gameData = Bolt.Collections.Games.findOne(this._id);
+        var game = new Bolt.Game(gameData);
+        var room = Bolt.Collections.Rooms.findOne(game.roomId);
         return room;
     },
     nbPlayers: function(){
@@ -71,7 +51,7 @@ Template.game.helpers({
 });
 
 
-Template.game.events({
+Template.gamePlay.events({
     'submit form': function(evt,tmpl){
         evt.preventDefault();
         Notifications.info('Sending message...');
@@ -86,11 +66,8 @@ Template.game.events({
                 Notifications.error( error.message );
             }else{
                 //console.log(response);
-                var game = new Bolt.Game({
-                    date: tmpl.data.date,
-                    time: tmpl.data.time,
-                    roomId: tmpl.data.roomId
-                });
+                var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+                var game = new Bolt.Game(gameData);
                 if( !game.messages ){
                     game.messages = []
                 }
@@ -108,11 +85,8 @@ Template.game.events({
 
     'change [hook="set-game-result"]': function(evt,tmpl){
         var won = $(evt.currentTarget).attr('hook-data-result') == "won" ? true : false;
-        var game =  new Bolt.Game({
-            date: tmpl.data.date,
-            time: tmpl.data.time,
-            roomId: tmpl.data.roomId
-        });
+        var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+        var game = new Bolt.Game(gameData);
         game.won = won;
         if( game.save() ){
             Notifications.success( "Game result saved." );
@@ -124,11 +98,8 @@ Template.game.events({
     'click [hook="set-game-time"]': function(evt,tmpl){
         evt.preventDefault();
         var gameTime = $('[hook="game-time"]').val();
-        var game =  new Bolt.Game({
-            date: tmpl.data.date,
-            time: tmpl.data.time,
-            roomId: tmpl.data.roomId
-        });
+        var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+        var game = new Bolt.Game(gameData);
         game.timeLog = gameTime;
         if( game.save() ){
             Notifications.success( "Game time saved." );
@@ -137,27 +108,21 @@ Template.game.events({
         }
     },
     'click [hook="send-follow-up"]': function(evt,tmpl) {
-        var game =  new Bolt.Game({
-            date: tmpl.data.date,
-            time: tmpl.data.time,
-            roomId: tmpl.data.roomId
-        });
-
+        var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+        var game = new Bolt.Game(gameData);
         game.sendFollowUpEmail();
     },
     'click [hook="send-intro"]': function(evt,tmpl) {
         Notifications.info("Sending intro");
-        var room = Bolt.Collections.Rooms.findOne(tmpl.data.roomId);
+        var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+        var game = new Bolt.Game(gameData);
+
+        var room = Bolt.Collections.Rooms.findOne(game.roomId);
         Meteor.call('sendSMS', room.intro, $('[name="device"]:checked').val(), function(error,response){
            if( error ){
                Notifications.error("Intro NOT sent.");
                throw new Meteor.Error("Game|click|send-intro",error.message);
            }else{
-               var game = new Bolt.Game({
-                   date: tmpl.data.date,
-                   time: tmpl.data.time,
-                   roomId: tmpl.data.roomId
-               });
                if( !game.messages ){
                    game.messages = []
                }
@@ -176,11 +141,8 @@ Template.game.events({
                 Notifications.error("Outro NOT sent.");
                 throw new Meteor.Error("Game|click|send-outro",error.message);
             }else{
-                var game = new Bolt.Game({
-                    date: tmpl.data.date,
-                    time: tmpl.data.time,
-                    roomId: tmpl.data.roomId
-                });
+                var gameData = Bolt.Collections.Games.findOne();
+                var game = new Bolt.Game(gameData);
                 if( !game.messages ){
                     game.messages = []
                 }

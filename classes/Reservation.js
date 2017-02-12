@@ -18,18 +18,25 @@ Bolt.Reservation = function( args ){
         var data = args;
 
         // Nothing provided; throw error
+    }else if (typeof( args ) == 'number' ) {
+        var data = {};
+        var game = Bolt.Collections.Games.findOne({"reservations.publicId": args});
+
+        if (game && game.reservations){
+            _.each(game.reservations, function (reservation) {
+                if (reservation.publicId == args) {
+                    data = reservation;
+                }
+            });
+        }
+
     }else{
-        throw new Meteor.Error( 'KER ERROR', 'Cannot create RESERVATION object without data or id.' );
+        throw new Meteor.Error( '|Bolt|Reservation|constructor', 'Cannot create RESERVATION object without data or id.' );
     }
 
     // Set properties of object
     for (var prop in data) {
         this[prop] = data[prop];
-    }
-
-    // For backward compat, store both room object and roomId
-    if( this.room && this.room._id ){
-        this.roomId = this.room._id;
     }
 
     // Populate this badboy
@@ -48,6 +55,8 @@ Bolt.Reservation.prototype.populate = function( data ){
         this[prop] = data[prop];
     }
 
+    this.room = Bolt.Collections.Rooms.findOne( this.roomId );
+
     // Calculate all costs
     // TODO: Move this somewhere cleaner
     if( this.nbPlayers ) {
@@ -61,6 +70,9 @@ Bolt.Reservation.prototype.populate = function( data ){
         // Subtotal
         this.subtotal = ( parseFloat(this.costOfPlayers) + parseFloat(this.costOfCloseRoom) ).toFixed(2);
 
+        if( this.overrideSubtotal && this.overrideSubtotal != "" ){
+            this.subtotal = parseFloat( this.overrideSubtotal ).toFixed(2);
+        }
         // Check coupon
         if (this.coupon) {
             var couponData = Bolt.Collections.Coupons.findOne({coupon: this.coupon});
@@ -73,8 +85,15 @@ Bolt.Reservation.prototype.populate = function( data ){
             this.couponData = false;
         }
 
+
+
+        // Discount amount for residents
+        //this.discountKamaaina = !this.discount && parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
+        this.discountKamaaina = parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
+
         // Discount amount for coupon
         if( this.couponData && this.couponData.type == 'DOLLARS' ){
+            console.log('DOLLARS COUPON');
 
             this.discount = parseFloat( this.couponData.discount ).toFixed(2);
             // console.log( 'got dollars', this.discount, this.couponData.discount, this.subtotal );
@@ -87,15 +106,12 @@ Bolt.Reservation.prototype.populate = function( data ){
 
 
         }else if( this.couponData ){
+            console.log('PERCENTAGE COUPON');
             this.discount = ( parseFloat(this.subtotal) * ( this.couponData.discount / 100 ) ).toFixed(2);
+            console.log('PERCENTAGE COUPON', parseFloat(this.subtotal), this.couponData.discount, this.discount );
         }else{
             this.discount = 0;
         }
-
-        // Discount amount for residents
-        //this.discountKamaaina = !this.discount && parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
-        this.discountKamaaina = parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
-
         // Taxes
         this.taxes = ( ( parseFloat(this.subtotal) - parseFloat(this.discount) - parseFloat(this.discountKamaaina) ) * 0.04166 ).toFixed(2);
 
@@ -152,7 +168,7 @@ Bolt.Reservation.prototype.update = function(){
 
     // If the number of documents updated was 0
     if( result == 0 ){
-        throw new Meteor.Error( '[Bolt][Reservation][update] Error', 'No document updated.' );
+        throw new Meteor.Error( '|Bolt|Reservation|update Error', 'No document updated.' );
     }
 
     return result > 0 ? this._id : false;
@@ -173,46 +189,48 @@ Bolt.Reservation.prototype.create = function() {
         )
     );
 
+    return result;
+
     // If insert was successful, we get an ID back
     // Assign ID to object to we don't have to re-generate it
     // And create game object as needed
-    if( result ){
-
-        // Assign ID
-        this._id = result;
-
-        // For each room time slot, there's a game
-        // There can be multiple reservations for a single game
-        // After we create a reservation, we may need to create a game as well
-        // So...
-        //
-        // Get Game object
-        var game = new Bolt.Game({
-            date: this.date,
-            time: this.time,
-            roomId: this.roomId,
-            blocked: this.blocked || false
-        });
-
-        // Save to DB if game doesn't exist for time slot (room, date, & time)
-        if( !game._id ){
-            game.save();
-        }
-
-
-        Meteor.call('blockAllForSameTimeSlot', result, function( error, response ){
-            console.log( 'blockAllForSameTimeSlot', error, response );
-        });
-
-        // Return ID of reservation
-        return this._id;
-
-    }else{
-
-        throw new Meteor.Error( '[Bolt][Reservation][update] Error', 'Could not create document.' );
-        return false;
-
-    }
+    // if( result ){
+    //
+    //     // Assign ID
+    //     this._id = result;
+    //
+    //     // For each room time slot, there's a game
+    //     // There can be multiple reservations for a single game
+    //     // After we create a reservation, we may need to create a game as well
+    //     // So...
+    //     //
+    //     // Get Game object
+    //     var game = new Bolt.Game({
+    //         date: this.date,
+    //         time: this.time,
+    //         roomId: this.roomId,
+    //         blocked: this.blocked || false
+    //     });
+    //
+    //     // Save to DB if game doesn't exist for time slot (room, date, & time)
+    //     if( !game._id ){
+    //         game.save();
+    //     }
+    //
+    //
+    //     Meteor.call('blockAllForSameTimeSlot', result, function( error, response ){
+    //         console.log( 'blockAllForSameTimeSlot', error, response );
+    //     });
+    //
+    //     // Return ID of reservation
+    //     return this._id;
+    //
+    // }else{
+    //
+    //     throw new Meteor.Error( '[Bolt][Reservation][update] Error', 'Could not create document.' );
+    //     return false;
+    //
+    // }
 
 }
 
@@ -232,7 +250,7 @@ Bolt.Reservation.prototype.sendConfirmationEmail = function(){
             reservation.email,                                                  // Customer email
             '"Kauai Escape Room" ' + Meteor.settings.public.smtp.email,         // Our name & email
             'Booking confirmation - RESERVATION #' + reservation.publicId,      // Subject
-            Bolt.getConfirmationEmailBody(reservation._id),                     // Message body
+            Bolt.getConfirmationEmailBody(reservation),                     // Message body
             function (error, result) {                                          // Callback
 
                 // Handle errors as needed
@@ -264,7 +282,7 @@ Bolt.Reservation.prototype.sendNotificationEmail = function(){
             Meteor.settings.public.smtp.notifications,                              // To
             '"Kauai Escape Room" ' + Meteor.settings.public.smtp.mailman,           // From
             'Booking notification - RESERVATION #' + reservation.publicId,          // Subject
-            Bolt.getNotificationEmailBody(reservation._id),                         // Message body
+            Bolt.getNotificationEmailBody(reservation),                         // Message body
             function (error, result) {                                              // Callback
 
                 // Handle errors;

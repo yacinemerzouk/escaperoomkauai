@@ -1,0 +1,10 @@
+<template name="adminDashboard">
+
+    <h1>Dashboard</h1>
+
+    {{#if currentUser}}
+        {{> adminNav}}
+    {{else}}
+        {{> loginButtons}}
+    {{/if}}
+</template>

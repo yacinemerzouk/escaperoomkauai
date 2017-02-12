@@ -1,0 +1,29 @@
+<template name="adminGamesCalendar">
+
+    <!-- TITLE -->
+    <h1>Games</h1>
+
+    {{#if currentUser}}
+
+        <!-- CALENDAR DATE NAV -->
+        <div class="admin-games-calendar-nav">
+            <a href="#" hook="prev-games" class="prev-games"><i class="fa fa-caret-left" aria-hidden="true"></i> Prev</a>
+            <input type="text" hook="jump-to-date-datepicker" class="jump-to-date-datepicker" value="{{firstDay}}">
+            <a href="#" hook="next-games" class="next-games">Next <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+        </div>
+
+        <!-- CALENDAR -->
+        <div class="admin-games-calendar">
+
+            <!-- LOOP OVER DAYS -->
+            {{#each days}}
+
+                <!-- DATE: {{this}} -->
+                {{>adminGamesCalendarDay date=this}}
+
+            {{/each}}
+        </div>
+    {{else}}
+        {{> loginButtons}}
+    {{/if}}
+</template>

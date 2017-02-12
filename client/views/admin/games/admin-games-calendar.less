@@ -1,0 +1,89 @@
+.adminGamesCalendar{
+	.admin-games-calendar-nav{
+		height: 35px;
+		margin-bottom: 5px;
+		text-align: center;
+		a,span{
+			line-height: 35px;
+			font-size: 14px;
+			font-weight: bold;
+			text-transform: uppercase;
+			padding: 10px 15px;
+			background: #ddd;
+			text-decoration: none;
+		}
+		a:hover,span:hover{
+			background: #CCC;
+		}
+		.jump-to-date-datepicker{
+			text-align: center;
+		}
+		
+	}
+	.admin-games-calendar{
+		height: ~"calc(100vh - 160px)";
+		width: 100%;
+		border: 1px solid #888;
+		.admin-games-calendar-day{
+			padding: 15px;
+			height: ~"calc(100vh - 162px)";
+			box-sizing: border-box;
+			width: 20%;
+			border-right: 1px solid #888;
+			float: left;
+			overflow-y: scroll;
+		}
+		.admin-games-calendar-day:last-child{
+			border: none;
+		}
+		h2{
+			font-size: 14px;
+			font-weight: bold;
+			color: #666;
+			text-transform: uppercase;
+			line-height: 14px;
+			margin: 0px 0px 5px 0px;
+			padding-bottom: 10px;
+			border-bottom: 5px solid #ddd;
+			text-align: center;
+		}
+		a{
+			color: #333;
+			text-decoration: none;
+		}
+		a.action-link{
+			color: #96491a;
+			text-decoration: underline;
+		}
+		.admin-games-calendar-game{
+			background: #ddd;
+			text-align: center;
+			padding: 10px 5px;
+			margin-bottom: 5px;
+			.game-time{
+				font-weight: bold;
+			}
+		}
+		.admin-games-calendar-game.has-reservations{
+			background: #84cada;
+		}
+		.admin-games-calendar-game.has-reservations.can-be-booked{
+			background: #79c28e;
+		}
+		.add-game {
+			text-align: center;
+			a {
+				color: #000;
+				font-size: 12px;
+				text-decoration: none;
+				.fa{
+					font-size: 18px;
+					position: relative;
+					top: 2px
+				}
+			}
+			
+		}
+		
+	}
+}
