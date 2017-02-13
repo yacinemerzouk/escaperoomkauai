@@ -388,15 +388,8 @@ Router.route('/admin/settings', {
  */
 Router.route('/reservations', {
     name: 'reservations',
-    // waitOn: function(){
-    //     return [
-    //         Meteor.subscribe('reservations'),
-    //         Meteor.subscribe('rooms'),
-    //         Meteor.subscribe('games')
-    //     ]
-    // }
     onBeforeAction: function(){
-        Router.go('reservationsByDate', {date: Epoch.dateObjectToDateString( new Date() ) })
+        Router.go('adminGamesCalendar');
     }
 });
 
@@ -728,9 +721,11 @@ Router.route('/game/play/:_id', {
     name: 'gamePlay',
     layoutTemplate: 'layoutAdmin',
     waitOn: function(){
+        var game = new Bolt.Game(this.params._id);
+        console.log( 'waiton...', game );
         return [
             Meteor.subscribe( 'game', this.params._id ),
-            Meteor.subscribe( 'roomsMeta' )
+            Meteor.subscribe( 'roomById', game.roomId )
         ]
     },
     data: function(){

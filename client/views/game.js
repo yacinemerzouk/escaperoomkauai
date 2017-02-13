@@ -135,7 +135,10 @@ Template.gamePlay.events({
     },
     'click [hook="send-outro"]': function(evt,tmpl) {
         Notifications.info("Sending outro");
-        var room = Bolt.Collections.Rooms.findOne(tmpl.data.roomId);
+        var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+        var game = new Bolt.Game(gameData);
+
+        var room = Bolt.Collections.Rooms.findOne(game.roomId);
         Meteor.call('sendSMS', room.outro, $('[name="device"]:checked').val(), function(error,response){
             if( error ){
                 Notifications.error("Outro NOT sent.");
