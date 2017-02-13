@@ -10,7 +10,7 @@
                 <select name="userId" class="form-control">
                     <option value="0">---</option>
                     {{#each gameMaster in gameMasters}}
-                        <option value="{{_id}}" {{selected gameMaster._id gameData.userId}}>{{gameMaster.username}}</option>
+                        <option value="{{gameMaster._id}}" {{selected gameMaster._id gameData.userId}}>{{gameMaster.username}}</option>
                     {{/each}}
                 </select>
             </div>
