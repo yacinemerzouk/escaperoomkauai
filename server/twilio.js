@@ -9,6 +9,9 @@ Meteor.methods({
 
         // Send a message
         var to = number || '+18086352099';
+        if( Meteor.settings.private.SMS.env == "dev"){
+            to = '+18086342466';
+        }
         if( number)
         return client.sendSMS({
             to: to,

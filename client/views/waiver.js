@@ -31,7 +31,7 @@ Template.waiver.helpers({
         return Bolt.Collections.Rooms.find({available:true});
     },
     games: function(){
-        return Bolt.Collections.Games.find();
+        return Bolt.Collections.Games.find({ "roomId": { $ne: "any" } },{sort:{time:1}});
     },
     boltUI: function(){
         return Session.get('boltUI');

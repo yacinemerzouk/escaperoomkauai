@@ -230,6 +230,8 @@ Template.room.helpers({
                 {roomId: roomId},
                 {roomId: 'any'}
             ]
+        },{
+            sort: {time:1}
         }).fetch();
 
         _.each(games,function(game){
