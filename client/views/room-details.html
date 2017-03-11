@@ -21,12 +21,12 @@
                 </div>
                 <div class="specs" style="width: 160px">
                     <i class="fa fa-trophy" aria-hidden="true"></i>
-                    <span class="spec-value" style="">{{room.successRate}}%</span><br>
+                    <span class="spec-value" style="">{{dynamicSuccessRate}}%</span><br>
                     <span class="spec-key" style="">Success Rate</span>
                 </div>
                 <div class="specs">
                     <i class="fa fa-credit-card" aria-hidden="true"></i>
-                    <span class="spec-value" style="">${{kamaainaPerPlayer room}} - ${{room.pricePerPlayer}}</span><br>
+                    <span class="spec-value" style="">{{room.priceRange}}</span><br>
                     <span class="spec-key" style="">Per Player</span>
                 </div>
                 </p>
@@ -46,7 +46,7 @@
                 <!-- TITLE MAY CHANGE DEPENDING ON GAME AVAILABILITY -->
                 <h3 id="booknow" class="subheading">
                     {{#if room.available}}
-                        Book Now
+                        Book Now &nbsp;&bull;&nbsp; {{room.title}}
                     {{else}}
                         {{#if room.retired}}
                             Retired
@@ -62,20 +62,7 @@
 
                     <div class="row" id="form-fields-row">
 
-                        <!-- PLAYER PRICING AND NB OF PLAYERS -->
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <label for="nbPlayers">Select number of players</label>
-                                <p style="font-size: 14px; font-weight: bold;">{{toCurrency room.pricePerPlayer}} per player<br><span class="discount">{{toCurrency room.kamaainaDiscountPerPlayer}} off for each Hawaii resident</span></p>
 
-                                <select class="form-control" hook="update-players" id="nbPlayers" name="nbPlayers" style="width: 100%; max-width: 100%;">
-                                    <option value="0"> NUMBER OF PLAYERS </option>
-                                    {{#each nbPlayersOptions room=room game=game}}
-                                        <option value="{{this}}" {{selected this userSelections.nbPlayers}}>{{this}} players </option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                        </div>
 
 
                         <!-- DATE SELECTION -->
@@ -107,14 +94,21 @@
                                             {{#each games}}
                                                 {{#if canBeBooked this}}
 
-                                                    <a href="#" hook="set-time" hook-data="{{time}}" class="label label-time label-time-grey">{{time}} &nbsp;&bull;&nbsp; {{spotsLeftInGame this}}  spots left</a>
+                                                    <a href="#" hook="set-time" hook-data="{{time}}" class="label label-time label-time-green">{{time}} &nbsp;&bull;&nbsp; Available</a>
 
                                                 {{else}}
                                                     <span class="label label-time label-time-red">{{time}} &nbsp;&bull;&nbsp; Sold Out</span>
                                                 {{/if}}
                                             {{/each}}
                                         {{else}}
-                                            No games scheduled for this date.
+                                            <p style="font-weight: bold;">No games scheduled for this date.</p>
+
+                                            <p>
+                                                Do you want to make a reservation for a day that has no scheduled games? <a href="{{pathFor 'contact'}}">Call us</a> -- we can schedule something for you.
+                                            </p>
+                                            <p>
+                                                For groups of 9 or more players, please <a href="{{pathFor 'contact'}}">contact us</a>.
+                                            </p>
                                         {{/if}}
                                     {{else}}
                                         <img src="/images/loading.gif">
@@ -122,6 +116,8 @@
                                 </div>
                             {{/unless}}
                         </div>
+
+
 
                         {{#if game.time}}
                             <div class="col-xs-12">
@@ -133,6 +129,81 @@
                                     </a>
                                 </p>
 
+                                <!-- PLAYER PRICING AND NB OF PLAYERS -->
+
+                                <div class="form-group">
+                                    <label for="nbPlayers">Select number of players</label>
+
+                                    <select class="form-control" hook="update-players" id="nbPlayers" name="nbPlayers" style="width: 100%; max-width: 100%;">
+                                        <option value="0"> NUMBER OF PLAYERS </option>
+                                        <!--{{#each nbPlayersOptions room=room game=game}}-->
+                                            <!--<option value="{{this}}" {{selected this userSelections.nbPlayers}}>{{this}} players </option>-->
+                                        <!--{{/each}}-->
+                                        <option value="2" {{selected 2 userSelections.nbPlayers}}>2 Players @ $40 / player</option>
+                                        <option value="3" {{selected 3 userSelections.nbPlayers}}>3 Players @ $35 / player</option>
+                                        <option value="4" {{selected 4 userSelections.nbPlayers}}>4 Players @ $32 / player</option>
+                                        <option value="5" {{selected 5 userSelections.nbPlayers}}>5 Players @ $32 / player</option>
+                                        <option value="6" {{selected 6 userSelections.nbPlayers}}>6 Players @ $32 / player</option>
+                                        {{#if gte n1=room.maxPlayers n2=7}}
+                                            <option value="7" {{selected 7 userSelections.nbPlayers}}>7 Players @ $30 / player</option>
+                                        {{/if}}
+                                        {{#if gte n1=room.maxPlayers n2=8}}
+                                            <option value="8" {{selected 8 userSelections.nbPlayers}}>8 Players @ $30 / player</option>
+                                        {{/if}}
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="nbKamaaina">Kama'aina Discount</label>
+                                    <p>How many Hawai'i residents in your party? Hawai'i residents each get $5 off. HAWAII ID REQUIRED.</p>
+                                    <select class="form-control" hook="update-reservation" id="nbKamaaina" name="nbKamaaina" style="width: 100%">
+                                        <option value="0"> SELECT NUMBER OF HAWAII RESIDENTS </option>
+                                        <!--{{#each kamaainaPlayersOptions}}-->
+                                            <!--<option value="{{this}}" {{selected this userSelections.nbKamaaina}}>{{this}}</option>-->
+                                        <!--{{/each}}-->
+                                        <option value="0">0</option>
+                                        {{#if gte n1=room.maxPlayers n2=1}}
+                                            {{#if gte n1=userSelections.nbPlayers n2=1}}
+                                                <option value="1" {{selected 1 userSelections.nbKamaaina}}>1</option>
+                                            {{/if}}
+                                        {{/if}}
+                                        {{#if gte n1=room.maxPlayers n2=2}}
+                                            {{#if gte n1=userSelections.nbPlayers n2=2}}
+                                                <option value="2" {{selected 2 userSelections.nbKamaaina}}>2</option>
+                                            {{/if}}
+                                        {{/if}}
+                                        {{#if gte n1=room.maxPlayers n2=3}}
+                                            {{#if gte n1=userSelections.nbPlayers n2=3}}
+                                                <option value="3" {{selected 3 userSelections.nbKamaaina}}>3</option>
+                                            {{/if}}
+                                        {{/if}}
+                                        {{#if gte n1=room.maxPlayers n2=4}}
+                                            {{#if gte n1=userSelections.nbPlayers n2=4}}
+                                                <option value="4" {{selected 4 userSelections.nbKamaaina}}>4</option>
+                                            {{/if}}
+                                        {{/if}}
+                                        {{#if gte n1=room.maxPlayers n2=5}}
+                                            {{#if gte n1=userSelections.nbPlayers n2=5}}
+                                                <option value="5" {{selected 5 userSelections.nbKamaaina}}>5</option>
+                                            {{/if}}
+                                        {{/if}}
+                                        {{#if gte n1=room.maxPlayers n2=6}}
+                                            {{#if gte n1=userSelections.nbPlayers n2=6}}
+                                                <option value="6" {{selected 6 userSelections.nbKamaaina}}>6</option>
+                                            {{/if}}
+                                        {{/if}}
+                                        {{#if gte n1=room.maxPlayers n2=7}}
+                                            {{#if gte n1=userSelections.nbPlayers n2=7}}
+                                                <option value="7" {{selected 7 userSelections.nbKamaaina}}>7</option>
+                                            {{/if}}
+                                        {{/if}}
+                                        {{#if gte n1=room.maxPlayers n2=8}}
+                                            {{#if gte n1=userSelections.nbPlayers n2=8}}
+                                                <option value="8" {{selected 8 userSelections.nbKamaaina}}>8</option>
+                                            {{/if}}
+                                        {{/if}}
+                                    </select>
+                                </div>
 
 
                                 <!-- FIRST NAME -->
@@ -161,23 +232,23 @@
 
 
 
-                                <!-- DISPLAY CLOSED ROOM OPTION IF APPROPRIATE -->
-                                {{#if canBeClosed}}
-                                    <div class="form-group">
-                                        <label>Close Room</label>
-                                        <p>Groups of 2-4 players can choose to pay a ${{room.priceToClose}} fee to keep players outside of their own party from reserving the same game and time slot. Groups of 5 or 6 players will never be joined by players outside of their own party.</p>
+                                <!--&lt;!&ndash; DISPLAY CLOSED ROOM OPTION IF APPROPRIATE &ndash;&gt;-->
+                                <!--{{#if canBeClosed}}-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label>Close Room</label>-->
+                                        <!--<p>Groups of 2-4 players can choose to pay a ${{room.priceToClose}} fee to keep players outside of their own party from reserving the same game and time slot. Groups of 5 or 6 players will never be joined by players outside of their own party.</p>-->
 
-                                        <div class="checkbox">
-                                            <label style="border-bottom: none">
-                                                {{#if userSelections.closeRoom}}
-                                                    <input hook="update-reservation" type="checkbox" id="closeRoom" name="closeRoom" checked> Yes, I want to pay a ${{room.priceToClose}} closed room fee.
-                                                {{else}}
-                                                    <input hook="update-reservation" type="checkbox" id="closeRoom" name="closeRoom"> Yes, I want to pay a ${{room.priceToClose}} closed room fee.
-                                                {{/if}}
-                                            </label>
-                                        </div>
-                                    </div>
-                                {{/if}}
+                                        <!--<div class="checkbox">-->
+                                            <!--<label style="border-bottom: none">-->
+                                                <!--{{#if userSelections.closeRoom}}-->
+                                                    <!--<input hook="update-reservation" type="checkbox" id="closeRoom" name="closeRoom" checked> Yes, I want to pay a ${{room.priceToClose}} closed room fee.-->
+                                                <!--{{else}}-->
+                                                    <!--<input hook="update-reservation" type="checkbox" id="closeRoom" name="closeRoom"> Yes, I want to pay a ${{room.priceToClose}} closed room fee.-->
+                                                <!--{{/if}}-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--{{/if}}-->
 
                                 <!-- COUPON CODE -->
                                 <div class="form-group">
@@ -193,18 +264,7 @@
                                     {{/if}}
                                 </div>
 
-                                <!-- DISPLAY RESIDENT DISCOUNT OPTION IF NO COUPON CODE WAS USED. -->
 
-                                <div class="form-group">
-                                    <label for="nbKamaaina">Kama'aina Discount</label>
-                                    <p>How many Hawai'i residents in your party? Hawai'i residents each get $5 off. HAWAII ID REQUIRED.</p>
-                                    <select class="form-control" hook="update-reservation" id="nbKamaaina" name="nbKamaaina" style="width: 100%">
-                                        <option value="0"> SELECT NUMBER OF HAWAII RESIDENTS </option>
-                                        {{#each kamaainaPlayersOptions}}
-                                            <option value="{{this}}" {{selected this userSelections.nbKamaaina}}>{{this}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
 
                                 <!-- SOURCE TRACKING -->
                                 <div class="form-group">
@@ -212,11 +272,12 @@
                                     <input type="text" hook="update-reservation" class="form-control" id="source" name="source" value="{{reservation.source}}">
                                 </div>
 
-                            </div>
+
 
 
                             <!-- REVIEW ORDER -->
 
+                            {{#if gte n1=userSelections.nbPlayers n2=0}}
 
                             <label for="subtotal">Review Order</label>
                             <table class="table table-striped table-bordered table-responsive">
@@ -233,19 +294,21 @@
 
                                 <!-- COST OF PLAYERS -->
                                 <tr>
-                                    <td>{{reservation.nbPlayers}} players &nbsp;&times;&nbsp; {{toCurrency room.pricePerPlayer}}</td>
+                                    <td>{{reservation.nbPlayers}} Players</td>
                                     <td class="currency">{{toCurrency reservation.costOfPlayers}}</td>
                                 </tr>
 
                                 <!-- COST OF CLOSED ROOM -->
-                                {{#if canBeClosed game}}
-                                    {{#if reservation.closeRoom}}
-                                        <tr>
-                                            <td>Closed room</td>
-                                            <td class="currency">{{toCurrency reservation.costOfCloseRoom}}</td>
-                                        </tr>
-                                    {{/if}}
-                                {{/if}}
+                                <!--{{#if canBeClosed game}}-->
+                                    <!--{{#if reservation.closeRoom}}-->
+                                        <!--<tr>-->
+                                            <!--<td>Closed room</td>-->
+                                            <!--<td class="currency">{{toCurrency reservation.costOfCloseRoom}}</td>-->
+                                        <!--</tr>-->
+                                    <!--{{/if}}-->
+                                <!--{{/if}}-->
+
+
 
                                 <!-- SUBTOTAL BEFORE DISCOUNTS AND TAXES -->
                                 <tr style="font-weight:bold;">
@@ -261,14 +324,22 @@
                                     </tr>
                                 {{/if}}
 
+                                <!--&lt;!&ndash; DISCOUNT FROM KAMAAINA &ndash;&gt;-->
+                                <!--{{#if reservation.discountKamaaina}}-->
+                                    <!--<tr>-->
+                                        <!--<td class="discount">Kama'aina Discount &nbsp;&bull;&nbsp; {{reservation.nbKamaaina}} residents &nbsp;&times;&nbsp; &mdash; {{toCurrency room.kamaainaDiscountPerPlayer}}</td>-->
+                                        <!--<td class="currency discount">&mdash; {{toCurrency reservation.discountKamaaina}}</td>-->
+                                    <!--</tr>-->
+                                <!--{{/if}}-->
+
 
                                 <!-- DISCOUNT FROM COUPON CODE -->
                                 {{#if reservation.discount}}
                                     <tr>
                                         {{#if reservation.couponData.type}}
-                                            <td class="discount text-uppercase">Coupon "{{reservation.couponData.coupon}}" ${{reservation.couponData.discount}} OFF</td>
+                                            <td class="discount text-uppercase">Coupon "{{reservation.couponData.coupon}}" &nbsp;&bull;&nbsp; ${{reservation.couponData.discount}} OFF</td>
                                         {{else}}
-                                            <td class="discount text-uppercase">Coupon "{{reservation.couponData.coupon}}" {{reservation.couponData.discount}}% OFF</td>
+                                            <td class="discount text-uppercase">Coupon "{{reservation.couponData.coupon}}" &nbsp;&bull;&nbsp; {{reservation.couponData.discount}}% OFF</td>
                                         {{/if}}
                                         <td class="currency discount">&mdash; {{toCurrency reservation.discount}}</td>
                                     </tr>
@@ -288,9 +359,43 @@
                                 </tbody>
                             </table>
 
+
+                            <div class="form-group col-xs-6 text-center" style="background: #ddd; border-right:5px solid #eee; margin-bottom: 10px;">
+                                <label style="text-align: center; border: none; padding: 15px;">
+                                    <input checked hook="update-reservation" type="radio" class="form-control" name="pay" value="now" style="border:none; box-shadow: none; margin: 0 auto; width:20px; margin-bottom: 5px;">
+                                    Pay Now
+                                </label>
+                            </div>
+                            <div class="form-group col-xs-6" style="background: #ddd; border-left:5px solid #eee; margin-bottom: 10px;">
+                                <label style="text-align: center; border: none; padding: 15px;">
+                                    <input {{checked userSelections.pay 'check-in'}} hook="update-reservation" type="radio" class="form-control" name="pay" value="check-in" style="border:none; box-shadow: none; margin: 0 auto; width:20px;  margin-bottom: 5px;">
+                                    Pay At Check-In
+                                </label>
+                            </div>
+
+                            {{#if eq v1=userSelections.pay v2="check-in"}}
+                                <div class="row" style="margin-bottom: 5px;">
+
+                                    <!-- CREDIT CARD NUMBER -->
+                                    <div class="form-group col-xs-12">
+                                        <div style="font-size: 16px; background: #944e21; color: #FFF; padding: 15px 20px 5px 20px;">
+                                            <p>
+                                                Your credit card will <b>*** NOT ***</b> be charged today.
+                                            </p>
+                                            <p>
+                                                Your card will only be charged if you cancel within 72 hours of your scheduled game time.
+                                            </p>
+                                            <p>
+                                                All players must pay at check-in by credit card. We do not accept cash.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {{/if}}
                             <!-- CREDIT CARD FOR; IF TOTAL > 0 -->
                             {{#unless isFree}}
-                                <div class="row">
+                                <div class="row" style="padding-top: 10px; clear: both;">
 
                                     <!-- CREDIT CARD NUMBER -->
                                     <div class="form-group col-xs-12 col-md-6">
@@ -365,8 +470,8 @@
                             <!-- KACHING! -->
                             <input type="submit" hook="checkout" class="button btn-block button-available text-center" value="Complete Order">
 
-
-
+                           {{/if}}
+                            </div>
                         {{/if}}
 
 
@@ -416,6 +521,119 @@
 
             <!-- TESTIMONIALS -->
             <div class="col-xs-12 col-md-4 hidden-xs hidden-sm" style="padding-top: 140px;">
+
+                <div style="background: #eee; color: #666; margin-bottom: 20px; font-weight: bold; padding: 15px 20px; margin-top:5px;">
+                    <p style="font-size: 16px; margin-bottom: 10px">How much does it cost?</p>
+                    <p>
+                        Games cost between $25 and $40 per player. See our pricing chart below.
+                    </p>
+                    <p>All games are private events -- you will not be joined by players outside your party. </p>
+                </div>
+
+                <table class="table table-bordered table-responsive currency">
+                    <thead>
+                    <tr>
+                        <th class="text-right">
+                            #&nbsp;Players
+                        </th>
+                        <th class="text-right">
+                            Cost&nbsp;/&nbsp;Player
+                        </th>
+                        <th class="text-right">
+                            Total
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                {{toCurrency 40}}
+                            </td>
+                            <td>
+                                {{toCurrency 80}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                {{toCurrency 35}}
+                            </td>
+                            <td>
+                                {{toCurrency 105}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                4
+                            </td>
+                            <td>
+                                {{toCurrency 32}}
+                            </td>
+                            <td>
+                                {{toCurrency 128}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                5
+                            </td>
+                            <td>
+                                {{toCurrency 32}}
+                            </td>
+                            <td>
+                                {{toCurrency 160}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                6
+                            </td>
+                            <td>
+                                {{toCurrency 32}}
+                            </td>
+                            <td>
+                                {{toCurrency 192}}
+                            </td>
+                        </tr>
+                        {{#if gte n1=room.maxPlayers n2=7}}
+                            <tr>
+                                <td>
+                                    7
+                                </td>
+                                <td>
+                                    {{toCurrency 30}}
+                                </td>
+                                <td>
+                                    {{toCurrency 210}}
+                                </td>
+                            </tr>
+                        {{/if}}
+                        {{#if gte n1=room.maxPlayers n2=8}}
+
+                            <tr>
+                                <td>
+                                    8
+                                </td>
+                                <td>
+                                    {{toCurrency 30}}
+                                </td>
+                                <td>
+                                    {{toCurrency 240}}
+                                </td>
+                            </tr>
+                        {{/if}}
+                    </tbody>
+                </table>
+
+                <div style="background: #eee; color: #0e5900; margin-bottom: 20px; font-weight: bold; padding: 15px 20px;">
+                    <p style="font-size: 16px; margin-bottom: 3px">Kama'aina Discount</p>
+                    Hawai'i residents each get $5 off. Hawaii ID required.
+                </div>
 
                 {{#with settings}}
                     <p class="testimonial" style="margin-left: 0; margin-right:0; max-width: none; padding: 0; margin-bottom: 20px;">

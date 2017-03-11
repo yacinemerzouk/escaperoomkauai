@@ -57,15 +57,35 @@ Bolt.Reservation.prototype.populate = function( data ){
 
     this.room = Bolt.Collections.Rooms.findOne( this.roomId );
 
+
+    this.closeRoom = true;
     // Calculate all costs
     // TODO: Move this somewhere cleaner
     if( this.nbPlayers ) {
 
         // Total cost of players, before discounts and taxes
-        this.costOfPlayers = ( parseFloat(this.nbPlayers) * parseFloat(this.room.pricePerPlayer) ).toFixed(2);
+        //this.costOfPlayers = ( parseFloat(this.nbPlayers) * parseFloat(this.room.pricePerPlayer) ).toFixed(2);
+        if( this.nbPlayers == 2 ){
+            this.costOfPlayers = 80;
+        }else if( this.nbPlayers == 3 ){
+            this.costOfPlayers = 105;
+        }else if( this.nbPlayers == 4 ){
+            this.costOfPlayers = 128;
+        }else if( this.nbPlayers == 5 ){
+            this.costOfPlayers = 160;
+        }else if( this.nbPlayers == 6 ){
+            this.costOfPlayers = 192;
+        }else if( this.nbPlayers == 7 ){
+            this.costOfPlayers = 210;
+        }else if( this.nbPlayers == 8 ){
+            this.costOfPlayers = 240;
+        }else{
+            this.costOfPlayers = 0;
+        }
 
         // Total cost of closing room, before discounts and taxes
-        this.costOfCloseRoom = this.closeRoom ? ( this.room.priceToClose ).toFixed(2) : 0;
+        // this.costOfCloseRoom = this.closeRoom ? ( this.room.priceToClose ).toFixed(2) : 0;
+        this.costOfCloseRoom = 0;
 
         // Subtotal
         this.subtotal = ( parseFloat(this.costOfPlayers) + parseFloat(this.costOfCloseRoom) ).toFixed(2);
@@ -99,7 +119,7 @@ Bolt.Reservation.prototype.populate = function( data ){
             // console.log( 'got dollars', this.discount, this.couponData.discount, this.subtotal );
 
             if( parseFloat(this.discount) > parseFloat(this.subtotal) ){
-                this.discount = this.subtotal;
+                this.discount = parseFloat(this.subtotal) - parseFloat(this.discountKamaaina);
             }
 
             // console.log( 'got dollars2', this.discount, this.couponData.discount );
@@ -107,7 +127,7 @@ Bolt.Reservation.prototype.populate = function( data ){
 
         }else if( this.couponData ){
             console.log('PERCENTAGE COUPON');
-            this.discount = ( parseFloat(this.subtotal) * ( this.couponData.discount / 100 ) ).toFixed(2);
+            this.discount = ( ( parseFloat(this.subtotal) - parseFloat( this.discountKamaaina ) ) * ( this.couponData.discount / 100 ) ).toFixed(2);
             console.log('PERCENTAGE COUPON', parseFloat(this.subtotal), this.couponData.discount, this.discount );
         }else{
             this.discount = 0;
@@ -375,7 +395,7 @@ Bolt.Reservation.prototype.isValid = function(){
         isValid = false;
     }
     if( !ccExpYearOK ){
-        Notifications.error('Missing Info', 'Please select credit card expiration month.');
+        Notifications.error('Missing Info', 'Please select credit card expiration year.');
         isValid = false;
     }
     if( !cvvOK ){
