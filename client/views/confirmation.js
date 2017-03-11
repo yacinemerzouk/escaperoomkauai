@@ -15,11 +15,11 @@ Template.confirmation.helpers({
     // },
     reservation: function(){
         var resObject = new Bolt.Reservation(parseInt(this.publicId));
-        // console.log( 'RESERVATION', resObject );
         var gameObject = new Bolt.Game( {reservationPublicId: parseInt(this.publicId) } );
         resObject.game = gameObject;
         // console.log( 'GAME', gameObject );
         resObject.game = gameObject;
+        console.log( 'RESERVATION', resObject );
         return resObject;
     },
     total: function(){

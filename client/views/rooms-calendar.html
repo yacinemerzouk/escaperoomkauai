@@ -54,10 +54,10 @@
                                         {{#each roomChoices gameId=_id}}
 
                                             <a  hook="set-time" hook-data-time="{{../time}}" hook-data-date="{{../date}}" hook-data-room-id="{{_id}}" href="#" style="text-decoration: none">
-                                                <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px;">
+                                                <div class="label label-info label-time-green" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px;">
                                                     {{../time}} &nbsp;&bull;&nbsp;
                                                     {{roomTitle _id}} &nbsp;&bull;&nbsp;
-                                                    {{maxPlayers}} Spots left
+                                                    Up to {{maxPlayers}} Players
 
                                                 </div>
                                             </a>
@@ -67,10 +67,10 @@
                                         {{/each}}
                                     {{else}}
                                         <a  hook="set-time" hook-data-time="{{time}}" hook-data-date="{{date}}" hook-data-room-id="{{roomId}}" href="#" style="text-decoration: none">
-                                            <div class="label label-info" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px;">
+                                            <div class="label label-info label-time-green" style="font-weight: normal; text-align: left; margin-bottom: 5px; font-size: 12px; line-height: 12px; position:relative; bottom: 1px; display: block; padding: 9px 10px 10px;">
                                                 {{time}} &nbsp;&bull;&nbsp;
                                                 {{roomTitle roomId}} &nbsp;&bull;&nbsp;
-                                                {{calculateSpotsLeft this}} Spots left
+                                                Up to {{calculateSpotsLeft this}} Players
 
                                             </div>
                                         </a>
@@ -96,10 +96,10 @@
 
                 <h2 class="subheading" style="clear: both; padding-top: 70px;">Advance Bookings &amp; Large Groups</h2>
                 <p class="text-center">
-                    To book more than a week in advance, go to the <a href="{{pathFor 'rooms'}}">rooms</a> page.
+                    Do you want to make a reservation for a day that has no scheduled games? <a href="{{pathFor 'contact'}}">Call us</a> -- we can schedule something for you.
                 </p>
                 <p class="text-center">
-                    For groups of 7 or more players, please <a href="{{pathFor 'contact'}}">contact us</a>.
+                    For groups of 9 or more players, please <a href="{{pathFor 'contact'}}">contact us</a>.
                 </p>
 
             {{else}}

@@ -1,4 +1,5 @@
 Template.room.onCreated(function(){
+    Meteor.subscribe( 'games' );
     this.updateReservation = function( formData ){
 
         var formData = formData || Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
@@ -18,102 +19,156 @@ Template.room.onCreated(function(){
         Bolt.showLoadingAnimation();
 
 
-        var formData = $( '[hook="reservation-form"]' );
+        var formData = Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
         var userSelections = Session.get( 'userSelections' );
         if( formData.coupon ) {
             formData.coupon = formData.coupon.toUpperCase();
         }
+        console.log('THIS SHOULD NOT WORK',formData);
         var room = this.data.room;
         var reservationData = _.extend( userSelections, formData );
         var reservation = new Bolt.Reservation(_.extend( reservationData, {roomId: room._id, room:room } ));
-        // Grab room info
-        var game = new Bolt.Game( Session.get('game') );
-        console.log('insert game id here?');
-        // if(!game._id){
-        //     gameWithId = new Bolt.Game({});
-        // }
-        //game.addReservation( reservation );
 
-        console.log( 'SUBMIT ORDER', reservation, game );
+        if( reservation.isValid() ) {
 
 
-        Stripe.card.createToken({
-            number: reservation.cc,
-            exp_month: reservation.ccExpMonth,
-            exp_year: reservation.ccExpYear,
-            cvc: reservation.cvv,
-        }, function (status, response) {
+            // Grab room info
+            var game = new Bolt.Game(Session.get('game'));
+            console.log('insert game id here?');
+            // if(!game._id){
+            //     gameWithId = new Bolt.Game({});
+            // }
+            //game.addReservation( reservation );
 
-            var stripeToken = response.id;
-
-            Meteor.call(
-                'chargeCard',
-                stripeToken,
-                reservation.total * 100,
-                reservation.email,
-                function( error, response ){
-                    if( error ){
-                        throw new Meteor.Error('|Bolt|chargeCard|Error', error.message );
-                    }else{
-                        console.log( 'Back from chargeCard' );
-                        // Add transaction to reservation
-                        // reservation.transactions = reservation.transactions || [];
-                        // reservation.transactions.push({
-                        //     amount: reservation.total,
-                        //     ccTransaction: response
-                        // });
-                        // Add amountPaid
-                        // reservation.paid = reservation.total;
-                        // reservation.due = 0;
-                        // Add res to game
-                        var resId = game.addReservation( reservation );
-                        game.addTransaction({
-                            reservationPublicId: resId,
-                            amount: reservation.total,
-                            ccTransaction: response
-                        });
-                        console.log( 'Just before saving game', game );
-                        // Save game
-                        var orderProcessed = game.save();
-
-                        if( orderProcessed ){
-
-                            reservation.sendConfirmationEmail();
-                            reservation.sendNotificationEmail();
-
-                            //Configure the Twilio client
-                            var SMSString = "New Booking - " +
-                                reservation.room.title +
-                                " - " +
-                                game.date +
-                                " @ " +
-                                game.time +
-                                " - " +
-                                reservation.nbPlayers + " players" +
-                                " - " +
-                                "$" + reservation.total;
-                            Meteor.call('sendAdminNotificationSMS', SMSString, function(error,response){
-                                if( error ) {
-                                    // //console.log( error );
-                                    new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
-                                }else{
-                                    // //console.log( response );
-                                }
-
-                            });
+            console.log('SUBMIT ORDER', reservation, game);
 
 
-                            Bolt.hideLoadingAnimation();
-                            Router.go( 'confirmation', {_id:resId});
 
+            if( reservation.total == 0 || reservation.pay == 'check-in' ) {
+
+                var resId = game.addReservation(reservation);
+
+                console.log('Just before saving game', game);
+                // Save game
+                var orderProcessed = game.save();
+
+                if (orderProcessed) {
+
+                    reservation.sendConfirmationEmail();
+                    reservation.sendNotificationEmail();
+
+                    //Configure the Twilio client
+                    var SMSString = "New Booking - " +
+                        reservation.room.title +
+                        " - " +
+                        game.date +
+                        " @ " +
+                        game.time +
+                        " - " +
+                        reservation.nbPlayers + " players" +
+                        " - " +
+                        "$" + reservation.total;
+                    Meteor.call('sendAdminNotificationSMS', SMSString, function (error, response) {
+                        if (error) {
+                            // //console.log( error );
+                            new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
+                        } else {
+                            // //console.log( response );
                         }
-                    }
+
+                    });
+
+
+                    Bolt.hideLoadingAnimation();
+                    Router.go('confirmation', {_id: resId});
+
                 }
-            );
 
-        });
+            }else {
 
 
+                Stripe.card.createToken({
+                    number: reservation.cc,
+                    exp_month: reservation.ccExpMonth,
+                    exp_year: reservation.ccExpYear,
+                    cvc: reservation.cvv,
+                }, function (status, response) {
+
+                    var stripeToken = response.id;
+
+                    Meteor.call(
+                        'chargeCard',
+                        stripeToken,
+                        reservation.total * 100,
+                        reservation.email,
+                        function (error, response) {
+                            if (error) {
+                                throw new Meteor.Error('|Bolt|chargeCard|Error', error.message);
+                            } else {
+                                console.log('Back from chargeCard');
+                                // Add transaction to reservation
+                                // reservation.transactions = reservation.transactions || [];
+                                // reservation.transactions.push({
+                                //     amount: reservation.total,
+                                //     ccTransaction: response
+                                // });
+                                // Add amountPaid
+                                // reservation.paid = reservation.total;
+                                // reservation.due = 0;
+                                // Add res to game
+                                var resId = game.addReservation(reservation);
+                                game.addTransaction({
+                                    reservationPublicId: resId,
+                                    amount: reservation.total,
+                                    ccTransaction: response
+                                });
+                                console.log('Just before saving game', game);
+                                // Save game
+                                var orderProcessed = game.save();
+
+                                if (orderProcessed) {
+
+                                    reservation.sendConfirmationEmail();
+                                    reservation.sendNotificationEmail();
+
+                                    //Configure the Twilio client
+                                    var SMSString = "New Booking - " +
+                                        reservation.room.title +
+                                        " - " +
+                                        game.date +
+                                        " @ " +
+                                        game.time +
+                                        " - " +
+                                        reservation.nbPlayers + " players" +
+                                        " - " +
+                                        "$" + reservation.total;
+                                    Meteor.call('sendAdminNotificationSMS', SMSString, function (error, response) {
+                                        if (error) {
+                                            // //console.log( error );
+                                            new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
+                                        } else {
+                                            // //console.log( response );
+                                        }
+
+                                    });
+
+
+                                    Bolt.hideLoadingAnimation();
+                                    Router.go('confirmation', {_id: resId});
+
+                                }
+                            }
+                        }
+                    );
+
+                });
+
+            }
+
+        }else{
+            console.log( 'Reservation not valid' );
+            Bolt.hideLoadingAnimation();
+        }
 
     }
 });
@@ -171,8 +226,18 @@ Template.room.onRendered(function(){
         );
 
 
+        var minDate = Epoch.today();
+        if( room.openingDate > minDate ){
+            minDate = room.openingDate;
+            var us = Session.get('userSelections');
+            if( !us.date || us.date < minDate ) {
+                us.date = minDate;
+                Session.set('userSelections',us);
+            }
+        }
+
         $('#datepicker').datepicker({
-            minDate: Epoch.today(),
+            minDate: minDate,
             dateFormat: 'yy-mm-dd',
             defaultDate: game.date,
             onSelect: function (dateText, inst) {
@@ -291,7 +356,43 @@ Template.room.helpers({
             years.push( x );
         }
         return years;
+    },
+    isFree: function(){
+        console.log( 'in isFree', this.room );
+
+        var formData = Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
+        var userSelections = Session.get( 'userSelections' );
+        if( formData.coupon ) {
+            formData.coupon = formData.coupon.toUpperCase();
+        }
+
+        var room = this.room;
+        var reservationData = _.extend( userSelections, formData );
+        var reservation = new Bolt.Reservation(_.extend( reservationData, {roomId: room._id, room:room } ));
+
+        // var room = this.room;
+        // var reservation = new Bolt.Reservation( _.extend( reservationData, {roomId: room._id, room:room } ) );
+        return reservation.total == 0 ? true : false;
+    },
+    dynamicSuccessRate: function(){
+        var games = Bolt.Collections.Games.find( { roomId: this.room._id } ).fetch();
+        var nbGames = 0;
+        var nbGamesWon = 0;
+        _.each( games, function( game ) {
+            if (game && game.won === true || game.won === false) {
+                nbGames++;
+                if (game.won) {
+                    nbGamesWon++;
+                }
+            }
+        });
+        if( nbGames < 10 ) {
+            return this.room.successRate;
+        }else{
+            return Math.ceil(nbGamesWon / nbGames * 100);
+        }
     }
+
 });
 
 Template.room.events({
@@ -340,7 +441,7 @@ Template.room.events({
         tmpl.updateReservation( formData );
 
     },
-    'submit form': function(evt,tmpl){
+    'submit [hook="reservation-form"]': function(evt,tmpl){
 
         evt.preventDefault();
         tmpl.submitOrder();

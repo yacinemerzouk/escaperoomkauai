@@ -277,3 +277,13 @@ UI.registerHelper('roomChoices',function( args ){
     });
     return rooms;
 });
+
+UI.registerHelper('gte',function( args ){
+    console.log('GTE', args);
+    return args.hash.n1 >= args.hash.n2;
+});
+
+UI.registerHelper('eq',function( args ){
+    console.log('eq', args);
+    return args.hash.v1 === args.hash.v2;
+});

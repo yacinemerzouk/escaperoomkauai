@@ -26,43 +26,46 @@
                         <td>Reserved under {{reservation.firstName}} {{reservation.lastName}} &nbsp;&bull;&nbsp; {{reservation.email}} &nbsp;&bull;&nbsp; {{reservation.phone}}</td>
                     </tr>
 
-                    {{#if closeRoom}}
                     <tr>
-                        <td>Closed Room<br>You will play the room with only members of your party of {{reservation.nbPlayers}}. No one else can join this time slot.</td>
+                        <td>{{toCurrency reservation.due}} at check-in</td>
                     </tr>
-                    {{/if}}
+                    <!--{{#if closeRoom}}-->
+                    <!--<tr>-->
+                        <!--<td>Closed Room<br>You will play the room with only members of your party of {{reservation.nbPlayers}}. No one else can join this time slot.</td>-->
+                    <!--</tr>-->
+                    <!--{{/if}}-->
 
 
                     </tbody>
                 </table>
 
-                <table class="table table-responsive table-bordered table-striped">
-                    <tbody class="text-right">
+                <!--<table class="table table-responsive table-bordered table-striped">-->
+                    <!--<tbody class="text-right">-->
 
-                        <tr>
-                            <th>Amount Charged</th>
-                            <td class="currency">{{toCurrency reservation.total}}</td>
-                        </tr>
-                        {{#if reservation.adjustments}}
-                            {{#if reservation.refund}}
-                            <tr>
-                                <th>Amount Refunded (may take 5-10 days to appear on your statement)</th>
-                                <td class="currency">{{toCurrency reservation.refund}}</td>
-                            </tr>
-                            {{/if}}
-                            {{#if reservation.extra}}
-                            <tr>
-                                <th>Extra Charges</th>
-                                <td class="currency">{{toCurrency reservation.extra}}</td>
-                            </tr>
-                            {{/if}}
-                            <tr>
-                                <th>Corrected Amount Charged</th>
-                                <td class="currency">{{toCurrency reservation.correctedAmount}}</td>
-                            </tr>
-                            {{/if}}
-                    </tbody>
-                </table>
+                        <!--<tr>-->
+                            <!--<th>Amount Charged</th>-->
+                            <!--<td class="currency">{{toCurrency reservation.total}}</td>-->
+                        <!--</tr>-->
+                        <!--{{#if reservation.adjustments}}-->
+                            <!--{{#if reservation.refund}}-->
+                            <!--<tr>-->
+                                <!--<th>Amount Refunded (may take 5-10 days to appear on your statement)</th>-->
+                                <!--<td class="currency">{{toCurrency reservation.refund}}</td>-->
+                            <!--</tr>-->
+                            <!--{{/if}}-->
+                            <!--{{#if reservation.extra}}-->
+                            <!--<tr>-->
+                                <!--<th>Extra Charges</th>-->
+                                <!--<td class="currency">{{toCurrency reservation.extra}}</td>-->
+                            <!--</tr>-->
+                            <!--{{/if}}-->
+                            <!--<tr>-->
+                                <!--<th>Corrected Amount Charged</th>-->
+                                <!--<td class="currency">{{toCurrency reservation.correctedAmount}}</td>-->
+                            <!--</tr>-->
+                            <!--{{/if}}-->
+                    <!--</tbody>-->
+                <!--</table>-->
 
 
 

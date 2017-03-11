@@ -305,6 +305,11 @@ Bolt.Game.prototype.canBeClosed = function( nbPlayers ){
 
 Bolt.Game.prototype.canBeBooked = function( nbPlayers ){
     // console.log( 'canBeBooked', this );
+
+    if( this.blocked ){
+        return false;
+    }
+
     var room = new Bolt.Room( this.roomId );
     if( !this.reservations || this.reservations.length == 0 ){
         return true;
@@ -318,7 +323,8 @@ Bolt.Game.prototype.canBeBooked = function( nbPlayers ){
             }
         });
         // console.log( 'IN RES ARRAY', closeRoom, totalPlayers, room.maxPlayers );
-        if( closeRoom || totalPlayers >= room.maxPlayers - 1 ){
+        // if( closeRoom || totalPlayers >= room.maxPlayers - 1 ){
+        if( totalPlayers > 0 ){
             return false;
         }else{
             return true;

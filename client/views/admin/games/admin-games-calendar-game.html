@@ -1,5 +1,5 @@
 <template name="adminGamesCalendarGame">
-    <div class="admin-games-calendar-game {{#if hasReservations this}}has-reservations{{/if}} {{#if canBeBooked this}}can-be-booked{{/if}} ">
+    <div class="admin-games-calendar-game {{#if hasReservations this}}has-reservations{{/if}} {{#if canBeBooked this}}can-be-booked{{/if}} {{#if blocked}}blocked{{/if}} ">
         <span class="game-time">{{time}}</span><br>
         {{roomTitle roomId}}<br>
         {{gameMasterName userId}}<br>
@@ -10,9 +10,19 @@
         {{#unless isPaidInFull this}}
             <br><span class="label label-danger">PAYMENT REQUIRED</span>
         {{/unless}}
+        {{#if blocked}}
+            <span class="label label-danger">BLOCKED</span>
+        {{/if}}
         <br>
         <a href="#" hook="edit-game" hook-data-game-id="{{_id}}" class="action-link">Manage</a>
         <span style="color:#40576f;">&bull;</span>
-        <a href="{{pathFor 'gamePlay' _id=_id}}" class="action-link">Play</a>
+        <a href="{{pathFor 'gamePlay' _id=_id}}" class="action-link">Play</a><br>
+        {{#unless hasReservations this}}
+            {{#if blocked}}
+                <a href="#" hook="unblock" class="action-link">Unblock</a>
+            {{else}}
+                <a href="#" hook="block" class="action-link">Block</a>
+            {{/if}}
+        {{/unless}}
     </div>
 </template>
