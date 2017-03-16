@@ -37,7 +37,7 @@ Template.calendarFormEditGame.events({
     },
     'click [hook="edit-reservation"]': function(evt,tmpl){
         var publicId = parseInt( $(evt.currentTarget).attr('hook-data-reservation-id') );
-        console.log( 'edit res', publicId );
+        // console.log( 'edit res', publicId );
         Blaze.renderWithData(Template.calendarFormEditReservation,{gameId:tmpl.gameId,publicId:publicId},$('body')[0]);
         Blaze.remove(tmpl.view);
     },
@@ -63,7 +63,7 @@ Template.calendarFormEditGame.events({
             parseInt( parseFloat( refundAmount ).toFixed(2) * 100 ),
             function( error, response ){
                 if( error ){
-                    console.log( error );
+                    // console.log( error );
                 }else{
 
                     // Get reservation
@@ -72,7 +72,7 @@ Template.calendarFormEditGame.events({
                         reservationPublicId: reservationId
                     });
                     // Add transaction and Update paid / due
-                    console.log( 'Refund OK', reservation, response );
+                    // console.log( 'Refund OK', reservation, response );
                     game.addTransaction({
                         reservationPublicId: parseInt( reservationId ),
                         amount: parseFloat( refundAmount * -1 ).toFixed(2),
@@ -89,7 +89,7 @@ Template.calendarFormEditGame.events({
     'submit [hook="edit-game-form"]': function(evt,tmpl){
         evt.preventDefault();
         var formData = Bureaucrat.getFormData( $(evt.target) );
-        console.log( 'EDIT FORM DATA', formData );
+        // console.log( 'EDIT FORM DATA', formData );
         var game = new Bolt.Game( tmpl.data.gameId );
         game.populate(formData);
         var saved = game.save();

@@ -380,11 +380,11 @@ Bolt.Game.prototype.updateReservation = function( args ){
 
     _.each( this.reservations, function( reservation ){
         if( reservation.publicId == publicId ){
-            console.log( 'RESERVATION BEFORE UPDATE', reservation );
-            console.log( 'DATA FOR UPDATE', args );
+            // console.log( 'RESERVATION BEFORE UPDATE', reservation );
+            // console.log( 'DATA FOR UPDATE', args );
             reservation = _.extend( reservation, args );
             reservation.due = ( parseFloat( reservation.total ) - parseFloat( reservation.paid ) ).toFixed(2);
-            console.log( 'RESERVATION AFTER UPDATE', reservation );
+            // console.log( 'RESERVATION AFTER UPDATE', reservation );
         }
     });
 }
@@ -393,7 +393,7 @@ Bolt.Game.prototype.addTransaction = function( args ){
     var publicId = args.reservationPublicId;
     _.each( this.reservations, function( reservation ){
         if( reservation.publicId == publicId ){
-            console.log( reservation );
+            // console.log( reservation );
             if( !reservation.transactions ){
                 reservation.transactions = [];
             }
@@ -416,7 +416,7 @@ Bolt.Game.prototype.addTransaction = function( args ){
         }
     });
 
-    console.log( 'In addTransaction', args, this );
+    // console.log( 'In addTransaction', args, this );
 
 
 }

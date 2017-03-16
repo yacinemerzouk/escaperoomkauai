@@ -19,7 +19,7 @@ Template.confirmation.helpers({
         resObject.game = gameObject;
         // console.log( 'GAME', gameObject );
         resObject.game = gameObject;
-        console.log( 'RESERVATION', resObject );
+        // console.log( 'RESERVATION', resObject );
         return resObject;
     },
     total: function(){

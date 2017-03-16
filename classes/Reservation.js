@@ -113,7 +113,7 @@ Bolt.Reservation.prototype.populate = function( data ){
 
         // Discount amount for coupon
         if( this.couponData && this.couponData.type == 'DOLLARS' ){
-            console.log('DOLLARS COUPON');
+            // console.log('DOLLARS COUPON');
 
             this.discount = parseFloat( this.couponData.discount ).toFixed(2);
             // console.log( 'got dollars', this.discount, this.couponData.discount, this.subtotal );
@@ -126,9 +126,9 @@ Bolt.Reservation.prototype.populate = function( data ){
 
 
         }else if( this.couponData ){
-            console.log('PERCENTAGE COUPON');
+            // console.log('PERCENTAGE COUPON');
             this.discount = ( ( parseFloat(this.subtotal) - parseFloat( this.discountKamaaina ) ) * ( this.couponData.discount / 100 ) ).toFixed(2);
-            console.log('PERCENTAGE COUPON', parseFloat(this.subtotal), this.couponData.discount, this.discount );
+            // console.log('PERCENTAGE COUPON', parseFloat(this.subtotal), this.couponData.discount, this.discount );
         }else{
             this.discount = 0;
         }

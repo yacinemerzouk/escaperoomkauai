@@ -24,7 +24,7 @@ Template.room.onCreated(function(){
         if( formData.coupon ) {
             formData.coupon = formData.coupon.toUpperCase();
         }
-        console.log('THIS SHOULD NOT WORK',formData);
+        // console.log('THIS SHOULD NOT WORK',formData);
         var room = this.data.room;
         var reservationData = _.extend( userSelections, formData );
         var reservation = new Bolt.Reservation(_.extend( reservationData, {roomId: room._id, room:room } ));
@@ -34,13 +34,13 @@ Template.room.onCreated(function(){
 
             // Grab room info
             var game = new Bolt.Game(Session.get('game'));
-            console.log('insert game id here?');
+            // console.log('insert game id here?');
             // if(!game._id){
             //     gameWithId = new Bolt.Game({});
             // }
             //game.addReservation( reservation );
 
-            console.log('SUBMIT ORDER', reservation, game);
+            // console.log('SUBMIT ORDER', reservation, game);
 
 
 
@@ -48,7 +48,7 @@ Template.room.onCreated(function(){
 
                 var resId = game.addReservation(reservation);
 
-                console.log('Just before saving game', game);
+                // console.log('Just before saving game', game);
                 // Save game
                 var orderProcessed = game.save();
 
@@ -99,30 +99,24 @@ Template.room.onCreated(function(){
                     Meteor.call(
                         'chargeCard',
                         stripeToken,
-                        reservation.total * 100,
+                        parseInt( reservation.total * 100 ),
                         reservation.email,
                         function (error, response) {
                             if (error) {
+
                                 throw new Meteor.Error('|Bolt|chargeCard|Error', error.message);
+                                Notifications.error( error.message );
+                                Bolt.hideLoadingAnimation();
+
                             } else {
-                                console.log('Back from chargeCard');
-                                // Add transaction to reservation
-                                // reservation.transactions = reservation.transactions || [];
-                                // reservation.transactions.push({
-                                //     amount: reservation.total,
-                                //     ccTransaction: response
-                                // });
-                                // Add amountPaid
-                                // reservation.paid = reservation.total;
-                                // reservation.due = 0;
-                                // Add res to game
+
                                 var resId = game.addReservation(reservation);
                                 game.addTransaction({
                                     reservationPublicId: resId,
                                     amount: reservation.total,
                                     ccTransaction: response
                                 });
-                                console.log('Just before saving game', game);
+
                                 // Save game
                                 var orderProcessed = game.save();
 
@@ -156,6 +150,11 @@ Template.room.onCreated(function(){
                                     Bolt.hideLoadingAnimation();
                                     Router.go('confirmation', {_id: resId});
 
+                                }else{
+
+                                    Bolt.hideLoadingAnimation();
+                                    Notifications.error( 'Payment succeeded but there was an issue saving the reservation to our system. Please call us.')
+
                                 }
                             }
                         }
@@ -166,7 +165,7 @@ Template.room.onCreated(function(){
             }
 
         }else{
-            console.log( 'Reservation not valid' );
+            // console.log( 'Reservation not valid' );
             Bolt.hideLoadingAnimation();
         }
 
@@ -316,11 +315,11 @@ Template.room.helpers({
         return game.canBeClosed( nbPlayers );
     },
     canBeBooked: function( gameData ){
-        console.log( 'GAME DATA', gameData );
+        // console.log( 'GAME DATA', gameData );
         var game = new Bolt.Game( gameData );
         var userSelections = Session.get( 'userSelections' );
         var nbPlayers = userSelections.nbPlayers;
-        console.log( game, nbPlayers );
+        // console.log( game, nbPlayers );
         return game.canBeBooked( nbPlayers );
     },
     spotsLeftInGame: function( gameData ){
@@ -342,7 +341,7 @@ Template.room.helpers({
     hasSelectedNbPlayers: function(){
         var userSelections = Session.get( 'userSelections' );
         var nbPlayers = userSelections.nbPlayers;
-        console.log( 'NBPLAYERS', nbPlayers );
+        // console.log( 'NBPLAYERS', nbPlayers );
         if( nbPlayers && nbPlayers !== "0" && nbPlayers !== 0 && nbPlayers !== "" ){
             return true;
         }else{
@@ -358,7 +357,7 @@ Template.room.helpers({
         return years;
     },
     isFree: function(){
-        console.log( 'in isFree', this.room );
+        // console.log( 'in isFree', this.room );
 
         var formData = Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
         var userSelections = Session.get( 'userSelections' );
