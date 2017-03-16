@@ -4,9 +4,9 @@ Template.roomsCalendar.onRendered(function(){
 
     if( !Session.get('calendarDay') ) {
         Session.set('calendarDay', Epoch.dateObjectToDateString(new Date()));
-        console.log( 'SETTING CALENDAR DAY', Epoch.dateObjectToDateString(new Date()) );
+        // console.log( 'SETTING CALENDAR DAY', Epoch.dateObjectToDateString(new Date()) );
     }else{
-        console.log( 'CALENDAR DAY ALREADY SET', Session.get('calendarDay') );
+        // console.log( 'CALENDAR DAY ALREADY SET', Session.get('calendarDay') );
     }
 
     this.autorun(function() {
@@ -19,7 +19,7 @@ Template.roomsCalendar.onRendered(function(){
             Session.get('calendarDay'),
             {
                 onReady: function () {
-                    console.log('reservations ready');
+                    // console.log('reservations ready');
                     Session.set('calendarReservationsReady', true);
                 }
             }
@@ -29,7 +29,7 @@ Template.roomsCalendar.onRendered(function(){
             Session.get('calendarDay'),
             {
                 onReady: function () {
-                    console.log('games ready');
+                    // console.log('games ready');
                     Session.set('calendarGamesReady', true);
                 }
             }
@@ -55,10 +55,10 @@ Template.roomsCalendar.helpers({
     day: function(){
         var day = Bolt.getCalendarDay( Session.get('calendarDay') );
         if( Session.get('calendarReservationsReady') && Session.get('calendarGamesReady') ){
-            console.log( 'Everything ready; returning day', day );
+            // console.log( 'Everything ready; returning day', day );
             return day;
         }else{
-            console.log( 'Everything NOT ready; returning false' );
+            // console.log( 'Everything NOT ready; returning false' );
             return false;
         }
     },
@@ -80,7 +80,7 @@ Template.roomsCalendar.events({
         var roomId = $(evt.currentTarget).attr('hook-data-room-id');
         var room = new Bolt.Room(roomId);
         Session.set('userSelections', {date:date,time:time,roomId:roomId});
-        console.log('CALENDAR ROOM',room);
+        // console.log('CALENDAR ROOM',room);
         // Session.set( 'selectedTimeFromCalendar', $(evt.currentTarget).attr('hook-data') );
         // console.log( "SETTING TIME FOR CALENDAR", evt.currentTarget );
         // Router.go( url );

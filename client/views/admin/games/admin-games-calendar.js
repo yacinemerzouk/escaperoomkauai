@@ -16,7 +16,7 @@ Template.adminGamesCalendar.onRendered(function(){
                 // console.log( 'Calendar: roomsMeta ready' );
             },
             onStop: function(){
-                console.log( 'Calendar: roomsMeta FAIL' );
+                // console.log( 'Calendar: roomsMeta FAIL' );
             }
         }
     );
@@ -66,7 +66,7 @@ Template.adminGamesCalendar.helpers({
 Template.adminGamesCalendar.events({
     'click [hook="next-games"]': function (evt, tmpl) {
         evt.preventDefault();
-        console.log('next games');
+        // console.log('next games');
         var currentFirstDay = Session.get('firstDay');
         var newFirstDay = Epoch.addDaysToDate(1, currentFirstDay);
         Session.set('firstDay', newFirstDay);
@@ -82,7 +82,7 @@ Template.adminGamesCalendar.events({
     'click [hook="add-game"]': function( evt, tmpl ){
         evt.preventDefault();
         var date = $(evt.currentTarget).attr('hook-data-date');
-        console.log( 'Adding game', date );
+        // console.log( 'Adding game', date );
         Blaze.renderWithData(Template.calendarFormAddGame,{date:date},$('body')[0]);
     },
     'click [hook="edit-game"]':function(evt,tmpl){

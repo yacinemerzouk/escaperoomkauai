@@ -1,5 +1,6 @@
 Template.home.onCreated(function(){
     Meteor.subscribe( 'rooms' );
+    Meteor.subscribe( 'games' );
 });
 Template.home.events({
     'click [hook="explainer"]': function(evt,tmpl){

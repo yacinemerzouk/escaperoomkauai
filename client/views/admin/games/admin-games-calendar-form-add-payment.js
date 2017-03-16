@@ -34,7 +34,7 @@ Template.calendarFormAddPayment.events({
         evt.preventDefault();
         Bolt.showLoadingAnimation();
         var formData = Bureaucrat.getFormData( $(evt.target) );
-        console.log( 'form data', formData );
+        // console.log( 'form data', formData );
         var game = new Bolt.Game({reservationPublicId:parseInt( formData.publicId )});
         var paymentMethod = Session.get('paymentMethod');
         if( paymentMethod == 'ccSwiped' ){
@@ -76,9 +76,9 @@ Template.calendarFormAddPayment.events({
                         reservation.email,
                         function(error, response){
                             if( error ){
-                                console.log( 'Charge card error', error );
+                                // console.log( 'Charge card error', error );
                             }else{
-                                console.log( 'CHARGE SUCCEEDED', token, parseInt(parseFloat(formData.amount)*100),reservation.email,error,response);
+                                // console.log( 'CHARGE SUCCEEDED', token, parseInt(parseFloat(formData.amount)*100),reservation.email,error,response);
                                 game.addTransaction({
                                     reservationPublicId:parseInt( formData.publicId ),
                                     amount: formData.amount,
@@ -99,7 +99,7 @@ Template.calendarFormAddPayment.events({
                     );
 
                 }else{
-                    console.log( 'Token error?', status, response );
+                    // console.log( 'Token error?', status, response );
                     Bolt.hideLoadingAnimation();
                 }
 

@@ -266,11 +266,11 @@ UI.registerHelper('canChooseRoom',function( roomId ){
 });
 
 UI.registerHelper('roomChoices',function( args ){
-    console.log(args.hash.gameId);
+    // console.log(args.hash.gameId);
     var gameId = args.hash.gameId;
     var game = new Bolt.Game(gameId);
     var user = Meteor.users.findOne(game.userId);
-    console.log('roomchoices', game);
+    // console.log('roomchoices', game);
     var rooms = [];
     _.each(user.profile.rooms, function(roomId){
         rooms.push( new Bolt.Room( roomId ) );
@@ -279,11 +279,11 @@ UI.registerHelper('roomChoices',function( args ){
 });
 
 UI.registerHelper('gte',function( args ){
-    console.log('GTE', args);
+    // console.log('GTE', args);
     return args.hash.n1 >= args.hash.n2;
 });
 
 UI.registerHelper('eq',function( args ){
-    console.log('eq', args);
+    // console.log('eq', args);
     return args.hash.v1 === args.hash.v2;
 });

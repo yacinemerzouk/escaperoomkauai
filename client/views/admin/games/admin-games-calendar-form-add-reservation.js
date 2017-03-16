@@ -15,7 +15,7 @@ Template.calendarFormAddReservation.onCreated(function(){
 });
 Template.calendarFormAddReservation.helpers({
     game: function(){
-        console.log( 'IN CFAR helper', this );
+        // console.log( 'IN CFAR helper', this );
         return new Bolt.Game(this.gameId);
     },
     reservation: function(){

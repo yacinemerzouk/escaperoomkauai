@@ -6,7 +6,7 @@ Template.giftCards.onRendered(function(){
     this.submitOrder = function(){
         $('.processing-bg').show();
         var formData = Bureaucrat.getFormData( $( 'form' ) );
-        console.log( formData );
+        // console.log( formData );
 
 
 
@@ -29,7 +29,7 @@ Template.giftCards.onRendered(function(){
 
                 } else if (result) {
 
-                    console.log( result );
+                    // console.log( result );
 
                     // Create coupon
                     var couponData = formData;
@@ -234,7 +234,7 @@ Template.giftCards.events({
 
     },
     'change [hook="change-delivery"]': function(evt,tmpl){
-        console.log( evt.currentTarget.value );
+        // console.log( evt.currentTarget.value );
         var deliveryOption = evt.currentTarget.value;
         if( deliveryOption == 'email' ){
             $('[hook="address-section"]').addClass('hidden');

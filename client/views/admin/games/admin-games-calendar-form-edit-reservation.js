@@ -14,7 +14,7 @@ Template.calendarFormEditReservation.onCreated(function(){
         //ok
 
         Session.set( 'adminUserSelections', _.extend( userSelections, formData ) );
-        console.log( 'UPDATING RES', userSelections, formData );
+        // console.log( 'UPDATING RES', userSelections, formData );
     }
 });
 Template.calendarFormEditReservation.events({
@@ -25,7 +25,7 @@ Template.calendarFormEditReservation.events({
         Blaze.remove(tmpl.view);
     },
     'change [hook="update-reservation"]': function( evt, tmpl ){
-        console.log('In update reservation');
+        // console.log('In update reservation');
         tmpl.updateReservation();
     },
     'submit [hook="edit-reservation-form"]': function(evt,tmpl){

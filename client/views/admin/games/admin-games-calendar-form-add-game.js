@@ -12,7 +12,7 @@ Template.calendarFormAddGame.events({
     'submit form': function(evt,tmpl){
         evt.preventDefault();
         var formData = Bureaucrat.getFormData( $(evt.target) );
-        console.log( formData );
+        // console.log( formData );
         Bolt.Collections.Games.insert(formData);
         Blaze.remove(tmpl.view);
         Notifications.success('Game Created');

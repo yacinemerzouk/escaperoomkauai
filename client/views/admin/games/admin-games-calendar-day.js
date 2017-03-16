@@ -12,7 +12,7 @@ Template.adminGamesCalendarDay.onRendered(function(){
                 Session.set(date+'GamesReady',true);
             },
             onStop: function(){
-                console.log( 'Subscription error for ' + date );
+                // console.log( 'Subscription error for ' + date );
             }
         }
     )

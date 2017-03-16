@@ -433,7 +433,7 @@ Router.route('/admin/schedule/:date', {
     },
     data: function(){
         var games = Bolt.Collections.Games.find();
-        console.log( games.fetch() );
+        // console.log( games.fetch() );
         return {
             date: this.params.date,
             games: games
@@ -722,7 +722,7 @@ Router.route('/game/play/:_id', {
     layoutTemplate: 'layoutAdmin',
     waitOn: function(){
         var game = new Bolt.Game(this.params._id);
-        console.log( 'waiton...', game );
+        // console.log( 'waiton...', game );
         return [
             Meteor.subscribe( 'game', this.params._id ),
             Meteor.subscribe( 'roomById', game.roomId )
