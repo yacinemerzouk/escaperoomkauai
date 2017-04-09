@@ -490,6 +490,19 @@ Router.route('/admin/coupons/list', {
     }
 });
 
+/**
+ * TIKI COUNTDOWN PLAYER PAGE
+ */
+Router.route('/rooms/tiki-lounge/countdown', {
+    name: 'tikiCountdown',
+    layoutTemplate: 'layoutEmpty',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('tikiCountdown')
+        ]
+    }
+});
+
 
 /**
  * Gift Cards
@@ -725,7 +738,8 @@ Router.route('/game/play/:_id', {
         // console.log( 'waiton...', game );
         return [
             Meteor.subscribe( 'game', this.params._id ),
-            Meteor.subscribe( 'roomById', game.roomId )
+            Meteor.subscribe( 'roomById', game.roomId ),
+            Meteor.subscribe( 'tikiCountdown' )
         ]
     },
     data: function(){

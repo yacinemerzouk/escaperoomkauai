@@ -123,6 +123,14 @@
                 </div>
             </form>
 
+            {{#if isTikiLounge}}
+                <h2>Time <small><a href="#" hook="start-timer" class="btn button-available" style="color:white;">RESET &amp; START TIMER</a></small></h2>
+
+                <div hook="time-left" id="countdown" style='background: red; color: white;padding: 40px; font-size: 40px; text-align: center; font-family: Menlo, Monaco, Consolas, "Courier New", monospace'>
+                    0:00
+                </div>
+            {{/if}}
+
             <h2 class="subheading" style=" text-align: left; width: 100%; max-width: 100%">Messages Sent ({{messageCount}})</h2>
 
             {{#each messages}}

@@ -4,6 +4,9 @@ Template.rooms.onCreated(function(){
 });
 
 Template.rooms.rendered = function(){
+
+    fbq('track', 'Search');
+
     $( "#datepicker" ).datepicker();
 }
 
