@@ -54,6 +54,17 @@ Template.room.onCreated(function(){
 
                 if (orderProcessed) {
 
+                    fbq('track', 'Purchase', {
+                        value: reservation.total,
+                        currency: 'USD'
+                    });
+
+                    analytics.track("New Reservation", {
+                        eventName: reservation.room.title,
+                        couponValue: reservation.total,
+                    });
+
+
                     reservation.sendConfirmationEmail();
                     reservation.sendNotificationEmail();
 
@@ -122,6 +133,16 @@ Template.room.onCreated(function(){
 
                                 if (orderProcessed) {
 
+                                    fbq('track', 'Purchase', {
+                                        value: reservation.total,
+                                        currency: 'USD'
+                                    });
+
+                                    analytics.track("New Reservation", {
+                                        eventName: reservation.room.title,
+                                        couponValue: reservation.total,
+                                    });
+
                                     reservation.sendConfirmationEmail();
                                     reservation.sendNotificationEmail();
 
@@ -173,6 +194,8 @@ Template.room.onCreated(function(){
 });
 
 Template.room.onRendered(function(){
+
+    fbq('track', 'ViewContent');
 
     // Subscribe to coupons
     Meteor.subscribe( 'coupons' );

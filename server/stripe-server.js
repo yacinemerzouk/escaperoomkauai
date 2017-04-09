@@ -20,7 +20,7 @@ Meteor.methods({
 
             var customer = Bolt.Collections.Customers.findOne({email:email});
 
-            if( !customer ) {
+            if( email && email != "" && !customer ) {
                 var createCustomer = Meteor.wrapAsync(Stripe.customers.create, Stripe.customers);
                 customer = createCustomer({
                     source: stripeToken,

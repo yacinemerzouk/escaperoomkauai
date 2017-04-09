@@ -5,15 +5,65 @@
     <meta name="author" content="Zendy Web Studio">
     <link rel="icon" type="image/png" href="/images/favicon.png" />
 
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-74124187-1', 'auto');
-        ga('send', 'pageview');
-
-    </script>
     <link href='https://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+
+    <!-- Kauai Escape Room Ad Account's FB Pixel -->
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1887129118199690', {
+            em: 'insert_email_variable,'
+        });
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+                   src="https://www.facebook.com/tr?id=1887129118199690&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- DO NOT MODIFY -->
+    <!-- End Facebook Pixel Code -->
+
+
+
+    <!-- Google Code for Reservation 2017-04-05 Setup Conversion Page
+In your html page, add the snippet and call
+goog_report_conversion when someone clicks on the
+chosen link or button. -->
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        goog_snippet_vars = function() {
+            var w = window;
+            w.google_conversion_id = 877438701;
+            w.google_conversion_label = "S9stCOHhlXAQ7c2yogM";
+            w.google_conversion_value = 100.00;
+            w.google_conversion_currency = "USD";
+            w.google_remarketing_only = false;
+        }
+        // DO NOT CHANGE THE CODE BELOW.
+        goog_report_conversion = function(url) {
+            goog_snippet_vars();
+            window.google_conversion_format = "3";
+            var opt = new Object();
+            opt.onload_callback = function() {
+                if (typeof(url) != 'undefined') {
+                    window.location = url;
+                }
+            }
+            var conv_handler = window['google_trackConversion'];
+            if (typeof(conv_handler) == 'function') {
+                conv_handler(opt);
+            }
+        }
+        /* ]]> */
+    </script>
+    <script type="text/javascript"
+            src="//www.googleadservices.com/pagead/conversion_async.js">
+    </script>
+
+
+
+
 </head>

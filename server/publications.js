@@ -7,6 +7,14 @@ Meteor.publish('gameMasters', function(){
 });
 
 /**
+ * TIKI COUNTDOWN: publish all documents, which is a single document
+ */
+Meteor.publish('tikiCountdown', function(){
+    var docs = Bolt.Collections.tikiCountdownStatus.find();
+    return docs;
+});
+
+/**
  * ROOMS: publish all rooms, all data
  */
 Meteor.publish('rooms', function(){
