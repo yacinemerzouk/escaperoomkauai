@@ -4,7 +4,7 @@
     <div class="admin-games-calendar-day">
 
         <!-- TITLE / DATE: {{date}} -->
-        <h2>{{humanReadableDate date format='short'}}</h2>
+        <h2>{{dayOfWeek date}}<br>{{humanReadableDate date format='short'}}</h2>
 
         {{#if gamesReady}}
             {{#if games}}

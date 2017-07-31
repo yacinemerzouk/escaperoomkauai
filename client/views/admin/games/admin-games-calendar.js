@@ -1,6 +1,13 @@
 /**
  * TEMPLATE CREATED
  */
+Template.adminGamesCalendar.onCreated(function(){
+    Meteor.call('populateCalendar',function(e,r){
+        console.log('populateCalendar',e,r);
+    });
+});
+
+
 Template.adminGamesCalendar.onRendered(function(){
 
     // Set first day of calendar UI
