@@ -69,7 +69,7 @@ Template.room.onCreated(function(){
                     reservation.sendNotificationEmail();
 
                     //Configure the Twilio client
-                    var SMSString = "New Booking - " +
+                    var SMSString = "New Booking - Pay at check-in - " +
                         reservation.room.title +
                         " - " +
                         game.date +
@@ -77,6 +77,11 @@ Template.room.onCreated(function(){
                         game.time +
                         " - " +
                         reservation.nbPlayers + " players" +
+                        " - " +
+                        reservation.firstName + " " +
+                        reservation.lastName +
+                        " - " +
+                        reservation.phone +
                         " - " +
                         "$" + reservation.total;
                     Meteor.call('sendAdminNotificationSMS', SMSString, function (error, response) {
@@ -147,7 +152,7 @@ Template.room.onCreated(function(){
                                     reservation.sendNotificationEmail();
 
                                     //Configure the Twilio client
-                                    var SMSString = "New Booking - " +
+                                    var SMSString = "New Booking - paid online - " +
                                         reservation.room.title +
                                         " - " +
                                         game.date +
@@ -155,6 +160,11 @@ Template.room.onCreated(function(){
                                         game.time +
                                         " - " +
                                         reservation.nbPlayers + " players" +
+                                        " - " +
+                                        reservation.firstName + " " +
+                                        reservation.lastName +
+                                        " - " +
+                                        reservation.phone +
                                         " - " +
                                         "$" + reservation.total;
                                     Meteor.call('sendAdminNotificationSMS', SMSString, function (error, response) {
