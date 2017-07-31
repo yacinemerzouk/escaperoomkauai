@@ -726,7 +726,6 @@ Router.route('/room/:slug/:date', {
     }
 });
 
-
 /**
  * Game management
  */
