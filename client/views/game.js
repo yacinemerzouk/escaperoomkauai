@@ -187,7 +187,7 @@ Template.gamePlay.events({
                     console.log(err);
                 }else{
                     statusUpdated = rows;
-                    console.log( 'timer started', statusUpdated );
+                    // console.log( 'timer started', statusUpdated );
                     Session.set('lastReset',newResetTime);
                 }
             }
@@ -202,8 +202,8 @@ Template.gamePlay.onRendered(function(){
     this.autorun(function(){
         var resetDocReactive = Bolt.Collections.tikiCountdownStatus.find().fetch();
         var lastResetTime = resetDocReactive[0].resetTime;
-        console.log(resetDocReactive[0]);
-        console.log(Session.get('lastReset'));
+        // console.log(resetDocReactive[0]);
+        // console.log(Session.get('lastReset'));
         if( lastResetTime !== Session.get('lastReset') ){
             Session.set('lastReset',lastResetTime);
             clearTimeout(self.timer);

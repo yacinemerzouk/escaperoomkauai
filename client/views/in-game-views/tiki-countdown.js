@@ -48,7 +48,7 @@ Template.tikiCountdown.onCreated(function(){
 
     this.checkLastReset = function(){
         if( this.lastReset !== Session.get('lastReset') ){
-            console.log('reset');
+            // console.log('reset');
         }
     }
 });
@@ -66,8 +66,8 @@ Template.tikiCountdown.onRendered(function(){
     this.autorun(function(){
         var resetDocReactive = Bolt.Collections.tikiCountdownStatus.find().fetch();
         var lastResetTime = resetDocReactive[0].resetTime;
-        console.log(resetDocReactive[0]);
-        console.log(Session.get('lastReset'));
+        // console.log(resetDocReactive[0]);
+        // console.log(Session.get('lastReset'));
         if( lastResetTime !== Session.get('lastReset') ){
             Session.set('lastReset',lastResetTime);
             clearTimeout(self.timer);

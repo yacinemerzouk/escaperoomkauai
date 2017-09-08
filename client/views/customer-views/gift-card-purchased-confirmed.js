@@ -45,7 +45,7 @@ Template.giftCardPurchaseConfirmed.events({});
 Template.giftCardPurchaseConfirmed.helpers({
     coupon: function(){
         var coupon = Bolt.Collections.Coupons.findOne( this.params._id );
-        console.log( 'COUPON', coupon );
+        // console.log( 'COUPON', coupon );
         return coupon;
     }
 });

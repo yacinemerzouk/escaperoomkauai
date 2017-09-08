@@ -61,7 +61,7 @@ Template.giftCards.onRendered(function(){
             // TOKEN CALLBACK
             }, function (status, response) {
 
-                console.log( 'CREATED TOKEN', status, response );
+                // console.log( 'CREATED TOKEN', status, response );
 
                 // TOKEN RETRIEVED SUCCESSFULLY
                 if( status == 200 ) {
@@ -77,7 +77,7 @@ Template.giftCards.onRendered(function(){
                         formData.senderEmail,       // EMAIL OF BUYER
                         function (error, result) {  // CALLBACK
 
-                        console.log( 'BACK FROM CHARGECARD' );
+                        // console.log( 'BACK FROM CHARGECARD' );
 
                         // HANDLE ERRORS
                         if (error) {
@@ -91,7 +91,7 @@ Template.giftCards.onRendered(function(){
                         // CHARGE SUCCESSFUL!
                         } else if (result) {
 
-                            console.log( 'GENERATING COUPON' );
+                            // console.log( 'GENERATING COUPON' );
 
                             // Create coupon
                             var couponData = formData;
@@ -122,7 +122,7 @@ Template.giftCards.onRendered(function(){
                                     'type'
                                 ]
                             );
-                            console.log( 'COUPON DATA TO INSERT', couponDataToInsert );
+                            // console.log( 'COUPON DATA TO INSERT', couponDataToInsert );
                             var result = Bolt.Collections.Coupons.insert( couponDataToInsert );
 
                             // INSERT OK
@@ -287,7 +287,7 @@ Template.giftCards.onRendered(function(){
                             // INSERT FAILED
                             }else{
 
-                                console.log( 'INSERT FAILED' );
+                                // console.log( 'INSERT FAILED' );
 
                             }
 
@@ -303,7 +303,7 @@ Template.giftCards.onRendered(function(){
                 //ERROR
                 }else{
 
-                    console.log( "STRIPE ERROR. STATUS CODE: ", status );
+                    // console.log( "STRIPE ERROR. STATUS CODE: ", status );
                     Notifications.error('Payment Processing Error: ' + error.message, 'Sorry. We could not process your card. Please try again or call us at 808.635.6957');
                     Bolt.hideLoadingAnimation();
 

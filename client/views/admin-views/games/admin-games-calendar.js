@@ -3,7 +3,7 @@
  */
 Template.adminGamesCalendar.onCreated(function(){
     Meteor.call('populateCalendar',function(e,r){
-        console.log('populateCalendar',e,r);
+        // console.log('populateCalendar',e,r);
     });
 });
 
