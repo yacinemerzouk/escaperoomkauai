@@ -269,20 +269,36 @@ Template.room.onRendered(function(){
 
 
         // Grab games for newly selected date
-        // console.log('games not ready');
-        Meteor.subscribe(
-            'games',
-            game.date,
-            {
-                onReady: function () {
-                    console.log('game data ready');
-                    Session.set('calendarDataReady', true);
-                },
-                onStop: function () {
-                    console.log('error in games subscription');
-                }
+        console.log('AUTORUN: Fetching game data');
+        var tstamp1 = new Date().getTime();
+        Session.set('calendarDataReady', false);
+        Meteor.call('fetchGames', date, room._id, function(error,response){
+            var tstamp2 = new Date().getTime();
+            console.log('AUTORUN: Game data ready in ' + ( tstamp2 - tstamp1 ) + 'ms');
+            if( error ){
+                console.log( 'error fetching games' );
+                Session.set('calendarDataReady', true);
+            }else{
+                Session.set('games',response);
+                Session.set('calendarDataReady', true);
             }
-        );
+        });
+        // var tstamp1 = new Date().getTime();
+        // Meteor.subscribe(
+        //     'games',
+        //     game.date,
+        //     {
+        //         onReady: function () {
+        //             var tstamp2 = new Date().getTime();
+        //             console.log('AUTORUN: Game data ready in ' + ( tstamp2 - tstamp1 ) + 'ms');
+        //
+        //             Session.set('calendarDataReady', true);
+        //         },
+        //         onStop: function () {
+        //             console.log('error in games subscription');
+        //         }
+        //     }
+        // );
 
 
         var minDate = Epoch.today();
@@ -423,24 +439,29 @@ Template.room.helpers({
         return Session.get( 'game' );
     },
     games: function(){
-        var roomId = this.room._id;
-        var game = new Bolt.Game( Session.get( 'game' ) );
-        var games = Bolt.Collections.Games.find({
-            date: game.date,
-            $or: [
-                {roomId: roomId},
-                {roomId: 'any'}
-            ]
-        },{
-            sort: {time:1}
-        }).fetch();
-
-        _.each(games,function(game){
-            if( game.roomId == 'any' ){
-                game.roomId = roomId;
-            }
-        });
-        return games;
+        return Session.get('games');
+        // if( Session.get('calendarDataReady') ) {
+        //     var roomId = this.room._id;
+        //     var game = new Bolt.Game(Session.get('game'));
+        //     var games = Bolt.Collections.Games.find({
+        //         date: game.date,
+        //         $or: [
+        //             {roomId: roomId},
+        //             {roomId: 'any'}
+        //         ]
+        //     }, {
+        //         sort: {time: 1}
+        //     }).fetch();
+        //
+        //     _.each(games, function (game) {
+        //         if (game.roomId == 'any') {
+        //             game.roomId = roomId;
+        //         }
+        //     });
+        //     return games;
+        // }else{
+        //     return [];
+        // }
     },
     calendarDataReady: function(){
         return Session.get('calendarDataReady');
