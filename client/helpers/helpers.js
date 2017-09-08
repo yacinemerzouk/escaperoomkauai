@@ -9,7 +9,8 @@
  * @returns String: "active" or ""
  */
 UI.registerHelper('activeFlag', function( routeName ) {
-    return Router.current().route.getName() === routeName ? 'active' : '';
+
+    return Router.current().route && Router.current().route.getName() === routeName ? 'active' : '';
 });
 
 /**

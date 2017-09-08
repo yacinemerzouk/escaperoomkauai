@@ -1,0 +1,22 @@
+<template name="layoutNotFound">
+    <div class="hero hero-home-bg">
+        <div class="overlay">
+            <div class="content col-xs-12 text-center">
+                <h1 class="text-center">Page not found</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container content">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <br>
+                <br>
+                <h3>We couldn't find the page you requested.</h3>
+                <p><a href="{{pathFor 'home'}}" class="button"> Go To Homepage</a> </p>
+                <p><a href="{{pathFor 'rooms'}}" class="button button-unavailable"> View Our Escape Games</a> </p>
+                <p><a href="{{pathFor 'contact'}}" class="button button-unavailable"> Contact Us</a> </p>
+
+            </div>
+        </div>
+    </div>
+</template>

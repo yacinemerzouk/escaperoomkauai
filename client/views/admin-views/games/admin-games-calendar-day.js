@@ -3,19 +3,7 @@
  */
 Template.adminGamesCalendarDay.onRendered(function(){
     var date = this.data.date;
-    Meteor.subscribe(
-        'games',
-        date,
-        {
-            onReady: function(){
-                // console.log( 'Subscription ready for ' + date );
-                Session.set(date+'GamesReady',true);
-            },
-            onStop: function(){
-                // console.log( 'Subscription error for ' + date );
-            }
-        }
-    )
+
 });
 
 /**

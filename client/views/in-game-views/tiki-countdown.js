@@ -1,8 +1,12 @@
 Template.tikiCountdown.onCreated(function(){
     var self = this;
+    self.timer;
     this.countdown = function( elementName, minutes, seconds ){
+        clearTimeout( self.timer );
         elementName = elementName || "countdown";
-        minutes = minutes || 60;
+        if( !minutes && minutes !== 0 ){
+            minutes = 60;
+        }
         seconds = seconds || 0;
 
         var element, endTime, hours, mins, msLeft, time;
@@ -17,6 +21,9 @@ Template.tikiCountdown.onCreated(function(){
             msLeft = endTime - (+new Date);
             if ( msLeft < 1000 ) {
                 element.innerHTML = "0:00";
+                var x = document.getElementById("siren");
+                x.play();
+
             } else {
                 time = new Date( msLeft );
                 hours = time.getUTCHours();
@@ -62,16 +69,32 @@ Template.tikiCountdown.onRendered(function(){
     //
     // Session.set('lastReset',resetDoc.resetTime);
     // this.countdown();
+    // var self = this;
+    // this.autorun(function(){
+    //     var resetDocReactive = Bolt.Collections.tikiCountdownStatus.find().fetch();
+    //     var lastResetTime = resetDocReactive[0].resetTime;
+    //     // console.log(resetDocReactive[0]);
+    //     // console.log(Session.get('lastReset'));
+    //     if( lastResetTime !== Session.get('lastReset') ){
+    //         Session.set('lastReset',lastResetTime);
+    //         clearTimeout(self.timer);
+    //         self.countdown();
+    //     }
+    // });
     var self = this;
-    this.autorun(function(){
+    this.autorun(function() {
+
         var resetDocReactive = Bolt.Collections.tikiCountdownStatus.find().fetch();
         var lastResetTime = resetDocReactive[0].resetTime;
-        // console.log(resetDocReactive[0]);
-        // console.log(Session.get('lastReset'));
-        if( lastResetTime !== Session.get('lastReset') ){
-            Session.set('lastReset',lastResetTime);
-            clearTimeout(self.timer);
-            self.countdown();
+        var dateObject = new Date();
+        var currentTime = dateObject.getTime();
+        var secondsSinceLastReset = parseInt(( currentTime - lastResetTime ) / 1000);
+        console.log('SECONDS SINCE LAST RESET', secondsSinceLastReset);
+        if (secondsSinceLastReset < 3600) {
+            var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
+            var countdownSeconds = secondsLeftOnCountdown % 60;
+            var countdownMinutes = parseInt(Math.floor(secondsLeftOnCountdown / 60));
+            self.countdown("countdown", countdownMinutes, countdownSeconds);
         }
     });
 });

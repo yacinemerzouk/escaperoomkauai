@@ -6,19 +6,17 @@
         <!-- TITLE / DATE: {{date}} -->
         <h2>{{dayOfWeek date}}<br>{{humanReadableDate date format='short'}}</h2>
 
-        {{#if gamesReady}}
-            {{#if games}}
-                {{#each games}}
-                    {{>adminGamesCalendarGame}}
-                {{/each}}
-            {{else}}
+
+        {{#if games}}
+            {{#each games}}
+                {{>adminGamesCalendarGame}}
+            {{/each}}
+        {{else}}
             <div class="admin-games-calendar-game">
                 Nothing scheduled...
             </div>
-            {{/if}}
-        {{else}}
-            Loading...
         {{/if}}
+
 
 
         <div class="add-game">
