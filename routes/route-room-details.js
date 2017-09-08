@@ -5,7 +5,8 @@ Router.route('/room/:slug', {
     name: 'room',
     waitOn: function(){
         return [
-            Meteor.subscribe( 'room', this.params.slug )
+            Meteor.subscribe( 'room', this.params.slug ),
+            Meteor.subscribe( 'futureGames' )
         ]
     },
     sitemap: true,

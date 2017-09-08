@@ -204,7 +204,7 @@ Template.room.onCreated(function(){
                     }else{
 
                         Notification.error('Payment processing error');
-                        console.log( 'Stripe status not 200', status, response );
+                        // console.log( 'Stripe status not 200', status, response );
                         Bolt.hideLoadingAnimation();
                     }
 
@@ -213,7 +213,7 @@ Template.room.onCreated(function(){
             }
 
         }else{
-            // console.log( 'Reservation not valid' );
+            // // console.log( 'Reservation not valid' );
             Bolt.hideLoadingAnimation();
         }
 
@@ -240,6 +240,59 @@ Template.room.onRendered(function(){
         product: 'room'
     });
 
+    // Grab user selections
+    var userSelections = Session.get( 'userSelections' ) || {};
+
+    var date = userSelections.date || Epoch.today();
+    var time = userSelections.time;
+    var roomId = userSelections.roomId;
+    if( roomId != room._id ){
+        userSelections.time = false;
+        userSelections.roomId = room._id;
+    }
+
+    Session.set( 'userSelections', userSelections );
+
+    // // console.log( "JUST SET userSelections in onRendered", Session.get( 'userSelections' ) );
+
+    // Set game data
+    //// console.log( 'room autorun', room, date, time );
+    // console.log('!');
+    var game = new Bolt.Game({
+        roomId: room._id,
+        date: date,
+        time: time
+    });
+    //// console.log( 'SETTING GAME IN SESSION', game );
+    Session.set( 'game', game );
+
+    var minDate = Epoch.today();
+    if( room.openingDate > minDate ){
+        minDate = room.openingDate;
+        var us = Session.get('userSelections');
+        if( !us.date || us.date < minDate ) {
+            us.date = minDate;
+            Session.set('userSelections',us);
+        }
+    }
+
+    $('#datepicker').datepicker({
+        minDate: minDate,
+        dateFormat: 'yy-mm-dd',
+        defaultDate: game.date,
+        onSelect: function (dateText, inst) {
+            Session.set('calendarDataReady', false);
+            $('.ui-state-highlight').removeClass("ui-state-highlight");
+            var formData = Bureaucrat.getFormData($('[hook="reservation-form"]'));
+            if (formData) {
+                formData.date = dateText;
+                Session.set( 'userSelections', formData );
+            }else{
+                throw new Meteor.Error( '|Bolt|Datepicker|Error', 'No form data when changing date' );
+            }
+        }
+    });
+
     this.autorun( function(){
 
         // Grab user selections
@@ -252,37 +305,30 @@ Template.room.onRendered(function(){
             userSelections.time = false;
             userSelections.roomId = room._id;
         }
-
-        Session.set( 'userSelections', userSelections );
-        // console.log( "JUST SET userSelections in onRendered", Session.get( 'userSelections' ) );
-
-        // Set game data
-        //console.log( 'room autorun', room, date, time );
+        // console.log('?');
         var game = new Bolt.Game({
             roomId: room._id,
             date: date,
             time: time
         });
-        //console.log( 'SETTING GAME IN SESSION', game );
         Session.set( 'game', game );
 
 
-
         // Grab games for newly selected date
-        console.log('AUTORUN: Fetching game data');
-        var tstamp1 = new Date().getTime();
-        Session.set('calendarDataReady', false);
-        Meteor.call('fetchGames', date, room._id, function(error,response){
-            var tstamp2 = new Date().getTime();
-            console.log('AUTORUN: Game data ready in ' + ( tstamp2 - tstamp1 ) + 'ms');
-            if( error ){
-                console.log( 'error fetching games' );
-                Session.set('calendarDataReady', true);
-            }else{
-                Session.set('games',response);
-                Session.set('calendarDataReady', true);
-            }
-        });
+        // // console.log('AUTORUN: Fetching game data');
+        // var tstamp1 = new Date().getTime();
+        // Session.set('calendarDataReady', false);
+        // Meteor.call('fetchGames', date, room._id, function(error,response){
+        //     var tstamp2 = new Date().getTime();
+        //     // console.log('AUTORUN: Game data ready in ' + ( tstamp2 - tstamp1 ) + 'ms');
+        //     if( error ){
+        //         // console.log( 'error fetching games' );
+        //         Session.set('calendarDataReady', true);
+        //     }else{
+        //         Session.set('games',response);
+        //         Session.set('calendarDataReady', true);
+        //     }
+        // });
         // var tstamp1 = new Date().getTime();
         // Meteor.subscribe(
         //     'games',
@@ -290,43 +336,18 @@ Template.room.onRendered(function(){
         //     {
         //         onReady: function () {
         //             var tstamp2 = new Date().getTime();
-        //             console.log('AUTORUN: Game data ready in ' + ( tstamp2 - tstamp1 ) + 'ms');
+        //             // console.log('AUTORUN: Game data ready in ' + ( tstamp2 - tstamp1 ) + 'ms');
         //
         //             Session.set('calendarDataReady', true);
         //         },
         //         onStop: function () {
-        //             console.log('error in games subscription');
+        //             // console.log('error in games subscription');
         //         }
         //     }
         // );
 
 
-        var minDate = Epoch.today();
-        if( room.openingDate > minDate ){
-            minDate = room.openingDate;
-            var us = Session.get('userSelections');
-            if( !us.date || us.date < minDate ) {
-                us.date = minDate;
-                Session.set('userSelections',us);
-            }
-        }
 
-        $('#datepicker').datepicker({
-            minDate: minDate,
-            dateFormat: 'yy-mm-dd',
-            defaultDate: game.date,
-            onSelect: function (dateText, inst) {
-                Session.set('calendarDataReady', false);
-                $('.ui-state-highlight').removeClass("ui-state-highlight");
-                var formData = Bureaucrat.getFormData($('[hook="reservation-form"]'));
-                if (formData) {
-                    formData.date = dateText;
-                    Session.set( 'userSelections', formData );
-                }else{
-                    throw new Meteor.Error( '|Bolt|Datepicker|Error', 'No form data when changing date' );
-                }
-            }
-        });
 
     });
 });
@@ -353,7 +374,7 @@ Template.room.events({
         }else {
             userSelections.time = $(evt.currentTarget).attr('hook-data');
             Session.set('userSelections',userSelections);
-            // console.log(userSelections.time);
+            // // console.log(userSelections.time);
         }
 
     },
@@ -439,7 +460,20 @@ Template.room.helpers({
         return Session.get( 'game' );
     },
     games: function(){
-        return Session.get('games');
+        if( Session.get('game') ) {
+            var game = new Bolt.Game(Session.get('game'));
+            var games = Bolt.Collections.Games.find({
+                date: game.date,
+                $or: [
+                    {roomId: game.roomId},
+                    {roomId: 'any'}
+                ]
+            }, {
+                sort: {time: 1}
+            }).fetch();
+            // console.log('GAMES? ', games);
+            return games;
+        }
         // if( Session.get('calendarDataReady') ) {
         //     var roomId = this.room._id;
         //     var game = new Bolt.Game(Session.get('game'));
@@ -473,11 +507,11 @@ Template.room.helpers({
         return game.canBeClosed( nbPlayers );
     },
     canBeBooked: function( gameData ){
-        // console.log( 'GAME DATA', gameData );
+        // // console.log( 'GAME DATA', gameData );
         var game = new Bolt.Game( gameData );
         var userSelections = Session.get( 'userSelections' );
         var nbPlayers = userSelections.nbPlayers;
-        // console.log( game, nbPlayers );
+        // // console.log( game, nbPlayers );
         return game.canBeBooked( nbPlayers );
     },
     spotsLeftInGame: function( gameData ){
@@ -488,7 +522,7 @@ Template.room.helpers({
         var kamaainaPlayersOptions = [];
         var userSelections = Session.get( 'userSelections' );
         var nbPlayers = userSelections.nbPlayers;
-        // console.log( 'NBKAMAAINA',userSelections );
+        // // console.log( 'NBKAMAAINA',userSelections );
         for( var x = 0; x <= nbPlayers; x++ ){
 
             kamaainaPlayersOptions.push(x);
@@ -499,7 +533,7 @@ Template.room.helpers({
     hasSelectedNbPlayers: function(){
         var userSelections = Session.get( 'userSelections' );
         var nbPlayers = userSelections.nbPlayers;
-        // console.log( 'NBPLAYERS', nbPlayers );
+        // // console.log( 'NBPLAYERS', nbPlayers );
         if( nbPlayers && nbPlayers !== "0" && nbPlayers !== 0 && nbPlayers !== "" ){
             return true;
         }else{
@@ -515,7 +549,7 @@ Template.room.helpers({
         return years;
     },
     isFree: function(){
-        // console.log( 'in isFree', this.room );
+        // // console.log( 'in isFree', this.room );
 
         var formData = Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
         var userSelections = Session.get( 'userSelections' );
