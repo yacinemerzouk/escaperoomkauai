@@ -1,0 +1,73 @@
+<template name="giftCardPurchaseConfirmed">
+
+    <!-- HERO INTRO -->
+    <div class="hero" style="background-image: url({{homepageCover}});">
+        <div class="overlay">
+            <div class="content col-xs-12 text-center">
+                <h1>THANK YOU!</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container content" >
+
+        <div class="row">
+            <div class="col-xs-12" style="padding-top: 40px;">
+
+                <h2 class="text-center">Gift Card Purchase Confirmed</h2>
+
+                <table class="table table-responsive table-bordered table-striped">
+                    <tbody>
+                    <tr>
+                        <th class="text-center">COUPON CODE<br><code style="font-size: 32px; color: #0e5900; background-color: #FFF">{{coupon.coupon}}</code></th>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center">${{coupon.discount}}.00 +tx</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-responsive table-bordered table-striped">
+                    <tbody class="text-right">
+                    <tr>
+                        <th>Credit Card Transaction Number</th>
+                        <td class="currency">{{coupon.transaction.id}}</td>
+                    </tr>
+                    <tr>
+                        <th>Amount Charged</th>
+                        <td class="currency">{{centsToDollarsCurrency coupon.transaction.amount}}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+
+                {{#if eq v1=coupon.delivery v2='pickup'}}
+
+                    <h3>Pick Up Instructions</h3>
+
+                    <p><b>Call us to arrange pick-up: (808) 635-6957</b>. Although we have fixed opening hours it's important to call because the front door may be locked and the staff may be unavailable when we have games in progress.</p>
+
+                {{/if}}
+
+                {{#if eq v1=coupon.delivery v2='mail'}}
+
+                    <h3>Gift card will be mailed to:</h3>
+                    <p>
+                        {{coupon.recipientAddress}}
+                    </p>
+
+                {{/if}}
+
+                {{#if eq v1=coupon.delivery v2='email'}}
+                    <h3>Coupon was emailed to:</h3>
+                    <p>
+                        {{coupon.recipientEmail}}
+                    </p>
+                {{/if}}
+
+            </div>
+        </div>
+    </div>
+</template>

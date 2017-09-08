@@ -1,4 +1,85 @@
 /**
+ * Room list
+ */
+Meteor.publish('roomList', function() {
+    var roomListCursor = Bolt.Collections.Rooms.find(
+        {
+            published: true
+        },
+        {
+            fields: {
+                _id: 1,
+                title: 1,
+                excerpt: 1,
+                slug: 1,
+                image: 1,
+                order: 1,
+                published: 1,
+                available: 1
+            }
+        }
+    );
+    return roomListCursor;
+});
+
+/**
+ * roomOverviewList
+ */
+Meteor.publish('roomOverviewList', function() {
+    var roomOverviewListCursor = Bolt.Collections.Rooms.find(
+        {
+            published: true
+        },
+        {
+            fields: {
+                _id: 1,
+                title: 1,
+                description: 1,
+                minPlayers: 1,
+                maxPlayers: 1,
+                duration: 1,
+                successRate: 1,
+                priceRange: 1,
+                slug: 1,
+                image: 1,
+                order: 1,
+                published: 1,
+                available: 1
+            }
+        }
+    );
+    return roomOverviewListCursor;
+});
+
+/**
+ * Room overview
+ */
+Meteor.publish('roomOverview', function( roomId ) {
+    if( roomId == 'popular' ){
+        roomId = 'gieyznWfyJMTBWYBT';
+    }
+    var roomOverviewCursor = Bolt.Collections.Rooms.find(
+        {
+            _id: roomId
+        },
+        {
+            fields: {
+                _id: 1,
+                title: 1,
+                description: 1,
+                minPlayers: 1,
+                maxPlayers: 1,
+                duration: 1,
+                successRate: 1,
+                priceRange: 1,
+                slug: 1,
+                image: 1
+            }
+        }
+    );
+    return roomOverviewCursor;
+});
+/**
  * GAME MASTERS: publish all rooms, all data
  */
 Meteor.publish('gameMasters', function(){

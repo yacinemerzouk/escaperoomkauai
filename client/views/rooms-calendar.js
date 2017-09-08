@@ -1,8 +1,6 @@
 
 Template.roomsCalendar.onRendered(function(){
 
-    fbq('track', 'Search');
-
     if( !Session.get('calendarDay') ) {
         Session.set('calendarDay', Epoch.dateObjectToDateString(new Date()));
         // console.log( 'SETTING CALENDAR DAY', Epoch.dateObjectToDateString(new Date()) );

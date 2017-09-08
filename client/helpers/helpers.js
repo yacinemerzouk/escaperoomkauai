@@ -288,22 +288,35 @@ UI.registerHelper('eq',function( args ){
     return args.hash.v1 === args.hash.v2;
 });
 
+
 UI.registerHelper('dayOfWeek',function( date ){
     // console.log(Epoch.dateStringToDateObject(date).getDay());
-    var d = Epoch.dateStringToDateObject(date).getDay();
-    if( d == 0 ){
-        return 'SUN';
-    }else if( d == 1 ){
-        return 'MON';
-    }else if( d == 2 ){
-        return 'TUE';
-    }else if( d == 3 ){
-        return 'WED';
-    }else if( d == 4 ){
-        return 'THU';
-    }else if( d == 5 ){
-        return 'FRI';
-    }else if( d == 6 ){
-        return 'SAT';
+    if( date ) {
+
+        var dateObject = Epoch.dateStringToDateObject(date);
+
+        if( dateObject ){
+
+            var d = dateObject.getDay();
+
+            if (d == 0) {
+                return 'SUN';
+            } else if (d == 1) {
+                return 'MON';
+            } else if (d == 2) {
+                return 'TUE';
+            } else if (d == 3) {
+                return 'WED';
+            } else if (d == 4) {
+                return 'THU';
+            } else if (d == 5) {
+                return 'FRI';
+            } else if (d == 6) {
+                return 'SAT';
+            }
+
+        }
+
     }
+
 });

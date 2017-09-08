@@ -1,0 +1,40 @@
+<template name="adminCouponsList">
+    <h1 style="margin-bottom: 20px">Coupons</h1>
+
+    <a href="{{pathFor 'adminCouponsCreate'}}" class="btn btn-primary" style="color: #FFF">
+        Create Coupon
+    </a>
+
+    <hr>
+
+    {{#if currentUser}}
+        {{#each coupons}}
+            Coupon: <span class="currency">{{coupon}}</span><br>
+            Type: <span class="currency">{{couponType}}</span><br>
+            Discount:
+            <span class="currency">
+                {{#if eq v1=couponType v2='DOLLAR'}}
+                    ${{discount}}
+                {{else}}
+                    {{discount}}%
+                {{/if}}
+            </span><br>
+
+            {{#if commission}}
+                Commission: <span class="currency">{{commission}}%</span><br>
+            {{/if}}
+            {{#if company}}
+                Company: <span class="currency">{{company}}</span><br>
+            {{/if}}
+            Expiration:
+            <span class="currency">
+                {{expiration}}
+            </span><br>
+            Max Uses: <span class="currency">{{maxUses}}</span><br>
+            Uses: <span class="currency">{{uses}}</span>
+            <hr>
+        {{/each}}
+    {{else}}
+        {{> loginButtons}}
+    {{/if}}
+</template>

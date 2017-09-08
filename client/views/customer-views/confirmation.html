@@ -1,0 +1,99 @@
+<template name="confirmation">
+    <div class="hero" style="background-image: url({{settings.contactCover}});">
+        <div class="overlay">
+            <div class="content col-xs-12 text-center">
+                <h1>THANK YOU!</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="max-width: 500px; margin: 0 auto;">
+
+                <h1>Reservation Confirmed</h1>
+
+                    <table class="table table-responsive table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Reservation #{{reservation.publicId}}</th>
+                            </tr>
+
+                            <tr>
+                                <td>{{roomTitle reservation.roomId}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{humanReadableDate reservation.game.date}} @ {{reservation.game.time}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{reservation.nbPlayers}} players</td>
+                            </tr>
+                            <tr>
+                                <td>Reserved under {{reservation.firstName}} {{reservation.lastName}} &nbsp;&bull;&nbsp; {{reservation.email}} &nbsp;&bull;&nbsp; {{reservation.phone}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>{{toCurrency reservation.due}} at check-in</td>
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+
+
+
+
+
+                     <b>CHECK-IN</b>
+                     <br><br>
+                    Please arrive 10 minutes before the game start time.
+                    <br>
+                    If you arrive late we may have to cut your game time short.
+                    <br><br>
+                     <b>PARKING</b>
+                     <br><br>
+                     Parking is available behind our building. You might also be able to park in front of our building on Rice street depending on the time and day of the week. It may take you a few minutes to find parking, especially on weekdays before 6pm, so please plan accordingly.
+                     <br><br>
+                     <b>LOCATION AND DIRECTIONS:</b>
+                     <br><br>
+                     <a style="color: #d26b2d" href="https://goo.gl/maps/VeL2UA3BNEo">Click here to view on Google Maps</a>
+                     <br><br>
+                     <b>REMINDERS:</b>
+                     <br><br>
+                     * Our escape games take place in relatively small rooms with no windows.
+                     <br><br>
+                     * Reading may be required at various points during the games; please bring reading glasses if needed.
+                     <br><br>
+                     * At least 1 player in each group must not be colorblind.
+                     <br><br>
+                     See you soon!
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Code for Reservation 2017-04-05 Setup Conversion Page -->
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var google_conversion_id = 877438701;
+        var google_conversion_language = "en";
+        var google_conversion_format = "3";
+        var google_conversion_color = "ffffff";
+        var google_conversion_label = "S9stCOHhlXAQ7c2yogM";
+        var google_conversion_value = {{reservation.total}};
+        var google_conversion_currency = "USD";
+        var google_remarketing_only = false;
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display:inline;">
+            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/877438701/?value=100.00&amp;currency_code=USD&amp;label=S9stCOHhlXAQ7c2yogM&amp;guid=ON&amp;script=0"/>
+        </div>
+    </noscript>
+
+</template>

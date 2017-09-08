@@ -1,0 +1,32 @@
+<template name="footer">
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-bg">
+            <div class="container" style="clear: both;">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="{{pathFor 'home'}}">Home</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href="{{pathFor 'contact'}}">Contact</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href="{{pathFor 'directions'}}">Directions</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href="{{pathFor 'about'}}">About</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href="{{pathFor 'rooms'}}">Rooms</a><br>
+
+                        {{#each rooms}}
+                            <a href="{{pathFor 'room' slug=slug}}">Room: {{title}}</a>
+                            <br>
+                        {{/each}}
+
+                        Version 2.0.19
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+</template>

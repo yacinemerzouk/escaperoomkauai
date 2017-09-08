@@ -1,0 +1,39 @@
+/**
+ * Contact
+ */
+Router.route('/contact', {
+    name: 'contact',
+    sitemap: true,
+    changefreq: 'monthly',
+    priority: '0.5',
+    ironMeta: true,
+    data: function(){
+        return Bolt.Collections.Settings.findOne({settingType: 'global'});
+    },
+    meta: function() {
+        var title = 'Contact Us - Kauai Escape Room - Escape Games, Puzzle Rooms';
+        var description = 'Email us at info@escaperoomkauai.com. You can also call us at 1.808.635.6957 to ask questions or book over the phone. Of course you can also book online.';
+        var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
+        return {
+            title: title,
+            description: description,
+            keywords: 'kauai, escape room, escape game, puzzle room',
+            canonical: 'https://www.escaperoomkauai.com/contact',
+            "og:title": title,
+            "og:type": 'website',
+            "og:url": 'https://www.escaperoomkauai.com/contact',
+            "og:description": description,
+            "og:site_name": 'Kauai Escape Room',
+            "og:image": image,
+            "og:image:width": '1200',
+            "og:image:height": '630',
+            "twitter:card": 'summary_large_image',
+            "twitter:site": '@kauaiescaperoom',
+            "twitter:creator": '@kauaiescaperoom',
+            "twitter:title": title,
+            "twitter:description": description,
+            "twitter:image": image
+        }
+    }
+
+});

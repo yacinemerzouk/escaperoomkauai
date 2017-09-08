@@ -4,49 +4,49 @@
 
 
     <!-- ONLY FOR ADMINS -->
-    {{#if currentUser}}
+        {{#if currentUser}}
 
-        <!-- CONTENT -->
-                    <form hook="create-coupon">
+            <!-- CONTENT -->
+            <form hook="create-coupon">
 
-                        <!-- COUPON CODE -->
-                        <div class="form-group">
-                            <label for="coupon">Coupon Code</label>
-                            <input type="text" hook="coupon" class="form-control" id="coupon" name="coupon" value="{{coupon}}">
-                        </div>
+                <!-- COUPON CODE -->
+                <div class="form-group">
+                    <label for="coupon">Coupon Code</label>
+                    <input type="text" hook="coupon" class="form-control" id="coupon" name="coupon" value="{{coupon}}">
+                </div>
 
-                        <!-- DISCOUNT PERCENTAGE -->
-                        <div class="form-group">
-                            <label for="discount">Discount %</label>
-                            <input type="text" hook="discount" class="form-control" id="discount" name="discount" value="{{discount}}">
-                        </div>
+                <!-- DISCOUNT PERCENTAGE -->
+                <div class="form-group">
+                    <label for="discount">Discount %</label>
+                    <input type="text" hook="discount" class="form-control" id="discount" name="discount" value="{{discount}}">
+                </div>
 
-                        <!-- LIMIT USES -->
-                        <div class="form-group">
-                            <label for="coupon">Maximum Uses (leave blank for unlimited)</label>
-                            <input type="text" hook="maxUses" class="form-control" id="maxUses" name="maxUses" value="{{maxUses}}">
-                        </div>
+                <!-- LIMIT USES -->
+                <div class="form-group">
+                    <label for="coupon">Maximum Uses (leave blank for unlimited)</label>
+                    <input type="text" hook="maxUses" class="form-control" id="maxUses" name="maxUses" value="{{maxUses}}">
+                </div>
 
-                        <!-- EXPIRATION -->
-                        <div class="form-group">
-                            <label for="expiration">Expiration (YYYY-MM-DD)  (leave blank for unlimited)</label>
-                            <input type="text" hook="expiration" class="form-control" id="expiration" name="expiration" value="{{maxUses}}">
-                        </div>
-                        <input type="submit" class="button" value="Create Coupon">
-                    </form>
+                <!-- EXPIRATION -->
+                <div class="form-group">
+                    <label for="expiration">Expiration (YYYY-MM-DD)  (leave blank for unlimited)</label>
+                    <input type="text" hook="expiration" class="form-control" id="expiration" name="expiration" value="{{maxUses}}">
+                </div>
+                <input type="submit" class="button" value="Create Coupon">
+            </form>
 
 
-                <!-- LIST OF EXISTING COUPONS; TODO: FILTER AND PAGINATE -->
-                    <h2 class="page-header">Coupons List</h2>
+            <!-- LIST OF EXISTING COUPONS; TODO: FILTER AND PAGINATE -->
+            <h2 class="page-header">Coupons List</h2>
 
-                    {{#each coupons}}
-                        Coupon: <span class="currency">{{coupon}}</span><br>
-                        Discount: <span class="currency">{{discount}}%</span><br>
-                        Expiration: <span class="currency">{{expiration}}</span><br>
-                        Max Uses: <span class="currency">{{maxUses}}</span><br>
-                        Uses: <span class="currency">{{uses}}</span>
-                        <hr>
-                    {{/each}}
+            {{#each coupons}}
+                Coupon: <span class="currency">{{coupon}}</span><br>
+                Discount: <span class="currency">{{discount}}%</span><br>
+                Expiration: <span class="currency">{{expiration}}</span><br>
+                Max Uses: <span class="currency">{{maxUses}}</span><br>
+                Uses: <span class="currency">{{uses}}</span>
+                <hr>
+            {{/each}}
 
 
     {{else}}

@@ -83,24 +83,24 @@
 //     });
 // }
 
-if( Meteor.isServer ){
-    Meteor.startup(function() {
-        if (Bolt.Collections.Games.find().count() === 0) {
-            Bolt.Collections.Games.insert(
-                {
-                    date:'2016-07-26',
-                    time: '9:00pm',
-                    won: true,
-                    time: '55:00'
-                }
-            );
-            Bolt.Collections.Games.insert(
-                {
-                    date:'2016-07-26',
-                    time: '7:30pm',
-                    won: false
-                }
-            );
-        }
-    });
-}
+// if( Meteor.isServer ){
+//     Meteor.startup(function() {
+//         if (Bolt.Collections.Games.find().count() === 0) {
+//             Bolt.Collections.Games.insert(
+//                 {
+//                     date:'2016-07-26',
+//                     time: '9:00pm',
+//                     won: true,
+//                     time: '55:00'
+//                 }
+//             );
+//             Bolt.Collections.Games.insert(
+//                 {
+//                     date:'2016-07-26',
+//                     time: '7:30pm',
+//                     won: false
+//                 }
+//             );
+//         }
+//     });
+// }

@@ -8,7 +8,7 @@ Meteor.methods({
         });
 
         // Send a message
-        var to = number || '+18086352099';
+        var to = number || '+18086315949';
         if( Meteor.settings.private.SMS.env == "dev"){
             to = '+18086342466';
         }
