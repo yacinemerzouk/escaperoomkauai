@@ -275,11 +275,11 @@ Template.room.onRendered(function(){
             game.date,
             {
                 onReady: function () {
-                    // console.log('games ready');
+                    console.log('game data ready');
                     Session.set('calendarDataReady', true);
                 },
                 onStop: function () {
-                    //console.log('error in games subscription');
+                    console.log('error in games subscription');
                 }
             }
         );

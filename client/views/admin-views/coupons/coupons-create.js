@@ -86,7 +86,7 @@ Template.adminCouponsCreate.events({
         formData.createdAt = new Date();
 
 
-        console.log( 'FORM DATA', formData );
+        // console.log( 'FORM DATA', formData );
 
         // Insert coupon
         var result = Bolt.Collections.Coupons.insert(formData);
