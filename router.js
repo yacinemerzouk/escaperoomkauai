@@ -1,46 +1,5 @@
 
-/**
- * ROOMS CALENDAR
- */
-Router.route('/rooms/calendar', {
-    name: 'roomsCalendar',
-    sitemap: true,
-    changefreq: 'monthly',
-    priority: '0.9',
-    waitOn: function(){
-        var date = Session.get('calendarDay') || Epoch.dateObjectToDateString(new Date());
-        return Meteor.subscribe('rooms');
-    },
-    data: function(){
-        return Bolt.Collections.Settings.findOne({settingType: 'global'});
-    },
-    ironMeta: true,
-    meta: function(){
-        var title = 'Availability Calendar - Kauai Escape Room - Escape Games, Puzzle Rooms';
-        var description = "The complete availability calendar for our escape rooms: the missing scientist, the lost Elvis record, Pele's tiki lounge, and our mobile escape room.";
-        var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
-        return {
-            title: title,
-            description: description,
-            keywords: 'kauai, escape room, escape game, puzzle room',
-            canonical: 'https://www.escaperoomkauai.com/rooms/calendar',
-            "og:title": title,
-            "og:type": 'website',
-            "og:url": 'https://www.escaperoomkauai.com/rooms/calendar',
-            "og:description": description,
-            "og:site_name": 'Kauai Escape Room',
-            "og:image": image,
-            "og:image:width": '1200',
-            "og:image:height": '630',
-            "twitter:card": 'summary_large_image',
-            "twitter:site": '@kauaiescaperoom',
-            "twitter:creator": '@kauaiescaperoom',
-            "twitter:title": title,
-            "twitter:description": description,
-            "twitter:image": image
-        }
-    }
-});
+
 
 
 
@@ -166,13 +125,7 @@ Router.route('/admin/schedule/:date', {
     }
 });
 
-/**
- * Admin Calendar - Admin page
- */
-Router.route('/admin/games/calendar', {
-    name: 'adminGamesCalendar',
-    layoutTemplate: 'layoutAdmin'
-});
+
 
 /**
  * Reservations - Admin page
@@ -237,26 +190,7 @@ Router.route('/admin/coupons/update', {
 
 
 
-/**
- * Waivers
- */
-Router.route('/waiver', {
-    name: 'waiver',
-    layoutTemplate: 'layoutEmpty'
-});
 
-/**
- * Transactions - Admin page
- */
-Router.route('/reports/transactions/list', {
-    name: 'reportsTransactionsList',
-    waitOn: function(){
-        return [
-            Meteor.subscribe('reservations'),
-            Meteor.subscribe('rooms')
-        ]
-    }
-});
 
 
 
@@ -316,48 +250,5 @@ Router.route('/reports/transactions/list', {
 //     }
 // });
 
-/**
- * Game management
- */
-Router.route('/game/play/:_id', {
-    name: 'gamePlay',
-    layoutTemplate: 'layoutAdmin',
-    waitOn: function(){
-        var game = new Bolt.Game(this.params._id);
-        // console.log( 'waiton...', game );
-        return [
-            Meteor.subscribe( 'game', this.params._id ),
-            Meteor.subscribe( 'roomById', game.roomId ),
-            Meteor.subscribe( 'tikiCountdown' )
-        ]
-    },
-    data: function(){
-        return {_id:this.params._id}
-    }
-    // data: function(){
-    //     // var gameData = {
-    //     //     date: this.params.date,
-    //     //     time: this.params.time,
-    //     //     roomId: this.params.roomId
-    //     // };
-    //     // var game = new Bolt.Game( gameData );
-    //     // if( !game._id ){
-    //     //     game.save();
-    //     // }
-    //     // if( ! gameData ){
-    //     //     var gameId = Bolt.Collections.Games.insert({
-    //     //         slug: 'mad-scientist',
-    //     //         date: this.data.date,
-    //     //         time: this.data.time
-    //     //     });
-    //     //     gameData = {
-    //     //         _id: gameId,
-    //     //         date: this.params.date,
-    //     //         time: this.params.time
-    //     //     }
-    //     // }
-    //     //var game = Bolt.Collections.Games.findOne( gameData );
-    //     return gameData;
-    // }
-});
+
 

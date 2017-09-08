@@ -1,32 +1,32 @@
 /**
+ * =============================================================
+ * DATA CONTEXT
+ * Template data: none
+ * Router subscriptions: none
+ * Template subscriptions: none
+ * =============================================================
+ */
+
+/**
+ * =============================================================
  * TEMPLATE CREATED
+ * =============================================================
  */
 Template.adminGamesCalendar.onCreated(function(){
-    Meteor.call('populateCalendar',function(e,r){
-        // console.log('populateCalendar',e,r);
-    });
+    // Populate games 60 days in advance
+    Meteor.call('populateCalendar',function(e,r){});
 });
 
-
+/**
+ * =============================================================
+ * TEMPLATE RENDERED
+ * =============================================================
+ */
 Template.adminGamesCalendar.onRendered(function(){
-
     // Set first day of calendar UI
     if( !Session.get('firstDay') ){
         Session.set('firstDay', Epoch.dateObjectToDateString(new Date()));
     }
-
-    // Subscribe to rooms data
-    Meteor.subscribe(
-        'roomsMeta',
-        {
-            onReady: function(){
-                // console.log( 'Calendar: roomsMeta ready' );
-            },
-            onStop: function(){
-                // console.log( 'Calendar: roomsMeta FAIL' );
-            }
-        }
-    );
 
     // Datepicker
     $('[hook="jump-to-date-datepicker"]').datepicker({
@@ -37,38 +37,18 @@ Template.adminGamesCalendar.onRendered(function(){
     });
 });
 
+
 /**
- * HELPERS
+ * =============================================================
+ * TEMPLATE DESTROYED
+ * =============================================================
  */
-Template.adminGamesCalendar.helpers({
-
-    /**
-     * First day
-     * @returns date as string
-     */
-    firstDay: function(){
-        return Session.get('firstDay');
-    },
-
-    /**
-     * Days
-     * @returns Array of date strings
-     */
-    days: function(){
-        var firstDay = Session.get('firstDay');
-        var days = [firstDay];
-
-        if( firstDay ) {
-            for (var x = 1; x < 5; x++) {
-                days.push(Epoch.addDaysToDate(x, firstDay));
-            }
-        }
-        return days;
-    }
-});
+Template.adminGamesCalendar.onDestroyed(function(){});
 
 /**
- * EVENTS
+ * =============================================================
+ * TEMPLATE EVENTS
+ * =============================================================
  */
 Template.adminGamesCalendar.events({
     'click [hook="next-games"]': function (evt, tmpl) {
@@ -96,5 +76,64 @@ Template.adminGamesCalendar.events({
         evt.preventDefault();
         var gameId = $(evt.currentTarget).attr('hook-data-game-id');
         Blaze.renderWithData(Template.calendarFormEditGame,{gameId:gameId},$('body')[0]);
+    },
+    /**
+     * Load past games
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="load-past-games"]': function(evt,tmpl){
+
+        // Prevent default event behavior
+        evt.preventDefault();
+
+        $(evt.currentTarget).hide();
+        Bolt.showLoadingAnimation();
+
+        Meteor.subscribe('games',{
+            onReady: function(){
+                Session.set('pastGamesLoaded');
+                Notifications.success('All games were loaded successfully.');
+                Bolt.hideLoadingAnimation()
+            },
+            onStop: function(){
+                Notifications.error('Could not load all games.');
+                $(evt.currentTarget).show();
+                Bolt.hideLoadingAnimation()
+            }
+        })
+
+    }
+});
+
+
+/**
+ * =============================================================
+ * TEMPLATE HELPERS
+ * =============================================================
+ */
+Template.adminGamesCalendar.helpers({
+    /**
+     * First day
+     * @returns date as string
+     */
+    firstDay: function(){
+        return Session.get('firstDay');
+    },
+
+    /**
+     * Days
+     * @returns Array of date strings
+     */
+    days: function(){
+        var firstDay = Session.get('firstDay');
+        var days = [firstDay];
+
+        if( firstDay ) {
+            for (var x = 1; x < 5; x++) {
+                days.push(Epoch.addDaysToDate(x, firstDay));
+            }
+        }
+        return days;
     }
 });

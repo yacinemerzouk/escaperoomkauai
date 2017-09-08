@@ -1,48 +1,49 @@
+/**
+ * =============================================================
+ * DATA CONTEXT
+ * Template data: none
+ * Router subscriptions: roomsMeta, games (today)
+ * Template subscriptions: none
+ * =============================================================
+ */
+ 
+/**
+ * =============================================================
+ * TEMPLATE CREATED
+ * =============================================================
+ */
+Template.waiver.onCreated(function(){});
+
+/**
+ * =============================================================
+ * TEMPLATE RENDERED
+ * =============================================================
+ */
 Template.waiver.onRendered(function(){
-    Bolt.showLoadingAnimation();
-    var roomsReady = false;
-    var gamesReady = false;
-    Meteor.subscribe(
-        'roomsMeta',
-        {
-            onReady: function(){
-                roomsReady = true;
-                if( roomsReady && gamesReady ) {
-                    Bolt.hideLoadingAnimation();
-                }
-            }
-        }
-    );
-    Meteor.subscribe(
-        'games',
-        Epoch.today(),
-        {
-            onReady: function(){
-                gamesReady = true;
-                if( roomsReady && gamesReady ) {
-                    Bolt.hideLoadingAnimation();
-                }
-            }
-        }
-    );
-});
-Template.waiver.helpers({
-    rooms: function(){
-        return Bolt.Collections.Rooms.find({available:true});
-    },
-    games: function(){
-        return Bolt.Collections.Games.find({ "roomId": { $ne: "any" } },{sort:{time:1}});
-    },
-    boltUI: function(){
-        return Session.get('boltUI');
-    },
-    allTimes: function(){
-        return Bolt.getAdminStartTimes();
-    }
+
 });
 
+
+/**
+ * =============================================================
+ * TEMPLATE DESTROYED
+ * =============================================================
+ */
+Template.waiver.onDestroyed(function(){});
+
+/**
+ * =============================================================
+ * TEMPLATE EVENTS
+ * =============================================================
+ */
 Template.waiver.events({
-    'click [hook="toggle-legalese"]': function(){
+
+    /**
+     * Toggle legal text
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="toggle-legalese"]': function(evt,tmpl){
         var legalese = $('[hook="legalese"]');
         if( legalese.is(':visible') ){
             legalese.hide();
@@ -50,6 +51,12 @@ Template.waiver.events({
             legalese.show();
         }
     },
+
+    /**
+     * Check / uncheck 'I am 18' box
+     * @param evt
+     * @param tmpl
+     */
     'change [hook="adult"]': function(){
         var adult = $('[hook="adult"]');
         if( adult.is(':checked') ){
@@ -58,6 +65,12 @@ Template.waiver.events({
             $('[hook="adult-form"]').hide();
         }
     },
+
+    /**
+     * Select onchange event
+     * @param evt
+     * @param tmpl
+     */
     'change [hook="room"]': function(evt,tmpl){
         var roomId = evt.currentTarget.value;
         var room = Bolt.Collections.Rooms.findOne(roomId);
@@ -66,6 +79,12 @@ Template.waiver.events({
         boltUI.waiver.room = room;
         Session.set('boltUI',boltUI);
     },
+
+    /**
+     * Form submission handler
+     * @param evt
+     * @param tmpl
+     */
     'submit [hook="submit-waiver"]': function(evt,tmpl){
 
         evt.preventDefault();
@@ -142,5 +161,24 @@ Template.waiver.events({
 
 
 
+    }
+});
+
+
+/**
+ * =============================================================
+ * TEMPLATE HELPERS
+ * =============================================================
+ */
+Template.waiver.helpers({
+    rooms: function(){
+        return Bolt.Collections.Rooms.find({available:true});
+    },
+    games: function(){
+        var today = Epoch.dateObjectToDateString( new Date() );
+        return Bolt.Collections.Games.find({ date: today, roomId: { $ne: "any" } },{sort:{time:1}});
+    },
+    boltUI: function(){
+        return Session.get('boltUI');
     }
 });

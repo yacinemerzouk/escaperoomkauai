@@ -16,7 +16,7 @@
 Router.configure({
     layoutTemplate: 'layout',
     loadingTemplate: 'loading',
-    notFoundTemplate: 'notFound',
+    notFoundTemplate: 'layoutNotFound',
     waitOn: function(){
         return [
             Meteor.subscribe('settings'),
