@@ -87,7 +87,7 @@
 
                             {{#unless game.time}}
                                 <div id="times">
-                                    {{#if calendarDataReady}}
+
                                         {{#if games}}
                                             {{#each games}}
                                                 {{#if canBeBooked this}}
@@ -108,10 +108,10 @@
                                                 For groups of 9 or more players, please <a href="{{pathFor 'contact'}}">contact us</a>.
                                             </p>
                                         {{/if}}
-                                    {{else}}
-                                        LOADING AVAILABLE GAMES ...
-                                        <img src="/images/loading.gif">
-                                    {{/if}}
+
+                                        <!--LOADING AVAILABLE GAMES ...-->
+                                        <!--<img src="/images/loading.gif">-->
+
                                 </div>
                             {{/unless}}
                         </div>
