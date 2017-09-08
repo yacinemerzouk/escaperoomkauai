@@ -42,7 +42,7 @@ Meteor.methods({
             }
 
         });
-        
+
         return successRates;
 
     }
