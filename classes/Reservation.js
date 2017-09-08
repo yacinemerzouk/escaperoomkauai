@@ -318,6 +318,37 @@ Bolt.Reservation.prototype.sendNotificationEmail = function(){
 }
 
 /**
+ * Send notification SMS to admins
+ */
+Bolt.Reservation.prototype.sendNotificationSMS = function( game, payment){
+    var SMSString = "New Booking - " + payment + " - " +
+        this.room.title +
+        " - " +
+        game.date +
+        " @ " +
+        game.time +
+        " - " +
+        this.nbPlayers + " players" +
+        " - " +
+        this.firstName + " " +
+        this.lastName +
+        " - " +
+        this.phone +
+        " - " +
+        "$" + this.total;
+    Meteor.call('sendAdminNotificationSMS', SMSString, function (error, response) {
+        if (error) {
+            // //console.log( error );
+            new Meteor.Error("[roomDetails][submitOrder][sendSMS] Error", error.message);
+        } else {
+            // //console.log( response );
+        }
+
+    });
+}
+
+
+/**
  * Checks whether the time slot for the reservation can be closed or not
  * @returns {boolean}
  */

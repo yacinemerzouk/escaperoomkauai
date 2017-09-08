@@ -1,0 +1,71 @@
+<template name="adminCouponsCreate">
+
+    <h1 style="margin-bottom: 20px">Create Coupon</h1>
+
+    <a href="{{pathFor 'adminCouponsList'}}" class="btn btn-primary" style="color: #FFF">
+        List Coupons
+    </a>
+
+    <hr>
+
+    <!-- ONLY FOR ADMINS -->
+    {{#if currentUser}}
+
+        <!-- CONTENT -->
+        <form hook="create-coupon" style="max-width: 500px">
+
+            <!-- COUPON CODE -->
+            <!--<div class="form-group">-->
+                <!--<label for="coupon">Coupon Code</label>-->
+                <!--<input type="text" hook="coupon" class="form-control" id="coupon" name="coupon" value="{{coupon}}">-->
+            <!--</div>-->
+
+            <!-- TYPE OF COUPON -->
+            <div class="form-group">
+                <label for="coupon">Coupon Type</label>
+                <select type="text" hook="couponType" class="form-control" id="couponType" name="couponType">
+                    <option value="PERCENTAGE">Percentage</option>
+                    <option value="DOLLARS">Amount</option>
+                    <option value="COMMISSION">Commission</option>
+                </select>
+            </div>
+
+            <!-- DISCOUNT PERCENTAGE -->
+            <div class="form-group">
+                <label for="discount">Discount amount or % (integer)</label>
+                <input type="text" hook="discount" class="form-control" id="discount" name="discount" value="{{discount}}">
+            </div>
+
+            <!-- COMMISSION -->
+            <div class="form-group">
+                <label for="commission">Commission % (integer)</label>
+                <input type="text" hook="commission" class="form-control" id="commission" name="commission" value="{{commission}}">
+            </div>
+
+            <!-- COMMISSION COMPANY -->
+            <div class="form-group">
+                <label for="commission">Company</label>
+                <input type="text" hook="company" class="form-control" id="company" name="company" value="{{company}}">
+            </div>
+
+            <!-- LIMIT USES -->
+            <div class="form-group">
+                <label for="coupon">Maximum Uses (leave blank for unlimited)</label>
+                <input type="text" hook="maxUses" class="form-control" id="maxUses" name="maxUses" value="{{maxUses}}">
+            </div>
+
+            <!-- EXPIRATION -->
+            <div class="form-group">
+                <label for="expiration">Expiration (YYYY-MM-DD)  (leave blank for unlimited)</label>
+                <input type="text" hook="expiration" class="form-control" id="expiration" name="expiration" value="{{maxUses}}">
+            </div>
+            <input type="submit" class="button" value="Create Coupon">
+        </form>
+
+    {{else}}
+
+        Admins only.
+
+    {{/if}}
+
+</template>

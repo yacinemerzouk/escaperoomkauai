@@ -157,6 +157,7 @@ label{
 
 
 
+
 // loading screen styles
 .loading-bg{
 	width: 100%;
@@ -653,9 +654,14 @@ button:hover,
 footer{
 	text-align: center;
 	font-size: 12px;
-	padding: 0 0 60px;
+	padding: 0 0 0px;
 	clear: both;
-	margin-top: 80px;
+	margin-top: 0px;
+	border-top: 1px solid #EEE;
+	.footer-bg{
+		padding: 60px 0;
+		background: #FFF;
+	}
 	a{
 		color: #888;
 
@@ -674,11 +680,36 @@ footer{
 /* ======================================== */
 /* LAYOUT & NAVBAR
 /* ======================================== */
+body{
+	background: #DDD;
+}
+.container{
+	background: #FFF;
+	max-width: 960px;
+}
+.container.content{
+	padding-bottom: 60px;
+}
+
+#wrapper{
+	max-width: 960px;
+	margin: 0 auto;
+	position: relative;
+}
+@media (max-width: 991px){
+	#wrapper {
+		max-width: 750px;
+	}
+}
 .navbar-wrapper{
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
+	max-width: 960px;
+	
+	margin: 0 auto;
+	
 }
 .navbar-brand{
 	position: absolute;
@@ -806,6 +837,7 @@ footer{
 		position: relative;
 		right: 0;
 		transition: right 0.35s ease;
+		
 	}
 
 	#navbar2 .navbar-collapse {
