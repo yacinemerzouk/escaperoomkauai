@@ -1,4 +1,25 @@
-Template.layout.rendered = function(){
+/**
+ * =============================================================
+ * DATA CONTEXT
+ * Template data: none
+ * Router subscriptions: none
+ * Template subscriptions: none
+ * =============================================================
+ */
+ 
+/**
+ * =============================================================
+ * TEMPLATE CREATED
+ * =============================================================
+ */
+Template.layout.onCreated(function(){});
+
+/**
+ * =============================================================
+ * TEMPLATE RENDERED
+ * =============================================================
+ */
+Template.layout.onRendered(function(){
     $('#bs-example-navbar-collapse-2').on('show.bs.collapse', function (e) {
         $('body').addClass('menu-slider');
     });
@@ -16,8 +37,29 @@ Template.layout.rendered = function(){
         //$('body').removeClass('menu-slider');
         $('body, #bs-example-navbar-collapse-2').removeClass('in');
     })
-};
+});
 
+
+/**
+ * =============================================================
+ * TEMPLATE DESTROYED
+ * =============================================================
+ */
+Template.layout.onDestroyed(function(){});
+
+/**
+ * =============================================================
+ * TEMPLATE EVENTS
+ * =============================================================
+ */
+Template.layout.events({});
+
+
+/**
+ * =============================================================
+ * TEMPLATE HELPERS
+ * =============================================================
+ */
 Template.layout.helpers({
     settings: function () {
         return Bolt.Collections.Settings.findOne({settingType: 'global'});

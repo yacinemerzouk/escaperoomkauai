@@ -88,10 +88,14 @@ Template.room.onCreated(function(){
                     });
 
                     // GA EVENT TRACKING
-                    analytics.track("New Reservation", {
-                        eventName: reservation.room.title,
-                        couponValue: reservation.total,
-                    });
+                    analytics.track(
+                        "Reservation",
+                        {
+                            category: "Transaction",
+                            revenue: reservation.total,
+                            label: "Reservation - " + reservation.room.title
+                        }
+                    );
 
                     // SEND EMAILS
                     reservation.sendConfirmationEmail();
@@ -172,11 +176,15 @@ Template.room.onCreated(function(){
                                             currency: 'USD'
                                         });
 
-                                        // GA TRACKING
-                                        analytics.track("New Reservation", {
-                                            eventName: reservation.room.title,
-                                            couponValue: reservation.total,
-                                        });
+                                        // GA EVENT TRACKING
+                                        analytics.track(
+                                            "Reservation",
+                                            {
+                                                category: "Transaction",
+                                                revenue: reservation.total,
+                                                label: "Reservation - " + reservation.room.title
+                                            }
+                                        );
 
                                         // SEND EMAILS
                                         reservation.sendConfirmationEmail();
