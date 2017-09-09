@@ -128,6 +128,21 @@ Template.giftCards.onRendered(function(){
                             // INSERT OK
                             if (result) {
 
+                                fbq('track', 'Purchase', {
+                                    value: parseInt(formData.total / 100),
+                                    currency: 'USD'
+                                });
+
+                                // GA EVENT TRACKING
+                                analytics.track(
+                                    "Gift Card",
+                                    {
+                                        category: "Transaction",
+                                        revenue: parseInt(formData.total / 100),
+                                        label: "Gift Card Purchase"
+                                    }
+                                );
+
                                 var bodyConfirmation = '<div style="background-color: #ddd; padding: 30px;">' +
                                     '<div style="padding: 0px; width: 120px; margin: 0 auto; ">' +
                                     '<img src="https://www.escaperoomkauai.com/images/social-banner-logo.png" width="120" height="120">' +

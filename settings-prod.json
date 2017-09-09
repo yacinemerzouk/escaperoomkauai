@@ -25,6 +25,10 @@
         "analyticsSettings": {
             "Google Analytics" : {
                 "trackingId": "UA-74124187-1"
+            },
+            "Mixpanel": {
+                "token": "267568be6be9861d28cd6063926e8882",
+                "people": true
             }
         },
         "stripe": {
