@@ -44,6 +44,9 @@ Router.onAfterAction(function(){
         // Track FB Pageviews
         fbq('track', 'PageView');
 
+        // Track GA Pageviews
+        ga('send', 'pageview');
+
         // Grab user-defined meta params from routes above
         var meta = this.lookupOption('meta');
 

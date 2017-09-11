@@ -82,20 +82,64 @@ Template.room.onCreated(function(){
                 if (orderProcessed) {
 
                     // FB EVENT TRACKING
-                    fbq('track', 'Purchase', {
+                    var fbe = {
                         value: reservation.total,
                         currency: 'USD'
-                    });
-
-                    // GA EVENT TRACKING
-                    analytics.track(
-                        "Reservation",
+                    }
+                    console.log( 'FB EVENT DATA', fbe );
+                    fbq(
+                        'track',
+                        'Purchase',
                         {
-                            category: "Transaction",
-                            revenue: reservation.total,
-                            label: "Reservation - " + reservation.room.title
+                            value: fbe.value,
+                            currency: 'USD'
                         }
                     );
+
+                    // GA EVENT TRACKING
+                    var gae = {
+                        event: 'event',
+                        category: 'Transaction',
+                        action: "Reservation " + "(pay: "+reservation.pay+")",
+                        label: "Reservation - " + reservation.room.title,
+                        total: reservation.total,
+                        couponValue: reservation.subtotal,
+                        transactionId: resId,
+                        deliveryFee: "0",
+                        taxes: reservation.taxes,
+                        itemName: room.title,
+                        sku: room.slug,
+                        price: reservation.subtotal
+
+                    };
+                    console.log( 'GA EVENT DATA', gae );
+                    ga( 'send', gae.event, gae.category, gae.action, gae.label, parseInt( reservation.subtotal ) );
+
+                    ga('ecommerce:addTransaction', {
+                        'id': gae.transactionId,                     // Transaction ID. Required.
+                        'revenue': gae.total,               // Grand Total.
+                        'shipping': gae.deliveryFee,                  // Shipping.
+                        'tax': gae.taxes                    // Tax.
+                    });
+                    ga('ecommerce:addItem', {
+                        'id': gae.transactionId,                     // Transaction ID. Required.
+                        'name': gae.itemName,    // Product name. Required.
+                        'sku': gae.sku,                 // SKU/code.
+                        'category': 'Reservation',         // Category or variation.
+                        'price': gae.price,                 // Unit price.
+                        'quantity': '1'                   // Quantity.
+                    });
+                    ga('ecommerce:send');
+
+                    // GA EVENT TRACKING
+                    // analytics.track(
+                    //     "Reservation",
+                    //     {
+                    //         category: "Transaction",
+                    //         revenue: reservation.total,
+                    //         label: "Reservation - " + reservation.room.title
+                    //     }
+                    // );
 
                     // SEND EMAILS
                     reservation.sendConfirmationEmail();
@@ -170,21 +214,65 @@ Template.room.onCreated(function(){
                                     // IF GAME WAS SAVED OK
                                     if (orderProcessed) {
 
-                                        // FB TRACKING
-                                        fbq('track', 'Purchase', {
+                                        // FB EVENT TRACKING
+                                        var fbe = {
                                             value: reservation.total,
                                             currency: 'USD'
-                                        });
-
-                                        // GA EVENT TRACKING
-                                        analytics.track(
-                                            "Reservation",
+                                        }
+                                        console.log( 'FB EVENT DATA', fbe );
+                                        fbq(
+                                            'track',
+                                            'Purchase',
                                             {
-                                                category: "Transaction",
-                                                revenue: reservation.total,
-                                                label: "Reservation - " + reservation.room.title
+                                                value: fbe.value,
+                                                currency: 'USD'
                                             }
                                         );
+
+                                        // GA EVENT TRACKING
+                                        var gae = {
+                                            event: 'event',
+                                            category: 'Transaction',
+                                            action: "Reservation " + "(pay: "+reservation.pay+")",
+                                            label: "Reservation - " + reservation.room.title,
+                                            total: reservation.total,
+                                            couponValue: reservation.subtotal,
+                                            transactionId: resId,
+                                            deliveryFee: "0",
+                                            taxes: reservation.taxes,
+                                            itemName: room.title,
+                                            sku: room.slug,
+                                            price: reservation.subtotal
+
+                                        };
+                                        console.log( 'GA EVENT DATA', gae );
+                                        ga( 'send', gae.event, gae.category, gae.action, gae.label, parseInt( reservation.subtotal ) );
+
+                                        ga('ecommerce:addTransaction', {
+                                            'id': gae.transactionId,                     // Transaction ID. Required.
+                                            'revenue': gae.total,               // Grand Total.
+                                            'shipping': gae.deliveryFee,                  // Shipping.
+                                            'tax': gae.taxes                    // Tax.
+                                        });
+                                        ga('ecommerce:addItem', {
+                                            'id': gae.transactionId,                     // Transaction ID. Required.
+                                            'name': gae.itemName,    // Product name. Required.
+                                            'sku': gae.sku,                 // SKU/code.
+                                            'category': 'Reservation',         // Category or variation.
+                                            'price': gae.price,                 // Unit price.
+                                            'quantity': '1'                   // Quantity.
+                                        });
+                                        ga('ecommerce:send');
+
+                                        // GA EVENT TRACKING
+                                        // analytics.track(
+                                        //     "Reservation",
+                                        //     {
+                                        //         category: "Transaction",
+                                        //         revenue: reservation.total,
+                                        //         label: "Reservation - " + reservation.room.title
+                                        //     }
+                                        // );
 
                                         // SEND EMAILS
                                         reservation.sendConfirmationEmail();

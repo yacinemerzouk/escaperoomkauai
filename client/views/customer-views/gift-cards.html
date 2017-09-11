@@ -91,27 +91,27 @@
                                 <!-- SUBTOTAL BEFORE DISCOUNTS AND TAXES -->
                                 <tr style="font-weight:bold;">
                                     <td>Coupon Amount</td>
-                                    <td class="currency">{{toCurrency couponAmount}}</td>
+                                    <td class="currency">{{toCurrency checkoutData.couponValue}}</td>
                                 </tr>
                                 <tr style="font-weight:bold;">
                                     <td>Delivery Fee</td>
-                                    <td class="currency">{{toCurrency deliveryFee}}</td>
+                                    <td class="currency">{{toCurrency checkoutData.deliveryFee}}</td>
                                 </tr>
                                 <tr style="font-weight:bold;">
                                     <td>Subtotal</td>
-                                    <td class="currency">{{toCurrency subtotal}}</td>
+                                    <td class="currency">{{toCurrency checkoutData.subtotal}}</td>
                                 </tr>
 
                                 <!-- TAXES -->
                                 <tr>
                                     <td>Taxes</td>
-                                    <td class="currency">{{toCurrency taxes}}</td>
+                                    <td class="currency">{{toCurrency checkoutData.taxes}}</td>
                                 </tr>
 
                                 <!-- TOTAL -->
                                 <tr style="font-size: 18px;">
                                     <th>TOTAL</th>
-                                    <th class="currency">{{toCurrency total}}</th>
+                                    <th class="currency">{{toCurrency checkoutData.total}}</th>
                                 </tr>
 
                                 </tbody>
@@ -121,7 +121,11 @@
                             {{#unless isFree}}
                                 <div class="row">
 
-                                    <input type="hidden" name="total" id="total">
+                                    <input type="hidden" name="couponValue" value="{{checkoutData.couponValue}}">
+                                    <input type="hidden" name="deliveryFee" value="{{checkoutData.deliveryFee}}">
+                                    <input type="hidden" name="subtotal" value="{{checkoutData.subtotal}}">
+                                    <input type="hidden" name="taxes" value="{{checkoutData.taxes}}">
+                                    <input type="hidden" name="total" value="{{checkoutData.total}}">
 
                                     <!-- CREDIT CARD NUMBER -->
                                     <div class="form-group col-xs-12 col-md-6">
