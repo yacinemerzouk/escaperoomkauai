@@ -15,7 +15,9 @@ Meteor.publish('roomList', function() {
                 image: 1,
                 order: 1,
                 published: 1,
-                available: 1
+                available: 1,
+                ribbon: 1,
+                opening: 1
             }
         }
     );
@@ -44,7 +46,8 @@ Meteor.publish('roomOverviewList', function() {
                 image: 1,
                 order: 1,
                 published: 1,
-                available: 1
+                available: 1,
+                ribbon: 1
             }
         }
     );

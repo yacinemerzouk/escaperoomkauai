@@ -7,10 +7,12 @@ Template.roomBox.helpers({
 
         var successRates = Session.get('successRates');
 
-        if( successRates ){
-            return successRates[tmpl.room._id].successRate;
+        if( successRates && successRates[tmpl.room._id]){
+
+           return successRates[tmpl.room._id].successRate;
+
         }else {
-            return false;
+            return tmpl.room.successRate;
         }
 
     },

@@ -79,7 +79,7 @@ Template.gamePlay.onRendered(function(){
     var dateObject = new Date();
     var currentTime = dateObject.getTime();
     var secondsSinceLastReset = parseInt( ( currentTime - lastResetTime ) / 1000 );
-    console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
+    // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
     if( secondsSinceLastReset < 3600 ){
         var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
         var countdownSeconds = secondsLeftOnCountdown % 60;
@@ -277,12 +277,12 @@ Template.gamePlay.events({
                     var dateObject = new Date();
                     var currentTime = dateObject.getTime();
                     var secondsSinceLastReset = parseInt( ( currentTime - newResetTime ) / 1000 );
-                    console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
+                    // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
                     if( secondsSinceLastReset < 4800 ){
                         var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
                         var countdownSeconds = secondsLeftOnCountdown % 60;
                         var countdownMinutes = parseInt( Math.floor( secondsLeftOnCountdown / 60 ) );
-                        console.log( countdownMinutes, countdownSeconds );
+                        // console.log( countdownMinutes, countdownSeconds );
                         tmpl.countdown( "countdown", countdownMinutes, countdownSeconds );
                     }
                 }
@@ -305,14 +305,14 @@ Template.gamePlay.events({
         var dateObject = new Date();
         var currentTime = dateObject.getTime();
         var secondsSinceLastReset = parseInt( ( currentTime - newResetTime ) / 1000 );
-        console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
+        // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
         if( secondsSinceLastReset < 3600 ) {
             Bolt.Collections.tikiCountdownStatus.update(
                 {_id: "HdbcttuYTtwWvGKoS"},
                 {$set: {room: "tiki", resetTime: newResetTime}},
                 function (err, rows) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                     } else {
                         statusUpdated = rows;
                         // console.log( 'timer started', statusUpdated );
@@ -321,7 +321,7 @@ Template.gamePlay.events({
                             var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
                             var countdownSeconds = secondsLeftOnCountdown % 60;
                             var countdownMinutes = parseInt(Math.floor(secondsLeftOnCountdown / 60));
-                            console.log(countdownMinutes, countdownSeconds);
+                            // console.log(countdownMinutes, countdownSeconds);
 
                             tmpl.countdown("countdown", countdownMinutes, countdownSeconds);
                         }

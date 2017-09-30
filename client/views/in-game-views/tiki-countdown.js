@@ -89,7 +89,7 @@ Template.tikiCountdown.onRendered(function(){
         var dateObject = new Date();
         var currentTime = dateObject.getTime();
         var secondsSinceLastReset = parseInt(( currentTime - lastResetTime ) / 1000);
-        console.log('SECONDS SINCE LAST RESET', secondsSinceLastReset);
+        // console.log('SECONDS SINCE LAST RESET', secondsSinceLastReset);
         if (secondsSinceLastReset < 3600) {
             var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
             var countdownSeconds = secondsLeftOnCountdown % 60;

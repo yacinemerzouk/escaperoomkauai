@@ -49,15 +49,15 @@
                 <input type="text" hook="duration" class="form-control" id="duration" name="duration" value="{{duration}}">
             </div>
 
-            <div class="form-group">
-                <label for="pricePerPlayer">Price Per Player</label>
-                <input type="text" hook="pricePerPlayer" class="form-control" id="pricePerPlayer" name="pricePerPlayer" value="{{pricePerPlayer}}">
-            </div>
+            <!--<div class="form-group">-->
+                <!--<label for="pricePerPlayer">Price Per Player</label>-->
+                <!--<input type="text" hook="pricePerPlayer" class="form-control" id="pricePerPlayer" name="pricePerPlayer" value="{{pricePerPlayer}}">-->
+            <!--</div>-->
 
-            <div class="form-group">
-                <label for="priceToClose">Cost to Close Room (Private)</label>
-                <input type="text" hook="priceToClose" class="form-control" id="priceToClose" name="priceToClose" value="{{priceToClose}}">
-            </div>
+            <!--<div class="form-group">-->
+                <!--<label for="priceToClose">Cost to Close Room (Private)</label>-->
+                <!--<input type="text" hook="priceToClose" class="form-control" id="priceToClose" name="priceToClose" value="{{priceToClose}}">-->
+            <!--</div>-->
 
             <div class="form-group">
                 <label for="kamaainaDiscountPerPlayer">Resident Discount (Per Player)</label>
@@ -80,11 +80,34 @@
             </div>
 
             <div class="form-group">
+                <label for="successRate">Price Range</label>
+                <input type="text" class="form-control" id="priceRange" name="priceRange" value="{{priceRange}}">
+            </div>
+
+            <div class="form-group">
                 <label for="order">Display Order</label>
                 <input type="text" hook="order" class="form-control" id="order" name="order" value="{{order}}">
             </div>
 
-            <input type="hidden" hook="published" class="form-control" id="published" name="published" value="{{published}}"><br>
+            <div class="form-group">
+                <label for="available">Publish Room?</label>
+                {{#if published}}
+                    <input type="checkbox" hook="published" class="form-control" id="published" name="published" checked="checked">
+                {{else}}
+                    <input type="checkbox" hook="published" class="form-control" id="published" name="published">
+                {{/if}}
+            </div>
+
+            <div class="form-group">
+                <label for="available">Retired?</label>
+                {{#if published}}
+                    <input type="checkbox" hook="retired" class="form-control" id="retired" name="retired" checked="checked">
+                {{else}}
+                    <input type="checkbox" hook="retired" class="form-control" id="retired" name="retired">
+                {{/if}}
+            </div>
+
+            <!--<input type="hidden" hook="published" class="form-control" id="published" name="published" value="{{published}}"><br>-->
 
             <input type="submit" class="button btn-block" value="Save Room">
         </form>

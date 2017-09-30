@@ -86,7 +86,7 @@ Template.room.onCreated(function(){
                         value: reservation.total,
                         currency: 'USD'
                     }
-                    console.log( 'FB EVENT DATA', fbe );
+                    // console.log( 'FB EVENT DATA', fbe );
                     fbq(
                         'track',
                         'Purchase',
@@ -112,7 +112,7 @@ Template.room.onCreated(function(){
                         price: reservation.subtotal
 
                     };
-                    console.log( 'GA EVENT DATA', gae );
+                    // console.log( 'GA EVENT DATA', gae );
                     ga( 'send', gae.event, gae.category, gae.action, gae.label, parseInt( reservation.subtotal ) );
 
                     ga('ecommerce:addTransaction', {
@@ -219,7 +219,7 @@ Template.room.onCreated(function(){
                                             value: reservation.total,
                                             currency: 'USD'
                                         }
-                                        console.log( 'FB EVENT DATA', fbe );
+                                        // console.log( 'FB EVENT DATA', fbe );
                                         fbq(
                                             'track',
                                             'Purchase',
@@ -245,7 +245,7 @@ Template.room.onCreated(function(){
                                             price: reservation.subtotal
 
                                         };
-                                        console.log( 'GA EVENT DATA', gae );
+                                        // console.log( 'GA EVENT DATA', gae );
                                         ga( 'send', gae.event, gae.category, gae.action, gae.label, parseInt( reservation.subtotal ) );
 
                                         ga('ecommerce:addTransaction', {
@@ -668,10 +668,10 @@ Template.room.helpers({
 
         var successRates = Session.get('successRates');
 
-        if( successRates ){
+        if( successRates && successRates[tmpl.room._id]){
             return successRates[tmpl.room._id].successRate;
         }else {
-            return false;
+            return tmpl.room.successRate;
         }
     }
 });

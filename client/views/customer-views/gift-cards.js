@@ -31,7 +31,7 @@ Template.giftCards.onCreated(function(){
             taxes: taxes,
             total: total
         }
-        console.log( 'CHECKOUT DATA', checkoutData );
+        // console.log( 'CHECKOUT DATA', checkoutData );
         Session.set( 'checkoutData', checkoutData );
 
         //couponValueInput.val( )
@@ -44,7 +44,7 @@ Template.giftCards.onCreated(function(){
         // GET FORM DATA
         var formData = Bureaucrat.getFormData( $( 'form' ) );
 
-        console.log( 'FORM DATA', formData );
+        // console.log( 'FORM DATA', formData );
 
         // IF FORM HAS ALL DATA NEEDED
         if( formData.couponValue &&
@@ -147,7 +147,7 @@ Template.giftCards.onCreated(function(){
                                         value: formData.total,
                                         currency: 'USD'
                                     }
-                                    console.log( 'FB EVENT DATA', fbe );
+                                    // console.log( 'FB EVENT DATA', fbe );
 
                                     fbq(
                                         'track',
@@ -173,7 +173,7 @@ Template.giftCards.onCreated(function(){
                                         taxes: formData.taxes
 
                                     };
-                                    console.log( 'GA EVENT DATA', gae );
+                                    // console.log( 'GA EVENT DATA', gae );
                                     ga( 'send', gae.event, gae.category, gae.action, gae.label, parseInt( gae.couponValue ) );
 
                                     ga('ecommerce:addTransaction', {

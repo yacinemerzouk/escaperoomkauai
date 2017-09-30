@@ -50,8 +50,7 @@ Template.rooms.helpers({
     rooms: function(){
         var rooms = Bolt.Collections.Rooms.find(
             {
-                published: true,
-                available: true
+                published: true
             },
             {
                 sort: {
