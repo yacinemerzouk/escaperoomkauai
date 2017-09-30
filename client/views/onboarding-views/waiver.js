@@ -133,7 +133,8 @@ Template.waiver.events({
 
                 if (formData.newsletter) {
                     // You can as well pass different parameters on each call
-                    var mailChimp = new MailChimp("4dea6fda5950407d6090b15f60b3755f-us13");
+                    // var mailChimp = new MailChimp("4dea6fda5950407d6090b15f60b3755f-us13");
+                    var mailChimp = new MailChimp( Meteor.settings.private.MailChimp.apiKey );
 
                     mailChimp.call('lists', 'subscribe', {
                             email: {email: formData.email},
