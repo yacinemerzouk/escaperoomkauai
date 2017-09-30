@@ -14,10 +14,10 @@ Meteor.methods({
             // Callback beauty in action
             function (error, result) {
                 if (error) {
-                    console.error('[MailChimp][Lists][Subscribe] Error: %o', error);
+                    console.error('[MailChimp][Lists][Subscribe] Error:', error);
                 } else {
                     // Do something with your data!
-                    console.info('[MailChimp][Lists][Subscribe]: %o', result);
+                    // console.info('[MailChimp][Lists][Subscribe]: %o', result);
                 }
             }
         );
