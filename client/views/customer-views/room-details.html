@@ -91,8 +91,15 @@
                                         {{#if games}}
                                             {{#each games}}
                                                 {{#if canBeBooked this}}
+                                                    <!--{{#if isGMTrained game=this room=../room}}-->
 
                                                     <a href="#" hook="set-time" hook-data="{{time}}" class="label label-time label-time-green">{{time}} &nbsp;&bull;&nbsp; Available</a>
+
+                                                    <!--{{else}}-->
+
+
+
+                                                    <!--{{/if}}-->
 
                                                 {{else}}
                                                     <span class="label label-time label-time-red">{{time}} &nbsp;&bull;&nbsp; Sold Out</span>

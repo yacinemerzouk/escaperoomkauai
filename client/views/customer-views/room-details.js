@@ -557,12 +557,29 @@ Template.room.helpers({
         }
         return nbPlayersOptions;
     },
+    isGMTrained: function( args ){
+        var tmpl = this;
+        var gm = Meteor.users.findOne( { _id: args.hash.game.userId } );
+        // console.log( 'is GM Trained?', args.hash.room, args.hash.game );
+        var isGMTrained = false;
+        _.each( gm.profile.rooms, function( roomId ){
+            if( roomId == args.hash.room._id ){
+                isGMTrained = true;
+            }
+        });
+        return isGMTrained;
+    },
     game: function(){
         return Session.get( 'game' );
     },
     games: function(){
+        // console.log( 'in games. Do i have room id?', this );
+        var tmpl = this;
         if( Session.get('game') ) {
             var game = new Bolt.Game(Session.get('game'));
+
+
+
             var games = Bolt.Collections.Games.find({
                 date: game.date,
                 $or: [
@@ -572,8 +589,21 @@ Template.room.helpers({
             }, {
                 sort: {time: 1}
             }).fetch();
+
+
+            var isGMTrained = false;
+            var gamesToDisplay = [];
+            _.each( games, function( game ){
+                var gm = Meteor.users.findOne( { _id: game.userId } );
+                _.each( gm.profile.rooms, function( roomId ){
+                    if( roomId == tmpl.room._id ){
+                        gamesToDisplay.push( game );
+                    }
+                });
+            });
+
             // console.log('GAMES? ', games);
-            return games;
+            return gamesToDisplay;
         }
         // if( Session.get('calendarDataReady') ) {
         //     var roomId = this.room._id;
@@ -612,7 +642,7 @@ Template.room.helpers({
         var game = new Bolt.Game( gameData );
         var userSelections = Session.get( 'userSelections' );
         var nbPlayers = userSelections.nbPlayers;
-        // // console.log( game, nbPlayers );
+        // console.log( game, nbPlayers );
         return game.canBeBooked( nbPlayers );
     },
     spotsLeftInGame: function( gameData ){
