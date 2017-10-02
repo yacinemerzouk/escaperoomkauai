@@ -362,15 +362,20 @@ Template.room.onRendered(function(){
     //// console.log( 'SETTING GAME IN SESSION', game );
     Session.set( 'game', game );
 
+    // console.log( room ) ;
     var minDate = Epoch.today();
     if( room.openingDate > minDate ){
         minDate = room.openingDate;
+        // console.log( 'minDate1', minDate );
         var us = Session.get('userSelections');
         if( !us.date || us.date < minDate ) {
             us.date = minDate;
+            // console.log( 'minDate2', minDate );
             Session.set('userSelections',us);
         }
     }
+
+    // console.log( 'minDate3', minDate );
 
     $('#datepicker').datepicker({
         minDate: minDate,
