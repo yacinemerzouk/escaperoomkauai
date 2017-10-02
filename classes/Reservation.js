@@ -68,17 +68,17 @@ Bolt.Reservation.prototype.populate = function( data ){
         if( this.nbPlayers == 2 ){
             this.costOfPlayers = 80;
         }else if( this.nbPlayers == 3 ){
-            this.costOfPlayers = 105;
+            this.costOfPlayers = 108;
         }else if( this.nbPlayers == 4 ){
-            this.costOfPlayers = 128;
+            this.costOfPlayers = 136;
         }else if( this.nbPlayers == 5 ){
             this.costOfPlayers = 160;
         }else if( this.nbPlayers == 6 ){
             this.costOfPlayers = 192;
         }else if( this.nbPlayers == 7 ){
-            this.costOfPlayers = 210;
+            this.costOfPlayers = 224;
         }else if( this.nbPlayers == 8 ){
-            this.costOfPlayers = 240;
+            this.costOfPlayers = 256;
         }else{
             this.costOfPlayers = 0;
         }
@@ -109,7 +109,7 @@ Bolt.Reservation.prototype.populate = function( data ){
 
         // Discount amount for residents
         //this.discountKamaaina = !this.discount && parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
-        this.discountKamaaina = parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 5 ).toFixed(2) : 0;
+        this.discountKamaaina = parseInt(this.nbKamaaina) > 0 ? ( parseInt(this.nbKamaaina) * 3 ).toFixed(2) : 0;
 
         // Discount amount for coupon
         if( this.couponData && this.couponData.type == 'DOLLARS' ){
