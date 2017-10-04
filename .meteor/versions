@@ -38,7 +38,6 @@ email@1.2.3
 es5-shim@4.6.15
 fortawesome:fontawesome@4.7.0
 gadicohen:robots-txt@0.0.10
-gadicohen:sitemaps@0.0.26
 geojson-utils@1.0.10
 gfk:notifications@1.1.4
 hot-code-push@1.0.4
@@ -116,4 +115,5 @@ wizonesolutions:canonical@0.0.5
 zendy:bureaucrat@1.0.2
 zendy:epoch@1.0.4
 zendy:seo@0.1.0
+zendy:sitemaps@0.1.0
 zendy:tuxedo@1.0.0

@@ -32,7 +32,6 @@ gfk:notifications
 check@1.2.5
 email@1.2.3
 wizonesolutions:canonical
-gadicohen:sitemaps
 zendy:seo
 zendy:tuxedo
 accounts-base@1.3.3
@@ -45,3 +44,4 @@ dispatch:twilio
 miro:mailchimp
 random@1.0.10
 dynamic-import@0.1.3
+zendy:sitemaps
