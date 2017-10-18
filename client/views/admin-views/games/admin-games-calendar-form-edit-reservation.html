@@ -22,16 +22,15 @@
                         <label for="nbPlayers">Select number of players</label>
                         <select class="form-control" hook="update-reservation" id="nbPlayers" name="nbPlayers" style="width: 100%; max-width: 100%;">
                             <option value="0">-- NUMBER OF PLAYERS --</option>
-                            <option value="1" {{selected reservation.nbPlayers 1}}>1</option>
-                            <option value="2" {{selected reservation.nbPlayers 2}}>2</option>
-                            <option value="3" {{selected reservation.nbPlayers 3}}>3</option>
-                            <option value="4" {{selected reservation.nbPlayers 4}}>4</option>
-                            <option value="5" {{selected reservation.nbPlayers 5}}>5</option>
-                            <option value="6" {{selected reservation.nbPlayers 6}}>6</option>
-                            <option value="7" {{selected reservation.nbPlayers 7}}>7</option>
-                            <option value="8" {{selected reservation.nbPlayers 8}}>8</option>
-                            <option value="9" {{selected reservation.nbPlayers 9}}>9</option>
-                            <option value="10" {{selected reservation.nbPlayers 10}}>10</option>
+                            <option value="2" {{selected reservation.nbPlayers 2}}>2 @ $40</option>
+                            <option value="3" {{selected reservation.nbPlayers 3}}>3 @ $36</option>
+                            <option value="4" {{selected reservation.nbPlayers 4}}>4 @ $34</option>
+                            <option value="5" {{selected reservation.nbPlayers 5}}>5 @ $32</option>
+                            <option value="6" {{selected reservation.nbPlayers 6}}>6 @ $32</option>
+                            <option value="7" {{selected reservation.nbPlayers 7}}>7 @ $32</option>
+                            <option value="8" {{selected reservation.nbPlayers 8}}>8 @ $32</option>
+                            <option value="9" {{selected reservation.nbPlayers 9}}>9 @ $32</option>
+                            <option value="10" {{selected reservation.nbPlayers 10}}>10 @ $32</option>
                         </select>
                     </div>
 
@@ -64,7 +63,7 @@
 
 
                 <!-- DISPLAY CLOSED ROOM OPTION IF APPROPRIATE -->
-                <div class="form-group">
+                <div class="form-group hidden">
                     <label>Close Room</label>
                     <p>Groups of 2-4 players can choose to pay a ${{reservation.room.priceToClose}} fee to keep players outside of their own party from reserving the same game and time slot. Groups of 5 or 6 players will never be joined by players outside of their own party.</p>
 
@@ -97,7 +96,7 @@
 
                 <div class="form-group">
                     <label for="nbKamaaina">Kama'aina Discount</label>
-                    <p>How many Hawai'i residents in your party? Hawai'i residents each get $5 off. HAWAII ID REQUIRED.</p>
+                    <p>How many Hawai'i residents in your party? Hawai'i residents each get $3 off. HAWAII ID REQUIRED.</p>
                     <select class="form-control" hook="update-reservation" id="nbKamaaina" name="nbKamaaina" style="width: 100%">
                         <option value="0"> SELECT NUMBER OF HAWAII RESIDENTS </option>
                         <option value="1" {{selected reservation.nbKamaaina 1}}>1</option>
@@ -138,7 +137,7 @@
 
                     <!-- COST OF PLAYERS -->
                     <tr>
-                        <td>{{reservation.nbPlayers}} players &nbsp;&times;&nbsp; {{toCurrency reservation.room.pricePerPlayer}}</td>
+                        <td>{{reservation.nbPlayers}} players</td>
                         <td class="currency">{{toCurrency reservation.costOfPlayers}}</td>
                     </tr>
 

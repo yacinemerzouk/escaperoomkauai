@@ -17,6 +17,7 @@ Meteor.methods({
             }
         ).fetch();
 
+        console.log( 'Found ' + games.length + ' games' );
         _.each(games, function (game) {
 
             if( game.date <= today && game.roomId && game.roomId != 'any' ){
@@ -31,17 +32,22 @@ Meteor.methods({
 
                 }
 
-                var sr = successRates[game.roomId];
-                sr.nbGamesPlayed++;
-                if( game.won === true ){
-                    sr.nbGamesWon++
-                }
-                sr.successRate = parseInt( Math.floor( ( sr.nbGamesWon / sr.nbGamesPlayed ) * 100 ) );
-                successRates[game.roomId] = sr;
+                if( game.blocked !== true && ( game.won === true || game.won === false ) ) {
+                    var sr = successRates[game.roomId];
 
+                    sr.nbGamesPlayed++;
+                    if (game.won == true) {
+                        sr.nbGamesWon++
+                    }
+                    sr.successRate = parseInt(Math.floor(( sr.nbGamesWon / sr.nbGamesPlayed ) * 100));
+                    successRates[game.roomId] = sr;
+                }
             }
 
         });
+
+        console.log( 'Found ' + successRates['8Zfc8dZSS4zHqsRuv'].nbGamesPlayed + ' BTS games played.' );
+        console.log( 'Found ' + successRates['8Zfc8dZSS4zHqsRuv'].nbGamesWon + ' BTS games won.' );
 
         return successRates;
 
