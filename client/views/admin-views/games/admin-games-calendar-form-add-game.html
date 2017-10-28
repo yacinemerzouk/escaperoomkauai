@@ -7,17 +7,19 @@
             <div class="form-group">
                 <label>Game Master</label>
                 <select name="userId" class="form-control">
-                    <option value="0">---</option>
+                    <option value="RpiLtn28nLk9rHarH">ANY LOCATION</option>
 
                     {{#each gameMasters}}
-                        <option value="{{_id}}">{{username}}</option>
+
+                            <option value="{{_id}}">{{username}}</option>
+
                     {{/each}}
                 </select>
             </div>
             <div class="form-group">
                 <label>Room</label>
                 <select name="roomId" class="form-control">
-                    <option value="any">Any room for which game master is trained</option>
+                    <option value="any">ANY ROOM</option>
                     {{#each rooms}}
                         <option value="{{_id}}">{{title}}</option>
                     {{/each}}
