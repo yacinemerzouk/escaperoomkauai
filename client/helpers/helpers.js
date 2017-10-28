@@ -123,7 +123,7 @@ UI.registerHelper('checked', function( checked ){
  */
 UI.registerHelper('roomTitle', function( roomId ){
     if(roomId == 'any'){
-        return 'Any Game For GM';
+        return 'ANY GAME';
     }else {
         var room = Bolt.Collections.Rooms.findOne({
             _id: roomId
