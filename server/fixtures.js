@@ -8,134 +8,105 @@ Meteor.methods({
 
                     var dayIndex = Epoch.dateStringToDateObject(date).getDay();
 
-                    if (dayIndex == 0 || dayIndex == 5 || dayIndex == 6) {
+                    // MONDAY
+                    // 10:45 - ANY LOCATION - ANY ROOM
+                    // 12:45 - ANY LOCATION - ANY ROOM
+                    // 2:45 - ANY LOCATION - ANY ROOM
+                    // 4:45 - ANY LOCATION - ANY ROOM
+                    // 6:45 - KER1 ONLY - ANY ROOM
+                    // 8:45 - ANY LOCATION - ANY ROOM
+
+                    // TUESDAY, WEDNESDAY, THURSDAY, FRIDAY
+                    // 10:45 - ANY LOCATION - ANY ROOM
+                    // 12:45 - ANY LOCATION - ANY ROOM
+                    // 2:45 - ANY LOCATION - ANY ROOM
+                    // 4:45 - KER1 ONLY - ANY ROOM
+                    // 6:45 - ANY LOCATION - ANY ROOM
+                    // 8:45 - ANY LOCATION - ANY ROOM
+
+                    // SATURDAY, SUNDAY
+                    // 10:45 - ANY LOCATION - ANY ROOM
+                    // 12:45 - ANY LOCATION - ANY ROOM
+                    // 2:45 - ANY LOCATION - ANY ROOM
+                    // 4:45 - ANY LOCATION - ANY ROOM
+                    // 6:45 - ANY LOCATION - ANY ROOM
+                    // 8:45 - ANY LOCATION - ANY ROOM
+
+                    var game = new Bolt.Game({
+                        userId: "RpiLtn28nLk9rHarH",
+                        roomId: "any",
+                        date: date,
+                        time: "10:45am"
+                    });
+                    game.save();
+
+                    var game = new Bolt.Game({
+                        userId: "RpiLtn28nLk9rHarH",
+                        roomId: "any",
+                        date: date,
+                        time: "12:45pm"
+                    });
+                    game.save();
+
+                    var game = new Bolt.Game({
+                        userId: "RpiLtn28nLk9rHarH",
+                        roomId: "any",
+                        date: date,
+                        time: "2:45pm"
+                    });
+                    game.save();
+
+                    if (dayIndex == 0 || dayIndex == 1 || dayIndex == 6 ) {
 
                         var game = new Bolt.Game({
-                            userId: "jepiv57MpMStyycjr",
+                            userId: "RpiLtn28nLk9rHarH",
                             roomId: "any",
                             date: date,
-                            time: "10:30am"
+                            time: "4:45pm"
                         });
                         game.save();
 
-                        var game = new Bolt.Game({
-                            userId: "jepiv57MpMStyycjr",
-                            roomId: "any",
-                            date: date,
-                            time: "12:30pm"
-                        });
-                        game.save();
+                    }else {
 
                         var game = new Bolt.Game({
-                            userId: "jepiv57MpMStyycjr",
+                            userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "2:30pm"
+                            time: "4:45pm"
                         });
                         game.save();
-
-                        var game = new Bolt.Game({
-                            userId: "LuC4ngxpdTjEWQ7sK",
-                            roomId: "any",
-                            date: date,
-                            time: "4:30pm"
-                        });
-                        game.save();
-
-                        var game = new Bolt.Game({
-                            userId: "LuC4ngxpdTjEWQ7sK",
-                            roomId: "any",
-                            date: date,
-                            time: "6:30pm"
-                        });
-                        game.save();
-
-                        var game = new Bolt.Game({
-                            userId: "LuC4ngxpdTjEWQ7sK",
-                            roomId: "any",
-                            date: date,
-                            time: "8:30pm"
-                        });
-                        game.save();
-
 
                     }
 
-                    if (dayIndex == 3) {
-
+                    if (dayIndex == 0 || dayIndex == 1 || dayIndex == 6 ) {
 
                         var game = new Bolt.Game({
-                            userId: "jepiv57MpMStyycjr",
+                            userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "12:30pm"
+                            time: "6:45pm"
                         });
                         game.save();
 
-                        var game = new Bolt.Game({
-                            userId: "jepiv57MpMStyycjr",
-                            roomId: "any",
-                            date: date,
-                            time: "2:30pm"
-                        });
-                        game.save();
+                    }else {
 
                         var game = new Bolt.Game({
-                            userId: "jepiv57MpMStyycjr",
+                            userId: "RpiLtn28nLk9rHarH",
                             roomId: "any",
                             date: date,
-                            time: "4:30pm"
+                            time: "6:45pm"
                         });
                         game.save();
-
-                        var game = new Bolt.Game({
-                            userId: "jepiv57MpMStyycjr",
-                            roomId: "any",
-                            date: date,
-                            time: "6:30pm"
-                        });
-                        game.save();
-
 
                     }
 
-                    if (dayIndex == 4) {
-
-
-                        var game = new Bolt.Game({
-                            userId: "LuC4ngxpdTjEWQ7sK",
-                            roomId: "any",
-                            date: date,
-                            time: "12:30pm"
-                        });
-                        game.save();
-
-                        var game = new Bolt.Game({
-                            userId: "LuC4ngxpdTjEWQ7sK",
-                            roomId: "any",
-                            date: date,
-                            time: "2:30pm"
-                        });
-                        game.save();
-
-                        var game = new Bolt.Game({
-                            userId: "LuC4ngxpdTjEWQ7sK",
-                            roomId: "any",
-                            date: date,
-                            time: "4:30pm"
-                        });
-                        game.save();
-
-                        var game = new Bolt.Game({
-                            userId: "LuC4ngxpdTjEWQ7sK",
-                            roomId: "any",
-                            date: date,
-                            time: "6:30pm"
-                        });
-                        game.save();
-
-
-                    }
+                    var game = new Bolt.Game({
+                        userId: "RpiLtn28nLk9rHarH",
+                        roomId: "any",
+                        date: date,
+                        time: "8:45pm"
+                    });
+                    game.save();
 
 
                 }

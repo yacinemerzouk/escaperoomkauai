@@ -17,7 +17,7 @@ Meteor.methods({
             }
         ).fetch();
 
-        console.log( 'Found ' + games.length + ' games' );
+        // console.log( 'Found ' + games.length + ' games' );
         _.each(games, function (game) {
 
             if( game.date <= today && game.roomId && game.roomId != 'any' ){
@@ -46,8 +46,8 @@ Meteor.methods({
 
         });
 
-        console.log( 'Found ' + successRates['8Zfc8dZSS4zHqsRuv'].nbGamesPlayed + ' BTS games played.' );
-        console.log( 'Found ' + successRates['8Zfc8dZSS4zHqsRuv'].nbGamesWon + ' BTS games won.' );
+        // console.log( 'Found ' + successRates['8Zfc8dZSS4zHqsRuv'].nbGamesPlayed + ' BTS games played.' );
+        // console.log( 'Found ' + successRates['8Zfc8dZSS4zHqsRuv'].nbGamesWon + ' BTS games won.' );
 
         return successRates;
 

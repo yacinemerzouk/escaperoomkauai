@@ -14,7 +14,7 @@
  */
 Template.adminGamesCalendar.onCreated(function(){
     // Populate games 60 days in advance
-    // Meteor.call('populateCalendar',function(e,r){});
+    Meteor.call('populateCalendar',function(e,r){});
 });
 
 /**
