@@ -32,6 +32,13 @@
             <div class="form-group">
                 <label>Time</label>
                 <select name="time" class="form-control">
+                    <option value="0">---</option>
+                    <option>10:45am</option>
+                    <option>12:45pm</option>
+                    <option>2:45pm</option>
+                    <option>4:45pm</option>
+                    <option>6:45pm</option>
+                    <option>8:45pm</option>
                     {{#each allTimes}}
                         <option>{{this}}</option>
                     {{/each}}
