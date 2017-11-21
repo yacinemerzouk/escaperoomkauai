@@ -74,7 +74,15 @@ Template.gamePlay.onCreated(function(){
 Template.gamePlay.onRendered(function(){
     //this.countdown();
     var self = this;
-    var resetDocReactive = Bolt.Collections.tikiCountdownStatus.find().fetch();
+    var gameData = Bolt.Collections.Games.findOne(this.data._id);
+    var game = new Bolt.Game(gameData);
+    // console.log( 'GAME', game );
+    var resetDocReactive;
+    if( game.roomId == "3uvLANaxBvEfH4ZLH" ){
+        resetDocReactive = Bolt.Collections.tikiCountdownStatus.find().fetch();
+    }else if ( game.roomId == "HBBzehj9W2BPjvomA" ){
+        resetDocReactive = Bolt.Collections.seanceCountdownStatus.find().fetch();
+    }
     var lastResetTime = resetDocReactive[0].resetTime;
     var dateObject = new Date();
     var currentTime = dateObject.getTime();
@@ -118,27 +126,50 @@ Template.gamePlay.events({
         var formData = Bureaucrat.getFormData($(evt.currentTarget));
         //console.log('form data', formData, $('[name="device"]:checked').val() );
 
-        // Configure the Twilio client
-        Meteor.call('sendSMS', formData.message, $('[name="device"]:checked').val(), function(error,response){
-            if( error ){
-                //console.log( error );
-                Notifications.error( error.message );
-            }else{
-                //console.log(response);
-                var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
-                var game = new Bolt.Game(gameData);
-                if( !game.messages ){
-                    game.messages = []
-                }
-                game.messages.push(response);
-                game.save();
+        var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+        var game = new Bolt.Game(gameData);
+        if( game.roomId == "HBBzehj9W2BPjvomA" ){
+            // alert('SEANCE');
+            //console.log(response);
+            if (!game.messages) {
+                game.messages = []
+            }
+            game.messages.push({body:formData.message,dateCreated:new Date()});
+            var ok = game.save();
+            if( ok ){
                 $('textarea').val('');
                 Notifications.success('Message sent');
 
+            }else{
+                Notifications.error( 'could not send message' );
             }
             $('[type="submit"]').removeAttr("disabled");
 
-        })
+        }else {
+
+            // Configure the Twilio client
+            Meteor.call('sendSMS', formData.message, $('[name="device"]:checked').val(), function (error, response) {
+                if (error) {
+                    //console.log( error );
+                    Notifications.error(error.message);
+                } else {
+                    //console.log(response);
+                    var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+                    var game = new Bolt.Game(gameData);
+                    if (!game.messages) {
+                        game.messages = []
+                    }
+                    game.messages.push(response);
+                    game.save();
+                    $('textarea').val('');
+                    Notifications.success('Message sent');
+
+                }
+                $('[type="submit"]').removeAttr("disabled");
+
+            });
+
+        }
 
     },
 
@@ -234,20 +265,47 @@ Template.gamePlay.events({
         if( confirm( "WARNING! PLEASE CONFIRM:\nRESTART TIMER AT 60:00?") ) {
             var statusUpdated;
             var newResetTime = new Date().getTime();
-            Bolt.Collections.tikiCountdownStatus.update(
-                {_id: "HdbcttuYTtwWvGKoS"},
-                {$set: {room: "tiki", resetTime: newResetTime}},
-                function (err, rows) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        statusUpdated = rows;
-                        // console.log( 'timer started', statusUpdated );
-                        //Session.set('lastReset', newResetTime);
-                        tmpl.countdown("countdown",60,0);
+            var countdownCollection;
+            var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+            var game = new Bolt.Game(gameData);
+            var roomName = "";
+
+            if( game.roomId == "3uvLANaxBvEfH4ZLH" ){
+                countdownCollection = Bolt.Collections.tikiCountdownStatus;
+                roomName = "tiki";
+                countdownCollection.update(
+                    {_id: "HdbcttuYTtwWvGKoS"},
+                    {$set: {room: roomName, resetTime: newResetTime}},
+                    function (err, rows) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            statusUpdated = rows;
+                            // console.log( 'timer started', statusUpdated );
+                            //Session.set('lastReset', newResetTime);
+                            tmpl.countdown("countdown",60,0);
+                        }
                     }
-                }
-            );
+                );
+            }else if( game.roomId == "HBBzehj9W2BPjvomA" ){
+                countdownCollection = Bolt.Collections.seanceCountdownStatus;
+                roomName = "seance";
+                countdownCollection.update(
+                    {_id: "CjkxgQJ2HkTpXntFa"},
+                    {$set: {room: roomName, resetTime: newResetTime, gameId:game._id}},
+                    function (err, rows) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            statusUpdated = rows;
+                            // console.log( 'timer started', statusUpdated );
+                            //Session.set('lastReset', newResetTime);
+                            tmpl.countdown("countdown",60,0);
+                        }
+                    }
+                );
+            }
+
         }
 
     },
@@ -261,12 +319,32 @@ Template.gamePlay.events({
         // Prevent default event behavior
         evt.preventDefault();
 
-        var countdownDocs = Bolt.Collections.tikiCountdownStatus.find({}).fetch();
+        // var countdownDocs = Bolt.Collections.tikiCountdownStatus.find({}).fetch();
+        // var countdown = countdownDocs[0];
+        // var newResetTime = countdown.resetTime + 60000;
+
+        var collection;
+        var updateId;
+        var room;
+        var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+        var game = new Bolt.Game(gameData);
+        if( game.roomId == "3uvLANaxBvEfH4ZLH" ){
+
+            collection = Bolt.Collections.tikiCountdownStatus;
+            updateId = 'HdbcttuYTtwWvGKoS';
+            room = 'tiki';
+        }else if ( game.roomId == "HBBzehj9W2BPjvomA" ){
+            collection = Bolt.Collections.seanceCountdownStatus;
+            updateId = 'CjkxgQJ2HkTpXntFa';
+            room = 'seance';
+        }
+        countdownDocs = collection.find({}).fetch();
         var countdown = countdownDocs[0];
         var newResetTime = countdown.resetTime + 60000;
-        Bolt.Collections.tikiCountdownStatus.update(
-            {_id: "HdbcttuYTtwWvGKoS"},
-            {$set: {room: "tiki", resetTime: newResetTime}},
+
+        collection.update(
+            {_id: updateId},
+            {$set: {room: room, resetTime: newResetTime}},
             function (err, rows) {
                 if (err) {
                     console.log(err);
@@ -299,38 +377,53 @@ Template.gamePlay.events({
         // Prevent default event behavior
         evt.preventDefault();
 
-        var countdownDocs = Bolt.Collections.tikiCountdownStatus.find({}).fetch();
+        // var countdownDocs = Bolt.Collections.tikiCountdownStatus.find({}).fetch();
+        // var countdown = countdownDocs[0];
+        // var newResetTime = countdown.resetTime + 60000;
+
+        var collection;
+        var updateId;
+        var room;
+        var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+        var game = new Bolt.Game(gameData);
+        if( game.roomId == "3uvLANaxBvEfH4ZLH" ){
+
+            collection = Bolt.Collections.tikiCountdownStatus;
+            updateId = 'HdbcttuYTtwWvGKoS';
+            room = 'tiki';
+        }else if ( game.roomId == "HBBzehj9W2BPjvomA" ){
+            collection = Bolt.Collections.seanceCountdownStatus;
+            updateId = 'CjkxgQJ2HkTpXntFa';
+            room = 'seance';
+        }
+        countdownDocs = collection.find({}).fetch();
         var countdown = countdownDocs[0];
         var newResetTime = countdown.resetTime - 60000;
-        var dateObject = new Date();
-        var currentTime = dateObject.getTime();
-        var secondsSinceLastReset = parseInt( ( currentTime - newResetTime ) / 1000 );
-        // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
-        if( secondsSinceLastReset < 3600 ) {
-            Bolt.Collections.tikiCountdownStatus.update(
-                {_id: "HdbcttuYTtwWvGKoS"},
-                {$set: {room: "tiki", resetTime: newResetTime}},
-                function (err, rows) {
-                    if (err) {
-                        // console.log(err);
-                    } else {
-                        statusUpdated = rows;
-                        // console.log( 'timer started', statusUpdated );
-                        //Session.set('lastReset', newResetTime);
-                        if (secondsSinceLastReset < 4800) {
-                            var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
-                            var countdownSeconds = secondsLeftOnCountdown % 60;
-                            var countdownMinutes = parseInt(Math.floor(secondsLeftOnCountdown / 60));
-                            // console.log(countdownMinutes, countdownSeconds);
 
-                            tmpl.countdown("countdown", countdownMinutes, countdownSeconds);
-                        }
+        collection.update(
+            {_id: updateId},
+            {$set: {room: room, resetTime: newResetTime}},
+            function (err, rows) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    statusUpdated = rows;
+                    // console.log( 'timer started', statusUpdated );
+                    //Session.set('lastReset', newResetTime);
+                    var dateObject = new Date();
+                    var currentTime = dateObject.getTime();
+                    var secondsSinceLastReset = parseInt( ( currentTime - newResetTime ) / 1000 );
+                    // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
+                    if( secondsSinceLastReset < 4800 ){
+                        var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
+                        var countdownSeconds = secondsLeftOnCountdown % 60;
+                        var countdownMinutes = parseInt( Math.floor( secondsLeftOnCountdown / 60 ) );
+                        // console.log( countdownMinutes, countdownSeconds );
+                        tmpl.countdown( "countdown", countdownMinutes, countdownSeconds );
                     }
                 }
-            );
-        }else{
-            Notifications.error( 'Cannot remove 1 minute.', 'Less than 1 minute left' );
-        }
+            }
+        );
 
     }
 });
@@ -352,6 +445,12 @@ Template.gamePlay.helpers({
         var game = new Bolt.Game(gameData);
         // console.log('isTiki', game);
         return game.roomId == "3uvLANaxBvEfH4ZLH";
+    },
+    isSeance: function(){
+        var gameData = Bolt.Collections.Games.findOne(this._id);
+        var game = new Bolt.Game(gameData);
+        // console.log('isTiki', game);
+        return game.roomId == "HBBzehj9W2BPjvomA";
     },
     room: function(){
         var gameData = Bolt.Collections.Games.findOne(this._id);

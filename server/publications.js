@@ -99,6 +99,14 @@ Meteor.publish('tikiCountdown', function(){
 });
 
 /**
+ * SEANCE COUNTDOWN: publish all documents, which is a single document
+ */
+Meteor.publish('seanceCountdown', function(){
+    var docs = Bolt.Collections.seanceCountdownStatus.find();
+    return docs;
+});
+
+/**
  * ROOMS: publish all rooms, all data
  */
 Meteor.publish('rooms', function(){

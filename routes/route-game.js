@@ -10,7 +10,8 @@ Router.route('/game/play/:_id', {
         return [
             Meteor.subscribe( 'game', this.params._id ),
             Meteor.subscribe( 'roomById', game.roomId ),
-            Meteor.subscribe( 'tikiCountdown' )
+            Meteor.subscribe( 'tikiCountdown' ),
+            Meteor.subscribe( 'seanceCountdown' ),
         ]
     },
     data: function(){

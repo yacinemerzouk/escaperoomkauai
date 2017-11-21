@@ -2,9 +2,9 @@ Meteor.methods({
     'populateCalendar': function(){
         if( Meteor.isServer ) {
             var startDate = Epoch.dateObjectToDateString(new Date());
-            for (var x = 0; x < 61; x++) {
+            for (var x = 0; x < 70; x++) {
                 var date = Epoch.addDaysToDate(x, startDate);
-                if (date != "2017-12-24" && date != "2017-11-23" && date != "2017-12-25" && date != "2017-12-31" && date != "2018-01-15" && date <= "2018-01-10" && Bolt.Collections.Games.find({date: date}).count() === 0) {
+                if (date != "2017-12-24" && date != "2017-11-23" && date != "2017-12-25" && date != "2017-12-31" && date != "2018-01-15" && date <= "2017-12-31" && Bolt.Collections.Games.find({date: date}).count() === 0) {
 
                     var dayIndex = Epoch.dateStringToDateObject(date).getDay();
 
@@ -115,3 +115,5 @@ Meteor.methods({
 
     }
 });
+
+// Bolt.Collections.seanceCountdownStatus.insert({room:"seance"});

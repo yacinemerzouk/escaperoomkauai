@@ -1,0 +1,32 @@
+<template name="seanceCountdown">
+    <div style="padding: 30px 100px; font-size: 32px; line-height: 48px; color: #FFF;">
+
+        <span id="countdown">0:00</span>
+
+        <br>
+        <span id="message">{{latestMessage}}</span>
+
+    </div>
+    <audio id="music">
+        <source src="/audio/music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="new-message">
+        <source src="/audio/new-message.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <!--<div style="text-align: center; padding-top:10px; position: relative;">-->
+
+        <!--<video width="1000" controls loop autoplay="true">-->
+            <!--<source src="/videos/ritual.mp4" type="video/mp4">-->
+        <!--</video>-->
+
+    <!--</div>-->
+    <!--<div>-->
+        <!--<audio id="siren">-->
+            <!--<source src="/audio/siren.mp3" type="audio/mpeg">-->
+        <!--</audio>-->
+    <!--</div>-->
+
+
+</template>
