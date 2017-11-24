@@ -1,5 +1,6 @@
 <template name="seanceCountdown">
-    <div style="padding: 30px 100px; font-size: 32px; line-height: 48px; color: #FFF;">
+    <link href="https://fonts.googleapis.com/css?family=Quintessential" rel="stylesheet">
+    <div class="seance-screen" style="">
 
         <span id="countdown">0:00</span>
 
@@ -13,6 +14,10 @@
     </audio>
     <audio id="new-message">
         <source src="/audio/new-message.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="laser-audio">
+        <source src="/audio/laser.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     <!--<div style="text-align: center; padding-top:10px; position: relative;">-->

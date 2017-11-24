@@ -60,6 +60,9 @@
                         {{#if room.outro}}
                             <a href="#" hook="send-outro" class="button button-unavailable btn-block text-center" style="margin-top: 5px">Send Outro</a>
                         {{/if}}
+                        {{#if isSeance}}
+                            <a href="#" hook="play-laser-audio">Play Laser Audio</a>
+                        {{/if}}
                     </div>
                 </div>
             </form>

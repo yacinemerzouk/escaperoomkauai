@@ -292,7 +292,7 @@ Template.gamePlay.events({
                 roomName = "seance";
                 countdownCollection.update(
                     {_id: "CjkxgQJ2HkTpXntFa"},
-                    {$set: {room: roomName, resetTime: newResetTime, gameId:game._id}},
+                    {$set: {room: roomName, resetTime: newResetTime, gameId:game._id, playMusic:true}},
                     function (err, rows) {
                         if (err) {
                             console.log(err);
@@ -423,6 +423,31 @@ Template.gamePlay.events({
                     }
                 }
             }
+        );
+
+    },
+    /**
+     * Play laser audio in seance room
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="play-laser-audio"]': function(evt,tmpl){
+
+        // Prevent default event behavior
+        evt.preventDefault();
+
+        Bolt.Collections.seanceCountdownStatus.update(
+
+            {
+                _id: "CjkxgQJ2HkTpXntFa"
+            },
+            {
+                $set: {
+                    playLaserAudio: true
+                }
+
+            }
+
         );
 
     }

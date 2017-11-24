@@ -2,14 +2,14 @@ Template.seanceCountdown.onCreated(function(){
     var self = this;
     self.timer;
     this.countdown = function( elementName, minutes, seconds ){
-        console.log( minutes, seconds );
-        if( minutes == 60 && seconds == 0 ){
-            var music = document.getElementById("music");
-            music.volume = 0.5;
-            music.currentTime = 0;
-            music.play();
-
-        }
+        // console.log( minutes, seconds );
+        // if( minutes == 59 && seconds >= 55 ){
+        //     var music = document.getElementById("music");
+        //     music.volume = 0.5;
+        //     music.currentTime = 0;
+        //     music.play();
+        //
+        // }
         clearTimeout( self.timer );
         elementName = elementName || "countdown";
         if( !minutes && minutes !== 0 ){
@@ -81,6 +81,45 @@ Template.seanceCountdown.onRendered(function(){
             var countdownSeconds = secondsLeftOnCountdown % 60;
             var countdownMinutes = parseInt(Math.floor(secondsLeftOnCountdown / 60));
             self.countdown("countdown", countdownMinutes, countdownSeconds);
+        }
+        if( resetDocReactive[0].playLaserAudio === true ){
+            Bolt.Collections.seanceCountdownStatus.update(
+
+                {
+                    _id: "CjkxgQJ2HkTpXntFa"
+                },
+                {
+                    $set: {
+                        playLaserAudio: false
+                    }
+
+                }
+
+            );
+            var laserAudio = document.getElementById("laser-audio");
+            laserAudio.currentTime = 0;
+            laserAudio.play();
+
+        }
+        if( resetDocReactive[0].playMusic === true ){
+            Bolt.Collections.seanceCountdownStatus.update(
+
+                {
+                    _id: "CjkxgQJ2HkTpXntFa"
+                },
+                {
+                    $set: {
+                        playMusic: false
+                    }
+
+                }
+
+            );
+            // UNCOMMENT ONCE MUSIC IS READY
+            // var music = document.getElementById("music");
+            // music.currentTime = 0;
+            // music.play();
+
         }
     });
 });
