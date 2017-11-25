@@ -21,7 +21,7 @@ Template.giftCards.onCreated(function(){
             deliveryFee = 5.00;
         }
         var subtotal = parseFloat( parseFloat( couponValue ) + parseFloat( deliveryFee ) ).toFixed(2);
-        var taxes = parseFloat( parseFloat( subtotal ) * 0.04166 ).toFixed(2);
+        var taxes = 0 //parseFloat( parseFloat( subtotal ) * 0.04166 ).toFixed(2);
         var total = parseFloat( parseFloat( subtotal ) + parseFloat( taxes ) ).toFixed(2);
 
         var checkoutData = {
