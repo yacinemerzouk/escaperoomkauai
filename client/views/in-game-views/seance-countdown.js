@@ -116,9 +116,11 @@ Template.seanceCountdown.onRendered(function(){
 
             );
             // UNCOMMENT ONCE MUSIC IS READY
-            // var music = document.getElementById("music");
-            // music.currentTime = 0;
-            // music.play();
+            var music = document.getElementById("music");
+            music.volume = 0.5;
+
+            music.currentTime = 0;
+            music.play();
 
         }
     });

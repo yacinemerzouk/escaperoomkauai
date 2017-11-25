@@ -4,7 +4,7 @@ Meteor.methods({
             var startDate = Epoch.dateObjectToDateString(new Date());
             for (var x = 0; x < 70; x++) {
                 var date = Epoch.addDaysToDate(x, startDate);
-                if (date != "2017-12-24" && date != "2017-11-23" && date != "2017-12-25" && date != "2017-12-31" && date != "2018-01-15" && date <= "2017-12-31" && Bolt.Collections.Games.find({date: date}).count() === 0) {
+                if (date != "2017-12-24" && date != "2017-11-23" && date != "2017-12-25" && date != "2017-12-31" && date != "2018-01-15" && date <= "2018-01-10" && Bolt.Collections.Games.find({date: date}).count() === 0) {
 
                     var dayIndex = Epoch.dateStringToDateObject(date).getDay();
 
@@ -33,7 +33,7 @@ Meteor.methods({
                     // 8:45 - ANY LOCATION - ANY ROOM
 
                     var game = new Bolt.Game({
-                        userId: "RpiLtn28nLk9rHarH",
+                        userId: "3ytCjqSaRr4C8FvMo",
                         roomId: "any",
                         date: date,
                         time: "10:45am"
@@ -41,7 +41,7 @@ Meteor.methods({
                     game.save();
 
                     var game = new Bolt.Game({
-                        userId: "RpiLtn28nLk9rHarH",
+                        userId: "3ytCjqSaRr4C8FvMo",
                         roomId: "any",
                         date: date,
                         time: "12:45pm"
@@ -49,7 +49,7 @@ Meteor.methods({
                     game.save();
 
                     var game = new Bolt.Game({
-                        userId: "RpiLtn28nLk9rHarH",
+                        userId: "3ytCjqSaRr4C8FvMo",
                         roomId: "any",
                         date: date,
                         time: "2:45pm"
@@ -59,7 +59,7 @@ Meteor.methods({
                     if (dayIndex == 0 || dayIndex == 1 || dayIndex == 6 ) {
 
                         var game = new Bolt.Game({
-                            userId: "RpiLtn28nLk9rHarH",
+                            userId: "3ytCjqSaRr4C8FvMo",
                             roomId: "any",
                             date: date,
                             time: "4:45pm"
@@ -91,7 +91,7 @@ Meteor.methods({
                     }else {
 
                         var game = new Bolt.Game({
-                            userId: "RpiLtn28nLk9rHarH",
+                            userId: "3ytCjqSaRr4C8FvMo",
                             roomId: "any",
                             date: date,
                             time: "6:45pm"
@@ -101,7 +101,7 @@ Meteor.methods({
                     }
 
                     var game = new Bolt.Game({
-                        userId: "RpiLtn28nLk9rHarH",
+                        userId: "3ytCjqSaRr4C8FvMo",
                         roomId: "any",
                         date: date,
                         time: "8:45pm"
