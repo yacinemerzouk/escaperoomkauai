@@ -325,7 +325,16 @@ Template.room.onCreated(function(){
 Template.room.onRendered(function(){
 
     // Subscribe to coupons
-    Meteor.subscribe( 'coupons' );
+    this.autorun(function(){
+
+        var userSelections = Session.get('userSelections');
+        if( userSelections && userSelections.coupon ){
+
+            Meteor.subscribe( 'couponByCode', userSelections.coupon);
+
+        }
+
+    });
 
     // Grab room info
     var room = this.data.room;

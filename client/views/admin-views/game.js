@@ -450,6 +450,27 @@ Template.gamePlay.events({
 
         );
 
+        var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
+        var game = new Bolt.Game(gameData);
+        // if( game.roomId == "HBBzehj9W2BPjvomA" ){
+            // alert('SEANCE');
+            //console.log(response);
+            if (!game.messages) {
+                game.messages = []
+            }
+            game.messages.push({body:"Quick! While the tutor cannot watch! Direct our red spirit light to the keyhole in the picture!",dateCreated:new Date()});
+            var ok = game.save();
+            if( ok ){
+                $('textarea').val('');
+                Notifications.success('Message sent');
+
+            }else{
+                Notifications.error( 'could not send message' );
+            }
+            // $('[type="submit"]').removeAttr("disabled");
+
+        // }
+
     }
 });
 

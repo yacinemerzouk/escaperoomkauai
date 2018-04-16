@@ -282,6 +282,11 @@ Meteor.publish('couponById', function( _id ){
     return coupons;
 });
 
+Meteor.publish('couponByCode', function( code ){
+    var coupons = Bolt.Collections.Coupons.find({coupon:code});
+    return coupons;
+});
+
 Meteor.publish('games', function(date){
     var args;
     if( date ){

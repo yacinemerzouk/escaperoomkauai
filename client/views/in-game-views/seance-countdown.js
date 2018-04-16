@@ -101,6 +101,7 @@ Template.seanceCountdown.onRendered(function(){
             laserAudio.play();
 
         }
+        console.log( 'PLAY MUSIC?', resetDocReactive[0] );
         if( resetDocReactive[0].playMusic === true ){
             Bolt.Collections.seanceCountdownStatus.update(
 
