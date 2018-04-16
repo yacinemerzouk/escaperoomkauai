@@ -341,6 +341,15 @@ Meteor.publish('game',function( gameId ){
     return games;
 });
 
+Meteor.publish('gameByReservationPublicId',function( publicId ){
+    var games = Bolt.Collections.Games.find(
+        {
+            'reservations.publicId': publicId
+        }
+    );
+    return games;
+});
+
 Meteor.publish('reservationsForGame',function( roomId, date, time ){
     var res = Bolt.Collections.Reservations.find(
         {
