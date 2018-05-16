@@ -4,7 +4,7 @@ Meteor.methods({
             var startDate = Epoch.dateObjectToDateString(new Date());
             for (var x = 0; x < 70; x++) {
                 var date = Epoch.addDaysToDate(x, startDate);
-                if ( date <= "2018-06-17" && Bolt.Collections.Games.find({date: date}).count() === 0) {
+                if ( date <= "2018-07-08" && Bolt.Collections.Games.find({date: date}).count() === 0) {
 
                     var dayIndex = Epoch.dateStringToDateObject(date).getDay();
 
@@ -19,7 +19,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "12:45pm"
+                            time: "12:00pm"
                         });
                         game.save();
 
@@ -27,7 +27,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "2:45pm"
+                            time: "2:00pm"
                         });
                         game.save();
 
@@ -35,7 +35,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "4:45pm"
+                            time: "4:00pm"
                         });
                         game.save();
 
@@ -43,7 +43,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "6:45pm"
+                            time: "6:00pm"
                         });
                         game.save();
 
@@ -62,7 +62,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "10:45am"
+                            time: "10:00am"
                         });
                         game.save();
 
@@ -70,7 +70,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "12:45pm"
+                            time: "12:00pm"
                         });
                         game.save();
 
@@ -78,7 +78,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "2:45pm"
+                            time: "2:00pm"
                         });
                         game.save();
 
@@ -86,7 +86,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "4:45pm"
+                            time: "4:00pm"
                         });
                         game.save();
 
@@ -94,7 +94,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "6:45pm"
+                            time: "6:00pm"
                         });
                         game.save();
 
@@ -102,7 +102,7 @@ Meteor.methods({
                             userId: "9s4urwerA94vLZCMp",
                             roomId: "any",
                             date: date,
-                            time: "8:45pm"
+                            time: "8:00pm"
                         });
                         game.save();
 
