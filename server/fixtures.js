@@ -4,7 +4,7 @@ Meteor.methods({
             var startDate = Epoch.dateObjectToDateString(new Date());
             for (var x = 0; x < 70; x++) {
                 var date = Epoch.addDaysToDate(x, startDate);
-                if ( date <= "2018-07-08" && Bolt.Collections.Games.find({date: date}).count() === 0) {
+                if ( date <= "2018-08-05" && Bolt.Collections.Games.find({date: date}).count() === 0) {
 
                     var dayIndex = Epoch.dateStringToDateObject(date).getDay();
 
@@ -17,7 +17,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "12:00pm"
                         });
@@ -25,7 +25,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "2:00pm"
                         });
@@ -33,7 +33,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "4:00pm"
                         });
@@ -41,7 +41,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "6:00pm"
                         });
@@ -60,7 +60,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "10:00am"
                         });
@@ -68,7 +68,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "12:00pm"
                         });
@@ -76,7 +76,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "2:00pm"
                         });
@@ -84,7 +84,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "4:00pm"
                         });
@@ -92,7 +92,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "6:00pm"
                         });
@@ -100,7 +100,7 @@ Meteor.methods({
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
-                            roomId: "any",
+                            roomId: "3uvLANaxBvEfH4ZLH",
                             date: date,
                             time: "8:00pm"
                         });

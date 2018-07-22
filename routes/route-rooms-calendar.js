@@ -16,7 +16,7 @@ Router.route('/rooms/calendar', {
     ironMeta: true,
     meta: function(){
         var title = 'Availability Calendar - Kauai Escape Room - Escape Games, Puzzle Rooms';
-        var description = "The complete availability calendar for our escape rooms: the missing scientist, the lost Elvis record, Pele's tiki lounge, and our mobile escape room.";
+        var description = "The complete availability calendar for our escape rooms: Curse of the Tiki Lounge, Hunt for the Golden Tiki, and Quest for the Lost Continent";
         var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
         return {
             title: title,

@@ -15,7 +15,7 @@ Router.route('/rooms', {
     },
     meta: function(){
         var title = 'Our Escape Rooms - Kauai Escape Room - Escape Games, Puzzle Rooms';
-        var description = "Our escape rooms: the missing scientist, the lost Elvis record, Pele's tiki lounge, and our mobile escape room.";
+        var description = "Our escape rooms: Curse of the Tiki Lounge, Hunt for the Golden Tiki, and Quest for the Lost Continent";
         var image = 'https://www.escaperoomkauai.com/images/social-banner-logo.png';
         return {
             title: title,
