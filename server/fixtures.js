@@ -4,16 +4,16 @@ Meteor.methods({
             var startDate = Epoch.dateObjectToDateString(new Date());
             for (var x = 0; x < 70; x++) {
                 var date = Epoch.addDaysToDate(x, startDate);
-                if ( date <= "2018-08-05" && Bolt.Collections.Games.find({date: date}).count() === 0) {
+                if ( date <= "2018-09-23" && Bolt.Collections.Games.find({date: date}).count() === 0) {
 
                     var dayIndex = Epoch.dateStringToDateObject(date).getDay();
 
                     // SUNDAY, WEDNESDAY, THURSDAY
-                    // 12:45 - KER1 - ANY ROOM
-                    // 2:45 - KER1 - ANY ROOM
-                    // 4:45 - KER1 - ANY ROOM
-                    // 6:45 - KER1 - ANY ROOM
-                    if( dayIndex === 0 || dayIndex === 3 || dayIndex === 4 ){
+                    // 12:00 - KER1 - ANY ROOM
+                    // 2:00 - KER1 - ANY ROOM
+                    // 4:00 - KER1 - ANY ROOM
+                    // 6:00 - KER1 - ANY ROOM
+                    if( dayIndex === 0){
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
@@ -50,13 +50,12 @@ Meteor.methods({
                     }
 
                     // FRIDAY, SATURDAY
-                    // 10:45 - KER1 - ANY ROOM
-                    // 12:45 - KER1 - ANY ROOM
-                    // 2:45 - KER1 - ANY ROOM
-                    // 4:45 - KER1 - ANY ROOM
-                    // 6:45 - KER1 - ANY ROOM
-                    // 8:45 - KER1 - ANY ROOM
-                    if( dayIndex === 5 || dayIndex === 6 ){
+                    // 10:00 - KER1 - ANY ROOM
+                    // 12:00 - KER1 - ANY ROOM
+                    // 2:00 - KER1 - ANY ROOM
+                    // 6:00 - KER1 - ANY ROOM
+                    // 8:00 - KER1 - ANY ROOM
+                    if( dayIndex === 3 || dayIndex === 4 || dayIndex === 5 || dayIndex === 6 ){
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",
@@ -82,13 +81,13 @@ Meteor.methods({
                         });
                         game.save();
 
-                        var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "3uvLANaxBvEfH4ZLH",
-                            date: date,
-                            time: "4:00pm"
-                        });
-                        game.save();
+                        // var game = new Bolt.Game({
+                        //     userId: "9s4urwerA94vLZCMp",
+                        //     roomId: "3uvLANaxBvEfH4ZLH",
+                        //     date: date,
+                        //     time: "4:00pm"
+                        // });
+                        // game.save();
 
                         var game = new Bolt.Game({
                             userId: "9s4urwerA94vLZCMp",

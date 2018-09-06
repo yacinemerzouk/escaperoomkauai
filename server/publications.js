@@ -59,7 +59,7 @@ Meteor.publish('roomOverviewList', function() {
  */
 Meteor.publish('roomOverview', function( roomId ) {
     if( roomId == 'popular' ){
-        roomId = 'gieyznWfyJMTBWYBT';
+        roomId = '3uvLANaxBvEfH4ZLH';
     }
     var roomOverviewCursor = Bolt.Collections.Rooms.find(
         {

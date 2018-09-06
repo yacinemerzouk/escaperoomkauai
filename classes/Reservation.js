@@ -268,7 +268,7 @@ Bolt.Reservation.prototype.sendConfirmationEmail = function(){
         Meteor.call(
             'sendEmail',                                                        // Method
             reservation.email,                                                  // Customer email
-            '"Kauai Escape Room" ' + Meteor.settings.public.smtp.email,         // Our name & email
+            'Kauai Escape Room <' + Meteor.settings.public.smtp.mailman + '>',         // Our name & email
             'Booking confirmation - RESERVATION #' + reservation.publicId,      // Subject
             Bolt.getConfirmationEmailBody(reservation),                     // Message body
             function (error, result) {                                          // Callback
@@ -300,7 +300,7 @@ Bolt.Reservation.prototype.sendNotificationEmail = function(){
         Meteor.call(
             'sendEmail',                                                            // Method
             Meteor.settings.public.smtp.notifications,                              // To
-            '"Kauai Escape Room" ' + Meteor.settings.public.smtp.mailman,           // From
+            'Kauai Escape Room <' + Meteor.settings.public.smtp.mailman + '>',           // From
             'Booking notification - RESERVATION #' + reservation.publicId,          // Subject
             Bolt.getNotificationEmailBody(reservation),                         // Message body
             function (error, result) {                                              // Callback

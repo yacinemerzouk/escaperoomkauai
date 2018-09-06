@@ -99,14 +99,15 @@ Template.room.onCreated(function(){
                                 // ERROR HANDLER
                                 if (error) {
 
-                                    // METEOR ERROR
-                                    throw new Meteor.Error('|Bolt|holdCard|Error', error.message);
-
                                     // UI ERROR FOR USER
                                     Notifications.error(error.message);
 
                                     // HIDE LOADING GIF
                                     Bolt.hideLoadingAnimation();
+
+                                    // METEOR ERROR
+                                    throw new Meteor.Error('|Bolt|holdCard|Error', error.message);
+
 
                                     // SUCCESSFUL TRANSACTION HANDLER
                                 } else {

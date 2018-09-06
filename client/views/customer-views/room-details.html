@@ -353,13 +353,25 @@
                                             <p>
                                                 Your card will only be charged if you cancel within 72 hours of your scheduled game time.
                                             </p>
-                                            <p>
-                                                All players must pay at check-in by credit card. We do not accept cash.
-                                            </p>
+
                                         </div>
                                     </div>
 
                                 </div>
+                            {{else}}
+
+                                <div class="form-group col-xs-12">
+                                    <div style="font-size: 16px; background: #944e21; color: #FFF; padding: 15px 20px 5px 20px;">
+                                        <p>
+                                            Your credit card will be charged today.
+                                        </p>
+                                        <p>
+                                            You can cancel up to 72 hours before your game for a full refund. Cancellation made withing 72 hours of the game time are not refundable.
+                                        </p>
+                                    </div>
+                                </div>
+
+
                             {{/if}}
                             <!-- CREDIT CARD FOR; IF TOTAL > 0 -->
                             {{#unless isFree}}
