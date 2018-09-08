@@ -264,12 +264,14 @@ Bolt.Reservation.prototype.sendConfirmationEmail = function(){
 
         var reservation = this;
 
+        var subject = 'Booking confirmation - RESERVATION #' + reservation.publicId;
+
         // Call 'sendEmail' method
         Meteor.call(
             'sendEmail',                                                        // Method
             reservation.email,                                                  // Customer email
             'Kauai Escape Room <' + Meteor.settings.public.smtp.mailman + '>',         // Our name & email
-            'Booking confirmation - RESERVATION #' + reservation.publicId,      // Subject
+            Meteor.settings.public.env === 'dev' ? '[TEST] ' + subject : subject,      // Subject
             Bolt.getConfirmationEmailBody(reservation),                     // Message body
             function (error, result) {                                          // Callback
 
@@ -285,6 +287,16 @@ Bolt.Reservation.prototype.sendConfirmationEmail = function(){
 
 }
 
+Bolt.Reservation.prototype.sendCustomerInfoToSquare = function(reservation) {
+
+    console.log(this);
+
+    Meteor.call('saveCustomer', { reservation: this }, function(error, response){
+        console.log('Back from saveCustomer', error, response);
+    });
+
+}
+
 /**
  * Send notification to admin; sent to all admins after each new reservation
  */
@@ -296,12 +308,14 @@ Bolt.Reservation.prototype.sendNotificationEmail = function(){
         // create var from this to prevent scope issues in callback
         var reservation = this;
 
+        var subject = 'Booking notification - RESERVATION #' + reservation.publicId;
+
         // Call sendEMail methods
         Meteor.call(
             'sendEmail',                                                            // Method
             Meteor.settings.public.smtp.notifications,                              // To
             'Kauai Escape Room <' + Meteor.settings.public.smtp.mailman + '>',           // From
-            'Booking notification - RESERVATION #' + reservation.publicId,          // Subject
+            Meteor.settings.public.env === 'dev' ? '[TEST] ' + subject : subject, // Subject
             Bolt.getNotificationEmailBody(reservation),                         // Message body
             function (error, result) {                                              // Callback
 
@@ -387,10 +401,10 @@ Bolt.Reservation.prototype.isValid = function(){
     var emailOK = this.email ? true : false;                                            // Email is required; email format checked by browser input attribute type=email
     var phoneOK = this.phone ? true : false;                                            // Phone is required
     var nbPlayersOK = this.nbPlayers && parseInt( this.nbPlayers ) > 0 ;                // Number of players is required
-    var ccOK = this.total == 0 || this.cc;                                              // Credit card number is required if order total not 0
-    var ccExpMonthOK = this.total == 0 || this.ccExpMonth;                              // Credit card expiration is required if order total not 0
-    var ccExpYearOK = this.total == 0 || this.ccExpYear;                                // Credit card expiration is required if order total not 0
-    var cvvOK = this.total == 0 || this.cvv;                                            // Credit card verification code is required if order total not 0
+    var ccOK = true; // this.total == 0 || this.cc;                                              // Credit card number is required if order total not 0
+    var ccExpMonthOK = true; // this.total == 0 || this.ccExpMonth;                              // Credit card expiration is required if order total not 0
+    var ccExpYearOK = true; // this.total == 0 || this.ccExpYear;                                // Credit card expiration is required if order total not 0
+    var cvvOK = true; // this.total == 0 || this.cvv;                                            // Credit card verification code is required if order total not 0
 
     // For all the possible errors
     // If field value is not OK

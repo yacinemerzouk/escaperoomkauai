@@ -51,6 +51,26 @@ Template.adminGamesCalendar.onDestroyed(function(){});
  * =============================================================
  */
 Template.adminGamesCalendar.events({
+    'click [hook="square-test"]': (event, templateInstance) => {
+
+        // Prevent event default behavior
+        event.preventDefault();
+
+        Meteor.call('squareTest', function(error, response){
+
+            console.log('Back from squareTest', error, response);
+
+        });
+
+        Meteor.call('chargeTest', function(error, response){
+
+            console.log('Back from chargeTest', error, response);
+
+        });
+
+
+    },
+
     'click [hook="next-games"]': function (evt, tmpl) {
         evt.preventDefault();
         // console.log('next games');

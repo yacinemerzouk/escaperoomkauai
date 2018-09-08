@@ -39,7 +39,7 @@ Meteor.methods({
                     if (game.won == true) {
                         sr.nbGamesWon++
                     }
-                    sr.successRate = parseInt(Math.floor(( sr.nbGamesWon / sr.nbGamesPlayed ) * 100));
+                    sr.successRate = parseInt(Math.floor(( sr.nbGamesWon / sr.nbGamesPlayed ) * 90));
                     successRates[game.roomId] = sr;
                 }
             }

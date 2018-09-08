@@ -43,11 +43,8 @@ Meteor.methods({
                 html: text,
             };
 
-            console.log('Sending sgMail', msg,  Meteor.settings.private.SENDGRID_API_KEY);
-
             return sgMail.send(msg).then(function() {
 
-                console.log('It worked')
                 return true;
 
             }).catch(function(error) {

@@ -8,7 +8,7 @@ Router.route('/confirmation/:_id', {
         return [
             Meteor.subscribe('reservation', this.params._id),
             Meteor.subscribe('rooms'),
-            Meteor.subscribe('gameByReservationPublicId')
+            Meteor.subscribe('gameByReservationPublicId', this.params._id)
         ]
     },
     data: function(){

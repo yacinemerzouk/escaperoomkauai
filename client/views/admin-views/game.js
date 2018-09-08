@@ -63,7 +63,7 @@ Template.gamePlay.onCreated(function(){
         endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
         updateTimer();
     };
-    
+
 });
 
 /**
@@ -120,17 +120,27 @@ Template.gamePlay.onDestroyed(function(){});
  */
 Template.gamePlay.events({
     'submit form': function(evt,tmpl){
+
         evt.preventDefault();
+
+        console.log('sending message - 1/x');
         Notifications.info('Sending message...');
-        $('[type="submit"]').attr("disabled","disabled");
+
+        // $('[type="submit"]').attr("disabled","disabled");
         var formData = Bureaucrat.getFormData($(evt.currentTarget));
         //console.log('form data', formData, $('[name="device"]:checked').val() );
+        console.log('sending message - 3/x');
 
         var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
         var game = new Bolt.Game(gameData);
+
+        console.log('sending message - 3/x');
+
         if( game.roomId == "HBBzehj9W2BPjvomA" ){
             // alert('SEANCE');
             //console.log(response);
+            console.log('sending message - seance???/x');
+
             if (!game.messages) {
                 game.messages = []
             }
@@ -147,12 +157,19 @@ Template.gamePlay.events({
 
         }else {
 
+            console.log('sending message - 4/x');
+
             // Configure the Twilio client
             Meteor.call('sendSMS', formData.message, $('[name="device"]:checked').val(), function (error, response) {
                 if (error) {
                     //console.log( error );
+                    console.log('sending message - 6/x');
+
                     Notifications.error(error.message);
+
                 } else {
+
+                    console.log('sending message - 7/x');
                     //console.log(response);
                     var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
                     var game = new Bolt.Game(gameData);
@@ -160,14 +177,24 @@ Template.gamePlay.events({
                         game.messages = []
                     }
                     game.messages.push(response);
+                    console.log('sending message - 8/x');
+
                     game.save();
+                    console.log('sending message - 9/x');
+
                     $('textarea').val('');
+
                     Notifications.success('Message sent');
+
+                    console.log('sending message - 10/x');
 
                 }
                 $('[type="submit"]').removeAttr("disabled");
 
             });
+
+            console.log('sending message - 5/x');
+
 
         }
 

@@ -223,7 +223,7 @@ Bolt.Game.prototype.sendFollowUpEmail = function(){
             Meteor.call(
                 'sendEmail',
                 emailArray.join(),                                          // To
-                '"Kauai Escape Room" info@escaperoomkauai.com',             // From
+                'Kauai Escape Room <info@escaperoomkauai.com>',             // From
                 'How did you like your Kauai Escape Room experience?',      // Subject
                 Bolt.getFollowUpEmailBody(),                                // Message body
                 function (err, res) {
@@ -342,7 +342,7 @@ Bolt.Game.prototype.addReservation = function( reservation ){
         this.reservations = [];
     }
     if(!reservation.publicId){
-        reservation.publicId = Math.floor(10000000 + Math.random() * 90000000);
+        reservation.publicId = reservation.publicId || Math.floor(10000000 + Math.random() * 90000000);
     }
     if(!reservation.paid){
         reservation.paid = 0;

@@ -40,19 +40,19 @@ Template.room.onCreated(function(){
     }
 
     // FORM HANDLER
-    this.submitOrder = function(){
+    this.submitOrder = function() {
 
         // SHOW LOADING GIF
         Bolt.showLoadingAnimation();
 
         // GET FORM DATA
-        var formData = Bureaucrat.getFormData( $( '[hook="reservation-form"]' ) );
+        var formData = Bureaucrat.getFormData($('[hook="reservation-form"]'));
 
         // GET USER SELECTIONS
-        var userSelections = Session.get( 'userSelections' );
+        var userSelections = Session.get('userSelections');
 
         // FORMAT COUPON
-        if( formData.coupon ) {
+        if (formData.coupon) {
             formData.coupon = formData.coupon.toUpperCase();
         }
 
@@ -60,306 +60,96 @@ Template.room.onCreated(function(){
         var room = this.data.room;
 
         // COMBINE ALL AVAILABLE DATA BEFORE CREATING RESERVATION OBJECT
-        var reservationData = _.extend( userSelections, formData );
-        var reservation = new Bolt.Reservation(_.extend( reservationData, {roomId: room._id, room:room } ));
+        var reservationData = _.extend(userSelections, formData);
+        var reservation = new Bolt.Reservation(_.extend(reservationData, {
+            roomId: room._id,
+            room: room
+        }));
 
         // IF RESERVATION DATA IS OK
-        if( reservation.isValid() ) {
+        if (reservation.isValid()) {
 
             // GRAB GAME DATA
             var game = new Bolt.Game(Session.get('game'));
 
-            // SCENARIO 1: FREE GAME OR PAY-AT-CHECKIN GAME
-            if( reservation.total == 0 || reservation.pay == 'check-in' ) {
+            // ADD RESERVATION TO GAME
+            var resId = game.addReservation(reservation);
 
-                // START STRIPE TRANSACTION: GET TOKEN
-                Stripe.card.createToken({
-                    number: reservation.cc,
-                    exp_month: reservation.ccExpMonth,
-                    exp_year: reservation.ccExpYear,
-                    cvc: reservation.cvv,
+            // SAVE GAME
+            var orderProcessed = game.save();
 
-                    // TOKEN CALLBACK
-                }, function (status, response) {
+            // IF GAME WAS SAVED SUCCESSFULLY
+            if (orderProcessed) {
 
-                    // IF STATUS IS OK
-                    if( status == 200 ) {
-
-                        // GET TOKEN
-                        var stripeToken = response.id;
-
-                        // CHARGE CARD
-                        Meteor.call(
-                            'holdCard',                       // METEOR METHOD
-                            stripeToken,                        // TOKEN
-                            parseInt(reservation.total * 100),  // AMOUNT IN CENTS
-                            reservation.email,                  // BUYER EMAIL
-                            function (error, response) {        // CALLBACK
-
-                                // ERROR HANDLER
-                                if (error) {
-
-                                    // UI ERROR FOR USER
-                                    Notifications.error(error.message);
-
-                                    // HIDE LOADING GIF
-                                    Bolt.hideLoadingAnimation();
-
-                                    // METEOR ERROR
-                                    throw new Meteor.Error('|Bolt|holdCard|Error', error.message);
-
-
-                                    // SUCCESSFUL TRANSACTION HANDLER
-                                } else {
-
-                                    // ADD RESERVATION TO GAME
-                                    var resId = game.addReservation(reservation);
-
-                                    // SAVE GAME
-                                    var orderProcessed = game.save();
-
-                                    // IF GAME WAS SAVED SUCCESSFULLY
-                                    if (orderProcessed) {
-
-                                        // FB EVENT TRACKING
-                                        var fbe = {
-                                            value: reservation.total,
-                                            currency: 'USD'
-                                        }
-                                        // console.log( 'FB EVENT DATA', fbe );
-                                        fbq(
-                                            'track',
-                                            'Purchase',
-                                            {
-                                                value: fbe.value,
-                                                currency: 'USD'
-                                            }
-                                        );
-
-                                        // GA EVENT TRACKING
-                                        var gae = {
-                                            event: 'event',
-                                            category: 'Transaction',
-                                            action: "Reservation " + "(pay: "+reservation.pay+")",
-                                            label: "Reservation - " + reservation.room.title,
-                                            total: reservation.total,
-                                            couponValue: reservation.subtotal,
-                                            transactionId: resId,
-                                            deliveryFee: "0",
-                                            taxes: reservation.taxes,
-                                            itemName: room.title,
-                                            sku: room.slug,
-                                            price: reservation.subtotal
-
-                                        };
-                                        // console.log( 'GA EVENT DATA', gae );
-                                        ga( 'send', gae.event, gae.category, gae.action, gae.label, parseInt( reservation.subtotal ) );
-
-                                        ga('ecommerce:addTransaction', {
-                                            'id': gae.transactionId,                     // Transaction ID. Required.
-                                            'revenue': gae.total,               // Grand Total.
-                                            'shipping': gae.deliveryFee,                  // Shipping.
-                                            'tax': gae.taxes                    // Tax.
-                                        });
-                                        ga('ecommerce:addItem', {
-                                            'id': gae.transactionId,                     // Transaction ID. Required.
-                                            'name': gae.itemName,    // Product name. Required.
-                                            'sku': gae.sku,                 // SKU/code.
-                                            'category': 'Reservation',         // Category or variation.
-                                            'price': gae.price,                 // Unit price.
-                                            'quantity': '1'                   // Quantity.
-                                        });
-                                        ga('ecommerce:send');
-
-                                        // GA EVENT TRACKING
-                                        // analytics.track(
-                                        //     "Reservation",
-                                        //     {
-                                        //         category: "Transaction",
-                                        //         revenue: reservation.total,
-                                        //         label: "Reservation - " + reservation.room.title
-                                        //     }
-                                        // );
-
-                                        // SEND EMAILS
-                                        reservation.sendConfirmationEmail();
-                                        reservation.sendNotificationEmail();
-
-                                        // SEND SMS
-                                        reservation.sendNotificationSMS( game, reservation.total + ' due at check-in' );
-
-                                        // HIDE LOADING GIF
-                                        Bolt.hideLoadingAnimation();
-
-                                        // GO TO CONFIRMATION
-                                        Router.go('confirmation', {_id: resId});
-
-                                    }
-
-                                }
-
-                            }
-                        );
-
+                // FB EVENT TRACKING
+                var fbe = {
+                    value: reservation.total,
+                    currency: 'USD'
+                }
+                // console.log( 'FB EVENT DATA', fbe );
+                fbq(
+                    'track',
+                    'Purchase',
+                    {
+                        value: fbe.value,
+                        currency: 'USD'
                     }
+                );
 
+                // GA EVENT TRACKING
+                var gae = {
+                    event: 'event',
+                    category: 'Transaction',
+                    action: "Reservation " + "(pay: " + reservation.pay + ")",
+                    label: "Reservation - " + reservation.room.title,
+                    total: reservation.total,
+                    couponValue: reservation.subtotal,
+                    transactionId: resId,
+                    deliveryFee: "0",
+                    taxes: reservation.taxes,
+                    itemName: room.title,
+                    sku: room.slug,
+                    price: reservation.subtotal
+
+                };
+
+                ga('send', gae.event, gae.category, gae.action, gae.label, parseInt(reservation.subtotal));
+
+                ga('ecommerce:addTransaction', {
+                    'id': gae.transactionId,                     // Transaction ID. Required.
+                    'revenue': gae.total,               // Grand Total.
+                    'shipping': gae.deliveryFee,                  // Shipping.
+                    'tax': gae.taxes                    // Tax.
                 });
-
-
-
-            // SCENARIO 2: PAYMENT REQUIRED
-            }else {
-
-                // START STRIPE TRANSACTION: GET TOKEN
-                Stripe.card.createToken({
-                    number: reservation.cc,
-                    exp_month: reservation.ccExpMonth,
-                    exp_year: reservation.ccExpYear,
-                    cvc: reservation.cvv,
-
-                // TOKEN CALLBACK
-                }, function (status, response) {
-
-                    // IF STATUS IS OK
-                    if( status == 200 ) {
-
-                        // GET TOKEN
-                        var stripeToken = response.id;
-
-                        // CHARGE CARD
-                        Meteor.call(
-                            'chargeCard',                       // METEOR METHOD
-                            stripeToken,                        // TOKEN
-                            parseInt(reservation.total * 100),  // AMOUNT IN CENTS
-                            reservation.email,                  // BUYER EMAIL
-                            function (error, response) {        // CALLBACK
-
-                                // ERROR HANDLER
-                                if (error) {
-
-                                    // METEOR ERROR
-                                    throw new Meteor.Error('|Bolt|chargeCard|Error', error.message);
-
-                                    // UI ERROR FOR USER
-                                    Notifications.error(error.message);
-
-                                    // HIDE LOADING GIF
-                                    Bolt.hideLoadingAnimation();
-
-                                // SUCCESSFUL TRANSACTION HANDLER
-                                } else {
-
-                                    // ADD RESERVATION TO GAME
-                                    var resId = game.addReservation(reservation);
-
-                                    // ADD TRANSACTION GAME/RES DATA
-                                    game.addTransaction({
-                                        reservationPublicId: resId,
-                                        amount: reservation.total,
-                                        ccTransaction: response
-                                    });
-
-                                    // SAVE GAME
-                                    var orderProcessed = game.save();
-
-                                    // IF GAME WAS SAVED OK
-                                    if (orderProcessed) {
-
-                                        // FB EVENT TRACKING
-                                        var fbe = {
-                                            value: reservation.total,
-                                            currency: 'USD'
-                                        }
-                                        // console.log( 'FB EVENT DATA', fbe );
-                                        fbq(
-                                            'track',
-                                            'Purchase',
-                                            {
-                                                value: fbe.value,
-                                                currency: 'USD'
-                                            }
-                                        );
-
-                                        // GA EVENT TRACKING
-                                        var gae = {
-                                            event: 'event',
-                                            category: 'Transaction',
-                                            action: "Reservation " + "(pay: "+reservation.pay+")",
-                                            label: "Reservation - " + reservation.room.title,
-                                            total: reservation.total,
-                                            couponValue: reservation.subtotal,
-                                            transactionId: resId,
-                                            deliveryFee: "0",
-                                            taxes: reservation.taxes,
-                                            itemName: room.title,
-                                            sku: room.slug,
-                                            price: reservation.subtotal
-
-                                        };
-                                        // console.log( 'GA EVENT DATA', gae );
-                                        ga( 'send', gae.event, gae.category, gae.action, gae.label, parseInt( reservation.subtotal ) );
-
-                                        ga('ecommerce:addTransaction', {
-                                            'id': gae.transactionId,                     // Transaction ID. Required.
-                                            'revenue': gae.total,               // Grand Total.
-                                            'shipping': gae.deliveryFee,                  // Shipping.
-                                            'tax': gae.taxes                    // Tax.
-                                        });
-                                        ga('ecommerce:addItem', {
-                                            'id': gae.transactionId,                     // Transaction ID. Required.
-                                            'name': gae.itemName,    // Product name. Required.
-                                            'sku': gae.sku,                 // SKU/code.
-                                            'category': 'Reservation',         // Category or variation.
-                                            'price': gae.price,                 // Unit price.
-                                            'quantity': '1'                   // Quantity.
-                                        });
-                                        ga('ecommerce:send');
-
-                                        // GA EVENT TRACKING
-                                        // analytics.track(
-                                        //     "Reservation",
-                                        //     {
-                                        //         category: "Transaction",
-                                        //         revenue: reservation.total,
-                                        //         label: "Reservation - " + reservation.room.title
-                                        //     }
-                                        // );
-
-                                        // SEND EMAILS
-                                        reservation.sendConfirmationEmail();
-                                        reservation.sendNotificationEmail();
-
-                                        //SEND SMS
-                                        reservation.sendNotificationSMS( game, 'paid online' );
-
-                                        // HIDE LOADING GIF
-                                        Bolt.hideLoadingAnimation();
-
-                                        // GO TO CONFIRMATION PAGE
-                                        Router.go('confirmation', {_id: resId});
-
-                                    } else {
-
-                                        Bolt.hideLoadingAnimation();
-                                        Notifications.error('Payment succeeded but there was an issue saving the reservation to our system. Please call us.')
-
-                                    }
-                                }
-                            }
-                        );
-
-                    }else{
-
-                        Notification.error('Payment processing error');
-                        // console.log( 'Stripe status not 200', status, response );
-                        Bolt.hideLoadingAnimation();
-                    }
-
+                ga('ecommerce:addItem', {
+                    'id': gae.transactionId,                     // Transaction ID. Required.
+                    'name': gae.itemName,    // Product name. Required.
+                    'sku': gae.sku,                 // SKU/code.
+                    'category': 'Reservation',         // Category or variation.
+                    'price': gae.price,                 // Unit price.
+                    'quantity': '1'                   // Quantity.
                 });
+                ga('ecommerce:send');
+
+                // SEND EMAILS
+                reservation.sendConfirmationEmail();
+                reservation.sendNotificationEmail();
+
+                // SEND SMS
+                reservation.sendNotificationSMS(game, reservation.total + ' due at check-in');
+
+                // SEND CUSTOMER INFO TO SQUARE
+                reservation.sendCustomerInfoToSquare();
+
+                // HIDE LOADING GIF
+                Bolt.hideLoadingAnimation();
+
+                // GO TO CONFIRMATION
+                Router.go('confirmation', { _id: resId });
 
             }
 
-        }else{
+        } else {
             // // console.log( 'Reservation not valid' );
             Bolt.hideLoadingAnimation();
         }
@@ -374,6 +164,210 @@ Template.room.onCreated(function(){
  * =============================================================
  */
 Template.room.onRendered(function(){
+    var self = this;
+    // var createPaymentForm = function() {
+    //     $.getScript("https://js.squareup.com/v2/paymentform").done(function () {
+    //         paymentForm = new SqPaymentForm({
+    //             // Setup your SqPaymentForm object, see https://docs.connect.squareup.com/payments/sqpaymentform/sqpaymentform-setup
+    //             // for more details
+    //         });
+    //         // We're manually building the form here, since the page is already loaded and won't trigger the event SqPaymentForm
+    //         // is expecting
+    //         paymentForm.build();
+    //     });
+    // }
+
+    // Set the application ID
+    var applicationId = Meteor.settings.public.square.applicationId;
+
+// Set the location ID
+    var locationId = Meteor.settings.public.square.locationId;
+
+    /*
+     * function: requestCardNonce
+     *
+     * requestCardNonce is triggered when the "Pay with credit card" button is
+     * clicked
+     *
+     * Modifying this function is not required, but can be customized if you
+     * wish to take additional action when the form button is clicked.
+     */
+    function requestCardNonce(event) {
+
+        // Don't submit the form until SqPaymentForm returns with a nonce
+        event.preventDefault();
+
+        // Request a nonce from the SqPaymentForm object
+        self.paymentForm.requestCardNonce();
+    }
+
+// Create and initialize a payment form object
+    this.paymentForm = new SqPaymentForm({
+
+        // Initialize the payment form elements
+        applicationId: applicationId,
+        locationId: locationId,
+        inputClass: 'sq-input',
+
+        // Customize the CSS for SqPaymentForm iframe elements
+        inputStyles: [{
+            fontSize: '.9em'
+        }],
+
+        // Initialize Apple Pay placeholder ID
+        applePay: {
+            elementId: 'sq-apple-pay'
+        },
+
+        // Initialize Masterpass placeholder ID
+        masterpass: {
+            elementId: 'sq-masterpass'
+        },
+
+        // Initialize the credit card placeholders
+        cardNumber: {
+            elementId: 'sq-card-number',
+            placeholder: '•••• •••• •••• ••••'
+        },
+        cvv: {
+            elementId: 'sq-cvv',
+            placeholder: 'CVV'
+        },
+        expirationDate: {
+            elementId: 'sq-expiration-date',
+            placeholder: 'MM/YY'
+        },
+        postalCode: {
+            elementId: 'sq-postal-code'
+        },
+
+        // SqPaymentForm callback functions
+        callbacks: {
+
+            /*
+             * callback function: methodsSupported
+             * Triggered when: the page is loaded.
+             */
+            methodsSupported: function (methods) {
+
+                var applePayBtn = document.getElementById('sq-apple-pay');
+                var applePayLabel = document.getElementById('sq-apple-pay-label');
+                var masterpassBtn = document.getElementById('sq-masterpass');
+                var masterpassLabel = document.getElementById('sq-masterpass-label');
+
+                // Only show the button if Apple Pay for Web is enabled
+                // Otherwise, display the wallet not enabled message.
+                if (methods.applePay === true) {
+                    applePayBtn.style.display = 'inline-block';
+                    applePayLabel.style.display = 'none' ;
+                }
+                // Only show the button if Masterpass is enabled
+                // Otherwise, display the wallet not enabled message.
+                if (methods.masterpass === true) {
+                    masterpassBtn.style.display = 'inline-block';
+                    masterpassLabel.style.display = 'none';
+                }
+            },
+
+            /*
+             * callback function: createPaymentRequest
+             * Triggered when: a digital wallet payment button is clicked.
+             */
+            createPaymentRequest: function () {
+
+                var paymentRequestJson ;
+                /* ADD CODE TO SET/CREATE paymentRequestJson */
+                return paymentRequestJson ;
+            },
+
+            /*
+             * callback function: validateShippingContact
+             * Triggered when: a shipping address is selected/changed in a digital
+             *                 wallet UI that supports address selection.
+             */
+            validateShippingContact: function (contact) {
+
+                var validationErrorObj ;
+                /* ADD CODE TO SET validationErrorObj IF ERRORS ARE FOUND */
+                return validationErrorObj ;
+            },
+
+            /*
+             * callback function: cardNonceResponseReceived
+             * Triggered when: SqPaymentForm completes a card nonce request
+             */
+            cardNonceResponseReceived: function(errors, nonce, cardData, billingContact, shippingContact) {
+                if (errors) {
+                    // Log errors from nonce generation to the Javascript console
+                    console.log("Encountered errors:");
+                    errors.forEach(function(error) {
+                        console.log('  ' + error.message);
+                    });
+
+                    return;
+                }
+
+                console.log('Nonce received', nonce); /* FOR TESTING ONLY */
+
+                // Assign the nonce value to the hidden form field
+                // document.getElementById('card-nonce').value = nonce;
+                $('[hook="nonce"]').val(nonce);
+
+                // SUBMIT ORDER
+                self.submitOrder();
+
+                // POST the nonce form to the payment processing page
+                // document.getElementById('nonce-form').submit();
+
+            },
+
+            /*
+             * callback function: unsupportedBrowserDetected
+             * Triggered when: the page loads and an unsupported browser is detected
+             */
+            unsupportedBrowserDetected: function() {
+                /* PROVIDE FEEDBACK TO SITE VISITORS */
+            },
+
+            /*
+             * callback function: inputEventReceived
+             * Triggered when: visitors interact with SqPaymentForm iframe elements.
+             */
+            inputEventReceived: function(inputEvent) {
+                switch (inputEvent.eventType) {
+                    case 'focusClassAdded':
+                        /* HANDLE AS DESIRED */
+                        break;
+                    case 'focusClassRemoved':
+                        /* HANDLE AS DESIRED */
+                        break;
+                    case 'errorClassAdded':
+                        /* HANDLE AS DESIRED */
+                        break;
+                    case 'errorClassRemoved':
+                        /* HANDLE AS DESIRED */
+                        break;
+                    case 'cardBrandChanged':
+                        /* HANDLE AS DESIRED */
+                        break;
+                    case 'postalCodeChanged':
+                        /* HANDLE AS DESIRED */
+                        break;
+                }
+            },
+
+            /*
+             * callback function: paymentFormLoaded
+             * Triggered when: SqPaymentForm is fully loaded
+             */
+            paymentFormLoaded: function() {
+                /* HANDLE AS DESIRED */
+            }
+        }
+    });
+
+    this.paymentForm.build();
+
 
     // Subscribe to coupons
     this.autorun(function(){
@@ -474,42 +468,6 @@ Template.room.onRendered(function(){
         });
         Session.set( 'game', game );
 
-
-        // Grab games for newly selected date
-        // // console.log('AUTORUN: Fetching game data');
-        // var tstamp1 = new Date().getTime();
-        // Session.set('calendarDataReady', false);
-        // Meteor.call('fetchGames', date, room._id, function(error,response){
-        //     var tstamp2 = new Date().getTime();
-        //     // console.log('AUTORUN: Game data ready in ' + ( tstamp2 - tstamp1 ) + 'ms');
-        //     if( error ){
-        //         // console.log( 'error fetching games' );
-        //         Session.set('calendarDataReady', true);
-        //     }else{
-        //         Session.set('games',response);
-        //         Session.set('calendarDataReady', true);
-        //     }
-        // });
-        // var tstamp1 = new Date().getTime();
-        // Meteor.subscribe(
-        //     'games',
-        //     game.date,
-        //     {
-        //         onReady: function () {
-        //             var tstamp2 = new Date().getTime();
-        //             // console.log('AUTORUN: Game data ready in ' + ( tstamp2 - tstamp1 ) + 'ms');
-        //
-        //             Session.set('calendarDataReady', true);
-        //         },
-        //         onStop: function () {
-        //             // console.log('error in games subscription');
-        //         }
-        //     }
-        // );
-
-
-
-
     });
 });
 
@@ -519,7 +477,9 @@ Template.room.onRendered(function(){
  * TEMPLATE DESTROYED
  * =============================================================
  */
-Template.room.onDestroyed(function(){});
+Template.room.onDestroyed(function(){
+
+});
 
 /**
  * =============================================================
@@ -527,6 +487,14 @@ Template.room.onDestroyed(function(){});
  * =============================================================
  */
 Template.room.events({
+    'click button#sq-creditcard': function(event, templateInstance) {
+
+        event.preventDefault();
+        // templateInstance.submitOrder();
+        templateInstance.paymentForm.requestCardNonce();
+        // alert('Request nonce');
+
+    },
     'click [hook="set-time"]': function(evt,tmpl){
         evt.preventDefault();
         var userSelections = Session.get('userSelections');
@@ -536,6 +504,7 @@ Template.room.events({
             userSelections.time = $(evt.currentTarget).attr('hook-data');
             Session.set('userSelections',userSelections);
             // // console.log(userSelections.time);
+
         }
 
     },
@@ -574,13 +543,13 @@ Template.room.events({
     'submit [hook="reservation-form"]': function(evt,tmpl){
 
         evt.preventDefault();
-        tmpl.submitOrder();
+        // tmpl.submitOrder();
 
     },
     'click [hook="checkout"]': function(evt,tmpl){
 
         evt.preventDefault();
-        tmpl.submitOrder();
+        // tmpl.submitOrder();
 
     }
 });
@@ -592,6 +561,12 @@ Template.room.events({
  * =============================================================
  */
 Template.room.helpers({
+    // tempReservationPublicId(){
+    //
+    //     return Math.floor(10000000 + Math.random() * 90000000);
+    //
+    // },
+
     userSelections: function(){
         return Session.get( 'userSelections' );
     },
