@@ -301,13 +301,13 @@ Template.room.onRendered(function(){
                     // Log errors from nonce generation to the Javascript console
                     console.log("Encountered errors:");
                     errors.forEach(function(error) {
-                        console.log('  ' + error.message);
+                        Notifications.error(error.message);
                     });
 
                     return;
                 }
 
-                console.log('Nonce received', nonce); /* FOR TESTING ONLY */
+                // console.log('Nonce received', nonce); /* FOR TESTING ONLY */
 
                 // Assign the nonce value to the hidden form field
                 // document.getElementById('card-nonce').value = nonce;

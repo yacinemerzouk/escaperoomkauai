@@ -344,9 +344,10 @@ Meteor.publish('game',function( gameId ){
 Meteor.publish('gameByReservationPublicId',function( publicId ){
     var games = Bolt.Collections.Games.find(
         {
-            'reservations.publicId': publicId
+            'reservations.publicId': parseInt(publicId)
         }
     );
+    // console.log(games.count());
     return games;
 });
 

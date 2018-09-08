@@ -4,14 +4,14 @@ Meteor.methods({
 
     saveCustomer({ reservation }) {
 
-        console.log('IN saveCustomer. Here is the data:');
-        console.log(reservation.firstName);
-        console.log(reservation.lastName);
-        console.log(reservation.email);
-        console.log(reservation.phone);
-        console.log(reservation.publicId.toString());
-        console.log(reservation.date+'@'+reservation.time);
-        console.log(reservation.nonce);
+        // console.log'IN saveCustomer. Here is the data:');
+        // console.logreservation.firstName);
+        // console.logreservation.lastName);
+        // console.logreservation.email);
+        // console.logreservation.phone);
+        // console.logreservation.publicId.toString());
+        // console.logreservation.date+'@'+reservation.time);
+        // console.logreservation.nonce);
         var defaultClient = SquareConnect.ApiClient.instance;
 
         // Configure OAuth2 access token for authorization: oauth2
@@ -28,14 +28,14 @@ Meteor.methods({
             reference_id: reservation.publicId.toString(),
             note: reservation.date+'@'+reservation.time,
         }).then(function(createCustomerResponse) {
-            console.log('API called successfully. Returned data: ');
-            console.log(createCustomerResponse.id);
-            console.log(createCustomerResponse.customer.id);
-            console.log(reservation.nonce);
+            // console.log'API called successfully. Returned data: ');
+            // console.logcreateCustomerResponse.id);
+            // console.logcreateCustomerResponse.customer.id);
+            // console.logreservation.nonce);
             apiInstance.createCustomerCard(createCustomerResponse.customer.id, {
                 card_nonce: reservation.nonce,
             }).then(function(data) {
-                console.log('API called successfully. Returned data: ' + data);
+                // console.log'API called successfully. Returned data: ' + data);
             }, function(error) {
                 console.error(error);
             });
@@ -47,7 +47,7 @@ Meteor.methods({
         // return customer;
 
         // var customer = apiInstance.createCustomer(body).then(function(data) {
-        //     console.log('API called successfully. Returned data: ' + data);
+        //     // console.log'API called successfully. Returned data: ' + data);
         // }, function(error) {
         //     console.error(error);
         // });
@@ -63,7 +63,7 @@ Meteor.methods({
         var api = new SquareConnect.LocationsApi();
 
         // api.listLocations().then(function (data) {
-        //     console.log('API called successfully. Returned data: ' + data);
+        //     // console.log'API called successfully. Returned data: ' + data);
         //     return data;
         // }, function (error) {
         //     return error;

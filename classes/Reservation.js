@@ -289,10 +289,10 @@ Bolt.Reservation.prototype.sendConfirmationEmail = function(){
 
 Bolt.Reservation.prototype.sendCustomerInfoToSquare = function(reservation) {
 
-    console.log(this);
+    // console.log(this);
 
     Meteor.call('saveCustomer', { reservation: this }, function(error, response){
-        console.log('Back from saveCustomer', error, response);
+        // console.log('Back from saveCustomer', error, response);
     });
 
 }
