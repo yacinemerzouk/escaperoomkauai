@@ -1,18 +1,27 @@
 <template name="adminGamesCalendar">
 
-    <!-- TITLE -->
-    <h1>Games
-        <small><a href="#" hook="load-past-games">Load past games</a></small>
-        <!--<small><a href="#" hook="square-test">Test Square</a></small>-->
-    </h1>
+    <div class="hero" style="background-image: url({{aboutCover}});">
+        <div class="overlay">
+            <div class="content">
+                <h1>Games</h1>
+
+            </div>
+        </div>
+    </div>
 
     {{#if currentUser}}
 
-        <!-- CALENDAR DATE NAV -->
-        <div class="admin-games-calendar-nav">
-            <a href="#" hook="prev-games" class="prev-games"><i class="fa fa-caret-left" aria-hidden="true"></i> Prev</a>
-            <input type="text" hook="jump-to-date-datepicker" class="jump-to-date-datepicker" value="{{firstDay}}">
-            <a href="#" hook="next-games" class="next-games">Next <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+        <div style="padding: 20px 15px 5px;">
+            <!-- CALENDAR DATE NAV -->
+            <div class="admin-games-calendar-nav">
+                <a href="#" hook="prev-games" class="prev-games"><i class="fa fa-caret-left" aria-hidden="true"></i> Prev</a>
+                <input type="text" hook="jump-to-date-datepicker" class="jump-to-date-datepicker" value="{{firstDay}}">
+                <a href="#" hook="next-games" class="next-games">Next <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+            </div>
+
+            <div>
+                <small><a href="#" hook="load-past-games">Load past games</a></small>
+            </div>
         </div>
 
         <!-- CALENDAR -->
@@ -27,6 +36,8 @@
             {{/each}}
         </div>
     {{else}}
-        {{> loginButtons}}
+        <div class="container marketing">
+            Admins only
+        </div>
     {{/if}}
 </template>

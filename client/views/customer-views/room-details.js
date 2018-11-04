@@ -366,23 +366,13 @@ Template.room.onRendered(function(){
         }
     });
 
-    this.paymentForm.build();
-
-
-    // Subscribe to coupons
-    this.autorun(function(){
-
-        var userSelections = Session.get('userSelections');
-        if( userSelections && userSelections.coupon ){
-
-            Meteor.subscribe( 'couponByCode', userSelections.coupon);
-
-        }
-
-    });
-
     // Grab room info
     var room = this.data.room;
+
+
+    if( this.data.room.available ) {
+        this.paymentForm.build();
+    }
 
     // LOG ROOM DETAILS VIEW
     fbq('track', 'ViewContent', {

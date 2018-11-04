@@ -1,49 +1,66 @@
 <template name="layoutAdmin">
-    {{>loadingAnimatedToggle}}
+    {{> notifications}}
+    {{> loadingAnimatedToggle}}
+    <div id="wrapper" class="wrapper-full-width">
+        <div  class="navbar-wrapper">
+            <!-- Modified navbar: Animating from right to left (off canvas) -->
+            <nav id="navbar2" class="navbar navbar-default" role="navigation">
+                <div class="container" style="background: none;">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        {{#with settings}}
+                            <!--Logo-->
+                            <a class="navbar-brand" href="{{pathFor 'home'}}"><img src="{{logoURL}}"></a>
+                            <!--Announcement Box-->
+                            <!--<div class="promo">-->
+                            <!--<span class="promo-title">{{announcementTitle}}</span><br>-->
+                            <!--<span class="promo-text">{{textareaToHTML announcementContent}}</span>-->
+                            <!--</div>-->
+                        {{/with}}
+                    </div>
 
-    {{>notifications}}
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Kauai Escape Room</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <!--<ul class="nav navbar-nav navbar-right">-->
-                    <!--<li><a href="#">Home</a></li>-->
-                    <!--<li><a href="#"></a></li>-->
-                    <!--<li><a href="#">Profile</a></li>-->
-                    <!--<li><a href="#">Help</a></li>-->
-                <!--</ul>-->
-                <!--<form class="navbar-form navbar-right">-->
-                    <!--<input type="text" class="form-control" placeholder="Search...">-->
-                <!--</form>-->
-            </div>
-        </div>
-    </nav>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                        <ul class="nav navbar-nav">
+                            {{#if currentUser}}
+                                <li class="{{activeFlag 'adminDashboard'}}"><a href="{{pathFor 'adminDashboard'}}">Dashboard</a></li>
+                                <li class="{{activeFlag 'adminGamesCalendar'}}"><a href="{{pathFor 'adminGamesCalendar'}}">Games</a></li>
+                                {{#if currentUser.profile.isAdmin}}
+                                    <li class="{{activeFlag 'adminCouponsList'}}"><a href="{{pathFor route="adminCouponsList"}}">Coupons</a></li>
+                                    <li class="{{activeFlag 'adminRooms'}}"><a href="{{pathFor route="adminRooms"}}">Rooms</a></li>
+                                    <li class="{{activeFlag 'adminSettings'}}"><a href="{{pathFor route="adminSettings"}}">Settings</a></li>
+                                {{/if}}
+                            {{else}}
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                <ul class="nav nav-sidebar">
-                    <li class="{{activeFlag 'adminDashboard'}}"><a href="{{pathFor 'adminDashboard'}}">Dashboard</a></li>
-                    <li class="{{activeFlag 'adminGamesCalendar'}}"><a href="{{pathFor 'adminGamesCalendar'}}">Games</a></li>
-                    <li class="{{activeFlag 'adminCouponsList'}}"><a href="{{pathFor 'adminCouponsList'}}">Coupons</a></li>
-                    <li class="{{activeFlag 'adminRooms'}}"><a href="{{pathFor 'adminRooms'}}">Rooms</a></li>
-                    <li class="{{activeFlag 'adminSettings'}}"><a href="{{pathFor 'adminSettings'}}">Settings</a></li>
-                </ul>
-                {{#if currentUser}}
-                    <div style="padding-left: 15px">{{>loginButtons}}</div>
-                {{/if}}
-            </div>
-            <div class="col-sm-9 col-md-10 main">
-                {{>yield}}
-            </div>
+                            <!--<li class="{{activeFlag 'rooms'}}"><a href="{{pathFor 'rooms'}}">Rooms</a></li>-->
+                            <!--<li class="{{activeFlag 'roomsCalendar'}}"><a href="{{pathFor 'roomsCalendar'}}">Calendar</a></li>-->
+                            <!--<li class="{{activeFlag 'giftCards'}}">-->
+                                <!--<a href="{{pathFor 'giftCards'}}">-->
+                                    <!--Gift Cards-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="{{activeFlag 'faq'}}"><a href="{{pathFor 'faq'}}">FAQ</a></li>-->
+                            <!--<li class="{{activeFlag 'about'}}"><a href="{{pathFor 'about'}}">About</a></li>-->
+                            <!--<li class="{{activeFlag 'contact'}}"><a href="{{pathFor 'contact'}}">Contact</a></li>-->
+                            <!--<li class="{{activeFlag 'directions'}}"><a href="{{pathFor 'directions'}}">Directions</a></li>-->
+                            {{/if}}
+                            <li>{{> loginButtons}}</li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+
+
         </div>
+        {{>yield}}
+
+        {{>footer}}
+
     </div>
 </template>

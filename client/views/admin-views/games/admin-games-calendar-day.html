@@ -4,25 +4,34 @@
     <div class="admin-games-calendar-day">
 
         <!-- TITLE / DATE: {{date}} -->
-        <h2>{{dayOfWeek date}}<br>{{humanReadableDate date format='short'}}</h2>
+        <h2 style="font-size: 24px; text-transform: capitalize">
 
+            {{humanReadableDate date}}
+
+            <a href="#" class="add-game-link" style="" hook="add-game" hook-data-date="{{date}}">
+                <i class=" fa fa-plus-circle" aria-hidden="true"></i> ADD GAME
+            </a>
+
+        </h2>
 
         {{#if games}}
-            {{#each games}}
-                {{>adminGamesCalendarGame}}
-            {{/each}}
+        <div class="day-scroller">
+            <div class="day-scroller-content" style="width:{{widthForGames}}">
+
+
+                    {{#each games}}
+                        {{>adminGamesCalendarGame}}
+                    {{/each}}
+
+
+            </div>
+
+        </div>
         {{else}}
-            <div class="admin-games-calendar-game">
+            <div class="admin-games-calendar-game" style="width: 100%;">
                 Nothing scheduled...
             </div>
         {{/if}}
 
-
-
-        <div class="add-game">
-            <a href="#" hook="add-game" hook-data-date="{{date}}">
-                <i class="fa fa-plus-circle" aria-hidden="true"></i> ADD GAME
-            </a>
-        </div>
     </div>
 </template>

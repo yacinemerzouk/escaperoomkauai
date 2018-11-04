@@ -19,3 +19,30 @@
 		
 	}
 }
+.promo-bar{
+    height: 40px;
+    background: #e3da4f;
+    width: 100%;
+    padding: 0 30px;
+    text-align: right;
+    
+    .promo-title{
+        line-height: 40px;
+    }
+    
+    .promo-text{
+        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        line-height: 40px;
+        
+        a{
+            color: #000;
+            text-decoration: underline;
+        }
+    }
+    
+}
+@media screen and (max-width:400px){
+    .promo-bar{
+        display: none;
+    }
+}

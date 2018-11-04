@@ -16,12 +16,15 @@ Template.gamePlay.onCreated(function(){
     this.timer;
     var self = this;
     this.countdown = function( elementName, minutes, seconds ){
+        // console.log(minutes,seconds);
         clearTimeout( self.timer );
         elementName = elementName || "countdown";
         if( !minutes && minutes !== 0 ){
             minutes = 60;
         }
         seconds = seconds || 0;
+
+
 
         var element, endTime, hours, mins, msLeft, time;
 
@@ -55,7 +58,13 @@ Template.gamePlay.onCreated(function(){
                 // }else{
                 //     document.getElementById('news').innerHTML = document.getElementById('news').innerHTML + ".";
                 // }
+                // // console.log('in updateTimer', parseInt(msLeft/1000));
+                if(2400 === parseInt(msLeft/1000)){
+                    alert('Do not forget to place the doll in the cave!');
+                }
+
             }
+
 
         }
 
@@ -76,18 +85,21 @@ Template.gamePlay.onRendered(function(){
     var self = this;
     var gameData = Bolt.Collections.Games.findOne(this.data._id);
     var game = new Bolt.Game(gameData);
-    // console.log( 'GAME', game );
+    // // console.log( 'GAME', game );
     var resetDocReactive;
     if( game.roomId == "3uvLANaxBvEfH4ZLH" ){
         resetDocReactive = Bolt.Collections.tikiCountdownStatus.find().fetch();
     }else if ( game.roomId == "HBBzehj9W2BPjvomA" ){
         resetDocReactive = Bolt.Collections.seanceCountdownStatus.find().fetch();
     }
-    var lastResetTime = resetDocReactive[0].resetTime;
+    var lastResetTime;
+    if(resetDocReactive && resetDocReactive[0]){
+        lastResetTime = resetDocReactive[0].resetTime;
+    }
     var dateObject = new Date();
     var currentTime = dateObject.getTime();
     var secondsSinceLastReset = parseInt( ( currentTime - lastResetTime ) / 1000 );
-    // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
+    // // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
     if( secondsSinceLastReset < 3600 ){
         var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
         var countdownSeconds = secondsLeftOnCountdown % 60;
@@ -95,8 +107,8 @@ Template.gamePlay.onRendered(function(){
         this.countdown( "countdown", countdownMinutes, countdownSeconds );
     }
     // this.autorun(function(){
-    //     console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
-    //     console.log(Session.get('lastReset'));
+    //     // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
+    //     // console.log(Session.get('lastReset'));
     //     if( lastResetTime !== Session.get('lastReset') ){
     //         Session.set('lastReset',lastResetTime);
     //         clearTimeout(self.timer);
@@ -123,23 +135,23 @@ Template.gamePlay.events({
 
         evt.preventDefault();
 
-        console.log('sending message - 1/x');
+        // console.log('sending message - 1/x');
         Notifications.info('Sending message...');
 
         // $('[type="submit"]').attr("disabled","disabled");
         var formData = Bureaucrat.getFormData($(evt.currentTarget));
-        //console.log('form data', formData, $('[name="device"]:checked').val() );
-        console.log('sending message - 3/x');
+        //// console.log('form data', formData, $('[name="device"]:checked').val() );
+        // console.log('sending message - 3/x');
 
         var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
         var game = new Bolt.Game(gameData);
 
-        console.log('sending message - 3/x');
+        // console.log('sending message - 3/x');
 
         if( game.roomId == "HBBzehj9W2BPjvomA" ){
             // alert('SEANCE');
-            //console.log(response);
-            console.log('sending message - seance???/x');
+            //// console.log(response);
+            // console.log('sending message - seance???/x');
 
             if (!game.messages) {
                 game.messages = []
@@ -157,43 +169,43 @@ Template.gamePlay.events({
 
         }else {
 
-            console.log('sending message - 4/x');
+            // console.log('sending message - 4/x');
 
             // Configure the Twilio client
             Meteor.call('sendSMS', formData.message, $('[name="device"]:checked').val(), function (error, response) {
                 if (error) {
-                    //console.log( error );
-                    console.log('sending message - 6/x');
+                    //// console.log( error );
+                    // console.log('sending message - 6/x');
 
                     Notifications.error(error.message);
 
                 } else {
 
-                    console.log('sending message - 7/x');
-                    //console.log(response);
+                    // console.log('sending message - 7/x');
+                    //// console.log(response);
                     var gameData = Bolt.Collections.Games.findOne(tmpl.data._id);
                     var game = new Bolt.Game(gameData);
                     if (!game.messages) {
                         game.messages = []
                     }
                     game.messages.push(response);
-                    console.log('sending message - 8/x');
+                    // console.log('sending message - 8/x');
 
                     game.save();
-                    console.log('sending message - 9/x');
+                    // console.log('sending message - 9/x');
 
                     $('textarea').val('');
 
                     Notifications.success('Message sent');
 
-                    console.log('sending message - 10/x');
+                    // console.log('sending message - 10/x');
 
                 }
                 $('[type="submit"]').removeAttr("disabled");
 
             });
 
-            console.log('sending message - 5/x');
+            // console.log('sending message - 5/x');
 
 
         }
@@ -305,15 +317,34 @@ Template.gamePlay.events({
                     {$set: {room: roomName, resetTime: newResetTime}},
                     function (err, rows) {
                         if (err) {
-                            console.log(err);
+                            // console.log(err);
                         } else {
                             statusUpdated = rows;
-                            // console.log( 'timer started', statusUpdated );
+                            // // console.log( 'timer started', statusUpdated );
                             //Session.set('lastReset', newResetTime);
                             tmpl.countdown("countdown",60,0);
                         }
                     }
                 );
+            }else if( game.roomId == "WWXZxGLGvpr7NBRbf" ){
+                console.log('SETTING TIMER FOR LC');
+                countdownCollection = Bolt.Collections.lostContinentCountdownStatus;
+                roomName = "lc";
+                var result = countdownCollection.update(
+                    {_id: "9ysA4o4hbaJz24kaM"},
+                    {$set: {room: roomName, resetTime: newResetTime}},
+                    function (err, rows) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            statusUpdated = rows;
+                            console.log( 'timer started', statusUpdated );
+                            //Session.set('lastReset', newResetTime);
+                            tmpl.countdown("countdown",60,0);
+                        }
+                    }
+                );
+                console.log(result);
             }else if( game.roomId == "HBBzehj9W2BPjvomA" ){
                 countdownCollection = Bolt.Collections.seanceCountdownStatus;
                 roomName = "seance";
@@ -322,10 +353,10 @@ Template.gamePlay.events({
                     {$set: {room: roomName, resetTime: newResetTime, gameId:game._id, playMusic:true}},
                     function (err, rows) {
                         if (err) {
-                            console.log(err);
+                            // console.log(err);
                         } else {
                             statusUpdated = rows;
-                            // console.log( 'timer started', statusUpdated );
+                            // // console.log( 'timer started', statusUpdated );
                             //Session.set('lastReset', newResetTime);
                             tmpl.countdown("countdown",60,0);
                         }
@@ -360,6 +391,11 @@ Template.gamePlay.events({
             collection = Bolt.Collections.tikiCountdownStatus;
             updateId = 'HdbcttuYTtwWvGKoS';
             room = 'tiki';
+        }else if( game.roomId == "WWXZxGLGvpr7NBRbf" ){
+
+            collection = Bolt.Collections.lostContinentCountdownStatus;
+            updateId = '9ysA4o4hbaJz24kaM';
+            room = 'lc';
         }else if ( game.roomId == "HBBzehj9W2BPjvomA" ){
             collection = Bolt.Collections.seanceCountdownStatus;
             updateId = 'CjkxgQJ2HkTpXntFa';
@@ -377,17 +413,17 @@ Template.gamePlay.events({
                     console.log(err);
                 } else {
                     statusUpdated = rows;
-                    // console.log( 'timer started', statusUpdated );
+                    // // console.log( 'timer started', statusUpdated );
                     //Session.set('lastReset', newResetTime);
                     var dateObject = new Date();
                     var currentTime = dateObject.getTime();
                     var secondsSinceLastReset = parseInt( ( currentTime - newResetTime ) / 1000 );
-                    // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
+                    // // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
                     if( secondsSinceLastReset < 4800 ){
                         var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
                         var countdownSeconds = secondsLeftOnCountdown % 60;
                         var countdownMinutes = parseInt( Math.floor( secondsLeftOnCountdown / 60 ) );
-                        // console.log( countdownMinutes, countdownSeconds );
+                        // // console.log( countdownMinutes, countdownSeconds );
                         tmpl.countdown( "countdown", countdownMinutes, countdownSeconds );
                     }
                 }
@@ -418,6 +454,11 @@ Template.gamePlay.events({
             collection = Bolt.Collections.tikiCountdownStatus;
             updateId = 'HdbcttuYTtwWvGKoS';
             room = 'tiki';
+        }else if( game.roomId == "WWXZxGLGvpr7NBRbf" ){
+            console.log('Removing time from LC');
+            collection = Bolt.Collections.lostContinentCountdownStatus;
+            updateId = '9ysA4o4hbaJz24kaM';
+            room = 'lc';
         }else if ( game.roomId == "HBBzehj9W2BPjvomA" ){
             collection = Bolt.Collections.seanceCountdownStatus;
             updateId = 'CjkxgQJ2HkTpXntFa';
@@ -435,23 +476,47 @@ Template.gamePlay.events({
                     console.log(err);
                 } else {
                     statusUpdated = rows;
-                    // console.log( 'timer started', statusUpdated );
+                    console.log( 'minute removed?', statusUpdated );
                     //Session.set('lastReset', newResetTime);
                     var dateObject = new Date();
                     var currentTime = dateObject.getTime();
                     var secondsSinceLastReset = parseInt( ( currentTime - newResetTime ) / 1000 );
-                    // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
+                    // // console.log( 'SECONDS SINCE LAST RESET', secondsSinceLastReset );
                     if( secondsSinceLastReset < 4800 ){
                         var secondsLeftOnCountdown = 3600 - secondsSinceLastReset;
                         var countdownSeconds = secondsLeftOnCountdown % 60;
                         var countdownMinutes = parseInt( Math.floor( secondsLeftOnCountdown / 60 ) );
-                        // console.log( countdownMinutes, countdownSeconds );
+                        // // console.log( countdownMinutes, countdownSeconds );
                         tmpl.countdown( "countdown", countdownMinutes, countdownSeconds );
                     }
                 }
             }
         );
 
+    },
+    /**
+     * Play shadow sequence for Lost Continent
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="start-shadow-sequence"]': function(evt,tmpl){
+        // Prevent default event behavior
+        evt.preventDefault();
+
+        console.log('Click: start shadow sequence');
+        Bolt.Collections.lostContinentCountdownStatus.update(
+
+            {
+                _id: "9ysA4o4hbaJz24kaM"
+            },
+            {
+                $set: {
+                    playShadowSequence: true
+                }
+
+            }
+
+        );
     },
     /**
      * Play laser audio in seance room
@@ -481,7 +546,7 @@ Template.gamePlay.events({
         var game = new Bolt.Game(gameData);
         // if( game.roomId == "HBBzehj9W2BPjvomA" ){
             // alert('SEANCE');
-            //console.log(response);
+            //// console.log(response);
             if (!game.messages) {
                 game.messages = []
             }
@@ -516,13 +581,19 @@ Template.gamePlay.helpers({
     isTikiLounge: function(){
         var gameData = Bolt.Collections.Games.findOne(this._id);
         var game = new Bolt.Game(gameData);
-        // console.log('isTiki', game);
+        // // console.log('isTiki', game);
         return game.roomId == "3uvLANaxBvEfH4ZLH";
+    },
+    isLostContinent: function(){
+        var gameData = Bolt.Collections.Games.findOne(this._id);
+        var game = new Bolt.Game(gameData);
+        // // console.log('isTiki', game);
+        return game.roomId == "WWXZxGLGvpr7NBRbf";
     },
     isSeance: function(){
         var gameData = Bolt.Collections.Games.findOne(this._id);
         var game = new Bolt.Game(gameData);
-        // console.log('isTiki', game);
+        // // console.log('isTiki', game);
         return game.roomId == "HBBzehj9W2BPjvomA";
     },
     room: function(){

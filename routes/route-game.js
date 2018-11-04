@@ -11,7 +11,8 @@ Router.route('/game/play/:_id', {
             Meteor.subscribe( 'game', this.params._id ),
             Meteor.subscribe( 'roomById', game.roomId ),
             Meteor.subscribe( 'tikiCountdown' ),
-            Meteor.subscribe( 'seanceCountdown' ),
+            Meteor.subscribe( 'lostContinentCountdown' ),
+            // Meteor.subscribe( 'seanceCountdown' ),
         ]
     },
     data: function(){

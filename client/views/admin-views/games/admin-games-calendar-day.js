@@ -17,5 +17,9 @@ Template.adminGamesCalendarDay.helpers({
     'gamesReady': function(){
         var date = this.date;
         return Session.get(date+'GamesReady');
+    },
+    widthForGames(){
+        var nbGames = Bolt.Collections.Games.find({date:this.date},{sort:{time:1}}).count();
+        return parseInt(nbGames * 304 - 4) + 'px';
     }
 });

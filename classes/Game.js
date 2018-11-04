@@ -369,7 +369,8 @@ Bolt.Game.prototype.addReservation = function( reservation ){
             'total',
             'transactions',
             'due',
-            'paid'
+            'paid',
+            'coupon',
         )
     );
     return reservation.publicId;

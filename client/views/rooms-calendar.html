@@ -32,7 +32,7 @@
                                 </a>
                             </span>
 
-                            {{humanReadableDate date}}
+                            {{humanReadableDate date format='noYear'}}
                             <span class="next-day">
                                 <a href="#" hook="add-day">
                                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
@@ -91,13 +91,19 @@
                         {{else}}
                             <p class="text-center">No games scheduled for this day.</p>
                         {{/if}}
+
+                        <!--{{#with settings}}-->
+                            <p class="call-us">
+                                Looking for a date and time that is sold out or not available? Call or text us at <a href="tel:18086356957">(808) 635-6957</a> -- we can often accomodate you.
+                            </p>
+                        <!--{{/with}}-->
                     </div>
                 {{/with}}
 
+
+
                 <h2 class="subheading" style="clear: both; padding-top: 70px;">Advance Bookings &amp; Large Groups</h2>
-                <p class="text-center">
-                    Do you want to make a reservation for a day that has no scheduled games? <a href="{{pathFor 'contact'}}">Call us</a> -- we can schedule something for you.
-                </p>
+
                 <p class="text-center">
                     For groups of 9 or more players, please <a href="{{pathFor 'contact'}}">contact us</a>.
                 </p>

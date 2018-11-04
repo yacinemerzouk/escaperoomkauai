@@ -99,6 +99,14 @@ Meteor.publish('tikiCountdown', function(){
 });
 
 /**
+ * lost continent COUNTDOWN: publish all documents, which is a single document
+ */
+Meteor.publish('lostContinentCountdown', function(){
+    var docs = Bolt.Collections.lostContinentCountdownStatus.find();
+    return docs;
+});
+
+/**
  * SEANCE COUNTDOWN: publish all documents, which is a single document
  */
 Meteor.publish('seanceCountdown', function(){

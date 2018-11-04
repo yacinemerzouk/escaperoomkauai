@@ -2,27 +2,37 @@
     <div class="admin-games-calendar-game {{#if hasReservations this}}has-reservations{{/if}} {{#if canBeBooked this}}can-be-booked{{/if}} {{#if blocked}}blocked{{/if}} ">
         <span class="game-time">{{time}}</span><br>
         {{roomTitle roomId}}<br>
-        {{gameMasterName userId}}<br>
-        {{calculateNbPlayers this}} Players
-        {{#if isClosedRoom this}}
-            <br>CLOSED ROOM
-        {{/if}}
-        {{#unless isPaidInFull this}}
-            <br><span class="label label-danger">PAYMENT REQUIRED</span>
-        {{/unless}}
+        <!--{{gameMasterName userId}}<br>-->
+        {{calculateNbPlayers this}} Players &bull; {{calculateNbKamaaina this}} Kama'aina
+
         {{#if blocked}}
             <span class="label label-danger">BLOCKED</span>
         {{/if}}
         <br>
         <a href="#" hook="edit-game" hook-data-game-id="{{_id}}" class="action-link">Manage</a>
         <span style="color:#40576f;">&bull;</span>
-        <a href="{{pathFor 'gamePlay' _id=_id}}" class="action-link">Play</a><br>
+        <a href="{{pathFor 'gamePlay' _id=_id}}" class="action-link">Play</a>
+
+
         {{#unless hasReservations this}}
-            {{#if blocked}}
-                <a href="#" hook="unblock" class="action-link">Unblock</a>
-            {{else}}
-                <a href="#" hook="block" class="action-link">Block</a>
-            {{/if}}
+            {{#unless blocked}}
+                <span style="color:#40576f;">&bull;</span> <a href="#" hook="block" class="action-link">Block</a>
+            {{/unless}}
         {{/unless}}
+        {{#if blocked}}
+            <span style="color:#40576f;">&bull;</span> <a href="#" hook="unblock" class="action-link">Unblock</a>
+        {{/if}}
+        <br>
+        {{#if couponUsed}}
+            <span class="label label-success coupon-code">{{couponUsed}}</span>
+        {{else}}
+            <span class="label label-default">no coupon</span>
+        {{/if}}
+
+        {{#if source}}
+            <span class="label label-success" title="{{source}}">{{truncate string=source maxLength=30}}</span>
+        {{else}}
+            <span class="label label-default">no source</span>
+        {{/if}}
     </div>
 </template>

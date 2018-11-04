@@ -150,7 +150,7 @@ Template.adminGamesCalendar.helpers({
         var days = [firstDay];
 
         if( firstDay ) {
-            for (var x = 1; x < 5; x++) {
+            for (var x = 1; x < 7; x++) {
                 days.push(Epoch.addDaysToDate(x, firstDay));
             }
         }

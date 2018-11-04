@@ -2,7 +2,7 @@
 	.admin-games-calendar-nav{
 		height: 35px;
 		margin-bottom: 5px;
-		text-align: center;
+		text-align: left;
 		a,span{
 			line-height: 35px;
 			font-size: 14px;
@@ -21,17 +21,26 @@
 		
 	}
 	.admin-games-calendar{
-		height: ~"calc(100vh - 160px)";
+		height: auto;
 		width: 100%;
-		border: 1px solid #888;
+  
+		
 		.admin-games-calendar-day{
 			padding: 15px;
-			height: ~"calc(100vh - 162px)";
+			height: auto;
 			box-sizing: border-box;
-			width: 20%;
 			border-right: 1px solid #888;
-			float: left;
-			overflow-y: scroll;
+			float: none;
+			.add-game-link{
+                float: right; padding: 7px 0px 12px; color: #AAA; font-size: 16px; position: relative; bottom: 5px
+            }
+            .add-game-link:hover{
+                color: #000;
+            }
+            .day-scroller{
+                width: 100%;
+                overflow-x: scroll;
+            }
 		}
 		.admin-games-calendar-day:last-child{
 			border: none;
@@ -45,7 +54,7 @@
 			margin: 0px 0px 5px 0px;
 			padding-bottom: 10px;
 			border-bottom: 5px solid #ddd;
-			text-align: center;
+			text-align: left;
 		}
 		a{
 			color: #333;
@@ -57,12 +66,32 @@
 		}
 		.admin-games-calendar-game{
 			background: #ddd;
-			text-align: center;
-			padding: 10px 5px;
+			text-align: left;
+			padding: 10px 15px;
 			margin-bottom: 5px;
+            font-size: 15px;
 			.game-time{
 				font-weight: bold;
+                font-size: 18px
 			}
+            width: 300px;
+            display: inline-block;
+            .label-default{
+                background-color: rgba(0,0,0,0.1) !important;
+                font-size:12px;
+                line-height: 12px;
+                padding: 3px 5px;
+            }
+            .coupon-code{
+                font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+                letter-spacing: 1px;
+                padding-bottom: 2px;
+                padding-top: 5px;
+                
+            }
+            .label-success{
+                background-color: rgba(0,0,0,0.4) !important;
+            }
 		}
 		.admin-games-calendar-game.has-reservations{
 			background: #84cada;
@@ -73,20 +102,7 @@
 		.admin-games-calendar-game.blocked{
 			background: rgba(144, 37, 25, 0.45);
 		}
-		.add-game {
-			text-align: center;
-			a {
-				color: #000;
-				font-size: 12px;
-				text-decoration: none;
-				.fa{
-					font-size: 18px;
-					position: relative;
-					top: 2px
-				}
-			}
-			
-		}
+		
 		
 	}
 }
