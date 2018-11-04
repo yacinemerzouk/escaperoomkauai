@@ -150,16 +150,16 @@
                                         <!--{{#each nbPlayersOptions room=room game=game}}-->
                                             <!--<option value="{{this}}" {{selected this userSelections.nbPlayers}}>{{this}} players </option>-->
                                         <!--{{/each}}-->
-                                        <option value="2" {{selected 2 userSelections.nbPlayers}}>2 Players @ $40 / player</option>
-                                        <option value="3" {{selected 3 userSelections.nbPlayers}}>3 Players @ $36 / player</option>
-                                        <option value="4" {{selected 4 userSelections.nbPlayers}}>4 Players @ $34 / player</option>
-                                        <option value="5" {{selected 5 userSelections.nbPlayers}}>5 Players @ $32 / player</option>
-                                        <option value="6" {{selected 6 userSelections.nbPlayers}}>6 Players @ $32 / player</option>
+                                        <option value="2" {{selected 2 userSelections.nbPlayers}}>2 Players @ $42 / player</option>
+                                        <option value="3" {{selected 3 userSelections.nbPlayers}}>3 Players @ $38 / player</option>
+                                        <option value="4" {{selected 4 userSelections.nbPlayers}}>4 Players @ $35 / player</option>
+                                        <option value="5" {{selected 5 userSelections.nbPlayers}}>5 Players @ $33 / player</option>
+                                        <option value="6" {{selected 6 userSelections.nbPlayers}}>6 Players @ $33 / player</option>
                                         {{#if gte n1=room.maxPlayers n2=7}}
-                                            <option value="7" {{selected 7 userSelections.nbPlayers}}>7 Players @ $32 / player</option>
+                                            <option value="7" {{selected 7 userSelections.nbPlayers}}>7 Players @ $33 / player</option>
                                         {{/if}}
                                         {{#if gte n1=room.maxPlayers n2=8}}
-                                            <option value="8" {{selected 8 userSelections.nbPlayers}}>8 Players @ $32 / player</option>
+                                            <option value="8" {{selected 8 userSelections.nbPlayers}}>8 Players @ $33 / player</option>
                                         {{/if}}
                                     </select>
                                 </div>

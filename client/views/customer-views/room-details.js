@@ -730,7 +730,7 @@ Template.room.helpers({
         var successRates = Session.get('successRates');
 
         if( successRates && successRates[tmpl.room._id]){
-            return successRates[tmpl.room._id].successRate;
+            return successRates[tmpl.room._id].successRate || tmpl.room.successRate;
         }else {
             return tmpl.room.successRate;
         }

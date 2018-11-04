@@ -66,19 +66,19 @@ Bolt.Reservation.prototype.populate = function( data ){
         // Total cost of players, before discounts and taxes
         //this.costOfPlayers = ( parseFloat(this.nbPlayers) * parseFloat(this.room.pricePerPlayer) ).toFixed(2);
         if( this.nbPlayers == 2 ){
-            this.costOfPlayers = 80;
+            this.costOfPlayers = 84;
         }else if( this.nbPlayers == 3 ){
-            this.costOfPlayers = 108;
+            this.costOfPlayers = 114;
         }else if( this.nbPlayers == 4 ){
-            this.costOfPlayers = 136;
+            this.costOfPlayers = 140;
         }else if( this.nbPlayers == 5 ){
-            this.costOfPlayers = 160;
+            this.costOfPlayers = 165;
         }else if( this.nbPlayers == 6 ){
-            this.costOfPlayers = 192;
+            this.costOfPlayers = 198;
         }else if( this.nbPlayers == 7 ){
-            this.costOfPlayers = 224;
+            this.costOfPlayers = 231;
         }else if( this.nbPlayers == 8 ){
-            this.costOfPlayers = 256;
+            this.costOfPlayers = 264;
         }else{
             this.costOfPlayers = 0;
         }
