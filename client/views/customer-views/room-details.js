@@ -598,13 +598,14 @@ Template.room.helpers({
         return Session.get( 'game' );
     },
     games: function(){
-        // console.log( 'in games. Do i have room id?', this );
+        console.log( 'in games. Do i have room id?', this );
         var tmpl = this;
+
         if( Session.get('game') ) {
             var game = new Bolt.Game(Session.get('game'));
 
 
-
+            console.log(game);
             var games = Bolt.Collections.Games.find({
                 date: game.date,
                 $or: [
@@ -614,7 +615,7 @@ Template.room.helpers({
             }, {
                 sort: {time: 1}
             }).fetch();
-
+            console.log(games);
 
             var isGMTrained = false;
             var gamesToDisplay = [];
