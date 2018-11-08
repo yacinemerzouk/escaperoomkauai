@@ -1,6 +1,6 @@
 <template name="lostContinentCountdown">
 
-    <div id="countdown-container">
+    <div id="countdown-container" class="hidden">
         <div id="countdown" style="display: none">0:00</div>
         <div id="dots">
             <div id="tens">&#9632;</div>
@@ -8,10 +8,13 @@
             <div id="remainder">&#9632;</div>
         </div>
     </div>
-    <div id="shadow-sequence-container" class="hidden">
+    <div id="shadow-sequence-container" style="padding-top: 70px" class="hidden">
         <video id="shadow-sequence" width="1000" controls loop>
-            <source src="/videos/projection-test.mp4" type="video/mp4">
+            <source src="https://s3-us-west-2.amazonaws.com/escaperoomkauai.com/tiki-voyage-10min.mp4" type="video/mp4">
         </video>
     </div>
 
+    <audio id="music">
+        <source src="https://s3-us-west-2.amazonaws.com/escaperoomkauai.com/basecamp.mp3" type="audio/mpeg">
+    </audio>
 </template>

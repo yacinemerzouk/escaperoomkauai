@@ -94,6 +94,17 @@ Template.lostContinentCountdown.onCreated(function(){
     }
 });
 Template.lostContinentCountdown.onRendered(function(){
+
+    var music = document.getElementById("music");
+    music.volume = 0.5;
+
+    music.currentTime = 0;
+    music.play();
+    music.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    }, false);
+
     // this.lastReset = Session.get('lastReset');
     // setTimeout("this.checkLastReset()",1000);
     // this.countdown();
@@ -145,15 +156,21 @@ Template.lostContinentCountdown.onRendered(function(){
 
             );
             var shadowSequence = document.getElementById("shadow-sequence");
+
             shadowSequence.play();
             console.log('PLAY');
             setTimeout(function(){
                 $('#shadow-sequence-container').removeClass('hidden');
+                var music = document.getElementById("music");
+                if(music) {
+                    music.pause();
+                }
                 // $('#countdown-container').addClass('hidden');
                 setTimeout(function(){
+                    shadowSequence.pause();
                     $('#shadow-sequence-container').addClass('hidden');
                     $('#countdown-container').removeClass('hidden');
-                }, 33000);
+                }, 145000);
                 }, 1200);
 
         }

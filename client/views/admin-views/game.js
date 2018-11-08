@@ -15,6 +15,7 @@
 Template.gamePlay.onCreated(function(){
     this.timer;
     var self = this;
+    self.roomId = Bolt.Collections.Games.findOne(self.data._id).roomId;
     this.countdown = function( elementName, minutes, seconds ){
         // console.log(minutes,seconds);
         clearTimeout( self.timer );
@@ -35,6 +36,7 @@ Template.gamePlay.onCreated(function(){
 
         function updateTimer()
         {
+            // console.log(self.roomId);
             msLeft = endTime - (+new Date);
             if ( msLeft < 1000 ) {
                 element.innerHTML = "0:00";
@@ -59,8 +61,13 @@ Template.gamePlay.onCreated(function(){
                 //     document.getElementById('news').innerHTML = document.getElementById('news').innerHTML + ".";
                 // }
                 // // console.log('in updateTimer', parseInt(msLeft/1000));
-                if(2400 === parseInt(msLeft/1000)){
-                    alert('Do not forget to place the doll in the cave!');
+                if(self.roomId === "3uvLANaxBvEfH4ZLH") {
+                    // console.log('in cottl');
+                    if (2400 === parseInt(msLeft / 1000)) {
+
+                        alert('Do not forget to place the doll in the cave!');
+                    }
+
                 }
 
             }
@@ -504,19 +511,20 @@ Template.gamePlay.events({
         evt.preventDefault();
 
         console.log('Click: start shadow sequence');
-        Bolt.Collections.lostContinentCountdownStatus.update(
+        if(confirm('START SHADOW SEQUENCE?')) {
+            console.log('Starting shadow sequence');
+            Bolt.Collections.lostContinentCountdownStatus.update(
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        playShadowSequence: true
+                    }
 
-            {
-                _id: "9ysA4o4hbaJz24kaM"
-            },
-            {
-                $set: {
-                    playShadowSequence: true
                 }
-
-            }
-
-        );
+            );
+        }
     },
     /**
      * Play laser audio in seance room
