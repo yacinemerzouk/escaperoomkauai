@@ -519,13 +519,95 @@ Template.gamePlay.events({
                 },
                 {
                     $set: {
-                        playShadowSequence: true
+                        playShadowSequence: true,
+                        playMuSoundtrack: true,
                     }
 
                 }
             );
         }
     },
+
+    /**
+     * Start mu soundtrack
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="start-mu-soundtrack"]': function(evt,tmpl){
+        // Prevent default event behavior
+        evt.preventDefault();
+
+        console.log('Click: start mu soundtrack');
+        if(confirm('START MU SOUNDTRACK?')) {
+            console.log('Starting mu soundtrack');
+            Bolt.Collections.lostContinentCountdownStatus.update(
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        playMuSoundtrack: true,
+                    }
+
+                }
+            );
+        }
+    },
+
+    /**
+     * Lower mu soundtrack volume
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="lower-mu-soundtrack-volume"]': function(evt,tmpl){
+        // Prevent default event behavior
+        evt.preventDefault();
+
+        console.log('Click: lower mu soundtrack');
+        if(confirm('LOWER MU SOUNDTRACK?')) {
+            console.log('Lowering mu soundtrack');
+            Bolt.Collections.lostContinentCountdownStatus.update(
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        lowerMuSoundtrackVolume: true,
+                    }
+
+                }
+            );
+        }
+    },
+
+    /**
+     * Play loser audio
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="play-loser-audio"]': function(evt,tmpl){
+        // Prevent default event behavior
+        evt.preventDefault();
+
+        console.log('Click: Play loser audio');
+        if(confirm('PLAY LOSER AUDIO?')) {
+            console.log('Playing loser audio');
+            Bolt.Collections.lostContinentCountdownStatus.update(
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        playLoserAudio: true,
+                    }
+
+                }
+            );
+        }
+    },
+
+
+
     /**
      * Play laser audio in seance room
      * @param evt

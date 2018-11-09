@@ -1,4 +1,4 @@
-Template.lostContinentCountdown.onCreated(function(){
+Template.lostContinentMuScreen.onCreated(function(){
     var self = this;
     self.timer;
     this.countdown = function( elementName, minutes, seconds ){
@@ -93,17 +93,17 @@ Template.lostContinentCountdown.onCreated(function(){
         }
     }
 });
-Template.lostContinentCountdown.onRendered(function(){
+Template.lostContinentMuScreen.onRendered(function(){
 
-    var music = document.getElementById("music");
-    music.volume = 0.1;
-
-    music.currentTime = 0;
-    music.play();
-    music.addEventListener('ended', function() {
-        this.currentTime = 0;
-        this.play();
-    }, false);
+    // var muSoundtrack = document.getElementById("mu-soundtrack");
+    // muSoundtrack.volume = 0.5;
+    //
+    // muSoundtrack.currentTime = 0;
+    // muSoundtrack.play();
+    // muSoundtrack.addEventListener('ended', function() {
+    //     this.currentTime = 0;
+    //     this.play();
+    // }, false);
 
     // this.lastReset = Session.get('lastReset');
     // setTimeout("this.checkLastReset()",1000);
@@ -141,7 +141,9 @@ Template.lostContinentCountdown.onRendered(function(){
             var countdownMinutes = parseInt(Math.floor(secondsLeftOnCountdown / 60));
             self.countdown("countdown", countdownMinutes, countdownSeconds);
         }
-        if( resetDocReactive[0].playShadowSequence === true ){
+
+        // START MU SOUNDTRACK
+        if( resetDocReactive[0].playMuSoundtrack === true ){
             Bolt.Collections.lostContinentCountdownStatus.update(
 
                 {
@@ -149,33 +151,83 @@ Template.lostContinentCountdown.onRendered(function(){
                 },
                 {
                     $set: {
-                        playShadowSequence: false
+                        playMuSoundtrack: false
                     }
 
                 }
 
             );
-            var shadowSequence = document.getElementById("shadow-sequence");
+            var muSoundtrack = document.getElementById("mu-soundtrack");
+            muSoundtrack.volume = 0.8;
 
-            shadowSequence.volume = 1.0;
-            shadowSequence.play();
-            console.log('PLAY');
-            setTimeout(function(){
-                $('#shadow-sequence-container').removeClass('hidden');
-                var music = document.getElementById("music");
-                if(music) {
-                    music.pause();
-                }
-                // $('#countdown-container').addClass('hidden');
-                setTimeout(function(){
-                    shadowSequence.pause();
-                    $('#shadow-sequence-container').addClass('hidden');
-                    $('#countdown-container').removeClass('hidden');
-                }, 145000);
-                }, 1200);
+            muSoundtrack.currentTime = 0;
+            muSoundtrack.play();
+            muSoundtrack.addEventListener('ended', function() {
+                this.currentTime = 0;
+                this.play();
+            }, false);
 
         }
-        console.log( 'PLAY SHADOW SEQUENCE?', resetDocReactive[0] );
+
+        // LOWER MU SOUNDTRACK VOLUME
+        if( resetDocReactive[0].lowerMuSoundtrackVolume === true ){
+            Bolt.Collections.lostContinentCountdownStatus.update(
+
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        lowerMuSoundtrackVolume: false
+                    }
+
+                }
+
+            );
+            var muSoundtrack = document.getElementById("mu-soundtrack");
+            muSoundtrack.volume = 0.1;
+
+            // muSoundtrack.currentTime = 0;
+            // muSoundtrack.play();
+            // muSoundtrack.addEventListener('ended', function() {
+            //     this.currentTime = 0;
+            //     this.play();
+            // }, false);
+
+        }
+
+        // LOWER MU SOUNDTRACK VOLUME
+        if( resetDocReactive[0].playLoserAudio === true ){
+            Bolt.Collections.lostContinentCountdownStatus.update(
+
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        playLoserAudio: false
+                    }
+
+                }
+
+            );
+            var loserAudio = document.getElementById("mu-loser");
+            loserAudio.volume = 1.0;
+            loserAudio.currentTime = 0;
+            var muSoundtrack = document.getElementById("mu-soundtrack");
+            muSoundtrack.pause();
+            loserAudio.play();
+
+            // muSoundtrack.currentTime = 0;
+            // muSoundtrack.play();
+            // muSoundtrack.addEventListener('ended', function() {
+            //     this.currentTime = 0;
+            //     this.play();
+            // }, false);
+
+        }
+
+        console.log( 'PLAY MU SOUNDTRACK?', resetDocReactive[0] );
     });
 });
 
