@@ -1,3 +1,6 @@
+Template.adminGamesCalendarGame.onRendered(function(){
+    $('span').tooltip();
+});
 Template.adminGamesCalendarGame.events({
     'click [hook="block"]': function(evt,tmpl){
         evt.preventDefault();

@@ -36,13 +36,13 @@
         {{/if}}
 
         {{#if source}}
-            <span class="label label-success" title="{{source}}">{{truncate string=source maxLength=30}}</span>
+            <span class="label label-success" title="{{source}}" data-toggle="tooltip" data-placement="top">{{truncate string=source maxLength=30}}</span>
         {{else}}
             <span class="label label-default">no source</span>
         {{/if}}
 
         {{#if notes}}
-            <span class="label label-warning" title="{{notes}}">Notes</span>
+            <span class="label label-warning" title="{{notes}}" data-toggle="tooltip" data-placement="top">Notes</span>
         {{/if}}
     </div>
 </template>
