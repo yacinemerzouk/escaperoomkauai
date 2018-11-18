@@ -72,80 +72,99 @@ Template.room.onCreated(function(){
             // GRAB GAME DATA
             var game = new Bolt.Game(Session.get('game'));
 
-            // ADD RESERVATION TO GAME
-            var resId = game.addReservation(reservation);
+            var sameGameJustGotBooked = false;
 
-            // SAVE GAME
-            var orderProcessed = game.save();
+            // LOOP OVER RESERVATIONS TO MAKE SURE NO ONE BOOKED THE SAME GAME
+            // DURING THE CHECKOUT PROCESS
+            if(game.reservations && game.reservations.length > 0){
 
-            // IF GAME WAS SAVED SUCCESSFULLY
-            if (orderProcessed) {
+                game.reservations.forEach(function(res){
+                    if(res.canceled !== true){
+                        sameGameJustGotBooked = true;
+                    }
+                });
+            }
 
-                // FB EVENT TRACKING
-                var fbe = {
-                    value: reservation.total,
-                    currency: 'USD'
-                }
-                // console.log( 'FB EVENT DATA', fbe );
-                fbq(
-                    'track',
-                    'Purchase',
-                    {
-                        value: fbe.value,
+            if(sameGameJustGotBooked) {
+                Bolt.hideLoadingAnimation();
+                Notifications.error("Game no longer available.", "Unfortunately this time slot is no longer available. Please select a new time or contact us.")
+            }else{
+                // ADD RESERVATION TO GAME
+                var resId = game.addReservation(reservation);
+
+                // SAVE GAME
+                var orderProcessed = game.save();
+
+                // IF GAME WAS SAVED SUCCESSFULLY
+                if (orderProcessed) {
+
+                    // FB EVENT TRACKING
+                    var fbe = {
+                        value: reservation.total,
                         currency: 'USD'
                     }
-                );
+                    // console.log( 'FB EVENT DATA', fbe );
+                    fbq(
+                        'track',
+                        'Purchase',
+                        {
+                            value: fbe.value,
+                            currency: 'USD'
+                        }
+                    );
 
-                // GA EVENT TRACKING
-                var gae = {
-                    event: 'event',
-                    category: 'Transaction',
-                    action: "Reservation " + "(pay: " + reservation.pay + ")",
-                    label: "Reservation - " + reservation.room.title,
-                    total: reservation.total,
-                    couponValue: reservation.subtotal,
-                    transactionId: resId,
-                    deliveryFee: "0",
-                    taxes: reservation.taxes,
-                    itemName: room.title,
-                    sku: room.slug,
-                    price: reservation.subtotal
+                    // GA EVENT TRACKING
+                    var gae = {
+                        event: 'event',
+                        category: 'Transaction',
+                        action: "Reservation " + "(pay: " + reservation.pay + ")",
+                        label: "Reservation - " + reservation.room.title,
+                        total: reservation.total,
+                        couponValue: reservation.subtotal,
+                        transactionId: resId,
+                        deliveryFee: "0",
+                        taxes: reservation.taxes,
+                        itemName: room.title,
+                        sku: room.slug,
+                        price: reservation.subtotal
 
-                };
+                    };
 
-                ga('send', gae.event, gae.category, gae.action, gae.label, parseInt(reservation.subtotal));
+                    ga('send', gae.event, gae.category, gae.action, gae.label, parseInt(reservation.subtotal));
 
-                ga('ecommerce:addTransaction', {
-                    'id': gae.transactionId,                     // Transaction ID. Required.
-                    'revenue': gae.total,               // Grand Total.
-                    'shipping': gae.deliveryFee,                  // Shipping.
-                    'tax': gae.taxes                    // Tax.
-                });
-                ga('ecommerce:addItem', {
-                    'id': gae.transactionId,                     // Transaction ID. Required.
-                    'name': gae.itemName,    // Product name. Required.
-                    'sku': gae.sku,                 // SKU/code.
-                    'category': 'Reservation',         // Category or variation.
-                    'price': gae.price,                 // Unit price.
-                    'quantity': '1'                   // Quantity.
-                });
-                ga('ecommerce:send');
+                    ga('ecommerce:addTransaction', {
+                        'id': gae.transactionId,                     // Transaction ID. Required.
+                        'revenue': gae.total,               // Grand Total.
+                        'shipping': gae.deliveryFee,                  // Shipping.
+                        'tax': gae.taxes                    // Tax.
+                    });
+                    ga('ecommerce:addItem', {
+                        'id': gae.transactionId,                     // Transaction ID. Required.
+                        'name': gae.itemName,    // Product name. Required.
+                        'sku': gae.sku,                 // SKU/code.
+                        'category': 'Reservation',         // Category or variation.
+                        'price': gae.price,                 // Unit price.
+                        'quantity': '1'                   // Quantity.
+                    });
+                    ga('ecommerce:send');
 
-                // SEND EMAILS
-                reservation.sendConfirmationEmail();
-                reservation.sendNotificationEmail();
+                    // SEND EMAILS
+                    reservation.sendConfirmationEmail();
+                    reservation.sendNotificationEmail();
 
-                // SEND SMS
-                reservation.sendNotificationSMS(game, reservation.total + ' due at check-in');
+                    // SEND SMS
+                    reservation.sendNotificationSMS(game, reservation.total + ' due at check-in');
 
-                // SEND CUSTOMER INFO TO SQUARE
-                reservation.sendCustomerInfoToSquare();
+                    // SEND CUSTOMER INFO TO SQUARE
+                    reservation.sendCustomerInfoToSquare();
 
-                // HIDE LOADING GIF
-                Bolt.hideLoadingAnimation();
+                    // HIDE LOADING GIF
+                    Bolt.hideLoadingAnimation();
 
-                // GO TO CONFIRMATION
-                Router.go('confirmation', { _id: resId });
+                    // GO TO CONFIRMATION
+                    Router.go('confirmation', { _id: resId });
+
+                }
 
             }
 
