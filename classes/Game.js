@@ -73,6 +73,7 @@ Bolt.Game.prototype.save = function(){
         time: this.time,
         blocked: this.blocked ? true : false,
         messages: this.messages ? this.messages : [],
+        notes: this.notes || "",
         timeLog: this.timeLog ? this.timeLog : "",
         players: this.players ? this.players : [],
         followUpEmailSent: this.followUpEmailSent ? this.followUpEmailSent : false,
@@ -136,6 +137,21 @@ Bolt.Game.prototype.update = function( dataToSave ){
     return result > 0 ? this._id : false;
 
 }
+
+
+/**
+ * Delete game
+ * @returns bool
+ *
+ * Delete game
+ */
+Bolt.Game.prototype.remove = function(){
+
+    return  Bolt.Collections.Games.remove({_id: this._id});
+
+}
+
+
 
 /**
  * Create game

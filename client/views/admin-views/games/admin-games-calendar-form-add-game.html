@@ -7,13 +7,13 @@
             <div class="form-group">
                 <label>Location</label>
                 <select name="userId" class="form-control">
-                    <option value="9s4urwerA94vLZCMp">4353 Rice St</option>
+                    <option value="9s4urwerA94vLZCMp">Game Master Not Set</option>
 
-                    <!--{{#each gameMasters}}-->
+                    {{#each gameMasters}}
 
-                            <!--<option value="{{_id}}">{{username}}</option>-->
+                            <option value="{{_id}}">{{username}}</option>
 
-                    <!--{{/each}}-->
+                    {{/each}}
                 </select>
             </div>
             <div class="form-group">
@@ -33,16 +33,20 @@
                 <label>Time</label>
                 <select name="time" class="form-control">
                     <option value="0">---</option>
-                    <option>10:45am</option>
-                    <option>12:45pm</option>
-                    <option>2:45pm</option>
-                    <option>4:45pm</option>
-                    <option>6:45pm</option>
-                    <option>8:45pm</option>
+                    <option>10:00am</option>
+                    <option>12:00pm</option>
+                    <option>2:00pm</option>
+                    <option>4:00pm</option>
+                    <option>6:00pm</option>
+                    <option>8:00pm</option>
                     {{#each allTimes}}
                         <option>{{this}}</option>
                     {{/each}}
                 </select>
+            </div>
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea name="notes" class="form-control"></textarea>
             </div>
             <input type="submit" value="Add Game" class="btn btn-block button">
         </form>

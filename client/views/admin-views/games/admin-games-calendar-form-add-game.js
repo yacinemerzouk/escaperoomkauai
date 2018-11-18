@@ -12,10 +12,14 @@ Template.calendarFormAddGame.events({
     'submit form': function(evt,tmpl){
         evt.preventDefault();
         var formData = Bureaucrat.getFormData( $(evt.target) );
-        // console.log( formData );
-        Bolt.Collections.Games.insert(formData);
-        Blaze.remove(tmpl.view);
-        Notifications.success('Game Created');
+        if(formData.time === "0"){
+            Notifications.error("Select time before saving...");
+        }else {
+            // console.log( formData );
+            Bolt.Collections.Games.insert(formData);
+            Blaze.remove(tmpl.view);
+            Notifications.success('Game Created');
+        }
     }
 });
 Template.calendarFormAddGame.helpers({

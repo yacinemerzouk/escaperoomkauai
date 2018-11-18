@@ -11,6 +11,18 @@ Template.adminGamesCalendarGame.events({
         var game = new Bolt.Game(tmpl.data._id);
         game.blocked = false;
         game.save();
+    },
+
+    'click [hook="remove-game"]': function(evt,tmpl){
+        evt.preventDefault();
+        if(confirm("DELETE PERMANENTLY?")) {
+            var game = new Bolt.Game(tmpl.data._id);
+            if(game.remove()){
+                Notifications.success("Deleted");
+            }else{
+                Notifications.error("Could not delete");
+            }
+        }
     }
 });
 

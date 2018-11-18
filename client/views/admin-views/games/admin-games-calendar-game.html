@@ -1,8 +1,8 @@
 <template name="adminGamesCalendarGame">
     <div class="admin-games-calendar-game {{#if hasReservations this}}has-reservations{{/if}} {{#if canBeBooked this}}can-be-booked{{/if}} {{#if blocked}}blocked{{/if}} ">
         <span class="game-time">{{time}}</span><br>
-        {{roomTitle roomId}}<br>
-        <!--{{gameMasterName userId}}<br>-->
+        Room: <b>{{roomTitle roomId}}</b><br>
+        Game Master: <b>{{gameMasterName userId}}</b><br>
         {{calculateNbPlayers this}} Players &bull; {{calculateNbKamaaina this}} Kama'aina
 
         {{#if blocked}}
@@ -22,6 +22,12 @@
         {{#if blocked}}
             <span style="color:#40576f;">&bull;</span> <a href="#" hook="unblock" class="action-link">Unblock</a>
         {{/if}}
+        {{#if eq v1=currentUser._id v2="LgZ6PWa83zq4k5PTt"}}
+            {{#unless hasReservations this}}
+                <span style="color:#40576f;">&bull;</span>
+                <a href="#" hook="remove-game" class="action-link">Delete</a>
+            {{/unless}}
+        {{/if}}
         <br>
         {{#if couponUsed}}
             <span class="label label-success coupon-code">{{couponUsed}}</span>
@@ -33,6 +39,10 @@
             <span class="label label-success" title="{{source}}">{{truncate string=source maxLength=30}}</span>
         {{else}}
             <span class="label label-default">no source</span>
+        {{/if}}
+
+        {{#if notes}}
+            <span class="label label-warning" title="{{notes}}">Notes</span>
         {{/if}}
     </div>
 </template>

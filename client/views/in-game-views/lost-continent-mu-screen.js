@@ -57,9 +57,9 @@ Template.lostContinentMuScreen.onCreated(function(){
 
                     }
                     if(y < units) {
-                        $('#units').append('&#9650;');
+                        $('#units').append('<span class="wt">&#9650;</span>');
                     }else{
-                        $('#units').append('&#9651;');
+                        $('#units').append('<span class="bt">&#9650;</span>');
                     }
                 }
 
@@ -70,9 +70,9 @@ Template.lostContinentMuScreen.onCreated(function(){
 
                     }
                     if(z < remainder) {
-                        $('#remainder').append('&#9660;');
+                        $('#remainder').append('<span class="wt">&#9660;</span>');
                     }else{
-                        $('#remainder').append('&#9661;');
+                        $('#remainder').append('<span class="bt">&#9660;</span>');
                     }
                 }
 

@@ -89,8 +89,9 @@ Template.calendarFormEditGame.events({
     'submit [hook="edit-game-form"]': function(evt,tmpl){
         evt.preventDefault();
         var formData = Bureaucrat.getFormData( $(evt.target) );
-        // console.log( 'EDIT FORM DATA', formData );
+        console.log( 'EDIT FORM DATA', formData );
         var game = new Bolt.Game( tmpl.data.gameId );
+
         game.populate(formData);
         var saved = game.save();
         if( saved ){

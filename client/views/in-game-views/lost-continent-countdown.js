@@ -57,9 +57,9 @@ Template.lostContinentCountdown.onCreated(function(){
 
                     }
                     if(y < units) {
-                        $('#units').append('&#9650;');
+                        $('#units').append('<span class="wt">&#9650;</span>');
                     }else{
-                        $('#units').append('&#9651;');
+                        $('#units').append('<span class="bt">&#9650;</span>');
                     }
                 }
 
@@ -70,9 +70,9 @@ Template.lostContinentCountdown.onCreated(function(){
 
                     }
                     if(z < remainder) {
-                        $('#remainder').append('&#9660;');
+                        $('#remainder').append('<span class="wt">&#9660;</span>');
                     }else{
-                        $('#remainder').append('&#9661;');
+                        $('#remainder').append('<span class="bt">&#9660;</span>');
                     }
                 }
 
@@ -171,10 +171,55 @@ Template.lostContinentCountdown.onRendered(function(){
                     shadowSequence.pause();
                     $('#shadow-sequence-container').addClass('hidden');
                     $('#countdown-container').removeClass('hidden');
-                }, 145000);
+                }, 450000);
                 }, 1200);
 
         }
+
+        if( resetDocReactive[0].showTimer === true ){
+            Bolt.Collections.lostContinentCountdownStatus.update(
+
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        showTimer: false
+                    }
+
+                }
+
+            );
+            var shadowSequence = document.getElementById("shadow-sequence");
+
+            $('#shadow-sequence-container').addClass('hidden');
+            $('#countdown-container').removeClass('hidden');
+
+
+
+        }
+
+        if( resetDocReactive[0].playBasecampMusic === true ){
+            Bolt.Collections.lostContinentCountdownStatus.update(
+
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        playBasecampMusic: false
+                    }
+
+                }
+
+            );
+            window.location = window.location;
+
+
+
+        }
+
+
         console.log( 'PLAY SHADOW SEQUENCE?', resetDocReactive[0] );
     });
 });

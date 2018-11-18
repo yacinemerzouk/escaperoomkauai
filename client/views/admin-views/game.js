@@ -520,7 +520,59 @@ Template.gamePlay.events({
                 {
                     $set: {
                         playShadowSequence: true,
-                        playMuSoundtrack: true,
+                    }
+
+                }
+            );
+        }
+    },
+
+    /**
+     * Remove shadow sequence / tiki voyage
+     * and show timer
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="show-timer"]': function(evt,tmpl){
+        // Prevent default event behavior
+        evt.preventDefault();
+
+        console.log('Click: show timer');
+        if(confirm('REMOVE TIKI VOYAGE AND SHOW TIMER?')) {
+            console.log('Showing timer');
+            Bolt.Collections.lostContinentCountdownStatus.update(
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        showTimer: true,
+                    }
+
+                }
+            );
+        }
+    },
+
+    /**
+     * Start basecamp soundtrack
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="start-basecamp-music"]': function(evt,tmpl){
+        // Prevent default event behavior
+        evt.preventDefault();
+
+        console.log('Click: start basecamp msuic');
+        if(confirm('START basecamp SOUNDTRACK?')) {
+            console.log('Starting basecamp soundtrack');
+            Bolt.Collections.lostContinentCountdownStatus.update(
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        playBasecampMusic: true,
                     }
 
                 }
