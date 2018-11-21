@@ -753,6 +753,11 @@ Template.room.helpers({
         }else {
             return tmpl.room.successRate;
         }
+    },
+    isLostContinent: function(){
+        var game = Session.get( 'game' );
+        console.log('IS LC', game);
+        return game.roomId === "WWXZxGLGvpr7NBRbf";
     }
 });
 

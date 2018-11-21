@@ -97,6 +97,28 @@
 
         </div>
 
+        <!-- MOST RECENT -->
+        <div class="row">
+
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+
+                <h2 class="subheading">Our Newest Room</h2>
+
+                {{#with newest}}
+
+                    {{>roomBox room=this showDescription=true showSpecs=true showPrice=true showCTA=true showAvailabilityCTA=true size="large"}}
+
+                    <div class="video-padding">
+                        <div class="video-responsive">
+                            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/ZwqqpGQUU9Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                {{/with}}
+
+            </div>
+
+        </div>
+
 
         <!-- MORE INFO -->
         <div class="row">

@@ -65,6 +65,9 @@ Template.home.helpers({
     mostPopular: function(){
         return Bolt.Collections.Rooms.findOne( { slug: 'tiki-lounge' } );
     },
+    newest: function(){
+        return Bolt.Collections.Rooms.findOne( { slug: 'lost-continent' } );
+    },
     successRates: function(){
         Session.get('successRates');
     }
