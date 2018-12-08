@@ -94,6 +94,15 @@ Template.lostContinentMuScreen.onCreated(function(){
     }
 });
 Template.lostContinentMuScreen.onRendered(function(){
+    var muSoundtrack = document.getElementById("mu-soundtrack");
+    muSoundtrack.volume = 0.1;
+
+    muSoundtrack.currentTime = 0;
+    muSoundtrack.play();
+    muSoundtrack.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    }, false);
 
     // var muSoundtrack = document.getElementById("mu-soundtrack");
     // muSoundtrack.volume = 0.5;
@@ -158,7 +167,7 @@ Template.lostContinentMuScreen.onRendered(function(){
 
             );
             var muSoundtrack = document.getElementById("mu-soundtrack");
-            muSoundtrack.volume = 0.8;
+            muSoundtrack.volume = 0.9;
 
             muSoundtrack.currentTime = 0;
             muSoundtrack.play();
@@ -185,7 +194,7 @@ Template.lostContinentMuScreen.onRendered(function(){
 
             );
             var muSoundtrack = document.getElementById("mu-soundtrack");
-            muSoundtrack.volume = 0.1;
+            muSoundtrack.volume = 0.2;
 
             // muSoundtrack.currentTime = 0;
             // muSoundtrack.play();
@@ -218,16 +227,41 @@ Template.lostContinentMuScreen.onRendered(function(){
             muSoundtrack.pause();
             loserAudio.play();
 
-            // muSoundtrack.currentTime = 0;
-            // muSoundtrack.play();
-            // muSoundtrack.addEventListener('ended', function() {
-            //     this.currentTime = 0;
-            //     this.play();
-            // }, false);
+            loserAudio.addEventListener('ended', function() {
+                muSoundtrack.play();
+            }, false);
 
         }
 
-        console.log( 'PLAY MU SOUNDTRACK?', resetDocReactive[0] );
+        // WHEN PLAYING SHADOW SEQUENCE, REDUCE MU VOLUME
+        if( resetDocReactive[0].playShadowSequence === true ){
+
+            var muSoundtrack = document.getElementById("mu-soundtrack");
+            muSoundtrack.volume = 0.1;
+
+        }
+
+        // WHEN PLAYING SHADOW SEQUENCE, REDUCE MU VOLUME
+        if( resetDocReactive[0].resetMuScreen === true ){
+
+            Bolt.Collections.lostContinentCountdownStatus.update(
+
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        resetMuScreen: false
+                    }
+
+                }
+
+            );
+            window.location = window.location;
+
+        }
+
     });
+
 });
 

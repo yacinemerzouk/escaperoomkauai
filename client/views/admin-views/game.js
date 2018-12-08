@@ -511,7 +511,7 @@ Template.gamePlay.events({
         evt.preventDefault();
 
         console.log('Click: start shadow sequence');
-        if(confirm('START SHADOW SEQUENCE?')) {
+        if(confirm('Play TIKIAN VOYAGE Video?')) {
             console.log('Starting shadow sequence');
             Bolt.Collections.lostContinentCountdownStatus.update(
                 {
@@ -581,6 +581,30 @@ Template.gamePlay.events({
     },
 
     /**
+     * Reload mu screen page
+     * @param evt
+     * @param tmpl
+     */
+    'click [hook="start-mu-screen"]': function(evt,tmpl){
+        // Prevent default event behavior
+        evt.preventDefault();
+
+        if(confirm('RESET Mu Screen?')) {
+            Bolt.Collections.lostContinentCountdownStatus.update(
+                {
+                    _id: "9ysA4o4hbaJz24kaM"
+                },
+                {
+                    $set: {
+                        resetMuScreen: true,
+                    }
+
+                }
+            );
+        }
+    },
+
+    /**
      * Start mu soundtrack
      * @param evt
      * @param tmpl
@@ -590,7 +614,7 @@ Template.gamePlay.events({
         evt.preventDefault();
 
         console.log('Click: start mu soundtrack');
-        if(confirm('START MU SOUNDTRACK?')) {
+        if(confirm('PLAY LOUD SOUNDTRACK In Dig Site?')) {
             console.log('Starting mu soundtrack');
             Bolt.Collections.lostContinentCountdownStatus.update(
                 {
