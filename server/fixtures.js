@@ -8,138 +8,285 @@ Meteor.methods({
             var startDate = Epoch.dateObjectToDateString(new Date());
             for (var x = 0; x < 90; x++) {
                 var date = Epoch.addDaysToDate(x, startDate);
-                if ( date < "2019-01-01" && date !== "2018-11-22" && date !== "2018-12-25" && date !== "2019-01-01" && Bolt.Collections.Games.find({date: date}).count() === 0) {
+                if ( date >= "2019-02-06" && date <= "2019-03-31" && Bolt.Collections.Games.find({date: date}).count() === 0) {
 
                     var dayIndex = Epoch.dateStringToDateObject(date).getDay();
 
                     // DAYS
-                    // NOT SUNDAY - 10:00 - KER1 - QUEST FOR THE LOST CONTINENT
-                    // NOT SUNDAY - 10:00 - KER1 - CURSE OF THE TIKI LOUNGE
-                    // 10:00 - KER1 - CURSE OF THE TIKI LOUNGE
-                    // 12:00 - KER1 - QUEST FOR THE LOST CONTINENT
-                    // 12:00 - KER1 - CURSE OF THE TIKI LOUNGE
-                    // 2:00 - KER1 - QUEST FOR THE LOST CONTINENT
-                    // 2:00 - KER1 - CURSE OF THE TIKI LOUNGE
-                    // 4:00 - KER1 - QUEST FOR THE LOST CONTINENT
-                    // 4:00 - KER1 - CURSE OF THE TIKI LOUNGE
-                    // 6:00 - KER1 - QUEST FOR THE LOST CONTINENT
-                    // 6:00 - KER1 - CURSE OF THE TIKI LOUNGE
-                    // NOT SUNDAY - 8:00 - KER1 - QUEST FOR THE LOST CONTINENT
-                    // NOT SUNDAY - 8:00 - KER1 - CURSE OF THE TIKI LOUNGE
+                    // MONDAY:          Yacine  / 12 / 2 / 4 / 6
+                    // TUESDAY:         Yacine  / 12 / 2 / 4 / 6
+                    // WEDNESDAY:       Yacine  / 10 / 12 / 2 / 4
+                    //                  Richard / 6 / 8
+                    // THURSDAY:        Tami    / 10 / 12 / 2 / 4
+                    //                  Richard / 6 / 8
+                    // FRIDAY:          Tami    / 10 / 12 / 2 / 4
+                    //                  Richard / 6 / 8
+                    // SATURDAY:        Tami    / 10 / 12 / 2
+                    //                  Brendon / 4 / 6 / 8
+                    // Sunday:          Brendon / 10 / 12 / 2 / 4
 
+                    // Richard sF3w6nZiqbJe8FuCs
+                    // Tami jepiv57MpMStyycjr
+                    // Yacine LgZ6PWa83zq4k5PTt
+                    // Brendon 59yLrCJwbgTCmkToZ
 
-                    if(dayIndex !== 0) {
+                    // SUNDAYS
+                    if(dayIndex === 0) {
 
-
-                        // TIKI 10:00am
+                        // Brendon - ANY - 12:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "3uvLANaxBvEfH4ZLH",
+                            userId: "59yLrCJwbgTCmkToZ",
+                            roomId: "any",
                             date: date,
-                            time: "10:00am"
+                            time: "12:00pm"
                         });
                         game.save();
 
-                        // LOST CONTINENT 10:00am
+                        // Brendon - ANY - 2:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "WWXZxGLGvpr7NBRbf",
+                            userId: "59yLrCJwbgTCmkToZ",
+                            roomId: "any",
                             date: date,
-                            time: "10:00am"
+                            time: "2:00pm"
                         });
                         game.save();
+
+                        // Brendon - ANY - 4:00pm
+                        var game = new Bolt.Game({
+                            userId: "59yLrCJwbgTCmkToZ",
+                            roomId: "any",
+                            date: date,
+                            time: "4:00pm"
+                        });
+                        game.save();
+
+                        // Brendon - ANY - 6:00pm
+                        var game = new Bolt.Game({
+                            userId: "59yLrCJwbgTCmkToZ",
+                            roomId: "any",
+                            date: date,
+                            time: "6:00pm"
+                        });
+                        game.save();
+
                     }
 
-                        // TIKI 12:00pm
+                    // MONDAYS AND TUESDAYS
+                    if(dayIndex === 1 || dayIndex === 2) {
+
+                        // Yacine - ANY - 12:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "3uvLANaxBvEfH4ZLH",
+                            userId: "LgZ6PWa83zq4k5PTt",
+                            roomId: "any",
                             date: date,
                             time: "12:00pm"
                         });
                         game.save();
 
-                        // LOST CONTINENT 12:00pm
+                        // Yacine - ANY - 2:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "WWXZxGLGvpr7NBRbf",
+                            userId: "LgZ6PWa83zq4k5PTt",
+                            roomId: "any",
+                            date: date,
+                            time: "2:00pm"
+                        });
+                        game.save();
+
+                        // Yacine - ANY - 4:00pm
+                        var game = new Bolt.Game({
+                            userId: "LgZ6PWa83zq4k5PTt",
+                            roomId: "any",
+                            date: date,
+                            time: "4:00pm"
+                        });
+                        game.save();
+
+                        // Yacine - ANY - 6:00pm
+                        var game = new Bolt.Game({
+                            userId: "LgZ6PWa83zq4k5PTt",
+                            roomId: "any",
+                            date: date,
+                            time: "6:00pm"
+                        });
+                        game.save();
+
+                    }
+
+                    // WEDNESDAYS
+                    if(dayIndex === 3) {
+
+                        // Yacine - ANY - 10:00am
+                        var game = new Bolt.Game({
+                            userId: "LgZ6PWa83zq4k5PTt",
+                            roomId: "any",
+                            date: date,
+                            time: "10:00am"
+                        });
+                        game.save();
+
+                        // Yacine - ANY - 12:00pm
+                        var game = new Bolt.Game({
+                            userId: "LgZ6PWa83zq4k5PTt",
+                            roomId: "any",
                             date: date,
                             time: "12:00pm"
                         });
                         game.save();
 
-                        // TIKI 2:00pm
+                        // Yacine - ANY - 2:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "3uvLANaxBvEfH4ZLH",
+                            userId: "LgZ6PWa83zq4k5PTt",
+                            roomId: "any",
                             date: date,
                             time: "2:00pm"
                         });
                         game.save();
 
-                        // LOST CONTINENT 2:00pm
+                        // Yacine - ANY - 4:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "WWXZxGLGvpr7NBRbf",
+                            userId: "LgZ6PWa83zq4k5PTt",
+                            roomId: "any",
+                            date: date,
+                            time: "4:00pm"
+                        });
+                        game.save();
+
+                        // Richard - ANY - 6:00pm
+                        var game = new Bolt.Game({
+                            userId: "sF3w6nZiqbJe8FuCs",
+                            roomId: "any",
+                            date: date,
+                            time: "6:00pm"
+                        });
+                        game.save();
+
+                        // Richard - ANY - 8:00pm
+                        var game = new Bolt.Game({
+                            userId: "sF3w6nZiqbJe8FuCs",
+                            roomId: "any",
+                            date: date,
+                            time: "8:00pm"
+                        });
+                        game.save();
+
+                    }
+
+                    // THURSDAYS & FRIDAYS
+                    if(dayIndex === 4 || dayIndex === 5) {
+
+                        // Tami - ANY - 10:00am
+                        var game = new Bolt.Game({
+                            userId: "jepiv57MpMStyycjr",
+                            roomId: "any",
+                            date: date,
+                            time: "10:00am"
+                        });
+                        game.save();
+
+                        // Tami - ANY - 12:00pm
+                        var game = new Bolt.Game({
+                            userId: "jepiv57MpMStyycjr",
+                            roomId: "any",
+                            date: date,
+                            time: "12:00pm"
+                        });
+                        game.save();
+
+                        // Tami - ANY - 2:00pm
+                        var game = new Bolt.Game({
+                            userId: "jepiv57MpMStyycjr",
+                            roomId: "any",
                             date: date,
                             time: "2:00pm"
                         });
                         game.save();
 
-                        // TIKI 4:00pm
+                        // Tami - ANY - 4:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "3uvLANaxBvEfH4ZLH",
+                            userId: "jepiv57MpMStyycjr",
+                            roomId: "any",
                             date: date,
                             time: "4:00pm"
                         });
                         game.save();
 
-                        // LOST CONTINENT 4:00pm
+                        // Richard - ANY - 6:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "WWXZxGLGvpr7NBRbf",
+                            userId: "sF3w6nZiqbJe8FuCs",
+                            roomId: "any",
+                            date: date,
+                            time: "6:00pm"
+                        });
+                        game.save();
+
+                        // Richard - ANY - 8:00pm
+                        var game = new Bolt.Game({
+                            userId: "sF3w6nZiqbJe8FuCs",
+                            roomId: "any",
+                            date: date,
+                            time: "8:00pm"
+                        });
+                        game.save();
+
+                    }
+
+                    // SATURDAYS
+                    if(dayIndex === 6) {
+
+                        // Tami - ANY - 10:00am
+                        var game = new Bolt.Game({
+                            userId: "jepiv57MpMStyycjr",
+                            roomId: "any",
+                            date: date,
+                            time: "10:00am"
+                        });
+                        game.save();
+
+                        // Tami - ANY - 12:00pm
+                        var game = new Bolt.Game({
+                            userId: "jepiv57MpMStyycjr",
+                            roomId: "any",
+                            date: date,
+                            time: "12:00pm"
+                        });
+                        game.save();
+
+                        // Tami - ANY - 2:00pm
+                        var game = new Bolt.Game({
+                            userId: "jepiv57MpMStyycjr",
+                            roomId: "any",
+                            date: date,
+                            time: "2:00pm"
+                        });
+                        game.save();
+
+                        // Brendon - ANY - 4:00pm
+                        var game = new Bolt.Game({
+                            userId: "59yLrCJwbgTCmkToZ",
+                            roomId: "any",
                             date: date,
                             time: "4:00pm"
                         });
                         game.save();
 
-                        // TIKI 6:00pm
+                        // Brendon - ANY - 6:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "3uvLANaxBvEfH4ZLH",
+                            userId: "59yLrCJwbgTCmkToZ",
+                            roomId: "any",
                             date: date,
                             time: "6:00pm"
                         });
                         game.save();
 
-                        // LOST CONTINENT 6:00pm
+                        // Brendon - ANY - 8:00pm
                         var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "WWXZxGLGvpr7NBRbf",
-                            date: date,
-                            time: "6:00pm"
-                        });
-                        game.save();
-
-                    if(dayIndex !== 0) {
-                        // TIKI 8:00pm
-                        var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "3uvLANaxBvEfH4ZLH",
+                            userId: "59yLrCJwbgTCmkToZ",
+                            roomId: "any",
                             date: date,
                             time: "8:00pm"
                         });
                         game.save();
 
-                        // LOST CONTINENT 8:00pm
-                        var game = new Bolt.Game({
-                            userId: "9s4urwerA94vLZCMp",
-                            roomId: "WWXZxGLGvpr7NBRbf",
-                            date: date,
-                            time: "8:00pm"
-                        });
-                        game.save();
                     }
 
 
