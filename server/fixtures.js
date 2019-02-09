@@ -8,7 +8,7 @@ Meteor.methods({
             var startDate = Epoch.dateObjectToDateString(new Date());
             for (var x = 0; x < 90; x++) {
                 var date = Epoch.addDaysToDate(x, startDate);
-                if ( date >= "2019-02-06" && date <= "2019-03-31" && Bolt.Collections.Games.find({date: date}).count() === 0) {
+                if ( false && date >= "2019-02-06" && date <= "2019-03-31" && Bolt.Collections.Games.find({date: date}).count() === 0) {
 
                     var dayIndex = Epoch.dateStringToDateObject(date).getDay();
 
