@@ -17,7 +17,12 @@ Meteor.publish('roomList', function() {
                 published: 1,
                 available: 1,
                 ribbon: 1,
-                opening: 1
+                opening: 1,
+                description: 1,
+                minPlayers: 1,
+                maxPlayers: 1,
+                duration: 1,
+                priceRange: 1,
             }
         }
     );

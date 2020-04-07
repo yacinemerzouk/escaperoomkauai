@@ -8,7 +8,10 @@ Router.route('/rooms', {
     priority: '0.9',
     ironMeta: true,
     waitOn: function(){
-        return Meteor.subscribe( 'roomOverviewList' );
+        return [
+            Meteor.subscribe( 'roomOverviewList' ),
+            Meteor.subscribe( 'roomOverview', 'popular' )
+        ]
     },
     data: function(){
         return { settings: Bolt.Collections.Settings.findOne({settingType: 'global'}) };

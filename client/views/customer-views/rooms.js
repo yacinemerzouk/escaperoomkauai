@@ -61,6 +61,6 @@ Template.rooms.helpers({
         return rooms;
     },
     mostPopular: function(){
-        return Bolt.Collections.Rooms.findOne({slug:'mad-scientist'})
+        return Bolt.Collections.Rooms.findOne({slug:'tiki-lounge'})
     }
 });
