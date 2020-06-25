@@ -283,6 +283,27 @@ Bolt.Reservation.prototype.sendConfirmationEmail = function(){
                 }
             }
         );
+
+        var safetySubject = 'COVID-19 Guidelines For Your Game At Kauai Escape Room';
+
+        // Call 'sendEmail' method
+        Meteor.call(
+            'sendEmail',                                                        // Method
+            reservation.email,                                                  // Customer email
+            'Kauai Escape Room <' + Meteor.settings.public.smtp.mailman + '>',         // Our name & email
+            Meteor.settings.public.env === 'dev' ? '[TEST] ' + safetySubject : safetySubject,      // Subject
+            Bolt.getCoronavirusEmailBody(),                     // Message body
+            function (error, result) {                                          // Callback
+
+                // Handle errors as needed
+                // We don't handle successful responses from sendEmail; should we?
+                // TODO: decide what to do with successful responses
+                if (error) {
+                    throw new Meteor.Error( '[Bolt][Reservation][sendConfirmationEmail] Error', 'Error while sending coronavirus email. ||| Error message: ' + error.message + ' ||| Error object: ' + JSON.stringify(error) );
+                }
+            }
+        );
+
     }
 
 }
